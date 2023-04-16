@@ -1,0 +1,58 @@
+project:
+  type: book
+
+book:
+  title: "UTD Dissertation"
+  author: "John Waczak"
+  date: today
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+  appendices:
+    - appendix.qmd 
+
+bibliography: references.bib
+
+spacing: "doublespacing"
+degreetype: "Dissertation"
+degreefull: "Doctor of Philosophy"
+degreeabbr: "PhD"
+subject: "Physics"
+graduationmonth: "May"
+graduationyear: "2024"
+previousdegrees: "BS, MS, PhD"
+
+committeechair: "Austin J. Cunningham"
+committee1: "Gopal Gupta"
+committee2: "Mark Spong"
+committee3: "Richard Benson"
+
+copyright_year: 2024
+
+dedication: |
+  This thesis class file is dedicated to my students, who suffered without a proper one until the present time.
+
+acknowledgements: |
+  The author thanks Amanda Aiuvalasit and Wanda Trotta in the Office of the Graduate Dean for their time proofing sample documents produced by this class file and reexamining various details of the UTD thesis guidelines that arose during its creation.
+
+abstract: |
+  This mock dissertation concerns the development and usage of a LaTeX class file that eases the task of creating UTD theses and dissertations. The class file automatically creates margins, page headers and footers, page numbers, paragraph parameters, title pages, and table/figure captions consistent with the guidelines set forth by the UTD graduate school. In contrast to many prior works, care has been taken to respect relevant LaTeX coding conventions and standards. This helps to maximize compatibility with other LaTeX packages, and eases the incorporation of existing publication texts into a dissertation master document.
+
+
+biosketch: |
+  Kevin W.~Hamlen began learning the basics of LaTeX in the Fall of 2000 in order to publish computer science journal articles as part of his PhD candidacy at Cornell University. By the completion of his degree in 2006, he had written thousands of lines of TeX code.
+  After completing his PhD, Dr.~Hamlen joined the faculty of the Computer Science Department at The University of Texas at Dallas, and graduated his first two PhD students (Micah Jones and Sunitha Ramanujam) in 2011. By the graduation of his third student (Richard Wartell) in 2012, he had concluded that a properly crafted LaTeX class file for UTD theses was badly needed to streamline future dissertation preparations. He therefore created this one in December 2012.
+
+execute:
+  freeze: auto
+  echo: false
+
+format:
+  html:
+    theme: cosmo
+  utd-pdf:
+    keep-tex: true
+
+
+

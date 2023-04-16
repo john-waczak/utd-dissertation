@@ -1,0 +1,66 @@
+%%% Load any desired packages in the space below.
+%%% Warning: Do not load packages that change the margins, headers, or footers!
+%%%
+% Optional: If you want to use Times as your font, load it here.  Note that
+% although package "times" should work, it may not be the best choice.  Newer
+% LaTeX distributions offer "mathptmx" and "newtxtext,newtxmath" as superior
+% replacements.  You should find out which is best for your LaTeX.  (If this
+% sounds confusing, you probably shouldn't try to change the font to Times.)
+%\usepackage{times}
+%
+% Optional: If your LaTeX has microtype, use it to improve text quality:
+\usepackage{microtype}
+%
+% Recommended: If your dissertation contains math, use the AMS packages:
+\usepackage{amsmath,amssymb,amsthm}
+%
+% Recommended: If your dissertation needs embedded graphics, use graphicx:
+\usepackage{graphicx}
+%
+% Recommended: If your bibliography contains web page URLs, the url package
+% improves their appearance (e.g., better line breaking):
+\usepackage{url}
+%
+% Required: To satisfy UTD's formatting requirements for citations, use the
+% "natbib" package.  (Use other citation packages at your own risk; not all
+% are flexible enough to meet UTD's requirements.)  If you wish to use numeric
+% citations, change "authoryear" to "numbers" below.  Use the "chicago" BibTeX
+% style, which most closely matches the Turabian formatting required by UTD.
+% UTD mandates a blank line between each pair of bibliography entries, so set
+% \bibsep as shown below.  Finally, if you are accustomed to using \cite as
+% your citation macro, point it to natbib's \citep macro as shown.
+\usepackage[authoryear]{natbib}
+\bibliographystyle{chicago}
+\setlength{\bibsep}{12pt plus 1pt minus 1pt}
+\let\cite=\citep
+%
+% Required: If you have any wide tables or figures that need to be typeset
+% in landscape, use the rotating package:
+\usepackage{rotating}
+%
+% Optional: If you use hyperref to auto-generate hyperlinks, always load it
+% LAST since it modifies everything else.  In addition, only load hyperref if
+% you use pdftex or pdflatex to generate PDFs directly.  Do NOT use it if you
+% use plain tex or latex to generate a DVI file.  (If you are generating DVI
+% files which you then convert to PDF, you should seriously consider switching
+% to pdflatex.  The DVI format loses information because it cannot support
+% modern PDF document features.  Using pdflatex to generate PDFs directly
+% therefore results in documents of significantly higher quality.)
+\usepackage{ifpdf}
+\ifpdf
+  \usepackage{hyperref}
+\fi
+%
+%%% End of packages.
+
+%%% Define all your personal macros here (if you have any).
+%
+\providecommand{\hyperref}[2][]{#2}
+
+\newenvironment{exampleclasscode}
+ {\parindent=1cm\vskip0pt plus2pt minus0pt\begin{verse}}
+ {\end{verse}\vskip0pt plus2pt minus0pt}
+%
+%%% End of personal macro definitions.
+
+
