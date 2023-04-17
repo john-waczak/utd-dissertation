@@ -1,0 +1,247 @@
+\documentclass[doublespacing]{utdthesis}
+% For one-and-a-half spacing, use: \documentclass[halfspacing]{utdthesis}
+
+%%% Load any desired packages in the space below.
+%%% Warning: Do not load packages that change the margins, headers, or footers!
+%%%
+% Optional: If you want to use Times as your font, load it here.  Note that
+% although package "times" should work, it may not be the best choice.  Newer
+% LaTeX distributions offer "mathptmx" and "newtxtext,newtxmath" as superior
+% replacements.  You should find out which is best for your LaTeX.  (If this
+% sounds confusing, you probably shouldn't try to change the font to Times.)
+%\usepackage{times}
+%
+% Optional: If your LaTeX has microtype, use it to improve text quality:
+\usepackage{microtype}
+%
+% Recommended: If your dissertation contains math, use the AMS packages:
+\usepackage{amsmath,amssymb,amsthm}
+%
+% Recommended: If your dissertation needs embedded graphics, use graphicx:
+\usepackage{graphicx}
+%
+% Recommended: If your bibliography contains web page URLs, the url package
+% improves their appearance (e.g., better line breaking):
+\usepackage{url}
+%
+% Required: To satisfy UTD's formatting requirements for citations, use the
+% "natbib" package.  (Use other citation packages at your own risk; not all
+% are flexible enough to meet UTD's requirements.)  If you wish to use numeric
+% citations, change "authoryear" to "numbers" below.  Use the "chicago" BibTeX
+% style, which most closely matches the Turabian formatting required by UTD.
+% UTD mandates a blank line between each pair of bibliography entries, so set
+% \bibsep as shown below.  Finally, if you are accustomed to using \cite as
+% your citation macro, point it to natbib's \citep macro as shown.
+\usepackage[authoryear]{natbib}
+\bibliographystyle{chicago}
+\setlength{\bibsep}{12pt plus 1pt minus 1pt}
+\let\cite=\citep
+%
+% Required: If you have any wide tables or figures that need to be typeset
+% in landscape, use the rotating package:
+\usepackage{rotating}
+%
+% Optional: If you use hyperref to auto-generate hyperlinks, always load it
+% LAST since it modifies everything else.  In addition, only load hyperref if
+% you use pdftex or pdflatex to generate PDFs directly.  Do NOT use it if you
+% use plain tex or latex to generate a DVI file.  (If you are generating DVI
+% files which you then convert to PDF, you should seriously consider switching
+% to pdflatex.  The DVI format loses information because it cannot support
+% modern PDF document features.  Using pdflatex to generate PDFs directly
+% therefore results in documents of significantly higher quality.)
+\usepackage{ifpdf}
+\ifpdf
+  \usepackage{hyperref}
+\fi
+%
+%%% End of packages.
+
+%%% Define all your personal macros here (if you have any).
+%
+\providecommand{\hyperref}[2][]{#2}
+
+\newenvironment{exampleclasscode}
+ {\parindent=1cm\vskip0pt plus2pt minus0pt\begin{verse}}
+ {\end{verse}\vskip0pt plus2pt minus0pt}
+%
+%%% End of personal macro definitions.
+
+
+%%% The following definitions MUST come before the document begins.
+%
+\author{John L Waczak}
+\title{Title \\ Physical Sensing Coupled with Physics Based Machine Learning}
+\thesistype{Dissertation}  % or "Thesis"
+\degreefull{Doctor of Philosophy}
+\degreeabbr{PhD}
+\subject{Physics}
+\graduationmonth{May}
+\graduationyear{2023}
+\prevdegrees{BS} % comma-separated list of PREVIOUS degrees
+
+% List committee members in order.  Mark chairpersons with a "*":
+\committeemember*{David Lary}
+\committeemember{Person 2}
+\committeemember{Person 3}
+\committeemember{Person 4}
+%
+%%% End of definitions.
+
+
+%%% Beginning of actual thesis document.
+
+\begin{document}
+
+\frontmatter
+
+\signaturepage
+\copyrightpage{2012} % optional
+
+\begin{dedication} % optional
+This thesis class file \\
+is dedicated to my students, \\
+who suffered without a proper one \\
+until the present time.
+\end{dedication}
+
+\maketitle
+
+\begin{acks}{December 2022} % date when thesis first submitted to committee
+  Update required!
+\end{acks}
+
+\begin{abstract}
+  Update required!  
+\end{abstract}
+
+\tableofcontents
+\listoffigures % required if you have any figures
+\listoftables % required if you have any tables
+
+\mainmatter
+
+\chapter{Introduction}
+\label{c:introduction}
+\input{Chapter-Introduction.tex}
+
+\chapter{Global Change}
+\label{c:GlobalChange}
+\input{Chapter-GlobalChange.tex}
+
+\chapter{Key Technologies}
+\label{c:KeyTechnologies}
+\input{Chapter-KeyTechnologies.tex}
+
+
+\chapter{Autonomous sensing}
+\label{c:sensing}
+\section{Autonomous Hyperspectral Imaging}
+\label{s:hsi}
+\section{Walking Robot and Hovercraft}
+\label{s:wr}
+
+\chapter{Super Resolution}
+\label{c:super resolution}
+\section{Hyper Spectral Images}
+\label{s:sr with hsi}
+\section{Visible Images}
+\label{s:sr with visible}
+\section{Thermal Images}
+\label{s:sr with thermal}
+\section{Temporal Super Resolution: Imputation}
+\label{s:sr with time}
+
+\chapter{Atmospheric Sensing}
+\label{c:atmospheric sensing}
+\section{Time Series Analysis for Network Nodes}
+\label{s:time series}
+
+
+\chapter{Biometric Analysis}
+\label{c:biometrics}
+\section{Pose Analysis}
+\label{s:pose}
+\section{Facial Landmark Analysis}
+\label{s:face}
+
+\chapter{Audio Event Analysis}
+\label{c: Audio}
+\section{Gunshot Detection}
+\label{s:guns}
+\section{Species Identification}
+\label{s:birds}
+
+\chapter{Topological Data Analysis in Physical Measurement}
+\label{c:tda}
+\section{Persistent Homology}
+\label{s:homology}
+\section{Time Series Visibility Graphs}
+\label{s:visibility}
+\section{Graph Spectrum Analysis}
+\label{s:spectrum}
+\section{Graph Neural Networks}
+\label{s:gnn}
+
+\chapter{Scientific Machine Learning}
+\label{c:sciml}
+\section{Interpretable Machine Learning }
+\label{s:interpretable}
+\section{Sparse Identification of Nonlinear Dynamics}
+\label{s:sindy}
+\section{Physics Informed Neural Networks}
+\label{s:pinn}
+\section{SciML Applications}
+\label{s:sciml applications}
+
+
+
+\chapter{Conclusion}
+\label{c:conclusion}
+
+\appendix % required only if you have appendixes
+
+%Begin the bibliography:
+
+\begin{thesisbib}  % <--- THIS LINE IS REQUIRED!
+
+
+  % If you use BibTeX, typically the only command between \begin{thesisbib}
+  % and \end{thesisbib} is:
+  %
+\bibliography{references}
+  %
+  % (where "mybibfile" is the name of your .bib file).  In order to keep this
+  % sample file self-contained, I've created my bibliography manually below,
+  % but most people wouldn't want to do that.
+\end{thesisbib}  % <-- THIS LINE IS REQUIRED!
+
+
+\begin{biosketch}
+Kevin W.~Hamlen began learning the basics of \LaTeX{} in the Fall of 2000 in
+order to publish computer science journal articles as part of his
+Ph.D.~candidacy at Cornell University.
+By the completion of his degree in 2006, he had written thousands of lines of
+\TeX{} code.
+
+After completing his Ph.D., Dr.~Hamlen joined the faculty of the Computer
+Science Department at The University of Texas at Dallas, and graduated his
+first two Ph.D.~students (Micah Jones and Sunitha Ramanujam) in 2011.
+By the graduation of his third student (Richard Wartell) in 2012, he had
+concluded that a properly crafted \LaTeX{} class file for UTD theses was badly
+needed to streamline future dissertation preparations.
+He therefore created this one in December 2012.
+\end{biosketch}
+
+
+\begin{vita}  % <-- THIS LINE IS REQUIRED!
+  % Replace the lines below with your CV using any formatting you wish,
+  % or put nothing in this section and replace these pages with your CV
+  % in the resulting PDF file.  (But you MUST include the \begin{vita}
+  % and \end{vita} lines even if you intend to replace the pages, since
+  % those lines are needed to put the Curriculum Vitae entry into the
+  % Table of Contents.)
+\end{vita}  % <-- THIS LINE IS REQUIRED!
+
+
+\end{document}
+
