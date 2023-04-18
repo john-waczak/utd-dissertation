@@ -1,0 +1,17 @@
+# Machine Learning, Physics-Informed Machine Learning, Scientific Machine Learning
+
+## overview of types of ML 
+
+## explain NN (i.e. neural network as a function + universal approximator) 
+
+## explain Physics Informed NN(s)
+
+## explain SciML + UDE framework
+
+## use RLC circuit instead of Spring mass to introduce the concept
+
+## methods I've developed
+
+- Ensembling and Super Learners
+- Self Organizing Maps 
+- Generative Topographic Mapping

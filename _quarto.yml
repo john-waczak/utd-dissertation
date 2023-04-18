@@ -8,7 +8,14 @@ book:
   date: today
   chapters:
     - index.qmd
-    - Introduction.qmd
+    # - Introduction.qmd
+    - GlobalChange.qmd
+    - KeyTechnologies.qmd
+    - ML.qmd
+    - RobotTeam.qmd
+    - SensorNetwork.qmd
+    - MasterChemicalMechanism.qmd
+    - references.qmd
   appendices:
     - appendix.qmd 
 

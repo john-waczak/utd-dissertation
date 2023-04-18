@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.302">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>WiP: Physical Sensing Coupled with Physics Based Machine Learning - 2&nbsp; Global Change</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./KeyTechnologies.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./GlobalChange.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Global Change</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">WiP: Physical Sensing Coupled with Physics Based Machine Learning</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./GlobalChange.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Global Change</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./KeyTechnologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Key Technologies</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ML.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Machine Learning, Physics-Informed Machine Learning, Scientific Machine Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./RobotTeam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Robot Team</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./SensorNetwork.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sensor Network</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./MasterChemicalMechanism.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Master Chemical Mechanism</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional stuff</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-role-of-sensing" id="toc-the-role-of-sensing" class="nav-link active" data-scroll-target="#the-role-of-sensing"><span class="header-section-number">2.1</span> The Role of Sensing</a></li>
+  <li><a href="#the-role-of-computational-modelling" id="toc-the-role-of-computational-modelling" class="nav-link" data-scroll-target="#the-role-of-computational-modelling"><span class="header-section-number">2.2</span> The Role of Computational Modelling</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Global Change</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Abstract</div>
+    <p>Update required!</p>
+  </div>
+</div>
+
+</header>
+
+<p>Global change refers to the significant and long-term alterations in the Earth’s physical, chemical, and biological systems, resulting from natural and human-induced processes <span class="citation" data-cites="IPCC2014 IPCC2018 UN2015">(<a href="references.html#ref-IPCC2014" role="doc-biblioref">Edenhofer et al. 2014</a>; <a href="references.html#ref-IPCC2018" role="doc-biblioref">Masson-Delmotte et al. 2018</a>; <a href="references.html#ref-UN2015" role="doc-biblioref">United Nations 2015</a>)</span>. This includes changes in the climate, land use, biodiversity, and biogeochemical cycles, as well as interactions among these systems. Global change can have profound impacts on natural and human systems, including altered weather patterns, sea level rise, increased frequency and severity of extreme events, loss of biodiversity and ecosystem services, and effects on human health and well-being. Understanding and managing global change is a critical challenge facing society today, requiring interdisciplinary approaches and collaboration across sectors and regions.</p>
+<p>Global change can have a range of impacts on society, including environmental, social, and economic effects. Some of the aspects of global change that have the biggest impact on society include:</p>
+<ul>
+<li><p>Climate Change: Climate change, driven by human activities such as burning fossil fuels, deforestation, and land-use changes, has impacts on natural systems such as ocean acidification, sea level rise, and changes in precipitation patterns. These impacts can have cascading effects on human systems, including impacts on food security, water availability, and health.</p></li>
+<li><p>Biodiversity Loss: Global change can lead to the loss of biodiversity, which can have impacts on ecosystem functioning and services, such as pollination, pest control, and carbon storage. These impacts can have indirect effects on human well-being, including impacts on food security, health, and cultural heritage.</p></li>
+<li><p>Land Use Change: Land use change, such as deforestation, urbanization, and agriculture, can have impacts on natural systems such as soil quality, water availability, and biodiversity. These impacts can have direct and indirect effects on human systems, including impacts on food security, water availability, and cultural heritage.</p></li>
+<li><p>Economic and Social Inequality: Global change can exacerbate economic and social inequality, with impacts on access to resources, health, and well-being. These impacts can have cascading effects on the ability of societies to adapt and respond to global change.</p></li>
+<li><p>Human Health: Global change can have significant impacts on human health <span class="citation" data-cites="WHO2018 Costello2009 Haines2006">(<a href="references.html#ref-WHO2018" role="doc-biblioref">World Health Organization 2018</a>; <a href="references.html#ref-Costello2009" role="doc-biblioref">Costello et al. 2009</a>; <a href="references.html#ref-Haines2006" role="doc-biblioref">Haines et al. 2006</a>)</span>, both directly and indirectly, for example:</p>
+<ul>
+<li>Heat-related Illness: As temperatures increase due to global warming, there is an increased risk of heat-related illness, including heat exhaustion and heat stroke, particularly in vulnerable populations such as the elderly, young children, and outdoor workers.</li>
+<li>Air Pollution: Global change can lead to increased air pollution, including from sources such as wildfires and fossil fuel combustion. Exposure to air pollution can increase the risk of respiratory and cardiovascular diseases, including asthma, chronic obstructive pulmonary disease (COPD), and heart disease.</li>
+<li>Vector-borne Diseases: Changes in temperature and precipitation patterns can affect the distribution and abundance of disease vectors such as mosquitoes and ticks, leading to increased risks of vector-borne diseases such as dengue fever, malaria, and Lyme disease.</li>
+<li>Waterborne Diseases: Changes in precipitation patterns and water quality can increase the risk of waterborne diseases, including cholera and other diarrheal diseases.</li>
+<li>Food Security: Global change can affect food production and availability, leading to food shortages and malnutrition, particularly in vulnerable populations such as children and pregnant women.</li>
+</ul></li>
+</ul>
+<p>Effectively addressing these aspects of global change requires interdisciplinary approaches and collaboration across sectors and regions, as well as a commitment to sustainable development and equitable solutions. Adaptation and mitigation are two strategies for addressing global change, which differ in their focus and approach.</p>
+<p>Adaptation involves taking measures to adjust and respond to the impacts of global change that are already occurring or are expected to occur in the future. This can include actions such as building sea walls to protect against sea level rise, developing drought-resistant crops, and improving public health infrastructure to address the increased risk of vector-borne diseases. Adaptation strategies aim to reduce the vulnerability of human and natural systems to the impacts of global change and increase their resilience.</p>
+<p>Mitigation involves taking measures to reduce the drivers of global change, such as greenhouse gas emissions, land use change, and deforestation. This can include actions such as increasing energy efficiency, shifting to renewable energy sources, and reducing waste and consumption. Mitigation strategies aim to address the root causes of global change and reduce its severity and impact.</p>
+<p>Both adaptation and mitigation are important strategies for addressing global change, but they differ in their focus and approach. Adaptation strategies focus on responding to the impacts of global change that are already occurring or are expected to occur in the future, while mitigation strategies focus on reducing the drivers of global change and preventing its impacts from occurring in the first place. A comprehensive approach to global change will require both adaptation and mitigation strategies, as well as efforts to promote sustainable development and equitable solutions.</p>
+<section id="the-role-of-sensing" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="the-role-of-sensing"><span class="header-section-number">2.1</span> The Role of Sensing</h2>
+<p>Sensing technologies can play a critical role in both adaptation and mitigation efforts by providing data and information that can inform decision-making and improve the effectiveness of strategies <span class="citation" data-cites="UNEP2017 NRC2010 CEN2017">(<a href="references.html#ref-UNEP2017" role="doc-biblioref">United Nations Environment Programme 2017</a>; <a href="references.html#ref-NRC2010" role="doc-biblioref">National Research Council 2010</a>; <a href="references.html#ref-CEN2017" role="doc-biblioref">Centre for Ecology and Hydrology 2017</a>)</span>.</p>
+<p>In adaptation efforts, sensing technologies can provide real-time data on environmental conditions such as temperature, precipitation, sea level, air quality, as well as on the status and health of ecosystems and wildlife. This information can be used to inform early warning systems for natural disasters, to track the spread of vector-borne diseases, and to monitor the impacts of climate change on biodiversity and ecosystem services. Sensing technologies can also provide data on the effectiveness of adaptation measures, such as the performance of sea walls and other infrastructure.</p>
+<p>In mitigation efforts, sensing technologies can provide data on greenhouse gas emissions and other drivers of global change, as well as on the effectiveness of mitigation measures such as renewable energy and carbon capture and storage. Sensing technologies can also be used to monitor and manage land use changes such as deforestation and urbanization, and to track the impacts of these changes on ecosystems and carbon storage.</p>
+<p>Overall, sensing technologies can provide critical data and information for both adaptation and mitigation efforts, helping to improve decision-making and increase the effectiveness of strategies. The integration of sensing technologies with other tools such as modeling and data analysis can also help to identify new strategies and solutions for addressing global change. There are various sensing technologies and approaches used for monitoring the global environment. Here are some of the key ones:</p>
+<ul>
+<li><p>Remote Sensing: This technology involves using satellites and other airborne platforms to collect data on the Earth’s atmosphere, land, and oceans. Remote sensing provides information on environmental parameters such as temperature, humidity, air quality, land use and land cover, and ocean temperature, salinity, and sea level <span class="citation" data-cites="Thenkabail2019 Buyantuyev2017 Gamon2016 Wang2017 Pasher2019">(<a href="references.html#ref-Thenkabail2019" role="doc-biblioref">Thenkabail 2019</a>; <a href="references.html#ref-Buyantuyev2017" role="doc-biblioref">Buyantuyev and Wu 2017</a>; <a href="references.html#ref-Gamon2016" role="doc-biblioref">Gamon et al. 2016</a>; <a href="references.html#ref-Wang2017" role="doc-biblioref">Wang et al. 2017</a>; <a href="references.html#ref-Pasher2019" role="doc-biblioref">Pasher et al. 2019</a>)</span>. Some examples of remote sensing include:</p>
+<ul>
+<li>Lidar: This technology uses laser pulses to measure distance and can be used to create detailed three-dimensional maps of the environment. Lidar is commonly used to measure forest canopy height, but can also be used to measure atmospheric conditions such as cloud cover and aerosol concentrations.</li>
+<li>Imaging Spectroscopy: This technology uses a combination of imaging and spectroscopy to measure the reflectance of different wavelengths of light. Imaging spectroscopy can be used to identify and map different types of vegetation and minerals, and can provide information on the health of plant communities.</li>
+<li>Unmanned Aerial Vehicles (UAVs): These are remote-controlled or autonomous aircraft that can be equipped with sensors for remote and in-situ environmental monitoring. UAVs can be used for mapping and monitoring of large areas, and can collect high-resolution data on environmental conditions.</li>
+</ul></li>
+<li><p>In-Situ Sensors: These sensors are used to collect data directly from the environment at the location of interest. They can measure environmental parameters such as temperature, pressure, and humidity, as well as water quality and soil moisture. In situ sensors are commonly used in marine environments to measure ocean temperature, salinity, and other properties. Some examples of in-situ sensing include:</p>
+<ul>
+<li>Weather Stations: These are automated weather monitoring systems that collect data on atmospheric conditions such as temperature, humidity, barometric pressure, wind speed and direction, and precipitation. Weather stations can be installed on land or in the ocean to provide continuous monitoring of environmental conditions.</li>
+<li>Ground-Based Sensors: These sensors are used to monitor the quality of air, water, and soil. They can detect and measure pollutants such as carbon dioxide, nitrogen dioxide, ozone, sulfur dioxide, and particulate matter. Ground-based sensors are installed in various locations such as cities, industrial sites, and rural areas to provide localized environmental monitoring.</li>
+<li>Acoustic Sensors: These sensors are used to monitor environmental noise levels, including noise from traffic, industrial sources, and natural sources such as wind and waves. Acoustic sensors can provide information on noise levels over time and across different locations.</li>
+</ul></li>
+</ul>
+<p>Overall, these sensing technologies play a critical role in monitoring the global environment and can provide valuable information for environmental research, management, and policy-making.</p>
+</section>
+<section id="the-role-of-computational-modelling" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-role-of-computational-modelling"><span class="header-section-number">2.2</span> The Role of Computational Modelling</h2>
+<p>Computer modeling can play a valuable role in both understanding and predicting global change <span class="citation" data-cites="Chen2019 Hantson2016 DeLucia2021 Oleson2013 Clark2016">(<a href="references.html#ref-Chen2019" role="doc-biblioref">Chen et al. 2019</a>; <a href="references.html#ref-Hantson2016" role="doc-biblioref">Hantson et al. 2016</a>; <a href="references.html#ref-DeLucia2021" role="doc-biblioref">DeLucia et al. 2021</a>; <a href="references.html#ref-Oleson2013" role="doc-biblioref">Oleson et al. 2013</a>; <a href="references.html#ref-Clark2016" role="doc-biblioref">Clark et al. 2016</a>)</span>. For example:</p>
+<ul>
+<li>Climate Modeling: Computer models can be used to simulate the Earth’s climate system and predict future climate conditions. These models can incorporate data on greenhouse gas emissions, land use changes, and other factors to project how the Earth’s climate will change over time.</li>
+<li>Ecosystem Modeling: Computer models can be used to simulate how ecosystems will respond to changes in environmental conditions, such as changes in temperature, precipitation, and atmospheric composition. These models can help predict how changes in ecosystems will impact biodiversity, ecosystem services, and human well-being.</li>
+<li>Carbon Cycle Modeling: Computer models can be used to simulate the global carbon cycle, which is the exchange of carbon between the Earth’s atmosphere, land, and oceans. These models can help predict how changes in carbon emissions and land use will impact atmospheric carbon dioxide concentrations and global climate.</li>
+<li>Air Quality Modeling: Computer models can be used to simulate air quality, including the dispersion of pollutants in the atmosphere. These models can help predict how changes in emissions and atmospheric conditions will impact air quality and human health.</li>
+<li>Hydrological Modeling: Computer models can be used to simulate the movement of water through the Earth’s hydrological cycle. These models can help predict how changes in precipitation, land use, and other factors will impact water availability, quality, and distribution.</li>
+</ul>
+<p>Overall, computer modeling can provide valuable insights into the complex processes and interactions that drive global change. These insights can inform policy decisions and help guide efforts to mitigate and adapt to the impacts of global change.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Buyantuyev2017" class="csl-entry" role="listitem">
+Buyantuyev, Alexander, and Jiquan Wu. 2017. <span>“Remote Sensing Applications for Land Cover and Land-Use Transformations in Semiarid and Arid Environments.”</span> <em>Journal of Arid Environments</em> 140: 1–5. <a href="https://doi.org/10.1016/j.jaridenv.2017.01.008">https://doi.org/10.1016/j.jaridenv.2017.01.008</a>.
+</div>
+<div id="ref-CEN2017" class="csl-entry" role="listitem">
+Centre for Ecology and Hydrology. 2017. <span>“Ecological Sensing: A Revolution in Biodiversity Monitoring.”</span> <a href="https://www.ceh.ac.uk/news-and-media/blogs/ecological-sensing-revolution-biodiversity-monitoring">https://www.ceh.ac.uk/news-and-media/blogs/ecological-sensing-revolution-biodiversity-monitoring</a>.
+</div>
+<div id="ref-Chen2019" class="csl-entry" role="listitem">
+Chen, Jiawei, Xiaoming Shi, Xinyi Li, Mingjie Wang, Wei Shen, and Yanzhao Liu. 2019. <span>“A Review of Air Quality Modeling: From Gas-Phase to Particulate Matter.”</span> <em>Advances in Atmospheric Sciences</em> 36 (10): 921–47. <a href="https://doi.org/10.1007/s00376-019-9047-1">https://doi.org/10.1007/s00376-019-9047-1</a>.
+</div>
+<div id="ref-Clark2016" class="csl-entry" role="listitem">
+Clark, Martyn P., W. Neil Adger, Suraje Dessai, Marisa Goulden, David W. Cash, and Richard and Dickson Stern Nicholas and Gonzalez. 2016. <span>“Urbanization, Climate Change and&nbsp;Economic Growth: Challenges and Opportunities for Policy Makers.”</span> <em>Science of the Total Environment</em> 557-558: 279–91. <a href="https://doi.org/10.1016/j.scitotenv.2016.03.022">https://doi.org/10.1016/j.scitotenv.2016.03.022</a>.
+</div>
+<div id="ref-Costello2009" class="csl-entry" role="listitem">
+Costello, Anthony, Mustafa Abbas, Adriana Allen, Sarah Ball, Sarah Bell, Richard Bellamy, Sharon Friel, et al. 2009. <span>“Managing the Health Effects of Climate Change: Lancet and University College London Institute for Global Health Commission.”</span> <em>The Lancet</em> 373 (9676): 1693–733. <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(09)60935-1/fulltext">https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(09)60935-1/fulltext</a>.
+</div>
+<div id="ref-DeLucia2021" class="csl-entry" role="listitem">
+DeLucia, Evan H., Nuria Gomez-Casanovas, Stephen P. Long, Melanie A. Mayes, Rebecca A. Montgomery, William J. Parton, William J. Sacks, Joshua P. Schimel, Joseph Verfaillie, and Whendee L. Silver. 2021. <span>“The Missing Soil n: Detecting Processes Driving Soil Nitrogen Storage in Complex Ecosystems.”</span> <em>Journal of Ecology</em> 109 (2): 447–59. <a href="https://doi.org/10.1111/1365-2745.13550">https://doi.org/10.1111/1365-2745.13550</a>.
+</div>
+<div id="ref-IPCC2014" class="csl-entry" role="listitem">
+Edenhofer, O., R. Pichs-Madruga, Y. Sokona, E. Farahani, S. Kadner, K. Seyboth, A. Adler, et al. 2014. <em>Climate Change 2014: Mitigation of Climate Change</em>. <em>IPCC Working Group II</em>. Cambridge University Press. <a href="https://doi.org/10.1017/CBO9781107415416">https://doi.org/10.1017/CBO9781107415416</a>.
+</div>
+<div id="ref-Gamon2016" class="csl-entry" role="listitem">
+Gamon, John A., K. Fred Huemmrich, Robert S. Stone, and Craig E. Tweedie. 2016. <span>“Spatial and Temporal Variation in Primary Productivity (NDVI) of Coastal Alaskan Tundra: Decreased Vegetation Growth Following Earlier Snowmelt.”</span> <em>Remote Sensing of Environment</em> 175: 233–42. <a href="https://doi.org/10.1016/j.rse.2015.12.051">https://doi.org/10.1016/j.rse.2015.12.051</a>.
+</div>
+<div id="ref-Haines2006" class="csl-entry" role="listitem">
+Haines, Andrew, R Sari Kovats, Diarmid Campbell-Lendrum, and Carlos Corvalán. 2006. <span>“Climate Change and Human Health: Impacts, Vulnerability and Public Health.”</span> <em>Public Health</em> 120 (7): 585–96. <a href="https://doi.org/10.1016/j.puhe.2006.01.002">https://doi.org/10.1016/j.puhe.2006.01.002</a>.
+</div>
+<div id="ref-Hantson2016" class="csl-entry" role="listitem">
+Hantson, Stijn, Almut Arneth, Sandy P. Harrison, Douglas I. Kelley, I. Colin Prentice, Sam S. Rabin, Sally Archibald, et al. 2016. <span>“The Status and Challenge of Global Fire Modelling.”</span> <em>Biogeosciences</em> 13 (11): 3359–75. <a href="https://doi.org/10.5194/bg-13-3359-2016">https://doi.org/10.5194/bg-13-3359-2016</a>.
+</div>
+<div id="ref-IPCC2018" class="csl-entry" role="listitem">
+Masson-Delmotte, V., P. Zhai, H.-O. Pörtner, D. Roberts, J. Skea, P. R. Shukla, A. Pirani, et al. 2018. <em>Global Warming of 1.5°c. An IPCC Special Report on the Impacts of Global Warming of 1.5°c Above Pre-Industrial Levels and Related Global Greenhouse Gas Emission Pathways, in the Context of Strengthening the Global Response to the Threat of Climate Change, Sustainable Development, and Efforts to Eradicate Poverty</em>. <em>IPCC Special Report</em>. Intergovernmental Panel on Climate Change. <a href="https://www.ipcc.ch/sr15/">https://www.ipcc.ch/sr15/</a>.
+</div>
+<div id="ref-NRC2010" class="csl-entry" role="listitem">
+National Research Council. 2010. <span>“Verifying Greenhouse Gas Emissions: Methods to Support International Climate Agreements.”</span> <a href="https://www.nap.edu/catalog/12883/verifying-greenhouse-gas-emissions-methods-to-support-international-climate-agreements">https://www.nap.edu/catalog/12883/verifying-greenhouse-gas-emissions-methods-to-support-international-climate-agreements</a>.
+</div>
+<div id="ref-Oleson2013" class="csl-entry" role="listitem">
+Oleson, K. W., D. M. Lawrence, G. B. Bonan, and M. G. Flanner. 2013. <span>“Interactions Between Land Use Change and Carbon Cycle Feedbacks.”</span> <em>Global Biogeochemical Cycles</em> 27 (4): 972–83. <a href="https://doi.org/10.1002/gbc.20073">https://doi.org/10.1002/gbc.20073</a>.
+</div>
+<div id="ref-Pasher2019" class="csl-entry" role="listitem">
+Pasher, Jon, Bum-Jun Park, Jérôme Théau, Francois Pimont, and Scott Goetz. 2019. <span>“Remote Sensing of Wetlands: An Overview and Practical Guide.”</span> <em>Wetlands Ecology and Management</em> 27 (2): 129–47. <a href="https://doi.org/10.1007/s11273-018-9624-3">https://doi.org/10.1007/s11273-018-9624-3</a>.
+</div>
+<div id="ref-Thenkabail2019" class="csl-entry" role="listitem">
+Thenkabail, Prasad S. 2019. <span>“Remote Sensing of Global Croplands for Food Security.”</span> <em>Remote Sensing</em> 11 (10): 1261. <a href="https://doi.org/10.3390/rs11101261">https://doi.org/10.3390/rs11101261</a>.
+</div>
+<div id="ref-UN2015" class="csl-entry" role="listitem">
+United Nations. 2015. <span>“Transforming Our World: The 2030 Agenda for Sustainable Development.”</span> <em>UN General Assembly</em>. <a href="https://sdgs.un.org/2030agenda">https://sdgs.un.org/2030agenda</a>.
+</div>
+<div id="ref-UNEP2017" class="csl-entry" role="listitem">
+United Nations Environment Programme. 2017. <span>“Adaptation Gap Report 2017.”</span> <a href="https://www.unep.org/resources/adaptation-gap-report-2017">https://www.unep.org/resources/adaptation-gap-report-2017</a>.
+</div>
+<div id="ref-Wang2017" class="csl-entry" role="listitem">
+Wang, Donglian, Donghui Xie, Yichun Xie, and Chen Chen. 2017. <span>“Remote Sensing Applications for Urban Water Resources: A Review.”</span> <em>Remote Sensing</em> 9 (8): 829. <a href="https://doi.org/10.3390/rs9080829">https://doi.org/10.3390/rs9080829</a>.
+</div>
+<div id="ref-WHO2018" class="csl-entry" role="listitem">
+World Health Organization. 2018. <span>“Climate Change and Health.”</span> <a href="https://www.who.int/news-room/fact-sheets/detail/climate-change-and-health">https://www.who.int/news-room/fact-sheets/detail/climate-change-and-health</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./KeyTechnologies.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Key Technologies</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,9 @@
+# Robot Team
+
+## georectification
+## supervised ML for concentration 
+## super resolution if we have time (and open data cube)
+## solar geometry
+## reflectance/radiance 
+## unsupervised methods 
+## synthetic data generation 

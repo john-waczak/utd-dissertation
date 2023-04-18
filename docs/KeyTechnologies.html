@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>WiP: Physical Sensing Coupled with Physics Based Machine Learning - Appendix A — Additional stuff</title>
+<title>WiP: Physical Sensing Coupled with Physics Based Machine Learning - 3&nbsp; Key Technologies</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,7 +49,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="prev">
+<link href="./ML.html" rel="next">
+<link href="./GlobalChange.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -72,7 +92,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appendix.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional stuff</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./KeyTechnologies.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Key Technologies</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -111,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./KeyTechnologies.html" class="sidebar-item-text sidebar-link">
+  <a href="./KeyTechnologies.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Key Technologies</span></span></a>
   </div>
 </li>
@@ -156,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix.html" class="sidebar-item-text sidebar-link active">
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional stuff</span></span></a>
   </div>
 </li>
@@ -168,14 +188,24 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#an-introduction-to-some-key-tools-used-in-this-thesis" id="toc-an-introduction-to-some-key-tools-used-in-this-thesis" class="nav-link active" data-scroll-target="#an-introduction-to-some-key-tools-used-in-this-thesis"><span class="header-section-number">3.1</span> An Introduction to Some Key Tools Used in This Thesis</a>
+  <ul class="collapse">
+  <li><a href="#julia-for-scientific-computing" id="toc-julia-for-scientific-computing" class="nav-link" data-scroll-target="#julia-for-scientific-computing"><span class="header-section-number">3.1.1</span> Julia for Scientific Computing</a></li>
+  <li><a href="#scientific-and-physics-based-machine-learning" id="toc-scientific-and-physics-based-machine-learning" class="nav-link" data-scroll-target="#scientific-and-physics-based-machine-learning"><span class="header-section-number">3.1.2</span> Scientific and Physics-based Machine Learning</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Appendix A — Additional stuff</h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Key Technologies</span></h1>
 </div>
 
 
@@ -196,9 +226,57 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>You might put some computer output here, or maybe additional tables. It is possible to have multiple appendices. Just list them in the appropriate place within <code>_quarto.yml</code>.</p>
+<section id="an-introduction-to-some-key-tools-used-in-this-thesis" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="an-introduction-to-some-key-tools-used-in-this-thesis"><span class="header-section-number">3.1</span> An Introduction to Some Key Tools Used in This Thesis</h2>
+<section id="julia-for-scientific-computing" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="julia-for-scientific-computing"><span class="header-section-number">3.1.1</span> Julia for Scientific Computing</h3>
+<p>Julia is designed to combine the ease of use and high-level abstractions of languages like Python with the performance of compiled languages like C++, achieving a unique combination of speed and productivity for numerical and scientific computing. Julia is a high-level, high-performance programming language designed for numerical and scientific computing. It combines the ease of use and readability of Python with the speed and efficiency of Fortran or C. Julia has a wide array of scientific computing functionality, making it a powerful language for numerical analysis, data science, and engineering. It has built-in support for arrays and linear algebra, as well as packages for differential equations, optimization, probabilistic programming, data analysis and visualization, parallel and distributed computing, and machine learning. Julia’s combination of performance, expressiveness, and flexibility make it an excellent choice for scientific and engineering applications, allowing for high-level abstractions and rapid prototyping, while still providing low-level control and efficient execution.</p>
+<p>Here are some examples of what can be done easily in Julia that may not be as easy or efficient in other widely used scientific computing languages such as Python or Fortran:</p>
+<ul>
+<li>Multiple dispatch: Julia has a powerful multiple dispatch system that allows for generic programming and efficient function overloading. This allows for more flexible and expressive code compared to traditional object-oriented programming (OOP) in Python. Multiple dispatch allows a function to behave differently based on the types and/or number of arguments passed to it. In other words, the behavior of a function can be dispatched’ based on the specific types and/or number of arguments passed to it.</li>
+<li>Just-in-time (JIT) compilation: Julia’s JIT compiler translates high-level Julia code into optimized machine code, making Julia programs run nearly as fast as C or Fortran. In contrast, Python code is interpreted, and Fortran requires pre-compilation.</li>
+<li>Distributed computing: Julia has built-in support for distributed computing, making it easy to parallelize and scale up computations across multiple processors or machines. This is not as easy to do in Python or Fortran.</li>
+<li>Units and Error Propagation: The Units package in Julia provides a powerful and flexible framework for handling physical units in computations, useful for error propagation and dimensional analysis, helping to ensure that the results are accurate, consistent, easy to interpret, and dimensionally consistent.</li>
+<li>Built-in unit testing: Julia has a built-in testing framework that makes it easy to write and run unit tests for your code, ensuring that it works correctly.</li>
+<li>ISO characters: Julia supports the use of Greek and other ISO characters in variable and function names, which can make code more readable and expressive, especially in mathematical or scientific contexts.</li>
+<li>Interactive data visualization: Julia has a number of powerful data visualization packages, such as Plots.jl and Makie.jl, that allow for interactive, high-performance data visualization.</li>
+<li>Package management: Julia has a sophisticated package manager that makes it easy to install, manage, and use third-party packages in your code. This is not as easy to do in Fortran, and while Python has a package manager, Julia’s package manager is faster and more reliable.</li>
+<li>Inline C/Fortran/Python/R/Matlab code: Julia allows for inline C, Fortran, Python, R or Matlab code, making it easy to use existing libraries and code written in these languages without having to rewrite everything in Julia.</li>
+</ul>
+</section>
+<section id="scientific-and-physics-based-machine-learning" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="scientific-and-physics-based-machine-learning"><span class="header-section-number">3.1.2</span> Scientific and Physics-based Machine Learning</h3>
+<p>Scientific machine learning (SciML) refers to the application of Machine Learning (ML) techniques to scientific problems, where the goal is not only to make predictions but also to gain insights into the underlying physical processes <span class="citation" data-cites="raissi2019physics rackauckas2020universal carleo2019machine">(<a href="references.html#ref-raissi2019physics" role="doc-biblioref">Raissi, Perdikaris, and Karniadakis 2019</a>; <a href="references.html#ref-rackauckas2020universal" role="doc-biblioref">Rackauckas et al. 2020</a>; <a href="references.html#ref-carleo2019machine" role="doc-biblioref">Carleo et al. 2019</a>)</span>. SciML involves the integration of domain-specific knowledge and physical models with data-driven techniques, and it has the potential to revolutionize many areas of science and engineering. In this thesis we explore the use of Physics-based machine learning (PBML) <span class="citation" data-cites="Raissi2021 Wu2021">(<a href="references.html#ref-Raissi2021" role="doc-biblioref">Raissi and Karniadakis 2021</a>; <a href="references.html#ref-Wu2021" role="doc-biblioref">Wu and Zhang 2021</a>)</span> for a variety of applications.</p>
+<p>Recent examples include a paper by <span class="citation" data-cites="raissi2019physics">(<a href="references.html#ref-raissi2019physics" role="doc-biblioref">Raissi, Perdikaris, and Karniadakis 2019</a>)</span> that introduces a physics-informed neural network (PINN) framework for solving nonlinear partial differential equations, a paper by <span class="citation" data-cites="rackauckas2020universal">(<a href="references.html#ref-rackauckas2020universal" role="doc-biblioref">Rackauckas et al. 2020</a>)</span> that proposes a universal differential equation (UDE) approach to scientific machine learning, and a review article by <span class="citation" data-cites="carleo2019machine">(<a href="references.html#ref-carleo2019machine" role="doc-biblioref">Carleo et al. 2019</a>)</span> that discusses the use of machine learning in various fields of physics, including condensed matter physics, high-energy physics, and quantum physics. PBML has several advantages over purely data-driven approaches, including:</p>
+<ul>
+<li>Improved generalization: PBML models incorporate prior knowledge of the underlying physics, resulting in models that are more interpretable and generalizable. This enables the models to make accurate predictions even with limited training data.</li>
+<li>Incorporation of physical constraints: PBML models can be designed to incorporate physical constraints, such as conservation laws, which can help to ensure physically consistent predictions.</li>
+<li>Improved interpretability: PBML models are more interpretable than purely data-driven models since they are designed to incorporate physical principles. This can enable scientists and engineers to gain deeper insights into the underlying mechanisms of the systems they are studying.</li>
+<li>Reduced data requirements: PBML models require less training data than purely data-driven models since they leverage the physics-based priors, reducing the need for large datasets to train accurate models.</li>
+<li>Better extrapolation: PBML models are better equipped to extrapolate beyond the training data since they incorporate knowledge of the underlying physics, enabling them to make more accurate predictions in new and unseen scenarios.</li>
+</ul>
+<p>Overall, PBML has several advantages over purely data-driven approaches, including improved generalization, reduced data requirements, better extrapolation, incorporation of physical constraints, and improved interpretability, making it a valuable tool for scientific and engineering applications.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-carleo2019machine" class="csl-entry" role="listitem">
+Carleo, Giuseppe, Kenny Choo, Johannes Hofmann, Edward Huang, Chris Hughes, Michael Hush, Raban Iten, et al. 2019. <span>“Machine Learning and the Physical Sciences.”</span> <em>Reviews of Modern Physics</em> 91 (4): 045002.
+</div>
+<div id="ref-rackauckas2020universal" class="csl-entry" role="listitem">
+Rackauckas, Christopher, David Kelly, Qing Nie, Jesse Li, Cody Warner, Malvika Dhairya, Jie Fang, et al. 2020. <span>“Universal Differential Equations for Scientific Machine Learning.”</span> <em>arXiv Preprint arXiv:2012.09345</em>.
+</div>
+<div id="ref-Raissi2021" class="csl-entry" role="listitem">
+Raissi, Maziar, and George Em Karniadakis. 2021. <span>“Physics-Informed Neural Networks: A Deep Learning Framework for Solving Forward and Inverse Problems Involving Nonlinear Partial Differential Equations.”</span> <em>Journal of Computational Physics</em> 378: 686–707.
+</div>
+<div id="ref-raissi2019physics" class="csl-entry" role="listitem">
+Raissi, Maziar, Paris Perdikaris, and George Em Karniadakis. 2019. <span>“Physics-Informed Neural Networks: A Deep Learning Framework for Solving Forward and Inverse Problems Involving Nonlinear Partial Differential Equations.”</span> <em>Journal of Computational Physics</em> 378: 686–707.
+</div>
+<div id="ref-Wu2021" class="csl-entry" role="listitem">
+Wu, Jingtao, and Xiaohua Zhang. 2021. <span>“A Review on Physics-Informed Machine Learning: Basic Principles, Recent Developments and Future Directions.”</span> <em>Physics Reports</em> 903: 1–45.
+</div>
+</div>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -436,11 +514,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./references.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      <a href="./GlobalChange.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Global Change</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./ML.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Machine Learning, Physics-Informed Machine Learning, Scientific Machine Learning</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

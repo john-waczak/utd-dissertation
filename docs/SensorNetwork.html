@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>WiP: Physical Sensing Coupled with Physics Based Machine Learning - Appendix A — Additional stuff</title>
+<title>WiP: Physical Sensing Coupled with Physics Based Machine Learning - 6&nbsp; Sensor Network</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="prev">
+<link href="./MasterChemicalMechanism.html" rel="next">
+<link href="./RobotTeam.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -72,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appendix.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional stuff</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./SensorNetwork.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sensor Network</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -129,7 +130,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./SensorNetwork.html" class="sidebar-item-text sidebar-link">
+  <a href="./SensorNetwork.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sensor Network</span></span></a>
   </div>
 </li>
@@ -156,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix.html" class="sidebar-item-text sidebar-link active">
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional stuff</span></span></a>
   </div>
 </li>
@@ -168,14 +169,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#docker-nodered-influxdb-grafana" id="toc-docker-nodered-influxdb-grafana" class="nav-link active" data-scroll-target="#docker-nodered-influxdb-grafana"><span class="header-section-number">6.1</span> Docker, NodeRed, InfluxDB, Grafana</a></li>
+  <li><a href="#hamiltonian-nn-stuff" id="toc-hamiltonian-nn-stuff" class="nav-link" data-scroll-target="#hamiltonian-nn-stuff"><span class="header-section-number">6.2</span> Hamiltonian NN stuff</a></li>
+  <li><a href="#neural-ode" id="toc-neural-ode" class="nav-link" data-scroll-target="#neural-ode"><span class="header-section-number">6.3</span> neural ode</a></li>
+  <li><a href="#tda" id="toc-tda" class="nav-link" data-scroll-target="#tda"><span class="header-section-number">6.4</span> TDA</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Appendix A — Additional stuff</h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sensor Network</span></h1>
 </div>
 
 
@@ -196,9 +206,20 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>You might put some computer output here, or maybe additional tables. It is possible to have multiple appendices. Just list them in the appropriate place within <code>_quarto.yml</code>.</p>
+<section id="docker-nodered-influxdb-grafana" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="docker-nodered-influxdb-grafana"><span class="header-section-number">6.1</span> Docker, NodeRed, InfluxDB, Grafana</h2>
+</section>
+<section id="hamiltonian-nn-stuff" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="hamiltonian-nn-stuff"><span class="header-section-number">6.2</span> Hamiltonian NN stuff</h2>
+</section>
+<section id="neural-ode" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="neural-ode"><span class="header-section-number">6.3</span> neural ode</h2>
+</section>
+<section id="tda" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="tda"><span class="header-section-number">6.4</span> TDA</h2>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -436,11 +457,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./references.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      <a href="./RobotTeam.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Robot Team</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./MasterChemicalMechanism.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Master Chemical Mechanism</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

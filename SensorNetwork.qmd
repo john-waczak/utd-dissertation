@@ -1,0 +1,6 @@
+# Sensor Network
+
+## Docker, NodeRed, InfluxDB, Grafana
+## Hamiltonian NN stuff
+## neural ode
+## TDA
