@@ -10,3 +10,66 @@ Comprehensive sensing of the environment can improve decision-making. The real-t
 
 Many advances in technology have enabled the creation of comprehensive sensing systems that can monitor and analyze data from various sensors and devices in real-time. In this thesis we use a range of technologies including autonomous robotic teams [@Dunbabin2012; @Rubenstein2014; @Chen2017], hyperspectral imaging [@Plaza2009; @Li2018; @Zhu2017], mesh networks utilizing the Internet of Things (IoT) [@Gubbi2013; @Atzori2010; @Al-Fuqaha2015], machine learning (ML) [@Goodfellow2016; @LeCun2015; @Jordan2015], edge computing, high-performance computing,  wearable sensors and modern high-performance dynamic programming languages such as Julia [@Bezanson2017] designed for numerical and scientific computing. These technologies have facilitated the collection and processing of large amounts of data from multiple sources, resulting in more accurate and comprehensive environmental monitoring.
 
+
+
+Other sections to ponder: 
+
+## Particulate Matter 
+
+- definitions 
+- sensing methods 
+- physics of... 
+- air quality
+- consequences of...
+
+## Optics of Aqueous Chemicals
+
+- incident solar radiation 
+- transport through the atmosphere
+- Motivating relationship: Beer-Lambert Law
+  - what happens when we have multiple dissolved species? i.e. justification for use of ML
+  - 
+- section in jackson about reflectivity of water
+- Types of spectra we deal with: 
+  - reflectance 
+  - radiance 
+  - solar irradiance
+- Solar Geometry 
+
+## Chemical Reaction Kinetics for the Working Physicist
+
+- reaction extent 
+- Gibbs free energy (mountain-valley-hill)
+- reaction order 
+- reaction networks 
+- graph theory for reaction networks 
+- fundamental reactions 
+- bimolecular, trimolecular 
+- derivation via kinetic theory 
+- the Maxwell-Boltzmann distribution 
+- Photolysis
+
+## Remote Sensing 
+
+- Hyper spectral images 
+- types of Imagers 
+- Vegetation Indices 
+- Orthorectification + Georeferencing = Georectification
+
+
+## On the calibration of measurement devices... 
+
+- discuss standard curve fitting used for *most* reference instrument calibration
+- discuss value of ML for doing the same 
+- stress importance of probabilistic models 
+- non-parametric, non-linear...
+
+
+## Uncertainty Quantification
+
+- standard methods (linear propagation of uncertainty)
+- `Measurments.jl`, i.e., why Julia is awesome
+- Bayesian frameworks, Ensemble sampling, Markov-Chain-Monte-Carlo
+- Bayesian Regression
+- Kernelization and Gaussian Processes
+- Conformal Prediction and Frequentist Statistics
