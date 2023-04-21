@@ -61,6 +61,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -142,6 +144,24 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./SuperResolution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Super Resolution</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TechnicalNotes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Technical Notes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./OtherTopics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Other Topics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -177,6 +197,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#hamiltonian-nn-stuff" id="toc-hamiltonian-nn-stuff" class="nav-link" data-scroll-target="#hamiltonian-nn-stuff"><span class="header-section-number">6.2</span> Hamiltonian NN stuff</a></li>
   <li><a href="#neural-ode" id="toc-neural-ode" class="nav-link" data-scroll-target="#neural-ode"><span class="header-section-number">6.3</span> neural ode</a></li>
   <li><a href="#tda" id="toc-tda" class="nav-link" data-scroll-target="#tda"><span class="header-section-number">6.4</span> TDA</a></li>
+  <li><a href="#sensor-network-sciml" id="toc-sensor-network-sciml" class="nav-link" data-scroll-target="#sensor-network-sciml"><span class="header-section-number">7</span> Sensor Network + SciML</a>
+  <ul class="collapse">
+  <li><a href="#evaluation-of-local-chaos-in-sharedairdfwnetwork" id="toc-evaluation-of-local-chaos-in-sharedairdfwnetwork" class="nav-link" data-scroll-target="#evaluation-of-local-chaos-in-sharedairdfwnetwork"><span class="header-section-number">7.1</span> Evaluation of local chaos in SharedAirDFWNetwork</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -217,8 +241,35 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="tda" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="tda"><span class="header-section-number">6.4</span> TDA</h2>
+<hr>
+</section>
+<section id="sensor-network-sciml" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Sensor Network + SciML</h1>
+<section id="evaluation-of-local-chaos-in-sharedairdfwnetwork" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="evaluation-of-local-chaos-in-sharedairdfwnetwork"><span class="header-section-number">7.1</span> Evaluation of local chaos in SharedAirDFWNetwork</h2>
+<ul>
+<li><p>This gives me an excuse to work with the sensor data</p></li>
+<li><p>Train GTM, SOM, and Variational Autoencoder to produce lower dimensional representation of all data from a central node, e.g.&nbsp;in <span class="math inline">\(\mathbb{R}^2\)</span>.</p>
+<ul>
+<li>For VAE, test a range of dimensions from the number of sensors down to 2 (better for visualization)</li>
+</ul></li>
+<li><p>Analyze the variety of methods from <a href="https://docs.sciml.ai/DataDrivenDiffEq/stable/">DataDrivenDiffEq.jl</a> to infer dynamics in the low dimensional space</p></li>
+<li><p>Can we infer some kind of Hamiltonian from the data and do a HamiltonianNN approach?</p>
+<ul>
+<li>Start of with a standard kinetic-energy style Hamiltonian e.g.&nbsp;<span class="math inline">\(\sum_i \frac{1}{2} \dot{x}_i^2\)</span> where <span class="math inline">\(x_i\)</span> is the</li>
+<li>use DataDrivenDiffEq approach to learn the associated potential energy term</li>
+<li>alternatively, attempt to capture diurnal cycle (or other relevant time scales) by <em>learning</em> coordinate representation that forces dynamics to be uncoupled harmonic oscillators a la Hamilton-Jacobi theory.</li>
+<li>Test if this hamiltonian NN model can then be transfered to another central node with an appropriate shift in the “total energy”</li>
+</ul></li>
+<li><p>Attempt to analyze the 2d data to infer Koopman operator. We should treat the original sensor values as observables on which the learned koopman operator acts. This should be doable if the NN is just a function.</p></li>
+<li><p>use DMD appraoch to identify a “forcing” coordinate that can identify when we switch nodes as in <a href="https://www.semanticscholar.org/paper/Chaos-as-an-intermittently-forced-linear-system-Brunton-Brunton/2efad3ddade8be144ec43d22a9f2992ab036a923">Chaos as an intermittently forced linear system</a></p></li>
+<li><p><a href="https://www.youtube.com/watch?v=lx-msllg1kU&amp;ab_channel=SteveBrunton">video on Physics Informed DMD</a></p></li>
+<li><p><a href="https://www.youtube.com/watch?v=KmQkDgu-Qp0&amp;list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa&amp;ab_channel=SteveBrunton">Deep Learning to Discover Coordinates for Dynamics: Autoencoders &amp; Physics Informed Machine Learning</a></p></li>
+<li><p>NOTE: we may need to impute missing values. We shoud do so with either my GPR code or with other ML methods + ConformalPrediction. Provided uncertainty estimates, we should then think about how to propagate errors through our analysis via <a href="https://github.com/JuliaPhysics/Measurements.jl">Measurements.jl</a>, <a href="https://juliaintervals.github.io/pages/packages/intervalarithmetic/">IntervalArithmetic</a>,</p></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -112,6 +112,13 @@
     "text": "4.6 methods I’ve developed\n\nEnsembling and Super Learners\nSelf Organizing Maps\nGenerative Topographic Mapping"
   },
   {
+    "objectID": "RobotTeam.html",
+    "href": "RobotTeam.html",
+    "title": "5  Robot Team",
+    "section": "",
+    "text": "6 RobotTeam Papers"
+  },
+  {
     "objectID": "RobotTeam.html#georectification",
     "href": "RobotTeam.html#georectification",
     "title": "5  Robot Team",
@@ -161,6 +168,48 @@
     "text": "5.7 synthetic data generation"
   },
   {
+    "objectID": "RobotTeam.html#robot-team-ii-electric-boogaloo-title-w.i.p.",
+    "href": "RobotTeam.html#robot-team-ii-electric-boogaloo-title-w.i.p.",
+    "title": "5  Robot Team",
+    "section": "6.1 Robot Team II: Electric Boogaloo (title w.i.p.)",
+    "text": "6.1 Robot Team II: Electric Boogaloo (title w.i.p.)\n\nDiscuss real time georectification, generation of reflectance data, etc…\nCombine Multiple days of observations\nDiscuss need for both viewing geometry and solar geometry\n\nmake reference to highly nonuniform reflectance as a function of incident angle\nmake reference to Beer’s law as justification for direct determination of concentration of concentration from spectra\nin depth discussion of fluorometers (maybe save this for the dissertation)"
+  },
+  {
+    "objectID": "RobotTeam.html#unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams",
+    "href": "RobotTeam.html#unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams",
+    "title": "5  Robot Team",
+    "section": "6.2 Unsupervised Classification of Hyperspectral Imagery for Rapid Characterization of Novel Environments with Autonomous Robotic Teams",
+    "text": "6.2 Unsupervised Classification of Hyperspectral Imagery for Rapid Characterization of Novel Environments with Autonomous Robotic Teams\n\n6.2.1 K-means / Fuzzy K-means\n\n\n6.2.2 Self Organizing Maps\n\nfit an SOM model to the data\nfor each pixel in entire map, assign best matching unit (use distinguishable colors for a \\(10\\times 10\\) or \\(25\\times 25\\) SOM grid)\nFor class, investigate the learned “spectrum” representation and compare against known chemical spectra.\n\nis there a database we could try to use to look up possible species in the reflectance spectra? ### Generative Topographic Mapping ### analysis ideas\n\nThe nice feature of both the SOM and the GTM is we can reinterpret them to be spectral-unmixing models. Each SOM node has a feature vector of identical length to the input vector. Similarly, the mean projection \\(y(x;W)\\) in GTM represents the center of a gaussian in data space. Thus, we can reinterpret these feature vectors and gaussian centers as representative endmember spectra for the dataset. Further, the topographic properties of these methods ensure we have similarity between classes (at least in the latent space). For the GTM we are guarenteed that the data space projections of our GTM nodes will be similar. We should see if this holds for SOM. We can also interpret the cluster means from K-means as our endmembers.\nFor SOM and GTM once we have fit the models, we can look at the map of “winning nodes” (BMU for SOM and Mean for GTM) and perform a secondary clustering (via K-means or DBSCAN). These new clusters can define our endmember-bundles for a spectral-unmixing model.\nOnce we have these maps, we should color the point by which day the data came from to see if there are any interesting groups or if the data are distributd across observation days\nWe should make sure we apply the method for unsupervised classification to the dye-released images (see if the maps mirror the diffusion of dye). Pick a day where we have &gt;1 dye flight. Make a map for both cases to illustrate how rapidly fitting an unsupervised model on the fly can enable near real time tracking of plume evolution (good for defense, oil spills, etc…). –&gt; can we then construct a vector field / flow field from the difference and predict the plume evolution? Maybe this would be a good excuse to try lagrangian particle tracking…\nProvided our GTM/SOM fits, we should try a secondary\nFrom nodes/node clusters, can we identify spectral endmembers that represent chemicals we measure (e.g. chlorophyll)?\nFrom node activations (SOM) or responsabilities (GTM) can we fit a good model that competes with predictions from full spectra? (dimensionality reduction demonstration)\ncluster viewing geometry separate from refelctances and use resulting viewing geo classes to color GTM/SOM map of reflectance data"
+  },
+  {
+    "objectID": "RobotTeam.html#spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml",
+    "href": "RobotTeam.html#spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml",
+    "title": "5  Robot Team",
+    "section": "6.3 Spectral Indices for Rapid HSI Surveys: Unsupervised and Supervised Methods via SciML",
+    "text": "6.3 Spectral Indices for Rapid HSI Surveys: Unsupervised and Supervised Methods via SciML\n\nApply to PROSPECT database as a simple test case\nApply to our own Data\n\nMutliple Endmember Spectral Mixture Analysis\ngeneralize Spectral Unmixing Models unmixing models… with gaussian process we could think of an infinite basis of gaussians describing “peaks” in the spectrum”. Can we try to kernelize this procedure?"
+  },
+  {
+    "objectID": "RobotTeam.html#synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams",
+    "href": "RobotTeam.html#synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams",
+    "title": "5  Robot Team",
+    "section": "6.4 Synthetic Data Generation for Hyperspectral Imaging with Autonomous Robotic Teams",
+    "text": "6.4 Synthetic Data Generation for Hyperspectral Imaging with Autonomous Robotic Teams\n\nVariational Autoencoders\nGroup transformations, e.g. rotations, reflections, translations, cropping, etc… (do these make sense if boat data is point observation)\nAdvanced sampling methods for regions with"
+  },
+  {
+    "objectID": "RobotTeam.html#uncertainty-quantification-via-partial-p.",
+    "href": "RobotTeam.html#uncertainty-quantification-via-partial-p.",
+    "title": "5  Robot Team",
+    "section": "6.5 Uncertainty Quantification via \\(\\partial P\\).",
+    "text": "6.5 Uncertainty Quantification via \\(\\partial P\\).\n\nCategorize Methods into two categories:\n\nquantifying uncertainty in collected data\nquantifying model uncertainty\n\nConformal Prediction (we have a NN code for doing this in flux. Just need to apply it)\nRepresentativeness Uncertainty i.e. when georectifying HSI images and reducing spatial extend via ilat and ilon settings, also compute the stdev for each grainy pixel\nMeasurements.jl forward mode once we have the representativeness uncertainty.\nNeed a way to quantify uncertainty from Boat sensors…\nSensativity Analysis with w/ automatic differentiation"
+  },
+  {
+    "objectID": "SensorNetwork.html",
+    "href": "SensorNetwork.html",
+    "title": "6  Sensor Network",
+    "section": "",
+    "text": "7 Sensor Network + SciML"
+  },
+  {
     "objectID": "SensorNetwork.html#docker-nodered-influxdb-grafana",
     "href": "SensorNetwork.html#docker-nodered-influxdb-grafana",
     "title": "6  Sensor Network",
@@ -187,6 +236,20 @@
     "title": "6  Sensor Network",
     "section": "6.4 TDA",
     "text": "6.4 TDA"
+  },
+  {
+    "objectID": "SensorNetwork.html#evaluation-of-local-chaos-in-sharedairdfwnetwork",
+    "href": "SensorNetwork.html#evaluation-of-local-chaos-in-sharedairdfwnetwork",
+    "title": "6  Sensor Network",
+    "section": "7.1 Evaluation of local chaos in SharedAirDFWNetwork",
+    "text": "7.1 Evaluation of local chaos in SharedAirDFWNetwork\n\nThis gives me an excuse to work with the sensor data\nTrain GTM, SOM, and Variational Autoencoder to produce lower dimensional representation of all data from a central node, e.g. in \\(\\mathbb{R}^2\\).\n\nFor VAE, test a range of dimensions from the number of sensors down to 2 (better for visualization)\n\nAnalyze the variety of methods from DataDrivenDiffEq.jl to infer dynamics in the low dimensional space\nCan we infer some kind of Hamiltonian from the data and do a HamiltonianNN approach?\n\nStart of with a standard kinetic-energy style Hamiltonian e.g. \\(\\sum_i \\frac{1}{2} \\dot{x}_i^2\\) where \\(x_i\\) is the\nuse DataDrivenDiffEq approach to learn the associated potential energy term\nalternatively, attempt to capture diurnal cycle (or other relevant time scales) by learning coordinate representation that forces dynamics to be uncoupled harmonic oscillators a la Hamilton-Jacobi theory.\nTest if this hamiltonian NN model can then be transfered to another central node with an appropriate shift in the “total energy”\n\nAttempt to analyze the 2d data to infer Koopman operator. We should treat the original sensor values as observables on which the learned koopman operator acts. This should be doable if the NN is just a function.\nuse DMD appraoch to identify a “forcing” coordinate that can identify when we switch nodes as in Chaos as an intermittently forced linear system\nvideo on Physics Informed DMD\nDeep Learning to Discover Coordinates for Dynamics: Autoencoders & Physics Informed Machine Learning\nNOTE: we may need to impute missing values. We shoud do so with either my GPR code or with other ML methods + ConformalPrediction. Provided uncertainty estimates, we should then think about how to propagate errors through our analysis via Measurements.jl, IntervalArithmetic,"
+  },
+  {
+    "objectID": "MasterChemicalMechanism.html",
+    "href": "MasterChemicalMechanism.html",
+    "title": "7  Master Chemical Mechanism",
+    "section": "",
+    "text": "8 Chemical Data Assimilation & ActivePure Work"
   },
   {
     "objectID": "MasterChemicalMechanism.html#sensor-fusion",
@@ -222,6 +285,69 @@
     "title": "7  Master Chemical Mechanism",
     "section": "7.5 data assimilation",
     "text": "7.5 data assimilation"
+  },
+  {
+    "objectID": "MasterChemicalMechanism.html#activepure-research-lab",
+    "href": "MasterChemicalMechanism.html#activepure-research-lab",
+    "title": "7  Master Chemical Mechanism",
+    "section": "8.1 ActivePure Research Lab",
+    "text": "8.1 ActivePure Research Lab\n\nOverview of all sensor in sensor matrix\nOverview of measurement capabilities (list of species, uncertainty levels, etc…)\nOverview of containerized data acquisition pipeline\n\nNodeRed\nInfluxDB\nGrafana\nQuarto\nAutomatic Alerts\nAutomatic Reports"
+  },
+  {
+    "objectID": "MasterChemicalMechanism.html#kinetics-and-chemical-data-assimilation",
+    "href": "MasterChemicalMechanism.html#kinetics-and-chemical-data-assimilation",
+    "title": "7  Master Chemical Mechanism",
+    "section": "8.2 Kinetics and Chemical Data Assimilation",
+    "text": "8.2 Kinetics and Chemical Data Assimilation\n\nMCM Implementation in Julia\nDirect computation of Photolysis rates\nCombination with Dr. Lary’s AutoChem\nAddition of Ion Chemistry from MIT Lightning disseration\nVisualization of chemical cycles\nSciML methods to infer below detection limits"
+  },
+  {
+    "objectID": "SuperResolution.html#cloud-shadow-mask-for-sentinel-2",
+    "href": "SuperResolution.html#cloud-shadow-mask-for-sentinel-2",
+    "title": "8  Super Resolution",
+    "section": "8.1 Cloud & Shadow Mask for Sentinel-2",
+    "text": "8.1 Cloud & Shadow Mask for Sentinel-2\n\n8.1.1 ML Type\n\nSupervised Classification ### ML Methods\nSingle Pixel w/ Tree Based Methods\nDeep NN with Convolutional Layers ### Features\nSentinel 2 Multi-band Imagery\nLand Type\nViewing Geometry\nSolar Geometry ### Targets\nSentinel 2 Cloud Mask + Cloud Shadow Mask"
+  },
+  {
+    "objectID": "SuperResolution.html#cloud-shadow-fill",
+    "href": "SuperResolution.html#cloud-shadow-fill",
+    "title": "8  Super Resolution",
+    "section": "8.2 Cloud & Shadow Fill",
+    "text": "8.2 Cloud & Shadow Fill\n\n8.2.1 ML Type\n\nsupervised regression ### ML Methods\npixel based (Would it make sense to do something else here?) ### Features\nSentinel 2 Multi-band Imagery\nSentinel 2 Cloud Mask & Cloud Shadow Mask\nSentinel 1 SAR Variables (GRD or SLC or both?)\n10 m Digital Elevation Map\nViewing Geometry\nSolar Geometry\nLand Type ### Targets\nCloudless & Shadowless Sentinel 2 Multi-band imagery"
+  },
+  {
+    "objectID": "SuperResolution.html#sentinel-2-rgb-spatial-super-resolution",
+    "href": "SuperResolution.html#sentinel-2-rgb-spatial-super-resolution",
+    "title": "8  Super Resolution",
+    "section": "8.3 Sentinel 2 RGB Spatial Super Resolution",
+    "text": "8.3 Sentinel 2 RGB Spatial Super Resolution\n\n8.3.1 ML Type\n\nSupervised Regression ### ML Methods\nThis has to be a Deep NN method using convolution to get the upsampling. I don’t think we can do this with pixel based models (using tree methods)\nProbably should use a GAN ### Features\nHigh (spatial) Resolution NAIP RGB Image\nSentinel 2 Multi-band Imagery\nSentinel 1 SAR Variables (GRD or SLC or both?)\n10 m Digital Elevation Map\nViewing Geometry\nSolar Geometry\nLand Type ### Targets\nSentinel RGB Bands @ NAIP Resolution ### Loss Function Terms ### Notes We could make a model that uses all 3 bands (RGB) simultaneously, or we can make a model for a single band that we validate against R, G, and B bands individually. This has the added perc of increasing the training samples. This will be much easier to then apply to all bands of the sentinel imagery (and perhaps Sentinel 1, etc…) independently. We could try:\nRed, Green, Blue bands separately\nBlack and White converted RGB image\nData Augmentation via Scaling / Rotation / Reflection"
+  },
+  {
+    "objectID": "SuperResolution.html#sentinel-2-multiband-spatial-super-resolution",
+    "href": "SuperResolution.html#sentinel-2-multiband-spatial-super-resolution",
+    "title": "8  Super Resolution",
+    "section": "8.4 Sentinel 2 Multiband Spatial Super Resolution",
+    "text": "8.4 Sentinel 2 Multiband Spatial Super Resolution\n\n8.4.1 ML Type\n\nSupervised Regression ### ML Methods\nThis has to be a Deep NN method using convolution to get the upsampling. I don’t think we can do this with pixel based models (using tree methods)\nProbably should use a GAN ### Features\nHigh (spatial) Resolution NAIP RGB Image\nSentinel 2 Multi-band Imagery\nSentinel 1 SAR Variables (GRD or SLC or both?)\n10 m Digital Elevation Map\nViewing Geometry\nSolar Geometry\nLand Type ### Targets\nSentinel RGB Bands @ NAIP Resolution ### Loss Function Terms"
+  },
+  {
+    "objectID": "SuperResolution.html#sentinel-2-multiband-spectral-super-resolution",
+    "href": "SuperResolution.html#sentinel-2-multiband-spectral-super-resolution",
+    "title": "8  Super Resolution",
+    "section": "8.5 Sentinel 2 Multiband Spectral Super Resolution",
+    "text": "8.5 Sentinel 2 Multiband Spectral Super Resolution\n\n8.5.1 ML Type\n\nSupervised Regression ### ML Methods\nThis can be pixel based ### Features\nSentinel 2 Multi-band Imagery\nSentinel 1 SAR Variables (GRD or SLC or both?)\n10 m Digital Elevation Map\nViewing Geometry\nSolar Geometry\nUAV Hyperspectral Image ### Targets\nSentinel Hyperspectral Imagery (i.e. Sentinel at all HSI Bands) ### Loss Function Terms"
+  },
+  {
+    "objectID": "TechnicalNotes.html#real-time-georectification-of-drone-based-imagery",
+    "href": "TechnicalNotes.html#real-time-georectification-of-drone-based-imagery",
+    "title": "9  Technical Notes",
+    "section": "9.1 Real Time Georectification of Drone Based Imagery",
+    "text": "9.1 Real Time Georectification of Drone Based Imagery\n\nGeorectification of pushbroom HSI\nGeorectifcation of square visible + thermal FLIR imagery ## Self Organizing Maps ## Bayesian Optimization with Gaussian Process Regression ## Gaussian Process Regression / Classification in MLJ ## Solar Geometry? (probably not necessary)"
+  },
+  {
+    "objectID": "OtherTopics.html",
+    "href": "OtherTopics.html",
+    "title": "10  Other Topics",
+    "section": "",
+    "text": "Sparse Nonlinear Models for Fluid Dynamics with Machine Learning and Optimization\nResidual Dynamic Mode Decomposition: A very easy way to get error bounds for your DMD computations\nDeep Learning of Dynamics and Coordinates with SINDy Autoencoders\nIdentifying Dominant Balance Physics from Data"
   },
   {
     "objectID": "references.html",

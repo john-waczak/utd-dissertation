@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>WiP: Physical Sensing Coupled with Physics Based Machine Learning - 5&nbsp; Robot Team</title>
+<title>WiP: Physical Sensing Coupled with Physics Based Machine Learning - 10&nbsp; Other Topics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./SensorNetwork.html" rel="next">
-<link href="./ML.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./TechnicalNotes.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -61,8 +61,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -75,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./RobotTeam.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Robot Team</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./OtherTopics.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Other Topics</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -126,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./RobotTeam.html" class="sidebar-item-text sidebar-link active">
+  <a href="./RobotTeam.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Robot Team</span></span></a>
   </div>
 </li>
@@ -156,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./OtherTopics.html" class="sidebar-item-text sidebar-link">
+  <a href="./OtherTopics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Other Topics</span></span></a>
   </div>
 </li>
@@ -189,38 +187,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#georectification" id="toc-georectification" class="nav-link active" data-scroll-target="#georectification"><span class="header-section-number">5.1</span> georectification</a></li>
-  <li><a href="#supervised-ml-for-concentration" id="toc-supervised-ml-for-concentration" class="nav-link" data-scroll-target="#supervised-ml-for-concentration"><span class="header-section-number">5.2</span> supervised ML for concentration</a></li>
-  <li><a href="#super-resolution-if-we-have-time-and-open-data-cube" id="toc-super-resolution-if-we-have-time-and-open-data-cube" class="nav-link" data-scroll-target="#super-resolution-if-we-have-time-and-open-data-cube"><span class="header-section-number">5.3</span> super resolution if we have time (and open data cube)</a></li>
-  <li><a href="#solar-geometry" id="toc-solar-geometry" class="nav-link" data-scroll-target="#solar-geometry"><span class="header-section-number">5.4</span> solar geometry</a></li>
-  <li><a href="#reflectanceradiance" id="toc-reflectanceradiance" class="nav-link" data-scroll-target="#reflectanceradiance"><span class="header-section-number">5.5</span> reflectance/radiance</a></li>
-  <li><a href="#unsupervised-methods" id="toc-unsupervised-methods" class="nav-link" data-scroll-target="#unsupervised-methods"><span class="header-section-number">5.6</span> unsupervised methods</a></li>
-  <li><a href="#synthetic-data-generation" id="toc-synthetic-data-generation" class="nav-link" data-scroll-target="#synthetic-data-generation"><span class="header-section-number">5.7</span> synthetic data generation</a></li>
-  <li><a href="#robotteam-papers" id="toc-robotteam-papers" class="nav-link" data-scroll-target="#robotteam-papers"><span class="header-section-number">6</span> RobotTeam Papers</a>
-  <ul class="collapse">
-  <li><a href="#robot-team-ii-electric-boogaloo-title-w.i.p." id="toc-robot-team-ii-electric-boogaloo-title-w.i.p." class="nav-link" data-scroll-target="#robot-team-ii-electric-boogaloo-title-w.i.p."><span class="header-section-number">6.1</span> Robot Team II: Electric Boogaloo (title w.i.p.)</a></li>
-  <li><a href="#unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams" id="toc-unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams" class="nav-link" data-scroll-target="#unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams"><span class="header-section-number">6.2</span> Unsupervised Classification of Hyperspectral Imagery for Rapid Characterization of Novel Environments with Autonomous Robotic Teams</a>
-  <ul class="collapse">
-  <li><a href="#k-means-fuzzy-k-means" id="toc-k-means-fuzzy-k-means" class="nav-link" data-scroll-target="#k-means-fuzzy-k-means"><span class="header-section-number">6.2.1</span> K-means / Fuzzy K-means</a></li>
-  <li><a href="#self-organizing-maps" id="toc-self-organizing-maps" class="nav-link" data-scroll-target="#self-organizing-maps"><span class="header-section-number">6.2.2</span> Self Organizing Maps</a></li>
-  </ul></li>
-  <li><a href="#spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml" id="toc-spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml" class="nav-link" data-scroll-target="#spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml"><span class="header-section-number">6.3</span> Spectral Indices for Rapid HSI Surveys: Unsupervised and Supervised Methods via SciML</a></li>
-  <li><a href="#synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams" id="toc-synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams" class="nav-link" data-scroll-target="#synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams"><span class="header-section-number">6.4</span> Synthetic Data Generation for Hyperspectral Imaging with Autonomous Robotic Teams</a></li>
-  <li><a href="#uncertainty-quantification-via-partial-p." id="toc-uncertainty-quantification-via-partial-p." class="nav-link" data-scroll-target="#uncertainty-quantification-via-partial-p."><span class="header-section-number">6.5</span> Uncertainty Quantification via <span class="math inline">\(\partial P\)</span>.</a></li>
-  </ul></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Robot Team</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Other Topics</span></h1>
 </div>
 
 
@@ -241,105 +215,14 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="georectification" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="georectification"><span class="header-section-number">5.1</span> georectification</h2>
-</section>
-<section id="supervised-ml-for-concentration" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="supervised-ml-for-concentration"><span class="header-section-number">5.2</span> supervised ML for concentration</h2>
-</section>
-<section id="super-resolution-if-we-have-time-and-open-data-cube" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="super-resolution-if-we-have-time-and-open-data-cube"><span class="header-section-number">5.3</span> super resolution if we have time (and open data cube)</h2>
-</section>
-<section id="solar-geometry" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="solar-geometry"><span class="header-section-number">5.4</span> solar geometry</h2>
-</section>
-<section id="reflectanceradiance" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="reflectanceradiance"><span class="header-section-number">5.5</span> reflectance/radiance</h2>
-</section>
-<section id="unsupervised-methods" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="unsupervised-methods"><span class="header-section-number">5.6</span> unsupervised methods</h2>
-</section>
-<section id="synthetic-data-generation" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="synthetic-data-generation"><span class="header-section-number">5.7</span> synthetic data generation</h2>
-<hr>
-</section>
-<section id="robotteam-papers" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> RobotTeam Papers</h1>
-<section id="robot-team-ii-electric-boogaloo-title-w.i.p." class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="robot-team-ii-electric-boogaloo-title-w.i.p."><span class="header-section-number">6.1</span> Robot Team II: Electric Boogaloo (title w.i.p.)</h2>
 <ul>
-<li>Discuss real time georectification, generation of reflectance data, etc…</li>
-<li>Combine Multiple days of observations</li>
-<li>Discuss need for both viewing geometry and solar geometry
-<ul>
-<li>make reference to highly nonuniform reflectance as a function of incident angle</li>
-<li>make reference to Beer’s law as justification for direct determination of concentration of concentration from spectra</li>
-<li>in depth discussion of fluorometers (maybe save this for the dissertation)</li>
-</ul></li>
-</ul>
-</section>
-<section id="unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams"><span class="header-section-number">6.2</span> Unsupervised Classification of Hyperspectral Imagery for Rapid Characterization of Novel Environments with Autonomous Robotic Teams</h2>
-<section id="k-means-fuzzy-k-means" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="k-means-fuzzy-k-means"><span class="header-section-number">6.2.1</span> K-means / Fuzzy K-means</h3>
-</section>
-<section id="self-organizing-maps" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="self-organizing-maps"><span class="header-section-number">6.2.2</span> Self Organizing Maps</h3>
-<ul>
-<li>fit an SOM model to the data</li>
-<li>for each pixel in entire map, assign best matching unit (use distinguishable colors for a <span class="math inline">\(10\times 10\)</span> or <span class="math inline">\(25\times 25\)</span> SOM grid)</li>
-<li>For class, investigate the learned “spectrum” representation and compare against known chemical spectra.
-<ul>
-<li>is there a database we could try to use to look up possible species in the reflectance spectra? ### Generative Topographic Mapping ### analysis ideas</li>
-</ul></li>
-<li>The nice feature of both the SOM and the GTM is we can reinterpret them to be spectral-unmixing models. Each SOM node has a feature vector of identical length to the input vector. Similarly, the mean projection <span class="math inline">\(y(x;W)\)</span> in GTM represents the center of a gaussian in <em>data space</em>. Thus, we can reinterpret these feature vectors and gaussian centers as representative endmember spectra for the dataset. Further, the topographic properties of these methods ensure we have similarity between classes (at least in the latent space). For the GTM we are guarenteed that the data space projections of our GTM nodes will be similar. <strong>We should see if this holds for SOM</strong>. We can also interpret the cluster means from K-means as our endmembers.</li>
-<li>For SOM and GTM once we have fit the models, we can look at the map of “winning nodes” (BMU for SOM and Mean for GTM) and perform a secondary clustering (via K-means or DBSCAN). These new clusters can define our endmember-bundles for a spectral-unmixing model.</li>
-<li>Once we have these maps, we should color the point by which day the data came from to see if there are any interesting groups or if the data are distributd across observation days</li>
-<li>We should make sure we apply the method for unsupervised classification to the dye-released images (see if the maps mirror the diffusion of dye). Pick a day where we have &gt;1 dye flight. Make a map for both cases to illustrate how rapidly fitting an unsupervised model on the fly can enable near real time tracking of plume evolution (good for defense, oil spills, etc…). –&gt; can we then construct a vector field / flow field from the difference and predict the plume evolution? Maybe this would be a good excuse to try lagrangian particle tracking…</li>
-<li>Provided our GTM/SOM fits, we should try a secondary</li>
-<li>From nodes/node clusters, can we identify spectral endmembers that represent chemicals we measure (e.g.&nbsp;chlorophyll)?</li>
-<li>From node activations (SOM) or responsabilities (GTM) can we fit a good model that competes with predictions from full spectra? (dimensionality reduction demonstration)</li>
-<li>cluster viewing geometry separate from refelctances and use resulting viewing geo classes to color GTM/SOM map of reflectance data</li>
-</ul>
-</section>
-</section>
-<section id="spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml"><span class="header-section-number">6.3</span> Spectral Indices for Rapid HSI Surveys: Unsupervised and Supervised Methods via SciML</h2>
-<ul>
-<li>Apply to PROSPECT database as a simple test case</li>
-<li>Apply to our own Data
-<ul>
-<li><a href="https://aviris.jpl.nasa.gov/proceedings/workshops/99_docs/46.pdf">Mutliple Endmember Spectral Mixture Analysis</a></li>
-<li>generalize <strong>Spectral Unmixing Models</strong> unmixing models… with gaussian process we could think of an infinite basis of gaussians describing “peaks” in the spectrum”. Can we try to kernelize this procedure?</li>
-</ul></li>
-</ul>
-</section>
-<section id="synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams"><span class="header-section-number">6.4</span> Synthetic Data Generation for Hyperspectral Imaging with Autonomous Robotic Teams</h2>
-<ul>
-<li>Variational Autoencoders</li>
-<li>Group transformations, e.g.&nbsp;rotations, reflections, translations, cropping, etc… (do these make sense if boat data is point observation)</li>
-<li>Advanced sampling methods for regions with</li>
-</ul>
-</section>
-<section id="uncertainty-quantification-via-partial-p." class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="uncertainty-quantification-via-partial-p."><span class="header-section-number">6.5</span> Uncertainty Quantification via <span class="math inline">\(\partial P\)</span>.</h2>
-<ul>
-<li>Categorize Methods into two categories:
-<ul>
-<li>quantifying uncertainty in collected data</li>
-<li>quantifying model uncertainty</li>
-</ul></li>
-<li>Conformal Prediction (we have a NN code for doing this in flux. Just need to apply it)</li>
-<li>Representativeness Uncertainty i.e.&nbsp;when georectifying HSI images and reducing spatial extend via <code>ilat</code> and <code>ilon</code> settings, also compute the stdev for each grainy pixel</li>
-<li>Measurements.jl <em>forward mode</em> once we have the representativeness uncertainty.</li>
-<li>Need a way to quantify uncertainty from Boat sensors…</li>
-<li>Sensativity Analysis with w/ automatic differentiation</li>
+<li><a href="https://www.youtube.com/watch?v=z_CZ_VyMDXE&amp;ab_channel=SteveBrunton">Sparse Nonlinear Models for Fluid Dynamics with Machine Learning and Optimization</a></li>
+<li><a href="https://www.youtube.com/watch?v=Dc2OYDVp43I&amp;ab_channel=SteveBrunton">Residual Dynamic Mode Decomposition: A very easy way to get error bounds for your DMD computations</a></li>
+<li><a href="https://www.youtube.com/watch?v=WHhDgxkiR9c&amp;t=255s&amp;ab_channel=SteveBrunton">Deep Learning of Dynamics and Coordinates with SINDy Autoencoders</a></li>
+<li><a href="https://www.youtube.com/watch?v=U6eZOzHLSM0&amp;list=PLMrJAkhIeNNRK8orLUJL86k7BcuVX11dl&amp;index=4&amp;ab_channel=SteveBrunton">Identifying Dominant Balance Physics from Data</a></li>
 </ul>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -577,13 +460,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ML.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Machine Learning, Physics-Informed Machine Learning, Scientific Machine Learning</span></span>
+      <a href="./TechnicalNotes.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Technical Notes</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./SensorNetwork.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sensor Network</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

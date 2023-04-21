@@ -1,0 +1,8 @@
+# Technical Notes 
+## Real Time Georectification of Drone Based Imagery
+- Georectification of pushbroom HSI 
+- Georectifcation of  square visible + thermal FLIR imagery
+## Self Organizing Maps 
+## Bayesian Optimization with Gaussian Process Regression
+## Gaussian Process Regression / Classification in MLJ
+## Solar Geometry? (probably not necessary)

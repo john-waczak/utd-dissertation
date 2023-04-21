@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./SuperResolution.html" rel="next">
 <link href="./SensorNetwork.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -142,6 +142,24 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./SuperResolution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Super Resolution</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TechnicalNotes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Technical Notes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./OtherTopics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Other Topics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -178,6 +196,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#docker-ingestion-framework" id="toc-docker-ingestion-framework" class="nav-link" data-scroll-target="#docker-ingestion-framework"><span class="header-section-number">7.3</span> docker ingestion framework</a></li>
   <li><a href="#master-chemical-mechanism" id="toc-master-chemical-mechanism" class="nav-link" data-scroll-target="#master-chemical-mechanism"><span class="header-section-number">7.4</span> master chemical mechanism</a></li>
   <li><a href="#data-assimilation" id="toc-data-assimilation" class="nav-link" data-scroll-target="#data-assimilation"><span class="header-section-number">7.5</span> data assimilation</a></li>
+  <li><a href="#chemical-data-assimilation-activepure-work" id="toc-chemical-data-assimilation-activepure-work" class="nav-link" data-scroll-target="#chemical-data-assimilation-activepure-work"><span class="header-section-number">8</span> Chemical Data Assimilation &amp; ActivePure Work</a>
+  <ul class="collapse">
+  <li><a href="#activepure-research-lab" id="toc-activepure-research-lab" class="nav-link" data-scroll-target="#activepure-research-lab"><span class="header-section-number">8.1</span> ActivePure Research Lab</a></li>
+  <li><a href="#kinetics-and-chemical-data-assimilation" id="toc-kinetics-and-chemical-data-assimilation" class="nav-link" data-scroll-target="#kinetics-and-chemical-data-assimilation"><span class="header-section-number">8.2</span> Kinetics and Chemical Data Assimilation</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -221,8 +244,39 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="data-assimilation" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="data-assimilation"><span class="header-section-number">7.5</span> data assimilation</h2>
+<hr>
+</section>
+<section id="chemical-data-assimilation-activepure-work" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Chemical Data Assimilation &amp; ActivePure Work</h1>
+<section id="activepure-research-lab" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="activepure-research-lab"><span class="header-section-number">8.1</span> ActivePure Research Lab</h2>
+<ul>
+<li>Overview of all sensor in sensor matrix</li>
+<li>Overview of measurement capabilities (list of species, uncertainty levels, etc…)</li>
+<li>Overview of containerized data acquisition pipeline
+<ul>
+<li>NodeRed</li>
+<li>InfluxDB</li>
+<li>Grafana</li>
+<li>Quarto</li>
+<li>Automatic Alerts</li>
+<li>Automatic Reports</li>
+</ul></li>
+</ul>
+</section>
+<section id="kinetics-and-chemical-data-assimilation" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="kinetics-and-chemical-data-assimilation"><span class="header-section-number">8.2</span> Kinetics and Chemical Data Assimilation</h2>
+<ul>
+<li>MCM Implementation in Julia</li>
+<li>Direct computation of Photolysis rates</li>
+<li>Combination with Dr.&nbsp;Lary’s AutoChem</li>
+<li>Addition of Ion Chemistry from MIT Lightning disseration</li>
+<li>Visualization of chemical cycles</li>
+<li>SciML methods to infer below detection limits</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -466,8 +520,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./SuperResolution.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Super Resolution</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

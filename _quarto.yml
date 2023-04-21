@@ -15,9 +15,12 @@ book:
     - RobotTeam.qmd
     - SensorNetwork.qmd
     - MasterChemicalMechanism.qmd
+    - SuperResolution.qmd
+    - TechnicalNotes.qmd
+    - OtherTopics.qmd
     - references.qmd
   appendices:
-    - appendix.qmd 
+    - appendix.qmd
 
 bibliography: references.bib
 

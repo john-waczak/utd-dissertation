@@ -1,0 +1,5 @@
+# Other Topics
+- [Sparse Nonlinear Models for Fluid Dynamics with Machine Learning and Optimization](https://www.youtube.com/watch?v=z_CZ_VyMDXE&ab_channel=SteveBrunton)
+- [Residual Dynamic Mode Decomposition: A very easy way to get error bounds for your DMD computations](https://www.youtube.com/watch?v=Dc2OYDVp43I&ab_channel=SteveBrunton)
+- [Deep Learning of Dynamics and Coordinates with SINDy Autoencoders](https://www.youtube.com/watch?v=WHhDgxkiR9c&t=255s&ab_channel=SteveBrunton)
+- [Identifying Dominant Balance Physics from Data](https://www.youtube.com/watch?v=U6eZOzHLSM0&list=PLMrJAkhIeNNRK8orLUJL86k7BcuVX11dl&index=4&ab_channel=SteveBrunton)
