@@ -8,8 +8,10 @@
 
 ---
 
-# Sensor Network + SciML
-## Evaluation of local chaos in SharedAirDFWNetwork 
+## Sensor Network + SciML
+
+### Evaluation of local chaos in SharedAirDFWNetwork
+
 - This gives me an excuse to work with the sensor data 
 - Train GTM, SOM, and Variational Autoencoder to produce lower dimensional representation of all data from a central node, e.g. in $\mathbb{R}^2$. 
   - For VAE, test a range of dimensions from the number of sensors down to 2 (better for visualization)

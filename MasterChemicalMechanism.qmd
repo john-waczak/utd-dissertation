@@ -1,16 +1,22 @@
 # Master Chemical Mechanism 
 
-## sensor fusion 
+## sensor fusion
+
 ## photolysis
-## docker ingestion framework 
-## master chemical mechanism 
+
+## docker ingestion framework
+
+## master chemical mechanism
+
 ## data assimilation 
 
 
 ---
 
-# Chemical Data Assimilation & ActivePure Work
-## ActivePure Research Lab
+## Chemical Data Assimilation & ActivePure Work
+
+### ActivePure Research Lab
+
 - Overview of all sensor in sensor matrix 
 - Overview of measurement capabilities (list of species, uncertainty levels, etc...)
 - Overview of containerized data acquisition pipeline 
@@ -21,7 +27,8 @@
   - Automatic Alerts 
   - Automatic Reports
 
-## Kinetics and Chemical Data Assimilation 
+### Kinetics and Chemical Data Assimilation
+
 - MCM Implementation in Julia 
 - Direct computation of Photolysis rates 
 - Combination with Dr. Lary's AutoChem 

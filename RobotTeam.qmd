@@ -1,19 +1,23 @@
 # Robot Team
 
 ## georectification
-## supervised ML for concentration 
+
+## supervised ML for concentration
+
 ## super resolution if we have time (and open data cube)
+
 ## solar geometry
-## reflectance/radiance 
-## unsupervised methods 
+
+## reflectance/radiance
+
+## unsupervised methods
+
 ## synthetic data generation 
 
 
+## RobotTeam Papers
 
----
-
-# RobotTeam Papers 
-## Robot Team II: Electric Boogaloo (title w.i.p.)
+### Robot Team II: Electric Boogaloo (title w.i.p.)
 - Discuss real time georectification, generation of reflectance data, etc... 
 - Combine Multiple days of observations
 - Discuss need for both viewing geometry and solar geometry 
@@ -21,15 +25,21 @@
   - make reference to Beer's law as justification for direct determination of concentration of concentration from spectra 
   - in depth discussion of fluorometers (maybe save this for the dissertation)
 
-## Unsupervised Classification of Hyperspectral Imagery for Rapid Characterization of Novel Environments with Autonomous Robotic Teams 
-### K-means / Fuzzy K-means
-### Self Organizing Maps
+### Unsupervised Classification of Hyperspectral Imagery for Rapid Characterization of Novel Environments with Autonomous Robotic Teams
+
+#### K-means / Fuzzy K-means
+
+#### Self Organizing Maps
+
 - fit an SOM model to the data 
 - for each pixel in entire map, assign best matching unit (use distinguishable colors for a $10\times 10$ or $25\times 25$ SOM grid)
 - For class, investigate the learned "spectrum" representation and compare against known chemical spectra. 
-  - is there a database we could try to use to look up possible species in the reflectance spectra? 
-### Generative Topographic Mapping 
-### analysis ideas
+  - is there a database we could try to use to look up possible species in the reflectance spectra?
+
+#### Generative Topographic Mapping
+
+#### analysis ideas
+
 - The nice feature of both the SOM and the GTM is we can reinterpret them to be spectral-unmixing models. Each SOM node has a feature vector of identical length to the input vector. Similarly, the mean projection $y(x;W)$ in GTM represents the center of a gaussian in *data space*. Thus, we can reinterpret these feature vectors and gaussian centers as representative endmember spectra for the dataset. Further, the topographic properties of these methods ensure we have similarity between classes (at least in the latent space). For the GTM we are guarenteed that the data space projections of our GTM nodes will be similar. **We should see if this holds for SOM**. We can also interpret the cluster means from K-means as our endmembers. 
 - For SOM and GTM once we have fit the models, we can look at the map of "winning nodes" (BMU for SOM and Mean for GTM) and perform a secondary clustering (via K-means or DBSCAN). These new clusters can define our endmember-bundles for a spectral-unmixing model.
 - Once we have these maps, we should color the point by which day the data came from to see if there are any interesting groups or if the data are distributd across observation days 
@@ -39,18 +49,20 @@
 - From node activations (SOM) or responsabilities (GTM) can we fit a good model that competes with predictions from full spectra? (dimensionality reduction demonstration)
 - cluster viewing geometry separate from refelctances and use resulting viewing geo classes to color GTM/SOM map of reflectance data
 
-## Spectral Indices for Rapid HSI Surveys: Unsupervised and Supervised Methods via SciML
+### Spectral Indices for Rapid HSI Surveys: Unsupervised and Supervised Methods via SciML
+
 - Apply to PROSPECT database as a simple test case 
 - Apply to our own Data 
   - [Mutliple Endmember Spectral Mixture Analysis](https://aviris.jpl.nasa.gov/proceedings/workshops/99_docs/46.pdf)
   - generalize **Spectral Unmixing Models** unmixing models... with gaussian process we could think of an infinite basis of gaussians describing "peaks" in the spectrum". Can we try to kernelize this procedure?
 
-## Synthetic Data Generation for Hyperspectral Imaging with Autonomous Robotic Teams
+### Synthetic Data Generation for Hyperspectral Imaging with Autonomous Robotic Teams
+
 - Variational Autoencoders 
 - Group transformations, e.g. rotations, reflections, translations, cropping, etc... (do these make sense if boat data is point observation) 
 - Advanced sampling methods for regions with 
 
-## Uncertainty Quantification via $\partial P$.
+### Uncertainty Quantification via $\partial P$.
 - Categorize Methods into two categories: 
   - quantifying uncertainty in collected data 
   - quantifying model uncertainty
