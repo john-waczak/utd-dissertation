@@ -1,0 +1,9 @@
+# Machine Learning
+
+discuss role in science in particular (i.e. calibration, modeling, etc...)
+
+discuss pushback against use in science and need for methods which simultaneously provide uncertainty bounds. Also describe types of ML e.g. supervised, unsupervised, generative, etc...
+
+this is a good place for the Chihuahua vs Muffin meme... and use this to motivate incorportating physical knowledge into the machine learning process as a key feature for scientific applications... we have more constraints!
+
+also discuss statistical v.s. deep learning

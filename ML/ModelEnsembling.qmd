@@ -1,0 +1,7 @@
+## Model Ensembling
+
+Boosting vs Bagging 
+
+XGBoost vs RandomForest (and other implementations)
+
+MLJ and SciKitLearn documentation sites will have good references for this, I think.

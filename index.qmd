@@ -1,5 +1,17 @@
 # Introduction
 
+*NOTE*: We want to emphasize the need for reproducible research paradigms. This motivates 
+
+
+*NOTE*: for the area of uncertainty quantification via statistical machine learning methods we should emphasize the fact that uncertainty is challenging to quantify in physical systems but in the age of big data, we need not really on the assumption of conveniently shaped normal distributions-- we can do better. Instead, we let the data be our guide, deriving improved uncertainty bounds (in the statistical sense) with methods to track key diagnostic characteristics such as the relevant time scale. Further, in the domain of low-cost sensing, a key challenge is accurately quantifying uncertainty bounds for measurements as manufacturer provided estimates are almost always overly conservative (to minimize responsibility for variance, perhaps?)
+
+*NOTE*: We should also mention (in our goals for the dissertation) that reproducibility is of critical importance (in physics, in machine learning, in scientific code, in analysis, etc...) with relevant statistics quoted (perhaps that nice interview from )
+
+
+*NOTE*: explain Dr. Lary's principle of "Do the obvious thing: ask the obvious question, run the obvious experiment, perform the obvious analysis" as a guiding principle for the logical organization of this dissertation.
+
+
+
 The goal of this thesis is advancing physical sensing in service of society to provide actionable insights. This goal is pursued by applying physics informed approaches together with a suite of sensing and computational technologies, implementing the reusable paradigm of software defined sensors, i.e. physical sensing elements wrapped in a software layer. This software layer can serve a variety of purposes such as calibration and the provision of enhanced or derived data products. It is part of a broader effort in the MINTS-AI laboratory at the University of Texas at Dallas. Where MINTS-AI is an acronym, **M**ulti-Scale **M**ulti-Use **Int**egrated **Int**elligent **Int**eractive **S**ensing in **S**ervice of **S**ociety for **A**ctionable **I**nsights.
 
 Comprehensive environmental sensing is a timely and beneficial endeavor for a variety of reasons. The growing awareness of major environmental issues such as climate change, pollution, and habitat loss necessitates effective environmental monitoring and management. Comprehensive environmental sensing can provide real-time data on air and water quality, weather patterns, and other environmental factors, assisting in the identification and resolution of environmental issues. This assists in the development and implementation of policies and strategies aimed at reducing environmental impact and increasing sustainability. Given that, for instance, air quality can have significant effects on human health, this has particular societal value. 

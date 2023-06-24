@@ -1,0 +1,5 @@
+## Low Cost Sensors for (Outdoor) Air Quality
+
+The outdoor part here is optional. Here I seek to provide specific details of the classes of low cost sensors used for PM (optical particle counters based on Mie scattering), thermistors (for tempature), humidity sensors, pressure sensors, gas sensors, etc... This can be a rough outline for those that specifically are used in my research projects.
+
+

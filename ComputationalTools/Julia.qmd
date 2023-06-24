@@ -1,0 +1,8 @@
+## The Julia Programming Language
+
+Overview of key features of Julia that made it attractive for this work: 
+
+- reproducibility
+- composability
+- readability (greek symbols as variables and operators)
+- speed

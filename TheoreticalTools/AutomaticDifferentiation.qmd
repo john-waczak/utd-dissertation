@@ -1,0 +1,5 @@
+## Automatic Differentiation
+
+perhaps this can be moved to the [Computational tools](../ComputationalTools) section instead.
+
+Use Chris Rackauckas and Chris Olah blogs to start with chain rule and justify automatic differentiation. Then describe reverse mode via gradient tapes and the pullback operator.

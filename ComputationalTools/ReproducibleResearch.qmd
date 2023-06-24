@@ -1,0 +1,4 @@
+## Reproducible Research
+
+
+*principles & implementation*: version control, CI-CD, test-driven-development, containerization

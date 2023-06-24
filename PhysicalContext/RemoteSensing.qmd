@@ -1,0 +1,5 @@
+## Remote Sensing 
+
+mention different types of satellite data platforms (mostly optical), differences in orbits, coverage, etc... Also good to discuss the increasing use of drones for a variety of applications including intelligent agriculture, geophysics, mapping, etc...
+
+

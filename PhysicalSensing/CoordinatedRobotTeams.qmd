@@ -1,0 +1,3 @@
+## Coordinated Robot Teams for Data Acquisition 
+
+Here we can discuss the drone, boat, and walking robot as well as long range communication setup with wifi router, transfering of files, MQTT protocol, and real time mapping with Grafana.
