@@ -14,7 +14,7 @@ test text
 
 {{< include IndoorAirQuality.qmd >}}
 
-{{< include HyperspectralImaging.qmd >}}
+{{< include HyperSpectralImaging.qmd >}}
 
 {{< include RemoteSensing.qmd >}}
 
