@@ -1,0 +1,737 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "WiP: Physical Sensing Coupled with Physics Based Machine Learning",
+    "section": "",
+    "text": "1 Introduction\nNOTE: For the proposal in particular, we should add a new section with timelines and a table of currently completed tasks.\nNOTE: We want to emphasize the need for reproducible research paradigms. This motivates\nNOTE: for the area of uncertainty quantification via statistical machine learning methods we should emphasize the fact that uncertainty is challenging to quantify in physical systems but in the age of big data, we need not really on the assumption of conveniently shaped normal distributions– we can do better. Instead, we let the data be our guide, deriving improved uncertainty bounds (in the statistical sense) with methods to track key diagnostic characteristics such as the relevant time scale. Further, in the domain of low-cost sensing, a key challenge is accurately quantifying uncertainty bounds for measurements as manufacturer provided estimates are almost always overly conservative (to minimize responsibility for variance, perhaps?)\nNOTE: We should also mention (in our goals for the dissertation) that reproducibility is of critical importance (in physics, in machine learning, in scientific code, in analysis, etc…) with relevant statistics quoted (perhaps that nice interview from )\nNOTE: explain Dr. Lary’s principle of “Do the obvious thing: ask the obvious question, run the obvious experiment, perform the obvious analysis” as a guiding principle for the logical organization of this dissertation.\nThe goal of this thesis is advancing physical sensing in service of society to provide actionable insights. This goal is pursued by applying physics informed approaches together with a suite of sensing and computational technologies, implementing the reusable paradigm of software defined sensors, i.e. physical sensing elements wrapped in a software layer. This software layer can serve a variety of purposes such as calibration and the provision of enhanced or derived data products. It is part of a broader effort in the MINTS-AI laboratory at the University of Texas at Dallas. Where MINTS-AI is an acronym, Multi-Scale Multi-Use Integrated Intelligent Interactive Sensing in Service of Society for Actionable Insights.\nComprehensive environmental sensing is a timely and beneficial endeavor for a variety of reasons. The growing awareness of major environmental issues such as climate change, pollution, and habitat loss necessitates effective environmental monitoring and management. Comprehensive environmental sensing can provide real-time data on air and water quality, weather patterns, and other environmental factors, assisting in the identification and resolution of environmental issues. This assists in the development and implementation of policies and strategies aimed at reducing environmental impact and increasing sustainability. Given that, for instance, air quality can have significant effects on human health, this has particular societal value.\nExposure to air pollution has been linked to a wide range of health effects (Brook et al. 2010; Kelly and Fussell 2011; Xu et al. 2017), including respiratory and cardiovascular diseases, cancer, and adverse birth outcomes. Further, physical sensing provides valuable data and the basis for international assessments such as the Intergovernmental Panel on Climate Change (IPCC), which seeks to assess the science related to climate change and its impacts on natural and human systems (Houghton, Jenkins, and Ephraums 1990; Houghton et al. 1996, 2001; Solomon et al. 2007; Parry et al. 2007; Metz et al. 2007; Stocker et al. 2013; Field et al. 2014; Edenhofer et al. 2014; Masson-Delmotte et al. 2018; Friedlingstein et al. 2020; Huang et al. 2017).\nComprehensive sensing of the environment can improve decision-making. The real-time and accurate data provided by environmental sensors can aid in informed decision-making regarding various aspects such as traffic management, industrial regulation, and crop planning. For instance, data on air quality can be used to inform decisions about reducing pollution levels, while data on weather patterns can help farmers to plan their crops and reduce water usage. Comprehensive sensing of the environment can be instrumental in emergency response. Real-time data on weather patterns, air quality, water levels and resources, and seismic activity can help emergency responders to prepare for and respond to natural disasters such as hurricanes, floods, and earthquakes. The quick and accurate information can enable effective and timely response, potentially saving lives and reducing the impact of the disaster.\nMany advances in technology have enabled the creation of comprehensive sensing systems that can monitor and analyze data from various sensors and devices in real-time. In this thesis we use a range of technologies including autonomous robotic teams (Dunbabin and Marques 2012; Rubenstein, Cornejo, and Nagpal 2014; Y. Chen et al. 2017), hyperspectral imaging (Plaza et al. 2009; Li et al. 2018; Zhu et al. 2017), mesh networks utilizing the Internet of Things (IoT) (Gubbi et al. 2013; Atzori, Iera, and Morabito 2010; Al-Fuqaha et al. 2015), machine learning (ML) (Goodfellow, Bengio, and Courville 2016; LeCun, Bengio, and Hinton 2015; Jordan and Mitchell 2015), edge computing, high-performance computing, wearable sensors and modern high-performance dynamic programming languages such as Julia (Bezanson et al. 2017) designed for numerical and scientific computing. These technologies have facilitated the collection and processing of large amounts of data from multiple sources, resulting in more accurate and comprehensive environmental monitoring."
+  },
+  {
+    "objectID": "index.html#goals-of-this-dissertation",
+    "href": "index.html#goals-of-this-dissertation",
+    "title": "WiP: Physical Sensing Coupled with Physics Based Machine Learning",
+    "section": "1.1 Goals of this Dissertation",
+    "text": "1.1 Goals of this Dissertation\nTest text"
+  },
+  {
+    "objectID": "index.html#global-change",
+    "href": "index.html#global-change",
+    "title": "WiP: Physical Sensing Coupled with Physics Based Machine Learning",
+    "section": "1.2 Global Change",
+    "text": "1.2 Global Change\nGlobal change refers to the significant and long-term alterations in the Earth’s physical, chemical, and biological systems, resulting from natural and human-induced processes (Edenhofer et al. 2014; Masson-Delmotte et al. 2018; United Nations 2015). This includes changes in the climate, land use, biodiversity, and biogeochemical cycles, as well as interactions among these systems. Global change can have profound impacts on natural and human systems, including altered weather patterns, sea level rise, increased frequency and severity of extreme events, loss of biodiversity and ecosystem services, and effects on human health and well-being. Understanding and managing global change is a critical challenge facing society today, requiring interdisciplinary approaches and collaboration across sectors and regions.\nGlobal change can have a range of impacts on society, including environmental, social, and economic effects. Some of the aspects of global change that have the biggest impact on society include:\n\nClimate Change: Climate change, driven by human activities such as burning fossil fuels, deforestation, and land-use changes, has impacts on natural systems such as ocean acidification, sea level rise, and changes in precipitation patterns. These impacts can have cascading effects on human systems, including impacts on food security, water availability, and health.\nBiodiversity Loss: Global change can lead to the loss of biodiversity, which can have impacts on ecosystem functioning and services, such as pollination, pest control, and carbon storage. These impacts can have indirect effects on human well-being, including impacts on food security, health, and cultural heritage.\nLand Use Change: Land use change, such as deforestation, urbanization, and agriculture, can have impacts on natural systems such as soil quality, water availability, and biodiversity. These impacts can have direct and indirect effects on human systems, including impacts on food security, water availability, and cultural heritage.\nEconomic and Social Inequality: Global change can exacerbate economic and social inequality, with impacts on access to resources, health, and well-being. These impacts can have cascading effects on the ability of societies to adapt and respond to global change.\nHuman Health: Global change can have significant impacts on human health (World Health Organization 2018; Costello et al. 2009; Haines et al. 2006), both directly and indirectly, for example:\n\nHeat-related Illness: As temperatures increase due to global warming, there is an increased risk of heat-related illness, including heat exhaustion and heat stroke, particularly in vulnerable populations such as the elderly, young children, and outdoor workers.\nAir Pollution: Global change can lead to increased air pollution, including from sources such as wildfires and fossil fuel combustion. Exposure to air pollution can increase the risk of respiratory and cardiovascular diseases, including asthma, chronic obstructive pulmonary disease (COPD), and heart disease.\nVector-borne Diseases: Changes in temperature and precipitation patterns can affect the distribution and abundance of disease vectors such as mosquitoes and ticks, leading to increased risks of vector-borne diseases such as dengue fever, malaria, and Lyme disease.\nWaterborne Diseases: Changes in precipitation patterns and water quality can increase the risk of waterborne diseases, including cholera and other diarrheal diseases.\nFood Security: Global change can affect food production and availability, leading to food shortages and malnutrition, particularly in vulnerable populations such as children and pregnant women.\n\n\nEffectively addressing these aspects of global change requires interdisciplinary approaches and collaboration across sectors and regions, as well as a commitment to sustainable development and equitable solutions. Adaptation and mitigation are two strategies for addressing global change, which differ in their focus and approach.\nAdaptation involves taking measures to adjust and respond to the impacts of global change that are already occurring or are expected to occur in the future. This can include actions such as building sea walls to protect against sea level rise, developing drought-resistant crops, and improving public health infrastructure to address the increased risk of vector-borne diseases. Adaptation strategies aim to reduce the vulnerability of human and natural systems to the impacts of global change and increase their resilience.\nMitigation involves taking measures to reduce the drivers of global change, such as greenhouse gas emissions, land use change, and deforestation. This can include actions such as increasing energy efficiency, shifting to renewable energy sources, and reducing waste and consumption. Mitigation strategies aim to address the root causes of global change and reduce its severity and impact.\nBoth adaptation and mitigation are important strategies for addressing global change, but they differ in their focus and approach. Adaptation strategies focus on responding to the impacts of global change that are already occurring or are expected to occur in the future, while mitigation strategies focus on reducing the drivers of global change and preventing its impacts from occurring in the first place. A comprehensive approach to global change will require both adaptation and mitigation strategies, as well as efforts to promote sustainable development and equitable solutions."
+  },
+  {
+    "objectID": "index.html#the-role-of-sensing",
+    "href": "index.html#the-role-of-sensing",
+    "title": "WiP: Physical Sensing Coupled with Physics Based Machine Learning",
+    "section": "1.3 The Role of Sensing",
+    "text": "1.3 The Role of Sensing\nSensing technologies can play a critical role in both adaptation and mitigation efforts by providing data and information that can inform decision-making and improve the effectiveness of strategies (United Nations Environment Programme 2017; National Research Council 2010; Centre for Ecology and Hydrology 2017).\nIn adaptation efforts, sensing technologies can provide real-time data on environmental conditions such as temperature, precipitation, sea level, air quality, as well as on the status and health of ecosystems and wildlife. This information can be used to inform early warning systems for natural disasters, to track the spread of vector-borne diseases, and to monitor the impacts of climate change on biodiversity and ecosystem services. Sensing technologies can also provide data on the effectiveness of adaptation measures, such as the performance of sea walls and other infrastructure.\nIn mitigation efforts, sensing technologies can provide data on greenhouse gas emissions and other drivers of global change, as well as on the effectiveness of mitigation measures such as renewable energy and carbon capture and storage. Sensing technologies can also be used to monitor and manage land use changes such as deforestation and urbanization, and to track the impacts of these changes on ecosystems and carbon storage.\nOverall, sensing technologies can provide critical data and information for both adaptation and mitigation efforts, helping to improve decision-making and increase the effectiveness of strategies. The integration of sensing technologies with other tools such as modeling and data analysis can also help to identify new strategies and solutions for addressing global change. There are various sensing technologies and approaches used for monitoring the global environment. Here are some of the key ones:\n\nRemote Sensing: This technology involves using satellites and other airborne platforms to collect data on the Earth’s atmosphere, land, and oceans. Remote sensing provides information on environmental parameters such as temperature, humidity, air quality, land use and land cover, and ocean temperature, salinity, and sea level (Thenkabail 2019; Buyantuyev and Wu 2017; Gamon et al. 2016; Wang et al. 2017; Pasher et al. 2019). Some examples of remote sensing include:\n\nLidar: This technology uses laser pulses to measure distance and can be used to create detailed three-dimensional maps of the environment. Lidar is commonly used to measure forest canopy height, but can also be used to measure atmospheric conditions such as cloud cover and aerosol concentrations.\nImaging Spectroscopy: This technology uses a combination of imaging and spectroscopy to measure the reflectance of different wavelengths of light. Imaging spectroscopy can be used to identify and map different types of vegetation and minerals, and can provide information on the health of plant communities.\nUnmanned Aerial Vehicles (UAVs): These are remote-controlled or autonomous aircraft that can be equipped with sensors for remote and in-situ environmental monitoring. UAVs can be used for mapping and monitoring of large areas, and can collect high-resolution data on environmental conditions.\n\nIn-Situ Sensors: These sensors are used to collect data directly from the environment at the location of interest. They can measure environmental parameters such as temperature, pressure, and humidity, as well as water quality and soil moisture. In situ sensors are commonly used in marine environments to measure ocean temperature, salinity, and other properties. Some examples of in-situ sensing include:\n\nWeather Stations: These are automated weather monitoring systems that collect data on atmospheric conditions such as temperature, humidity, barometric pressure, wind speed and direction, and precipitation. Weather stations can be installed on land or in the ocean to provide continuous monitoring of environmental conditions.\nGround-Based Sensors: These sensors are used to monitor the quality of air, water, and soil. They can detect and measure pollutants such as carbon dioxide, nitrogen dioxide, ozone, sulfur dioxide, and particulate matter. Ground-based sensors are installed in various locations such as cities, industrial sites, and rural areas to provide localized environmental monitoring.\nAcoustic Sensors: These sensors are used to monitor environmental noise levels, including noise from traffic, industrial sources, and natural sources such as wind and waves. Acoustic sensors can provide information on noise levels over time and across different locations.\n\n\nOverall, these sensing technologies play a critical role in monitoring the global environment and can provide valuable information for environmental research, management, and policy-making."
+  },
+  {
+    "objectID": "index.html#the-role-of-computational-modelling",
+    "href": "index.html#the-role-of-computational-modelling",
+    "title": "WiP: Physical Sensing Coupled with Physics Based Machine Learning",
+    "section": "1.4 The Role of Computational Modelling",
+    "text": "1.4 The Role of Computational Modelling\nComputer modeling can play a valuable role in both understanding and predicting global change (J. Chen et al. 2019; Hantson et al. 2016; DeLucia et al. 2021; Oleson et al. 2013; Clark et al. 2016). For example:\n\nClimate Modeling: Computer models can be used to simulate the Earth’s climate system and predict future climate conditions. These models can incorporate data on greenhouse gas emissions, land use changes, and other factors to project how the Earth’s climate will change over time.\nEcosystem Modeling: Computer models can be used to simulate how ecosystems will respond to changes in environmental conditions, such as changes in temperature, precipitation, and atmospheric composition. These models can help predict how changes in ecosystems will impact biodiversity, ecosystem services, and human well-being.\nCarbon Cycle Modeling: Computer models can be used to simulate the global carbon cycle, which is the exchange of carbon between the Earth’s atmosphere, land, and oceans. These models can help predict how changes in carbon emissions and land use will impact atmospheric carbon dioxide concentrations and global climate.\nAir Quality Modeling: Computer models can be used to simulate air quality, including the dispersion of pollutants in the atmosphere. These models can help predict how changes in emissions and atmospheric conditions will impact air quality and human health.\nHydrological Modeling: Computer models can be used to simulate the movement of water through the Earth’s hydrological cycle. These models can help predict how changes in precipitation, land use, and other factors will impact water availability, quality, and distribution.\n\nOverall, computer modeling can provide valuable insights into the complex processes and interactions that drive global change. These insights can inform policy decisions and help guide efforts to mitigate and adapt to the impacts of global change."
+  },
+  {
+    "objectID": "index.html#key-technologies",
+    "href": "index.html#key-technologies",
+    "title": "WiP: Physical Sensing Coupled with Physics Based Machine Learning",
+    "section": "1.5 Key Technologies",
+    "text": "1.5 Key Technologies\n\n1.5.1 Julia for Scientific Computing\nJulia is designed to combine the ease of use and high-level abstractions of languages like Python with the performance of compiled languages like C++, achieving a unique combination of speed and productivity for numerical and scientific computing. Julia is a high-level, high-performance programming language designed for numerical and scientific computing. It combines the ease of use and readability of Python with the speed and efficiency of Fortran or C. Julia has a wide array of scientific computing functionality, making it a powerful language for numerical analysis, data science, and engineering. It has built-in support for arrays and linear algebra, as well as packages for differential equations, optimization, probabilistic programming, data analysis and visualization, parallel and distributed computing, and machine learning. Julia’s combination of performance, expressiveness, and flexibility make it an excellent choice for scientific and engineering applications, allowing for high-level abstractions and rapid prototyping, while still providing low-level control and efficient execution.\nHere are some examples of what can be done easily in Julia that may not be as easy or efficient in other widely used scientific computing languages such as Python or Fortran:\n\nMultiple dispatch: Julia has a powerful multiple dispatch system that allows for generic programming and efficient function overloading. This allows for more flexible and expressive code compared to traditional object-oriented programming (OOP) in Python. Multiple dispatch allows a function to behave differently based on the types and/or number of arguments passed to it. In other words, the behavior of a function can be dispatched’ based on the specific types and/or number of arguments passed to it.\nJust-in-time (JIT) compilation: Julia’s JIT compiler translates high-level Julia code into optimized machine code, making Julia programs run nearly as fast as C or Fortran. In contrast, Python code is interpreted, and Fortran requires pre-compilation.\nDistributed computing: Julia has built-in support for distributed computing, making it easy to parallelize and scale up computations across multiple processors or machines. This is not as easy to do in Python or Fortran.\nUnits and Error Propagation: The Units package in Julia provides a powerful and flexible framework for handling physical units in computations, useful for error propagation and dimensional analysis, helping to ensure that the results are accurate, consistent, easy to interpret, and dimensionally consistent.\nBuilt-in unit testing: Julia has a built-in testing framework that makes it easy to write and run unit tests for your code, ensuring that it works correctly.\nISO characters: Julia supports the use of Greek and other ISO characters in variable and function names, which can make code more readable and expressive, especially in mathematical or scientific contexts.\nInteractive data visualization: Julia has a number of powerful data visualization packages, such as Plots.jl and Makie.jl, that allow for interactive, high-performance data visualization.\nPackage management: Julia has a sophisticated package manager that makes it easy to install, manage, and use third-party packages in your code. This is not as easy to do in Fortran, and while Python has a package manager, Julia’s package manager is faster and more reliable.\nInline C/Fortran/Python/R/Matlab code: Julia allows for inline C, Fortran, Python, R or Matlab code, making it easy to use existing libraries and code written in these languages without having to rewrite everything in Julia.\n\n\n\n1.5.2 Scientific and Physics-based Machine Learning\nScientific machine learning (SciML) refers to the application of Machine Learning (ML) techniques to scientific problems, where the goal is not only to make predictions but also to gain insights into the underlying physical processes (Raissi, Perdikaris, and Karniadakis 2019; Rackauckas et al. 2020; Carleo et al. 2019). SciML involves the integration of domain-specific knowledge and physical models with data-driven techniques, and it has the potential to revolutionize many areas of science and engineering. In this thesis we explore the use of Physics-based machine learning (PBML) (Raissi and Karniadakis 2021; Wu and Zhang 2021) for a variety of applications.\nRecent examples include a paper by (Raissi, Perdikaris, and Karniadakis 2019) that introduces a physics-informed neural network (PINN) framework for solving nonlinear partial differential equations, a paper by (Rackauckas et al. 2020) that proposes a universal differential equation (UDE) approach to scientific machine learning, and a review article by (Carleo et al. 2019) that discusses the use of machine learning in various fields of physics, including condensed matter physics, high-energy physics, and quantum physics. PBML has several advantages over purely data-driven approaches, including:\n\nImproved generalization: PBML models incorporate prior knowledge of the underlying physics, resulting in models that are more interpretable and generalizable. This enables the models to make accurate predictions even with limited training data.\nIncorporation of physical constraints: PBML models can be designed to incorporate physical constraints, such as conservation laws, which can help to ensure physically consistent predictions.\nImproved interpretability: PBML models are more interpretable than purely data-driven models since they are designed to incorporate physical principles. This can enable scientists and engineers to gain deeper insights into the underlying mechanisms of the systems they are studying.\nReduced data requirements: PBML models require less training data than purely data-driven models since they leverage the physics-based priors, reducing the need for large datasets to train accurate models.\nBetter extrapolation: PBML models are better equipped to extrapolate beyond the training data since they incorporate knowledge of the underlying physics, enabling them to make more accurate predictions in new and unseen scenarios.\n\nOverall, PBML has several advantages over purely data-driven approaches, including improved generalization, reduced data requirements, better extrapolation, incorporation of physical constraints, and improved interpretability, making it a valuable tool for scientific and engineering applications."
+  },
+  {
+    "objectID": "index.html#machine-learning-physics-informed-machine-learning-scientific-machine-learning",
+    "href": "index.html#machine-learning-physics-informed-machine-learning-scientific-machine-learning",
+    "title": "WiP: Physical Sensing Coupled with Physics Based Machine Learning",
+    "section": "1.6 Machine Learning, Physics-Informed Machine Learning, Scientific Machine Learning",
+    "text": "1.6 Machine Learning, Physics-Informed Machine Learning, Scientific Machine Learning\n\n1.6.1 overview of types of ML\n\n\n1.6.2 explain NN (i.e. neural network as a function + universal approximator)\n\n\n1.6.3 explain Physics Informed NN(s)\n\n\n1.6.4 explain SciML + UDE framework\n\n\n1.6.5 use RLC circuit instead of Spring mass to introduce the concept\n\n\n1.6.6 methods I’ve developed\n\nEnsembling and Super Learners\nSelf Organizing Maps\nGenerative Topographic Mapping\n\nNOTE: perhaps add section on increasing concerns about indoor air quality (use EPA RFI document). I think ideally we should break down the introduction by sensing domain\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAl-Fuqaha, Ala, Mohsen Guizani, Mehdi Mohammadi, Mohammed Aledhari, and Mutlag Ayyash. 2015. “Internet of Things: A Survey on Enabling Technologies, Protocols, and Applications.” IEEE Communications Surveys & Tutorials 17 (4): 2347–76. https://doi.org/10.1109/COMST.2015.2444095.\n\n\nAtzori, Luigi, Antonio Iera, and Giacomo Morabito. 2010. “The Internet of Things: A Survey.” Computer Networks 54 (15): 2787–2805. https://doi.org/10.1016/j.comnet.2010.05.010.\n\n\nBezanson, Jeff, Alan Edelman, Stefan Karpinski, and Viral B. Shah. 2017. “Julia: A Fresh Approach to Numerical Computing.” SIAM Review 59 (1): 65–98. https://doi.org/10.1137/141000671.\n\n\nBrook, Robert D., Sanjay Rajagopalan, C. Arden Pope III, Jeffrey R. Brook, Aruni Bhatnagar, Ana V. Diez-Roux, Fernando Holguin, et al. 2010. “Particulate Matter Air Pollution and Cardiovascular Disease.” Circulation 121 (21): 2331–78. https://doi.org/10.1161/CIRCULATIONAHA.109.893472.\n\n\nBuyantuyev, Alexander, and Jiquan Wu. 2017. “Remote Sensing Applications for Land Cover and Land-Use Transformations in Semiarid and Arid Environments.” Journal of Arid Environments 140: 1–5. https://doi.org/10.1016/j.jaridenv.2017.01.008.\n\n\nCarleo, Giuseppe, Kenny Choo, Johannes Hofmann, Edward Huang, Chris Hughes, Michael Hush, Raban Iten, et al. 2019. “Machine Learning and the Physical Sciences.” Reviews of Modern Physics 91 (4): 045002.\n\n\nCentre for Ecology and Hydrology. 2017. “Ecological Sensing: A Revolution in Biodiversity Monitoring.” https://www.ceh.ac.uk/news-and-media/blogs/ecological-sensing-revolution-biodiversity-monitoring.\n\n\nChen, Jiawei, Xiaoming Shi, Xinyi Li, Mingjie Wang, Wei Shen, and Yanzhao Liu. 2019. “A Review of Air Quality Modeling: From Gas-Phase to Particulate Matter.” Advances in Atmospheric Sciences 36 (10): 921–47. https://doi.org/10.1007/s00376-019-9047-1.\n\n\nChen, Yan, Xun Zhu, Haibo Wang, Wei Ren, and Simon X. Yang. 2017. “Autonomous Robots with Decentralized, Collective Decision-Making.” Proceedings of the IEEE 105 (2): 321–37. https://doi.org/10.1109/JPROC.2016.2628400.\n\n\nClark, Martyn P., W. Neil Adger, Suraje Dessai, Marisa Goulden, David W. Cash, and Richard and Dickson Stern Nicholas and Gonzalez. 2016. “Urbanization, Climate Change and Economic Growth: Challenges and Opportunities for Policy Makers.” Science of the Total Environment 557-558: 279–91. https://doi.org/10.1016/j.scitotenv.2016.03.022.\n\n\nCostello, Anthony, Mustafa Abbas, Adriana Allen, Sarah Ball, Sarah Bell, Richard Bellamy, Sharon Friel, et al. 2009. “Managing the Health Effects of Climate Change: Lancet and University College London Institute for Global Health Commission.” The Lancet 373 (9676): 1693–733. https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(09)60935-1/fulltext.\n\n\nDeLucia, Evan H., Nuria Gomez-Casanovas, Stephen P. Long, Melanie A. Mayes, Rebecca A. Montgomery, William J. Parton, William J. Sacks, Joshua P. Schimel, Joseph Verfaillie, and Whendee L. Silver. 2021. “The Missing Soil n: Detecting Processes Driving Soil Nitrogen Storage in Complex Ecosystems.” Journal of Ecology 109 (2): 447–59. https://doi.org/10.1111/1365-2745.13550.\n\n\nDunbabin, Matthew, and Lino Marques. 2012. “Robotic Mapping of Environmental Variables for Prediction and Control.” Philosophical Transactions of the Royal Society A 370 (1962): 298–308. https://doi.org/10.1098/rsta.2011.0243.\n\n\nEdenhofer, O., R. Pichs-Madruga, Y. Sokona, E. Farahani, S. Kadner, K. Seyboth, A. Adler, et al. 2014. Climate Change 2014: Mitigation of Climate Change. IPCC Working Group II. Cambridge University Press. https://doi.org/10.1017/CBO9781107415416.\n\n\nField, C. B., V. R. Barros, D. J. Dokken, K. J. Mach, M. D. Mastrandrea, T. E. Bilir, M. Chatterjee, et al. 2014. Climate Change 2014: Impacts, Adaptation, and Vulnerability. Part a: Global and Sectoral Aspects. Cambridge University Press. https://doi.org/10.1017/CBO9781107415379.\n\n\nFriedlingstein, Pierre, Matthew W. Jones, Michael O’Sullivan, Robbie M. Andrew, Judith Hauck, Glen P. Peters, Wouter Peters, et al. 2020. “Global Carbon Budget 2020.” Earth System Science Data 12 (4): 3269–3340. https://doi.org/10.5194/essd-12-3269-2020.\n\n\nGamon, John A., K. Fred Huemmrich, Robert S. Stone, and Craig E. Tweedie. 2016. “Spatial and Temporal Variation in Primary Productivity (NDVI) of Coastal Alaskan Tundra: Decreased Vegetation Growth Following Earlier Snowmelt.” Remote Sensing of Environment 175: 233–42. https://doi.org/10.1016/j.rse.2015.12.051.\n\n\nGoodfellow, Ian, Yoshua Bengio, and Aaron Courville. 2016. “Deep Learning.” MIT Press. https://doi.org/10.1016/j.neunet.2016.10.003.\n\n\nGubbi, Jayavardhana, Rajkumar Buyya, Slaven Marusic, and Marimuthu Palaniswami. 2013. “Internet of Things (IoT): A Vision, Architectural Elements, and Future Directions.” Future Generation Computer Systems 29 (7): 1645–60. https://doi.org/10.1016/j.future.2013.01.010.\n\n\nHaines, Andrew, R Sari Kovats, Diarmid Campbell-Lendrum, and Carlos Corvalán. 2006. “Climate Change and Human Health: Impacts, Vulnerability and Public Health.” Public Health 120 (7): 585–96. https://doi.org/10.1016/j.puhe.2006.01.002.\n\n\nHantson, Stijn, Almut Arneth, Sandy P. Harrison, Douglas I. Kelley, I. Colin Prentice, Sam S. Rabin, Sally Archibald, et al. 2016. “The Status and Challenge of Global Fire Modelling.” Biogeosciences 13 (11): 3359–75. https://doi.org/10.5194/bg-13-3359-2016.\n\n\nHoughton, J. T., Y. Ding, D. J. Griggs, M. Noguer, P. J. van der Linden, X. Dai, K. Maskell, and C. A. Johnson. 2001. Climate Change 2001: The Scientific Basis. Cambridge University Press. https://doi.org/10.1017/CBO9780511546013.\n\n\nHoughton, J. T., G. J. Jenkins, and J. J. Ephraums. 1990. Climate Change: The IPCC Scientific Assessment. Cambridge University Press. https://doi.org/10.1017/CBO9780511623521.\n\n\nHoughton, J. T., L. G. Meira Filho, B. A. Callander, N. Harris, A. Kattenberg, and K. Maskell. 1996. Climate Change 1995: The Science of Climate Change. Cambridge University Press. https://doi.org/10.1017/CBO9780511809286.\n\n\nHuang, Jiaxing, Lejiang Yu, Jianping Guo, Xiaofeng Guo, Wei Wang, Chunyan Liu, and Duoying Ji. 2017. “Assessment of Global Surface Energy Budget Datasets Using Flux Tower Observations.” Journal of Geophysical Research: Atmospheres 122 (14): 7452–75. https://doi.org/10.1002/2016JD026049.\n\n\nJordan, Michael I., and Tom M. Mitchell. 2015. “Machine Learning: Trends, Perspectives, and Prospects.” Science 349 (6245): 255–60. https://doi.org/10.1126/science.aaa8415.\n\n\nKelly, Frank J., and Julian C. Fussell. 2011. “Air Pollution and Public Health: Emerging Hazards and Improved Understanding of Risk.” Environmental Geochemistry and Health 33 (4): 363–73. https://doi.org/10.1007/s10653-011-9415-1.\n\n\nLeCun, Yann, Yoshua Bengio, and Geoffrey Hinton. 2015. “Deep Learning.” Nature 521 (7553): 436–44. https://doi.org/10.1038/nature14539.\n\n\nLi, Jun, Antonio Plaza, José Bioucas-Dias, Paul Gader, and Jocelyn Chanussot. 2018. “Guest Editorial Deep Learning for Hyperspectral Image Analysis.” IEEE Transactions on Geoscience and Remote Sensing 56 (3): 1362–64. https://doi.org/10.1109/TGRS.2018.2801300.\n\n\nMasson-Delmotte, V., P. Zhai, H.-O. Pörtner, D. Roberts, J. Skea, P. R. Shukla, A. Pirani, et al. 2018. Global Warming of 1.5°c. An IPCC Special Report on the Impacts of Global Warming of 1.5°c Above Pre-Industrial Levels and Related Global Greenhouse Gas Emission Pathways, in the Context of Strengthening the Global Response to the Threat of Climate Change, Sustainable Development, and Efforts to Eradicate Poverty. IPCC Special Report. Intergovernmental Panel on Climate Change. https://www.ipcc.ch/sr15/.\n\n\nMetz, B., O. R. Davidson, P. R. Bosch, R. Dave, and L. A. Meyer. 2007. Climate Change 2007: Mitigation of Climate Change. Cambridge University Press. https://doi.org/10.1017/CBO9780511813573.\n\n\nNational Research Council. 2010. “Verifying Greenhouse Gas Emissions: Methods to Support International Climate Agreements.” https://www.nap.edu/catalog/12883/verifying-greenhouse-gas-emissions-methods-to-support-international-climate-agreements.\n\n\nOleson, K. W., D. M. Lawrence, G. B. Bonan, and M. G. Flanner. 2013. “Interactions Between Land Use Change and Carbon Cycle Feedbacks.” Global Biogeochemical Cycles 27 (4): 972–83. https://doi.org/10.1002/gbc.20073.\n\n\nParry, M. L., O. F. Canziani, J. P. Palutikof, P. J. van der Linden, and C. E. Hanson. 2007. Climate Change 2007: Impacts, Adaptation and Vulnerability. Cambridge University Press. https://doi.org/10.1017/CBO9780511546013.\n\n\nPasher, Jon, Bum-Jun Park, Jérôme Théau, Francois Pimont, and Scott Goetz. 2019. “Remote Sensing of Wetlands: An Overview and Practical Guide.” Wetlands Ecology and Management 27 (2): 129–47. https://doi.org/10.1007/s11273-018-9624-3.\n\n\nPlaza, Antonio, Jon A. Benediktsson, James W. Boardman, Jason Brazile, Lorenzo Bruzzone, Gustau Camps-Valls, Jocelyn Chanussot, et al. 2009. “Recent Advances in Techniques for Hyperspectral Image Processing.” Remote Sensing of Environment 113 (S1): S110–22. https://doi.org/10.1016/j.rse.2008.10.008.\n\n\nRackauckas, Christopher, David Kelly, Qing Nie, Jesse Li, Cody Warner, Malvika Dhairya, Jie Fang, et al. 2020. “Universal Differential Equations for Scientific Machine Learning.” arXiv Preprint arXiv:2012.09345.\n\n\nRaissi, Maziar, and George Em Karniadakis. 2021. “Physics-Informed Neural Networks: A Deep Learning Framework for Solving Forward and Inverse Problems Involving Nonlinear Partial Differential Equations.” Journal of Computational Physics 378: 686–707.\n\n\nRaissi, Maziar, Paris Perdikaris, and George Em Karniadakis. 2019. “Physics-Informed Neural Networks: A Deep Learning Framework for Solving Forward and Inverse Problems Involving Nonlinear Partial Differential Equations.” Journal of Computational Physics 378: 686–707.\n\n\nRubenstein, Michael, Alejandro Cornejo, and Radhika Nagpal. 2014. “Programmable Self-Assembly in a Thousand-Robot Swarm.” Science 345 (6198): 795–99. https://doi.org/10.1126/science.1254295.\n\n\nSolomon, S., D. Qin, M. Manning, Z. Chen, M. Marquis, K. B. Averyt, M. Tignor, and H. L. Miller Jr. 2007. Climate Change 2007: The Physical Science Basis. Cambridge University Press. https://doi.org/10.1017/CBO9780511546013.\n\n\nStocker, T. F., D. Qin, G.-K. Plattner, M. Tignor, S. K. Allen, J. Boschung, A. Nauels, Y. Xia, V. Bex, and P. M. Midgley. 2013. Climate Change 2013: The Physical Science Basis. Cambridge University Press. https://doi.org/10.1017/CBO9781107415324.\n\n\nThenkabail, Prasad S. 2019. “Remote Sensing of Global Croplands for Food Security.” Remote Sensing 11 (10): 1261. https://doi.org/10.3390/rs11101261.\n\n\nUnited Nations. 2015. “Transforming Our World: The 2030 Agenda for Sustainable Development.” UN General Assembly. https://sdgs.un.org/2030agenda.\n\n\nUnited Nations Environment Programme. 2017. “Adaptation Gap Report 2017.” https://www.unep.org/resources/adaptation-gap-report-2017.\n\n\nWang, Donglian, Donghui Xie, Yichun Xie, and Chen Chen. 2017. “Remote Sensing Applications for Urban Water Resources: A Review.” Remote Sensing 9 (8): 829. https://doi.org/10.3390/rs9080829.\n\n\nWorld Health Organization. 2018. “Climate Change and Health.” https://www.who.int/news-room/fact-sheets/detail/climate-change-and-health.\n\n\nWu, Jingtao, and Xiaohua Zhang. 2021. “A Review on Physics-Informed Machine Learning: Basic Principles, Recent Developments and Future Directions.” Physics Reports 903: 1–45.\n\n\nXu, Xiaohui, Feng Deng, Xiuwei Guo, Ping Lv, Hua Zhong, Yuantao Hao, Guocheng Hu, et al. 2017. “Association Between Particulate Matter Air Pollution and Hospital Admissions in Patients with Chronic Obstructive Pulmonary Disease in Beijing, China.” Science of the Total Environment 579: 1616–21. https://doi.org/10.1016/j.scitotenv.2016.11.166.\n\n\nZhu, Xiao Xiang, Devis Tuia, Lichao Mou, Gui-Song Xia, Liangpei Zhang, and Feng Xu. 2017. “Deep Learning in Remote Sensing: A Comprehensive Review and List of Resources.” IEEE Geoscience and Remote Sensing Magazine 5 (4): 8–36. https://doi.org/10.1109/MGRS.2017.2762307."
+  },
+  {
+    "objectID": "PhysicalContext/Overview.html#pollution-and-particulate-matter",
+    "href": "PhysicalContext/Overview.html#pollution-and-particulate-matter",
+    "title": "2  Physical Context",
+    "section": "2.1 Pollution and Particulate Matter",
+    "text": "2.1 Pollution and Particulate Matter"
+  },
+  {
+    "objectID": "PhysicalContext/Overview.html#optical-properties-of-aqueous-solutions",
+    "href": "PhysicalContext/Overview.html#optical-properties-of-aqueous-solutions",
+    "title": "2  Physical Context",
+    "section": "2.2 Optical Properties of Aqueous Solutions",
+    "text": "2.2 Optical Properties of Aqueous Solutions"
+  },
+  {
+    "objectID": "PhysicalContext/Overview.html#chemical-reaction-kinetics",
+    "href": "PhysicalContext/Overview.html#chemical-reaction-kinetics",
+    "title": "2  Physical Context",
+    "section": "2.3 Chemical Reaction Kinetics",
+    "text": "2.3 Chemical Reaction Kinetics"
+  },
+  {
+    "objectID": "PhysicalContext/Overview.html#photolysis",
+    "href": "PhysicalContext/Overview.html#photolysis",
+    "title": "2  Physical Context",
+    "section": "2.4 Photolysis",
+    "text": "2.4 Photolysis"
+  },
+  {
+    "objectID": "PhysicalContext/Overview.html#indoor-air-quality",
+    "href": "PhysicalContext/Overview.html#indoor-air-quality",
+    "title": "2  Physical Context",
+    "section": "2.5 Indoor Air Quality",
+    "text": "2.5 Indoor Air Quality"
+  },
+  {
+    "objectID": "PhysicalContext/Overview.html#hyperspectral-imaging",
+    "href": "PhysicalContext/Overview.html#hyperspectral-imaging",
+    "title": "2  Physical Context",
+    "section": "2.6 Hyperspectral Imaging",
+    "text": "2.6 Hyperspectral Imaging"
+  },
+  {
+    "objectID": "PhysicalContext/Overview.html#remote-sensing",
+    "href": "PhysicalContext/Overview.html#remote-sensing",
+    "title": "2  Physical Context",
+    "section": "2.7 Remote Sensing",
+    "text": "2.7 Remote Sensing\nmention different types of satellite data platforms (mostly optical), differences in orbits, coverage, etc… Also good to discuss the increasing use of drones for a variety of applications including intelligent agriculture, geophysics, mapping, etc…"
+  },
+  {
+    "objectID": "PhysicalContext/Overview.html#solar-geometry",
+    "href": "PhysicalContext/Overview.html#solar-geometry",
+    "title": "2  Physical Context",
+    "section": "2.8 Solar Geometry",
+    "text": "2.8 Solar Geometry\nAn explanation of relevant solar angles as well as their determination (i.e. the code I ported to Julia from Matlab script Dr. Lary supplied). We should also comment on the importance of"
+  },
+  {
+    "objectID": "PhysicalSensing/Overview.html#low-cost-sensors-for-outdoor-air-quality",
+    "href": "PhysicalSensing/Overview.html#low-cost-sensors-for-outdoor-air-quality",
+    "title": "3  Physical Sensing",
+    "section": "3.1 Low Cost Sensors for (Outdoor) Air Quality",
+    "text": "3.1 Low Cost Sensors for (Outdoor) Air Quality\nThe outdoor part here is optional. Here I seek to provide specific details of the classes of low cost sensors used for PM (optical particle counters based on Mie scattering), thermistors (for tempature), humidity sensors, pressure sensors, gas sensors, etc… This can be a rough outline for those that specifically are used in my research projects."
+  },
+  {
+    "objectID": "PhysicalSensing/Overview.html#sensing-chemical-concentration-in-aqueous-environments",
+    "href": "PhysicalSensing/Overview.html#sensing-chemical-concentration-in-aqueous-environments",
+    "title": "3  Physical Sensing",
+    "section": "3.2 Sensing Chemical Concentration in Aqueous Environments",
+    "text": "3.2 Sensing Chemical Concentration in Aqueous Environments\nHere we can give an overview of the sensors utilized on the boat for the robot team studies… We should include any information about the uncertainties. We can also comment on their use in fresh v.s. salt water environments."
+  },
+  {
+    "objectID": "PhysicalSensing/Overview.html#coordinated-robot-teams-for-data-acquisition",
+    "href": "PhysicalSensing/Overview.html#coordinated-robot-teams-for-data-acquisition",
+    "title": "3  Physical Sensing",
+    "section": "3.3 Coordinated Robot Teams for Data Acquisition",
+    "text": "3.3 Coordinated Robot Teams for Data Acquisition\nHere we can discuss the drone, boat, and walking robot as well as long range communication setup with wifi router, transfering of files, MQTT protocol, and real time mapping with Grafana."
+  },
+  {
+    "objectID": "PhysicalSensing/Overview.html#the-heart-chamber",
+    "href": "PhysicalSensing/Overview.html#the-heart-chamber",
+    "title": "3  Physical Sensing",
+    "section": "3.4 The HEART Chamber",
+    "text": "3.4 The HEART Chamber\nFor specifics of sensing equipment, see EPA RFI we did for Mr. Urso"
+  },
+  {
+    "objectID": "ComputationalTools/Overview.html#the-julia-programming-language",
+    "href": "ComputationalTools/Overview.html#the-julia-programming-language",
+    "title": "4  Computational Tools",
+    "section": "4.1 The Julia Programming Language",
+    "text": "4.1 The Julia Programming Language\nOverview of key features of Julia that made it attractive for this work:\n\nreproducibility\ncomposability\nreadability (greek symbols as variables and operators)\nspeed"
+  },
+  {
+    "objectID": "ComputationalTools/Overview.html#reproducible-research",
+    "href": "ComputationalTools/Overview.html#reproducible-research",
+    "title": "4  Computational Tools",
+    "section": "4.2 Reproducible Research",
+    "text": "4.2 Reproducible Research\nprinciples & implementation: version control, CI-CD, test-driven-development, containerization\nWe should also discuss how this dissertation is built using quarto and github workflows. Similarly, we can discuss the process of building quarto templates via pandocs to target specific journals as well as pdf, web, and slides formats."
+  },
+  {
+    "objectID": "ComputationalTools/Overview.html#eigen-stuff-and-the-singular-value-decomposition",
+    "href": "ComputationalTools/Overview.html#eigen-stuff-and-the-singular-value-decomposition",
+    "title": "4  Computational Tools",
+    "section": "4.3 Eigen-stuff and the Singular Value Decomposition",
+    "text": "4.3 Eigen-stuff and the Singular Value Decomposition\nBegin with a general description of the utility of eigen-stuff type analysis. Then explain how the SVD is the natural extension of this to non-square systems (rectangular matrices). Further expand by illustrating the application to principal component analysis. Make sure to comment on the general utility of decomposing a function/vector/signal into a (infinite) linear combination of (stationary) modes with simple time evolution."
+  },
+  {
+    "objectID": "ComputationalTools/Overview.html#optimization-methods",
+    "href": "ComputationalTools/Overview.html#optimization-methods",
+    "title": "4  Computational Tools",
+    "section": "4.4 Optimization Methods",
+    "text": "4.4 Optimization Methods\nDescribe standard gradient descent and it’s utility for machine learning. Expand to briefly describe the extensions used in our work:\n\nADAM\nBFGS\nLBFGS"
+  },
+  {
+    "objectID": "ComputationalTools/Overview.html#high-performance-computing",
+    "href": "ComputationalTools/Overview.html#high-performance-computing",
+    "title": "4  Computational Tools",
+    "section": "4.5 High Performance Computing",
+    "text": "4.5 High Performance Computing\nProvide an overview of relevant concepts in high performance computing i.e.\n\nslurm\nmulti-threading\nparallelization (distribured computing)\nMemory management (i.e. preallocating data containers and writing functions that mutate, not allocate)"
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#automatic-differentiation",
+    "href": "TheoreticalTools/Overview.html#automatic-differentiation",
+    "title": "5  Theoretical Tools",
+    "section": "5.1 Automatic Differentiation",
+    "text": "5.1 Automatic Differentiation\nperhaps this can be moved to the Computational tools section instead.\nUse Chris Rackauckas and Chris Olah blogs to start with chain rule and justify automatic differentiation. Then describe reverse mode via gradient tapes and the pullback operator."
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#dual-numbers",
+    "href": "TheoreticalTools/Overview.html#dual-numbers",
+    "title": "5  Theoretical Tools",
+    "section": "5.2 Dual Numbers",
+    "text": "5.2 Dual Numbers\nDescribe dual numbers because they are cool (and by extension, forward mode AD)"
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#embedding-theorems",
+    "href": "TheoreticalTools/Overview.html#embedding-theorems",
+    "title": "5  Theoretical Tools",
+    "section": "5.3 Embedding Theorems",
+    "text": "5.3 Embedding Theorems\nDiscuss Taken’s embedding theorem and other relevant information for the time-series work."
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#koopman-operator-theory",
+    "href": "TheoreticalTools/Overview.html#koopman-operator-theory",
+    "title": "5  Theoretical Tools",
+    "section": "5.4 Koopman Operator Theory",
+    "text": "5.4 Koopman Operator Theory\nGive an overview of continuous and discrete Koopman operator theory."
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#elements-of-bayesian-statistics",
+    "href": "TheoreticalTools/Overview.html#elements-of-bayesian-statistics",
+    "title": "5  Theoretical Tools",
+    "section": "5.5 Elements of Bayesian Statistics",
+    "text": "5.5 Elements of Bayesian Statistics\nDerive Baye’s rule and other important concepts"
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#maximum-likelihood-estimation",
+    "href": "TheoreticalTools/Overview.html#maximum-likelihood-estimation",
+    "title": "5  Theoretical Tools",
+    "section": "5.6 Maximum Likelihood Estimation",
+    "text": "5.6 Maximum Likelihood Estimation"
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#kl-divergence",
+    "href": "TheoreticalTools/Overview.html#kl-divergence",
+    "title": "5  Theoretical Tools",
+    "section": "5.7 KL Divergence",
+    "text": "5.7 KL Divergence"
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#a-survey-of-relevant-mathematical-structures",
+    "href": "TheoreticalTools/Overview.html#a-survey-of-relevant-mathematical-structures",
+    "title": "5  Theoretical Tools",
+    "section": "5.8 A Survey of Relevant Mathematical Structures",
+    "text": "5.8 A Survey of Relevant Mathematical Structures\ngeneric overview of role of mathematical structures in physics and machine learning"
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#uncertainty-propagation",
+    "href": "TheoreticalTools/Overview.html#uncertainty-propagation",
+    "title": "5  Theoretical Tools",
+    "section": "5.9 Uncertainty Propagation",
+    "text": "5.9 Uncertainty Propagation\nLinear v.s. Nonlinear Techniques, measurements.jl"
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#kernelization",
+    "href": "TheoreticalTools/Overview.html#kernelization",
+    "title": "5  Theoretical Tools",
+    "section": "5.10 Kernelization",
+    "text": "5.10 Kernelization"
+  },
+  {
+    "objectID": "TheoreticalTools/Overview.html#dynamical-systems",
+    "href": "TheoreticalTools/Overview.html#dynamical-systems",
+    "title": "5  Theoretical Tools",
+    "section": "5.11 Dynamical Systems",
+    "text": "5.11 Dynamical Systems\ncan quote paper on origins of term phase space"
+  },
+  {
+    "objectID": "ML/Overview.html#data-sampling",
+    "href": "ML/Overview.html#data-sampling",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.1 Data Sampling",
+    "text": "6.1 Data Sampling\ncross-validation techniques\nDr. Lary’s method (from Gaussian Process Code) for representative sampling to reduce data size"
+  },
+  {
+    "objectID": "ML/Overview.html#neural-networks",
+    "href": "ML/Overview.html#neural-networks",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.2 Neural Networks",
+    "text": "6.2 Neural Networks\nFrom a perspective of basic function composition… as in Rackauckas’s blog"
+  },
+  {
+    "objectID": "ML/Overview.html#decision-trees",
+    "href": "ML/Overview.html#decision-trees",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.3 Decision Trees",
+    "text": "6.3 Decision Trees"
+  },
+  {
+    "objectID": "ML/Overview.html#gaussian-process-regression",
+    "href": "ML/Overview.html#gaussian-process-regression",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.4 Gaussian Process Regression",
+    "text": "6.4 Gaussian Process Regression"
+  },
+  {
+    "objectID": "ML/Overview.html#model-ensembling",
+    "href": "ML/Overview.html#model-ensembling",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.5 Model Ensembling",
+    "text": "6.5 Model Ensembling\nBoosting vs Bagging\nXGBoost vs RandomForest (and other implementations)\nMLJ and SciKitLearn documentation sites will have good references for this, I think."
+  },
+  {
+    "objectID": "ML/Overview.html#super-learners",
+    "href": "ML/Overview.html#super-learners",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.6 Super Learners",
+    "text": "6.6 Super Learners\nUse the example of model stacking from MLJ documentation to describe our approach."
+  },
+  {
+    "objectID": "ML/Overview.html#self-organizing-maps",
+    "href": "ML/Overview.html#self-organizing-maps",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.7 Self Organizing Maps",
+    "text": "6.7 Self Organizing Maps"
+  },
+  {
+    "objectID": "ML/Overview.html#generative-topographic-maps",
+    "href": "ML/Overview.html#generative-topographic-maps",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.8 Generative Topographic Maps",
+    "text": "6.8 Generative Topographic Maps"
+  },
+  {
+    "objectID": "ML/Overview.html#data-assimilation",
+    "href": "ML/Overview.html#data-assimilation",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.9 Data Assimilation",
+    "text": "6.9 Data Assimilation"
+  },
+  {
+    "objectID": "ML/Overview.html#conformal-prediction",
+    "href": "ML/Overview.html#conformal-prediction",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.10 Conformal Prediction",
+    "text": "6.10 Conformal Prediction\nThe focus of this section can be on the concept of uncertainty quantification. For many physics theories that are nicely linearized, uncertainty analysis can be easily accomplished at the level of first order sensitivites. That is, we can look at the Jacobian of our model to infer the behavior of small deviations about initial conditions. This approach does not easily extend to more complicated domains where the nonlinear effects dominate. Further, we also often want to establish ways to think about the fundamental instrument uncertainty for a measuring device. This can require meticulous calibrations which often assume a linear or polynomial fit… We can do better. Why not let the data tell us what the measurement uncertainty really is?\nA good motivating example for the discussion of instrumental uncertainty is the use of a thermistor to measure temperature. One must assume a reasonable range of temperatures to establish the linear relationship between temperature and resistivity that is used determine the temperature. However, the material characteristics of the thermistor that introduce nonlinearities at extreme temperatures don’t necessarily mean we should have to throw out measurements that do not fall within this well-behaved range. Rather, we can preform a more sophisticated calibration to learn a model mapping resistivity to temperature that can account for these effects.\nThis is the bread-and-butter of the MINTS sensing efforts. Often low-cost sensing solutions provide decent measurements within a limit domain. With quality data from superior (but often prohibitively expensive) reference instruments, we can improve the default calibration to improve the reliability of data (by reducing uncertainty) and extend it’s domain of usefulness."
+  },
+  {
+    "objectID": "ML/Overview.html#generative-methods",
+    "href": "ML/Overview.html#generative-methods",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.11 Generative Methods",
+    "text": "6.11 Generative Methods"
+  },
+  {
+    "objectID": "ML/Overview.html#topological-data-analysis",
+    "href": "ML/Overview.html#topological-data-analysis",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.12 Topological Data Analysis",
+    "text": "6.12 Topological Data Analysis"
+  },
+  {
+    "objectID": "ML/Overview.html#auto-encoders",
+    "href": "ML/Overview.html#auto-encoders",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.13 Auto Encoders",
+    "text": "6.13 Auto Encoders\nThis is a good place to talk about dimensionality reduction in general, e.g. PCA and other linear methods…"
+  },
+  {
+    "objectID": "ML/Overview.html#physics-informed-neural-networks",
+    "href": "ML/Overview.html#physics-informed-neural-networks",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.14 Physics Informed Neural Networks",
+    "text": "6.14 Physics Informed Neural Networks"
+  },
+  {
+    "objectID": "ML/Overview.html#universal-differential-equations",
+    "href": "ML/Overview.html#universal-differential-equations",
+    "title": "6  Machine Learning and Data-driven Methods",
+    "section": "6.15 Universal Differential Equations",
+    "text": "6.15 Universal Differential Equations\nIt may also be nice to add a section on model evaluation criteria. Similarly, we can have a section on Feature selection and dimensionality reduction"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html",
+    "href": "RobotTeam/Overview.html",
+    "title": "7  Robot Team",
+    "section": "",
+    "text": "8 Super Resolution"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#georectification",
+    "href": "RobotTeam/Overview.html#georectification",
+    "title": "7  Robot Team",
+    "section": "7.1 Georectification",
+    "text": "7.1 Georectification"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#georectification-1",
+    "href": "RobotTeam/Overview.html#georectification-1",
+    "title": "7  Robot Team",
+    "section": "7.2 georectification",
+    "text": "7.2 georectification"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#supervised-ml-for-concentration",
+    "href": "RobotTeam/Overview.html#supervised-ml-for-concentration",
+    "title": "7  Robot Team",
+    "section": "7.3 supervised ML for concentration",
+    "text": "7.3 supervised ML for concentration"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#super-resolution-if-we-have-time-and-open-data-cube",
+    "href": "RobotTeam/Overview.html#super-resolution-if-we-have-time-and-open-data-cube",
+    "title": "7  Robot Team",
+    "section": "7.4 super resolution if we have time (and open data cube)",
+    "text": "7.4 super resolution if we have time (and open data cube)"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#solar-geometry",
+    "href": "RobotTeam/Overview.html#solar-geometry",
+    "title": "7  Robot Team",
+    "section": "7.5 solar geometry",
+    "text": "7.5 solar geometry"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#reflectanceradiance",
+    "href": "RobotTeam/Overview.html#reflectanceradiance",
+    "title": "7  Robot Team",
+    "section": "7.6 reflectance/radiance",
+    "text": "7.6 reflectance/radiance"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#unsupervised-methods",
+    "href": "RobotTeam/Overview.html#unsupervised-methods",
+    "title": "7  Robot Team",
+    "section": "7.7 unsupervised methods",
+    "text": "7.7 unsupervised methods"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#synthetic-data-generation",
+    "href": "RobotTeam/Overview.html#synthetic-data-generation",
+    "title": "7  Robot Team",
+    "section": "7.8 synthetic data generation",
+    "text": "7.8 synthetic data generation"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#robotteam-papers",
+    "href": "RobotTeam/Overview.html#robotteam-papers",
+    "title": "7  Robot Team",
+    "section": "7.9 RobotTeam Papers",
+    "text": "7.9 RobotTeam Papers\n\n7.9.1 Robot Team II: Electric Boogaloo (title w.i.p.)\n\nDiscuss real time georectification, generation of reflectance data, etc…\nCombine Multiple days of observations\nDiscuss need for both viewing geometry and solar geometry\n\nmake reference to highly nonuniform reflectance as a function of incident angle\nmake reference to Beer’s law as justification for direct determination of concentration of concentration from spectra\nin depth discussion of fluorometers (maybe save this for the dissertation)\n\n\n\n\n7.9.2 Unsupervised Classification of Hyperspectral Imagery for Rapid Characterization of Novel Environments with Autonomous Robotic Teams\n\n7.9.2.1 K-means / Fuzzy K-means\n\n\n7.9.2.2 Self Organizing Maps\n\nfit an SOM model to the data\nfor each pixel in entire map, assign best matching unit (use distinguishable colors for a \\(10\\times 10\\) or \\(25\\times 25\\) SOM grid)\nFor class, investigate the learned “spectrum” representation and compare against known chemical spectra.\n\nis there a database we could try to use to look up possible species in the reflectance spectra?\n\n\n\n\n7.9.2.3 Generative Topographic Mapping\n\n\n7.9.2.4 analysis ideas\n\nThe nice feature of both the SOM and the GTM is we can reinterpret them to be spectral-unmixing models. Each SOM node has a feature vector of identical length to the input vector. Similarly, the mean projection \\(y(x;W)\\) in GTM represents the center of a gaussian in data space. Thus, we can reinterpret these feature vectors and gaussian centers as representative endmember spectra for the dataset. Further, the topographic properties of these methods ensure we have similarity between classes (at least in the latent space). For the GTM we are guarenteed that the data space projections of our GTM nodes will be similar. We should see if this holds for SOM. We can also interpret the cluster means from K-means as our endmembers.\nFor SOM and GTM once we have fit the models, we can look at the map of “winning nodes” (BMU for SOM and Mean for GTM) and perform a secondary clustering (via K-means or DBSCAN). These new clusters can define our endmember-bundles for a spectral-unmixing model.\nOnce we have these maps, we should color the point by which day the data came from to see if there are any interesting groups or if the data are distributd across observation days\nWe should make sure we apply the method for unsupervised classification to the dye-released images (see if the maps mirror the diffusion of dye). Pick a day where we have &gt;1 dye flight. Make a map for both cases to illustrate how rapidly fitting an unsupervised model on the fly can enable near real time tracking of plume evolution (good for defense, oil spills, etc…). –&gt; can we then construct a vector field / flow field from the difference and predict the plume evolution? Maybe this would be a good excuse to try lagrangian particle tracking…\nProvided our GTM/SOM fits, we should try a secondary\nFrom nodes/node clusters, can we identify spectral endmembers that represent chemicals we measure (e.g. chlorophyll)?\nFrom node activations (SOM) or responsabilities (GTM) can we fit a good model that competes with predictions from full spectra? (dimensionality reduction demonstration)\ncluster viewing geometry separate from refelctances and use resulting viewing geo classes to color GTM/SOM map of reflectance data\n\n\n\n\n7.9.3 Spectral Indices for Rapid HSI Surveys: Unsupervised and Supervised Methods via SciML\n\nApply to PROSPECT database as a simple test case\nApply to our own Data\n\nMutliple Endmember Spectral Mixture Analysis\ngeneralize Spectral Unmixing Models unmixing models… with gaussian process we could think of an infinite basis of gaussians describing “peaks” in the spectrum”. Can we try to kernelize this procedure?\n\n\n\n\n7.9.4 Synthetic Data Generation for Hyperspectral Imaging with Autonomous Robotic Teams\n\nVariational Autoencoders\nGroup transformations, e.g. rotations, reflections, translations, cropping, etc… (do these make sense if boat data is point observation)\nAdvanced sampling methods for regions with\n\n\n\n7.9.5 Uncertainty Quantification via \\(\\partial P\\).\n\nCategorize Methods into two categories:\n\nquantifying uncertainty in collected data\nquantifying model uncertainty\n\nConformal Prediction (we have a NN code for doing this in flux. Just need to apply it)\nRepresentativeness Uncertainty i.e. when georectifying HSI images and reducing spatial extend via ilat and ilon settings, also compute the stdev for each grainy pixel\nMeasurements.jl forward mode once we have the representativeness uncertainty.\nNeed a way to quantify uncertainty from Boat sensors…\nSensativity Analysis with w/ automatic differentiation\n\nthe stuff regarding the full robot team that appeared in our 2020 robot team paper that Dr. Lary was the first author on."
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#supervised-methods",
+    "href": "RobotTeam/Overview.html#supervised-methods",
+    "title": "7  Robot Team",
+    "section": "7.10 Supervised Methods",
+    "text": "7.10 Supervised Methods\nstuff from paper # 1"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#unsupervised-methods-1",
+    "href": "RobotTeam/Overview.html#unsupervised-methods-1",
+    "title": "7  Robot Team",
+    "section": "7.11 Unsupervised Methods",
+    "text": "7.11 Unsupervised Methods\nstuff from paper # 2"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#cloud-shadow-mask-for-sentinel-2",
+    "href": "RobotTeam/Overview.html#cloud-shadow-mask-for-sentinel-2",
+    "title": "7  Robot Team",
+    "section": "8.1 Cloud & Shadow Mask for Sentinel-2",
+    "text": "8.1 Cloud & Shadow Mask for Sentinel-2\n\n8.1.1 ML Type\n\nSupervised Classification\n\n\n\n8.1.2 ML Methods\n\nSingle Pixel w/ Tree Based Methods\nDeep NN with Convolutional Layers\n\n\n\n8.1.3 Features\n\nSentinel 2 Multi-band Imagery\nLand Type\nViewing Geometry\nSolar Geometry\n\n\n\n8.1.4 Targets\n\nSentinel 2 Cloud Mask + Cloud Shadow Mask"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#cloud-shadow-fill",
+    "href": "RobotTeam/Overview.html#cloud-shadow-fill",
+    "title": "7  Robot Team",
+    "section": "8.2 Cloud & Shadow Fill",
+    "text": "8.2 Cloud & Shadow Fill\n\n8.2.1 ML Type\n\nsupervised regression\n\n\n\n8.2.2 ML Methods\n\npixel based (Would it make sense to do something else here?)\n\n\n\n8.2.3 Features\n\nSentinel 2 Multi-band Imagery\nSentinel 2 Cloud Mask & Cloud Shadow Mask\nSentinel 1 SAR Variables (GRD or SLC or both?)\n10 m Digital Elevation Map\nViewing Geometry\nSolar Geometry\nLand Type\n\n\n\n8.2.4 Targets\n\nCloudless & Shadowless Sentinel 2 Multi-band imagery"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#sentinel-2-rgb-spatial-super-resolution",
+    "href": "RobotTeam/Overview.html#sentinel-2-rgb-spatial-super-resolution",
+    "title": "7  Robot Team",
+    "section": "8.3 Sentinel 2 RGB Spatial Super Resolution",
+    "text": "8.3 Sentinel 2 RGB Spatial Super Resolution\n\n8.3.1 ML Type\n\nSupervised Regression\n\n\n\n8.3.2 ML Methods\n\nThis has to be a Deep NN method using convolution to get the upsampling. I don’t think we can do this with pixel based models (using tree methods)\nProbably should use a GAN\n\n\n\n8.3.3 Features\n\nHigh (spatial) Resolution NAIP RGB Image\nSentinel 2 Multi-band Imagery\nSentinel 1 SAR Variables (GRD or SLC or both?)\n10 m Digital Elevation Map\nViewing Geometry\nSolar Geometry\nLand Type\n\n\n\n8.3.4 Targets\n\nSentinel RGB Bands @ NAIP Resolution\n\n\n\n8.3.5 Loss Function Terms\n\n\n8.3.6 Notes\nWe could make a model that uses all 3 bands (RGB) simultaneously, or we can make a model for a single band that we validate against R, G, and B bands individually. This has the added perc of increasing the training samples. This will be much easier to then apply to all bands of the sentinel imagery (and perhaps Sentinel 1, etc…) independently. We could try:\n\nRed, Green, Blue bands separately\nBlack and White converted RGB image\nData Augmentation via Scaling / Rotation / Reflection"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#sentinel-2-multiband-spatial-super-resolution",
+    "href": "RobotTeam/Overview.html#sentinel-2-multiband-spatial-super-resolution",
+    "title": "7  Robot Team",
+    "section": "8.4 Sentinel 2 Multiband Spatial Super Resolution",
+    "text": "8.4 Sentinel 2 Multiband Spatial Super Resolution\n\n8.4.1 ML Type\n\nSupervised Regression\n\n\n\n8.4.2 ML Methods\n\nThis has to be a Deep NN method using convolution to get the upsampling. I don’t think we can do this with pixel based models (using tree methods)\nProbably should use a GAN\n\n\n\n8.4.3 Features\n\nHigh (spatial) Resolution NAIP RGB Image\nSentinel 2 Multi-band Imagery\nSentinel 1 SAR Variables (GRD or SLC or both?)\n10 m Digital Elevation Map\nViewing Geometry\nSolar Geometry\nLand Type\n\n\n\n8.4.4 Targets\n\nSentinel RGB Bands @ NAIP Resolution\n\n\n\n8.4.5 Loss Function Terms"
+  },
+  {
+    "objectID": "RobotTeam/Overview.html#sentinel-2-multiband-spectral-super-resolution",
+    "href": "RobotTeam/Overview.html#sentinel-2-multiband-spectral-super-resolution",
+    "title": "7  Robot Team",
+    "section": "8.5 Sentinel 2 Multiband Spectral Super Resolution",
+    "text": "8.5 Sentinel 2 Multiband Spectral Super Resolution\n\n8.5.1 ML Type\n\nSupervised Regression\n\n\n\n8.5.2 ML Methods\n\nThis can be pixel based\n\n\n\n8.5.3 Features\n\nSentinel 2 Multi-band Imagery\nSentinel 1 SAR Variables (GRD or SLC or both?)\n10 m Digital Elevation Map\nViewing Geometry\nSolar Geometry\nUAV Hyperspectral Image\n\n\n\n8.5.4 Targets\n\nSentinel Hyperspectral Imagery (i.e. Sentinel at all HSI Bands)\n\n\n\n8.5.5 Loss Function Terms\nif we get to it… probably with a focus on Scotty’s Ranch"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html",
+    "href": "ChemicalMechanism/Overview.html",
+    "title": "8  Chemical Data Assimilation",
+    "section": "",
+    "text": "9 Master Chemical Mechanism"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#photolysis",
+    "href": "ChemicalMechanism/Overview.html#photolysis",
+    "title": "8  Chemical Data Assimilation",
+    "section": "8.1 Photolysis",
+    "text": "8.1 Photolysis"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#heart-chamber",
+    "href": "ChemicalMechanism/Overview.html#heart-chamber",
+    "title": "8  Chemical Data Assimilation",
+    "section": "8.2 HEART Chamber",
+    "text": "8.2 HEART Chamber"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#sensor-fusion",
+    "href": "ChemicalMechanism/Overview.html#sensor-fusion",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.1 sensor fusion",
+    "text": "9.1 sensor fusion"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#photolysis-1",
+    "href": "ChemicalMechanism/Overview.html#photolysis-1",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.2 photolysis",
+    "text": "9.2 photolysis"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#docker-ingestion-framework",
+    "href": "ChemicalMechanism/Overview.html#docker-ingestion-framework",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.3 docker ingestion framework",
+    "text": "9.3 docker ingestion framework"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#master-chemical-mechanism-1",
+    "href": "ChemicalMechanism/Overview.html#master-chemical-mechanism-1",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.4 master chemical mechanism",
+    "text": "9.4 master chemical mechanism"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#data-assimilation",
+    "href": "ChemicalMechanism/Overview.html#data-assimilation",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.5 data assimilation",
+    "text": "9.5 data assimilation"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#chemical-data-assimilation-activepure-work",
+    "href": "ChemicalMechanism/Overview.html#chemical-data-assimilation-activepure-work",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.6 Chemical Data Assimilation & ActivePure Work",
+    "text": "9.6 Chemical Data Assimilation & ActivePure Work\n\n9.6.1 ActivePure Research Lab\n\nOverview of all sensor in sensor matrix\nOverview of measurement capabilities (list of species, uncertainty levels, etc…)\nOverview of containerized data acquisition pipeline\n\nNodeRed\nInfluxDB\nGrafana\nQuarto\nAutomatic Alerts\nAutomatic Reports\n\n\n\n\n9.6.2 Kinetics and Chemical Data Assimilation\n\nMCM Implementation in Julia\nDirect computation of Photolysis rates\nCombination with Dr. Lary’s AutoChem\nAddition of Ion Chemistry from MIT Lightning disseration\nVisualization of chemical cycles\nSciML methods to infer below detection limits"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#cri-mechanism",
+    "href": "ChemicalMechanism/Overview.html#cri-mechanism",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.7 CRI Mechanism",
+    "text": "9.7 CRI Mechanism"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#autochem",
+    "href": "ChemicalMechanism/Overview.html#autochem",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.8 AutoChem",
+    "text": "9.8 AutoChem"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#ion-chemistry",
+    "href": "ChemicalMechanism/Overview.html#ion-chemistry",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.9 Ion Chemistry",
+    "text": "9.9 Ion Chemistry"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#evaluation-indoor-air-quality-via-chemical-data-assimilation",
+    "href": "ChemicalMechanism/Overview.html#evaluation-indoor-air-quality-via-chemical-data-assimilation",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.10 Evaluation Indoor Air Quality via Chemical Data Assimilation",
+    "text": "9.10 Evaluation Indoor Air Quality via Chemical Data Assimilation\nThis is where we put our non-ActivePure results\nSpecific testing done (e.g. in fourth floor lab space) sans-AcitvePure technology"
+  },
+  {
+    "objectID": "ChemicalMechanism/Overview.html#photocatalytic-ionization",
+    "href": "ChemicalMechanism/Overview.html#photocatalytic-ionization",
+    "title": "8  Chemical Data Assimilation",
+    "section": "9.11 Photocatalytic Ionization",
+    "text": "9.11 Photocatalytic Ionization\nThis is where we put our ActivePure-specific results\nTesting results done with ActivePure technology"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#uncertainty-estimation-via-time-series-sampling",
+    "href": "TimeSeries/Overview.html#uncertainty-estimation-via-time-series-sampling",
+    "title": "9  Time Series Methods",
+    "section": "9.1 Uncertainty Estimation Via Time Series Sampling",
+    "text": "9.1 Uncertainty Estimation Via Time Series Sampling\n\n9.1.1 Types Of Uncertainty\n\n\n9.1.2 Instrument Uncertainty\n\n\n9.1.3 Representativeness Uncertainty\n\n\n9.1.4 Variograms\n\n\n9.1.5 Mutual Information\n\n\n9.1.6 Auto-correlation"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#time-series-chaos",
+    "href": "TimeSeries/Overview.html#time-series-chaos",
+    "title": "9  Time Series Methods",
+    "section": "9.2 Time Series Chaos",
+    "text": "9.2 Time Series Chaos\n\n9.2.1 What is Chaos?\n\n\n9.2.2 Lyapunov Exponents\n\n\n9.2.3 Fractal Dimension"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#koopman-operator-theory",
+    "href": "TimeSeries/Overview.html#koopman-operator-theory",
+    "title": "9  Time Series Methods",
+    "section": "9.3 Koopman Operator Theory",
+    "text": "9.3 Koopman Operator Theory"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#time-series-modeling-methods",
+    "href": "TimeSeries/Overview.html#time-series-modeling-methods",
+    "title": "9  Time Series Methods",
+    "section": "9.4 Time Series Modeling Methods",
+    "text": "9.4 Time Series Modeling Methods\n\n9.4.1 Token-Hankel Delay Embeddings\n\n\n9.4.2 Embedding Theorems (are magic)\n\n\n9.4.3 Determination of Optimal Lag\n\n\n9.4.4 Determination of Intrinsic Dimension (kind of unnecessary given large enough embedding)\n\n\n9.4.5 DMD and HAVOK\n\n\n9.4.6 Hamiltonian Neural Networks"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#time-series-classification",
+    "href": "TimeSeries/Overview.html#time-series-classification",
+    "title": "9  Time Series Methods",
+    "section": "9.5 Time Series Classification",
+    "text": "9.5 Time Series Classification\n\n9.5.1 Considerations for Batching of Time Series for ML Models\n\n\n9.5.2 K-means Clustering\n\n\n9.5.3 Self Organizing Maps\n\n\n9.5.4 Generative Topographic Maps\n\n\n9.5.5 Chaos Classification via HAVOK\n\n\n9.5.6 Symplectic and Normal Gradients for HNN"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#motivating-example-lorenz63-system",
+    "href": "TimeSeries/Overview.html#motivating-example-lorenz63-system",
+    "title": "9  Time Series Methods",
+    "section": "9.6 Motivating Example: Lorenz63 System",
+    "text": "9.6 Motivating Example: Lorenz63 System\n\n9.6.1 Origin of Lorenz System\n\n\n9.6.2 Time Scale Analysis and Variography\n\n\n9.6.3 Embedding\n\n\n9.6.4 Modeling\n\n\n9.6.5 Classification"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#real-example-1-pm-data",
+    "href": "TimeSeries/Overview.html#real-example-1-pm-data",
+    "title": "9  Time Series Methods",
+    "section": "9.7 Real Example 1: PM Data",
+    "text": "9.7 Real Example 1: PM Data\n\n9.7.1 Origin of Lorenz System\n\n\n9.7.2 Time Scale Analysis and Variography\n\n\n9.7.3 Embedding\n\n\n9.7.4 Modeling\n\n\n9.7.5 Classification"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#real-example-2-biometric-data",
+    "href": "TimeSeries/Overview.html#real-example-2-biometric-data",
+    "title": "9  Time Series Methods",
+    "section": "9.8 Real Example 2: Biometric Data",
+    "text": "9.8 Real Example 2: Biometric Data\n\n9.8.1 Origin of Lorenz System\n\n\n9.8.2 Time Scale Analysis and Variography\n\n\n9.8.3 Embedding\n\n\n9.8.4 Modeling\n\n\n9.8.5 Classification"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#real-example-3-stock-market-analysis",
+    "href": "TimeSeries/Overview.html#real-example-3-stock-market-analysis",
+    "title": "9  Time Series Methods",
+    "section": "9.9 Real Example 3: Stock Market Analysis",
+    "text": "9.9 Real Example 3: Stock Market Analysis\n\n9.9.1 Origin of Lorenz System\n\n\n9.9.2 Time Scale Analysis and Variography\n\n\n9.9.3 Embedding\n\n\n9.9.4 Modeling\n\n\n9.9.5 Classification"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#lora-wan-devices",
+    "href": "TimeSeries/Overview.html#lora-wan-devices",
+    "title": "9  Time Series Methods",
+    "section": "9.10 LoRa wan devices",
+    "text": "9.10 LoRa wan devices"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#docker-nodered-influxdb-grafana",
+    "href": "TimeSeries/Overview.html#docker-nodered-influxdb-grafana",
+    "title": "9  Time Series Methods",
+    "section": "9.11 Docker, NodeRed, InfluxDB, Grafana",
+    "text": "9.11 Docker, NodeRed, InfluxDB, Grafana"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#hamiltonian-nn-stuff",
+    "href": "TimeSeries/Overview.html#hamiltonian-nn-stuff",
+    "title": "9  Time Series Methods",
+    "section": "9.12 Hamiltonian NN stuff",
+    "text": "9.12 Hamiltonian NN stuff"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#neural-ode",
+    "href": "TimeSeries/Overview.html#neural-ode",
+    "title": "9  Time Series Methods",
+    "section": "9.13 neural ode",
+    "text": "9.13 neural ode"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#tda",
+    "href": "TimeSeries/Overview.html#tda",
+    "title": "9  Time Series Methods",
+    "section": "9.14 TDA",
+    "text": "9.14 TDA"
+  },
+  {
+    "objectID": "TimeSeries/Overview.html#sensor-network-sciml",
+    "href": "TimeSeries/Overview.html#sensor-network-sciml",
+    "title": "9  Time Series Methods",
+    "section": "9.15 Sensor Network + SciML",
+    "text": "9.15 Sensor Network + SciML\n\n9.15.1 Evaluation of local chaos in SharedAirDFWNetwork\n\nThis gives me an excuse to work with the sensor data\nTrain GTM, SOM, and Variational Autoencoder to produce lower dimensional representation of all data from a central node, e.g. in \\(\\mathbb{R}^2\\).\n\nFor VAE, test a range of dimensions from the number of sensors down to 2 (better for visualization)\n\nAnalyze the variety of methods from DataDrivenDiffEq.jl to infer dynamics in the low dimensional space\nCan we infer some kind of Hamiltonian from the data and do a HamiltonianNN approach?\n\nStart of with a standard kinetic-energy style Hamiltonian e.g. \\(\\sum_i \\frac{1}{2} \\dot{x}_i^2\\) where \\(x_i\\) is the\nuse DataDrivenDiffEq approach to learn the associated potential energy term\nalternatively, attempt to capture diurnal cycle (or other relevant time scales) by learning coordinate representation that forces dynamics to be uncoupled harmonic oscillators a la Hamilton-Jacobi theory.\nTest if this hamiltonian NN model can then be transfered to another central node with an appropriate shift in the “total energy”\n\nAttempt to analyze the 2d data to infer Koopman operator. We should treat the original sensor values as observables on which the learned koopman operator acts. This should be doable if the NN is just a function.\nuse DMD appraoch to identify a “forcing” coordinate that can identify when we switch nodes as in Chaos as an intermittently forced linear system\nvideo on Physics Informed DMD\nDeep Learning to Discover Coordinates for Dynamics: Autoencoders & Physics Informed Machine Learning\nNOTE: we may need to impute missing values. We shoud do so with either my GPR code or with other ML methods + ConformalPrediction. Provided uncertainty estimates, we should then think about how to propagate errors through our analysis via Measurements.jl, IntervalArithmetic,"
+  },
+  {
+    "objectID": "Discussion/Overview.html#limitations",
+    "href": "Discussion/Overview.html#limitations",
+    "title": "10  Discussion",
+    "section": "10.1 Limitations",
+    "text": "10.1 Limitations"
+  },
+  {
+    "objectID": "Discussion/Overview.html#future-work",
+    "href": "Discussion/Overview.html#future-work",
+    "title": "10  Discussion",
+    "section": "10.2 Future Work",
+    "text": "10.2 Future Work"
+  },
+  {
+    "objectID": "Extras/TechnicalNotes.html#real-time-georectification-of-drone-based-imagery",
+    "href": "Extras/TechnicalNotes.html#real-time-georectification-of-drone-based-imagery",
+    "title": "12  Technical Notes",
+    "section": "12.1 Real Time Georectification of Drone Based Imagery",
+    "text": "12.1 Real Time Georectification of Drone Based Imagery\n\nGeorectification of pushbroom HSI\nGeorectifcation of square visible + thermal FLIR imagery"
+  },
+  {
+    "objectID": "Extras/TechnicalNotes.html#self-organizing-maps",
+    "href": "Extras/TechnicalNotes.html#self-organizing-maps",
+    "title": "12  Technical Notes",
+    "section": "12.2 Self Organizing Maps",
+    "text": "12.2 Self Organizing Maps"
+  },
+  {
+    "objectID": "Extras/TechnicalNotes.html#bayesian-optimization-with-gaussian-process-regression",
+    "href": "Extras/TechnicalNotes.html#bayesian-optimization-with-gaussian-process-regression",
+    "title": "12  Technical Notes",
+    "section": "12.3 Bayesian Optimization with Gaussian Process Regression",
+    "text": "12.3 Bayesian Optimization with Gaussian Process Regression"
+  },
+  {
+    "objectID": "Extras/TechnicalNotes.html#gaussian-process-regression-classification-in-mlj",
+    "href": "Extras/TechnicalNotes.html#gaussian-process-regression-classification-in-mlj",
+    "title": "12  Technical Notes",
+    "section": "12.4 Gaussian Process Regression / Classification in MLJ",
+    "text": "12.4 Gaussian Process Regression / Classification in MLJ\nj ## Solar Geometry? (probably not necessary)"
+  },
+  {
+    "objectID": "Extras/OtherTopics.html",
+    "href": "Extras/OtherTopics.html",
+    "title": "13  Other Topics",
+    "section": "",
+    "text": "Sparse Nonlinear Models for Fluid Dynamics with Machine Learning and Optimization\nResidual Dynamic Mode Decomposition: A very easy way to get error bounds for your DMD computations\nDeep Learning of Dynamics and Coordinates with SINDy Autoencoders\nIdentifying Dominant Balance Physics from Data"
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Al-Fuqaha, Ala, Mohsen Guizani, Mehdi Mohammadi, Mohammed Aledhari, and\nMutlag Ayyash. 2015. “Internet of Things: A Survey on Enabling\nTechnologies, Protocols, and Applications.” IEEE\nCommunications Surveys & Tutorials 17 (4): 2347–76. https://doi.org/10.1109/COMST.2015.2444095.\n\n\nAtzori, Luigi, Antonio Iera, and Giacomo Morabito. 2010. “The\nInternet of Things: A Survey.” Computer Networks 54\n(15): 2787–2805. https://doi.org/10.1016/j.comnet.2010.05.010.\n\n\nBezanson, Jeff, Alan Edelman, Stefan Karpinski, and Viral B. Shah. 2017.\n“Julia: A Fresh Approach to Numerical Computing.” SIAM\nReview 59 (1): 65–98. https://doi.org/10.1137/141000671.\n\n\nBrook, Robert D., Sanjay Rajagopalan, C. Arden Pope III, Jeffrey R.\nBrook, Aruni Bhatnagar, Ana V. Diez-Roux, Fernando Holguin, et al. 2010.\n“Particulate Matter Air Pollution and Cardiovascular\nDisease.” Circulation 121 (21): 2331–78. https://doi.org/10.1161/CIRCULATIONAHA.109.893472.\n\n\nBuyantuyev, Alexander, and Jiquan Wu. 2017. “Remote Sensing\nApplications for Land Cover and Land-Use Transformations in Semiarid and\nArid Environments.” Journal of Arid Environments 140:\n1–5. https://doi.org/10.1016/j.jaridenv.2017.01.008.\n\n\nCarleo, Giuseppe, Kenny Choo, Johannes Hofmann, Edward Huang, Chris\nHughes, Michael Hush, Raban Iten, et al. 2019. “Machine Learning\nand the Physical Sciences.” Reviews of Modern Physics 91\n(4): 045002.\n\n\nCentre for Ecology and Hydrology. 2017. “Ecological Sensing: A\nRevolution in Biodiversity Monitoring.” https://www.ceh.ac.uk/news-and-media/blogs/ecological-sensing-revolution-biodiversity-monitoring.\n\n\nChen, Jiawei, Xiaoming Shi, Xinyi Li, Mingjie Wang, Wei Shen, and\nYanzhao Liu. 2019. “A Review of Air Quality Modeling: From\nGas-Phase to Particulate Matter.” Advances in Atmospheric\nSciences 36 (10): 921–47. https://doi.org/10.1007/s00376-019-9047-1.\n\n\nChen, Yan, Xun Zhu, Haibo Wang, Wei Ren, and Simon X. Yang. 2017.\n“Autonomous Robots with Decentralized, Collective\nDecision-Making.” Proceedings of the IEEE 105 (2):\n321–37. https://doi.org/10.1109/JPROC.2016.2628400.\n\n\nClark, Martyn P., W. Neil Adger, Suraje Dessai, Marisa Goulden, David W.\nCash, and Richard and Dickson Stern Nicholas and Gonzalez. 2016.\n“Urbanization, Climate Change and Economic Growth: Challenges and\nOpportunities for Policy Makers.” Science of the Total\nEnvironment 557-558: 279–91. https://doi.org/10.1016/j.scitotenv.2016.03.022.\n\n\nCostello, Anthony, Mustafa Abbas, Adriana Allen, Sarah Ball, Sarah Bell,\nRichard Bellamy, Sharon Friel, et al. 2009. “Managing the Health\nEffects of Climate Change: Lancet and University College London\nInstitute for Global Health Commission.” The Lancet 373\n(9676): 1693–733. https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(09)60935-1/fulltext.\n\n\nDeLucia, Evan H., Nuria Gomez-Casanovas, Stephen P. Long, Melanie A.\nMayes, Rebecca A. Montgomery, William J. Parton, William J. Sacks,\nJoshua P. Schimel, Joseph Verfaillie, and Whendee L. Silver. 2021.\n“The Missing Soil n: Detecting Processes Driving Soil Nitrogen\nStorage in Complex Ecosystems.” Journal of Ecology 109\n(2): 447–59. https://doi.org/10.1111/1365-2745.13550.\n\n\nDunbabin, Matthew, and Lino Marques. 2012. “Robotic Mapping of\nEnvironmental Variables for Prediction and Control.”\nPhilosophical Transactions of the Royal Society A 370 (1962):\n298–308. https://doi.org/10.1098/rsta.2011.0243.\n\n\nEdenhofer, O., R. Pichs-Madruga, Y. Sokona, E. Farahani, S. Kadner, K.\nSeyboth, A. Adler, et al. 2014. Climate Change 2014: Mitigation of\nClimate Change. IPCC Working Group II. Cambridge\nUniversity Press. https://doi.org/10.1017/CBO9781107415416.\n\n\nField, C. B., V. R. Barros, D. J. Dokken, K. J. Mach, M. D. Mastrandrea,\nT. E. Bilir, M. Chatterjee, et al. 2014. Climate Change 2014:\nImpacts, Adaptation, and Vulnerability. Part a: Global and Sectoral\nAspects. Cambridge University Press. https://doi.org/10.1017/CBO9781107415379.\n\n\nFriedlingstein, Pierre, Matthew W. Jones, Michael O’Sullivan, Robbie M.\nAndrew, Judith Hauck, Glen P. Peters, Wouter Peters, et al. 2020.\n“Global Carbon Budget 2020.” Earth System Science\nData 12 (4): 3269–3340. https://doi.org/10.5194/essd-12-3269-2020.\n\n\nGamon, John A., K. Fred Huemmrich, Robert S. Stone, and Craig E.\nTweedie. 2016. “Spatial and Temporal Variation in Primary\nProductivity (NDVI) of Coastal Alaskan Tundra: Decreased Vegetation\nGrowth Following Earlier Snowmelt.” Remote Sensing of\nEnvironment 175: 233–42. https://doi.org/10.1016/j.rse.2015.12.051.\n\n\nGoodfellow, Ian, Yoshua Bengio, and Aaron Courville. 2016. “Deep\nLearning.” MIT Press. https://doi.org/10.1016/j.neunet.2016.10.003.\n\n\nGubbi, Jayavardhana, Rajkumar Buyya, Slaven Marusic, and Marimuthu\nPalaniswami. 2013. “Internet of Things (IoT): A\nVision, Architectural Elements, and Future Directions.”\nFuture Generation Computer Systems 29 (7): 1645–60. https://doi.org/10.1016/j.future.2013.01.010.\n\n\nHaines, Andrew, R Sari Kovats, Diarmid Campbell-Lendrum, and Carlos\nCorvalán. 2006. “Climate Change and Human Health: Impacts,\nVulnerability and Public Health.” Public Health 120 (7):\n585–96. https://doi.org/10.1016/j.puhe.2006.01.002.\n\n\nHantson, Stijn, Almut Arneth, Sandy P. Harrison, Douglas I. Kelley, I.\nColin Prentice, Sam S. Rabin, Sally Archibald, et al. 2016. “The\nStatus and Challenge of Global Fire Modelling.”\nBiogeosciences 13 (11): 3359–75. https://doi.org/10.5194/bg-13-3359-2016.\n\n\nHoughton, J. T., Y. Ding, D. J. Griggs, M. Noguer, P. J. van der Linden,\nX. Dai, K. Maskell, and C. A. Johnson. 2001. Climate Change 2001:\nThe Scientific Basis. Cambridge University Press. https://doi.org/10.1017/CBO9780511546013.\n\n\nHoughton, J. T., G. J. Jenkins, and J. J. Ephraums. 1990. Climate\nChange: The IPCC Scientific Assessment. Cambridge University Press.\nhttps://doi.org/10.1017/CBO9780511623521.\n\n\nHoughton, J. T., L. G. Meira Filho, B. A. Callander, N. Harris, A.\nKattenberg, and K. Maskell. 1996. Climate Change 1995: The Science\nof Climate Change. Cambridge University Press. https://doi.org/10.1017/CBO9780511809286.\n\n\nHuang, Jiaxing, Lejiang Yu, Jianping Guo, Xiaofeng Guo, Wei Wang,\nChunyan Liu, and Duoying Ji. 2017. “Assessment of Global Surface\nEnergy Budget Datasets Using Flux Tower Observations.”\nJournal of Geophysical Research: Atmospheres 122 (14): 7452–75.\nhttps://doi.org/10.1002/2016JD026049.\n\n\nJordan, Michael I., and Tom M. Mitchell. 2015. “Machine Learning:\nTrends, Perspectives, and Prospects.” Science 349\n(6245): 255–60. https://doi.org/10.1126/science.aaa8415.\n\n\nKelly, Frank J., and Julian C. Fussell. 2011. “Air Pollution and\nPublic Health: Emerging Hazards and Improved Understanding of\nRisk.” Environmental Geochemistry and Health 33 (4):\n363–73. https://doi.org/10.1007/s10653-011-9415-1.\n\n\nLeCun, Yann, Yoshua Bengio, and Geoffrey Hinton. 2015. “Deep\nLearning.” Nature 521 (7553): 436–44. https://doi.org/10.1038/nature14539.\n\n\nLi, Jun, Antonio Plaza, José Bioucas-Dias, Paul Gader, and Jocelyn\nChanussot. 2018. “Guest Editorial Deep Learning for Hyperspectral\nImage Analysis.” IEEE Transactions on Geoscience and Remote\nSensing 56 (3): 1362–64. https://doi.org/10.1109/TGRS.2018.2801300.\n\n\nMasson-Delmotte, V., P. Zhai, H.-O. Pörtner, D. Roberts, J. Skea, P. R.\nShukla, A. Pirani, et al. 2018. Global Warming of 1.5°c. An IPCC\nSpecial Report on the Impacts of Global Warming of 1.5°c Above\nPre-Industrial Levels and Related Global Greenhouse Gas Emission\nPathways, in the Context of Strengthening the Global Response to the\nThreat of Climate Change, Sustainable Development, and Efforts to\nEradicate Poverty. IPCC Special Report. Intergovernmental\nPanel on Climate Change. https://www.ipcc.ch/sr15/.\n\n\nMetz, B., O. R. Davidson, P. R. Bosch, R. Dave, and L. A. Meyer. 2007.\nClimate Change 2007: Mitigation of Climate Change. Cambridge\nUniversity Press. https://doi.org/10.1017/CBO9780511813573.\n\n\nNational Research Council. 2010. “Verifying Greenhouse Gas\nEmissions: Methods to Support International Climate Agreements.”\nhttps://www.nap.edu/catalog/12883/verifying-greenhouse-gas-emissions-methods-to-support-international-climate-agreements.\n\n\nOleson, K. W., D. M. Lawrence, G. B. Bonan, and M. G. Flanner. 2013.\n“Interactions Between Land Use Change and Carbon Cycle\nFeedbacks.” Global Biogeochemical Cycles 27 (4): 972–83.\nhttps://doi.org/10.1002/gbc.20073.\n\n\nParry, M. L., O. F. Canziani, J. P. Palutikof, P. J. van der Linden, and\nC. E. Hanson. 2007. Climate Change 2007: Impacts, Adaptation and\nVulnerability. Cambridge University Press. https://doi.org/10.1017/CBO9780511546013.\n\n\nPasher, Jon, Bum-Jun Park, Jérôme Théau, Francois Pimont, and Scott\nGoetz. 2019. “Remote Sensing of Wetlands: An Overview and\nPractical Guide.” Wetlands Ecology and Management 27\n(2): 129–47. https://doi.org/10.1007/s11273-018-9624-3.\n\n\nPlaza, Antonio, Jon A. Benediktsson, James W. Boardman, Jason Brazile,\nLorenzo Bruzzone, Gustau Camps-Valls, Jocelyn Chanussot, et al. 2009.\n“Recent Advances in Techniques for Hyperspectral Image\nProcessing.” Remote Sensing of Environment 113 (S1):\nS110–22. https://doi.org/10.1016/j.rse.2008.10.008.\n\n\nRackauckas, Christopher, David Kelly, Qing Nie, Jesse Li, Cody Warner,\nMalvika Dhairya, Jie Fang, et al. 2020. “Universal Differential\nEquations for Scientific Machine Learning.” arXiv Preprint\narXiv:2012.09345.\n\n\nRaissi, Maziar, and George Em Karniadakis. 2021. “Physics-Informed\nNeural Networks: A Deep Learning Framework for Solving Forward and\nInverse Problems Involving Nonlinear Partial Differential\nEquations.” Journal of Computational Physics 378:\n686–707.\n\n\nRaissi, Maziar, Paris Perdikaris, and George Em Karniadakis. 2019.\n“Physics-Informed Neural Networks: A Deep Learning Framework for\nSolving Forward and Inverse Problems Involving Nonlinear Partial\nDifferential Equations.” Journal of Computational\nPhysics 378: 686–707.\n\n\nRubenstein, Michael, Alejandro Cornejo, and Radhika Nagpal. 2014.\n“Programmable Self-Assembly in a Thousand-Robot Swarm.”\nScience 345 (6198): 795–99. https://doi.org/10.1126/science.1254295.\n\n\nSolomon, S., D. Qin, M. Manning, Z. Chen, M. Marquis, K. B. Averyt, M.\nTignor, and H. L. Miller Jr. 2007. Climate Change 2007: The Physical\nScience Basis. Cambridge University Press. https://doi.org/10.1017/CBO9780511546013.\n\n\nStocker, T. F., D. Qin, G.-K. Plattner, M. Tignor, S. K. Allen, J.\nBoschung, A. Nauels, Y. Xia, V. Bex, and P. M. Midgley. 2013.\nClimate Change 2013: The Physical Science Basis. Cambridge\nUniversity Press. https://doi.org/10.1017/CBO9781107415324.\n\n\nThenkabail, Prasad S. 2019. “Remote Sensing of Global Croplands\nfor Food Security.” Remote Sensing 11 (10): 1261. https://doi.org/10.3390/rs11101261.\n\n\nUnited Nations. 2015. “Transforming Our World: The 2030 Agenda for\nSustainable Development.” UN General Assembly. https://sdgs.un.org/2030agenda.\n\n\nUnited Nations Environment Programme. 2017. “Adaptation Gap Report\n2017.” https://www.unep.org/resources/adaptation-gap-report-2017.\n\n\nWang, Donglian, Donghui Xie, Yichun Xie, and Chen Chen. 2017.\n“Remote Sensing Applications for Urban Water Resources: A\nReview.” Remote Sensing 9 (8): 829. https://doi.org/10.3390/rs9080829.\n\n\nWorld Health Organization. 2018. “Climate Change and\nHealth.” https://www.who.int/news-room/fact-sheets/detail/climate-change-and-health.\n\n\nWu, Jingtao, and Xiaohua Zhang. 2021. “A Review on\nPhysics-Informed Machine Learning: Basic Principles, Recent Developments\nand Future Directions.” Physics Reports 903: 1–45.\n\n\nXu, Xiaohui, Feng Deng, Xiuwei Guo, Ping Lv, Hua Zhong, Yuantao Hao,\nGuocheng Hu, et al. 2017. “Association Between Particulate Matter\nAir Pollution and Hospital Admissions in Patients with Chronic\nObstructive Pulmonary Disease in Beijing, China.” Science of\nthe Total Environment 579: 1616–21. https://doi.org/10.1016/j.scitotenv.2016.11.166.\n\n\nZhu, Xiao Xiang, Devis Tuia, Lichao Mou, Gui-Song Xia, Liangpei Zhang,\nand Feng Xu. 2017. “Deep Learning in Remote Sensing: A\nComprehensive Review and List of Resources.” IEEE Geoscience\nand Remote Sensing Magazine 5 (4): 8–36. https://doi.org/10.1109/MGRS.2017.2762307."
+  },
+  {
+    "objectID": "Appendices/appendix.html",
+    "href": "Appendices/appendix.html",
+    "title": "Appendix A — Additional stuff",
+    "section": "",
+    "text": "You might put some computer output here, or maybe additional tables. It is possible to have multiple appendices. Just list them in the appropriate place within _quarto.yml."
+  }
+]

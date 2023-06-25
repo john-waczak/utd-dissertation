@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>WiP: Physical Sensing Coupled with Physics Based Machine Learning - 7&nbsp; Robot Team</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../ChemicalMechanism/Overview.html" rel="next">
+<link href="../ML/Overview.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../RobotTeam/Overview.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Robot Team</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">WiP: Physical Sensing Coupled with Physics Based Machine Learning</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../PhysicalContext/Overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Physical Context</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../PhysicalSensing/Overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Physical Sensing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ComputationalTools/Overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Computational Tools</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../TheoreticalTools/Overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Theoretical Tools</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ML/Overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Machine Learning and Data-driven Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../RobotTeam/Overview.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Robot Team</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ChemicalMechanism/Overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chemical Data Assimilation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../TimeSeries/Overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Time Series Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Discussion/Overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Discussion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Conclusions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Extras/TechnicalNotes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Technical Notes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Extras/OtherTopics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Other Topics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Appendices/appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional stuff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Appendices/EEG-band-discovery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">EEG Band Discovery with Decision Trees</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#georectification" id="toc-georectification" class="nav-link active" data-scroll-target="#georectification"><span class="header-section-number">7.1</span> Georectification</a></li>
+  <li><a href="#georectification-1" id="toc-georectification-1" class="nav-link" data-scroll-target="#georectification-1"><span class="header-section-number">7.2</span> georectification</a></li>
+  <li><a href="#supervised-ml-for-concentration" id="toc-supervised-ml-for-concentration" class="nav-link" data-scroll-target="#supervised-ml-for-concentration"><span class="header-section-number">7.3</span> supervised ML for concentration</a></li>
+  <li><a href="#super-resolution-if-we-have-time-and-open-data-cube" id="toc-super-resolution-if-we-have-time-and-open-data-cube" class="nav-link" data-scroll-target="#super-resolution-if-we-have-time-and-open-data-cube"><span class="header-section-number">7.4</span> super resolution if we have time (and open data cube)</a></li>
+  <li><a href="#solar-geometry" id="toc-solar-geometry" class="nav-link" data-scroll-target="#solar-geometry"><span class="header-section-number">7.5</span> solar geometry</a></li>
+  <li><a href="#reflectanceradiance" id="toc-reflectanceradiance" class="nav-link" data-scroll-target="#reflectanceradiance"><span class="header-section-number">7.6</span> reflectance/radiance</a></li>
+  <li><a href="#unsupervised-methods" id="toc-unsupervised-methods" class="nav-link" data-scroll-target="#unsupervised-methods"><span class="header-section-number">7.7</span> unsupervised methods</a></li>
+  <li><a href="#synthetic-data-generation" id="toc-synthetic-data-generation" class="nav-link" data-scroll-target="#synthetic-data-generation"><span class="header-section-number">7.8</span> synthetic data generation</a></li>
+  <li><a href="#robotteam-papers" id="toc-robotteam-papers" class="nav-link" data-scroll-target="#robotteam-papers"><span class="header-section-number">7.9</span> RobotTeam Papers</a>
+  <ul class="collapse">
+  <li><a href="#robot-team-ii-electric-boogaloo-title-w.i.p." id="toc-robot-team-ii-electric-boogaloo-title-w.i.p." class="nav-link" data-scroll-target="#robot-team-ii-electric-boogaloo-title-w.i.p."><span class="header-section-number">7.9.1</span> Robot Team II: Electric Boogaloo (title w.i.p.)</a></li>
+  <li><a href="#unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams" id="toc-unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams" class="nav-link" data-scroll-target="#unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams"><span class="header-section-number">7.9.2</span> Unsupervised Classification of Hyperspectral Imagery for Rapid Characterization of Novel Environments with Autonomous Robotic Teams</a></li>
+  <li><a href="#spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml" id="toc-spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml" class="nav-link" data-scroll-target="#spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml"><span class="header-section-number">7.9.3</span> Spectral Indices for Rapid HSI Surveys: Unsupervised and Supervised Methods via SciML</a></li>
+  <li><a href="#synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams" id="toc-synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams" class="nav-link" data-scroll-target="#synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams"><span class="header-section-number">7.9.4</span> Synthetic Data Generation for Hyperspectral Imaging with Autonomous Robotic Teams</a></li>
+  <li><a href="#uncertainty-quantification-via-partial-p." id="toc-uncertainty-quantification-via-partial-p." class="nav-link" data-scroll-target="#uncertainty-quantification-via-partial-p."><span class="header-section-number">7.9.5</span> Uncertainty Quantification via <span class="math inline">\(\partial P\)</span>.</a></li>
+  </ul></li>
+  <li><a href="#supervised-methods" id="toc-supervised-methods" class="nav-link" data-scroll-target="#supervised-methods"><span class="header-section-number">7.10</span> Supervised Methods</a></li>
+  <li><a href="#unsupervised-methods-1" id="toc-unsupervised-methods-1" class="nav-link" data-scroll-target="#unsupervised-methods-1"><span class="header-section-number">7.11</span> Unsupervised Methods</a></li>
+  <li><a href="#super-resolution" id="toc-super-resolution" class="nav-link" data-scroll-target="#super-resolution"><span class="header-section-number">8</span> Super Resolution</a>
+  <ul class="collapse">
+  <li><a href="#cloud-shadow-mask-for-sentinel-2" id="toc-cloud-shadow-mask-for-sentinel-2" class="nav-link" data-scroll-target="#cloud-shadow-mask-for-sentinel-2"><span class="header-section-number">8.1</span> Cloud &amp; Shadow Mask for Sentinel-2</a>
+  <ul class="collapse">
+  <li><a href="#ml-type" id="toc-ml-type" class="nav-link" data-scroll-target="#ml-type"><span class="header-section-number">8.1.1</span> ML Type</a></li>
+  <li><a href="#ml-methods" id="toc-ml-methods" class="nav-link" data-scroll-target="#ml-methods"><span class="header-section-number">8.1.2</span> ML Methods</a></li>
+  <li><a href="#features" id="toc-features" class="nav-link" data-scroll-target="#features"><span class="header-section-number">8.1.3</span> Features</a></li>
+  <li><a href="#targets" id="toc-targets" class="nav-link" data-scroll-target="#targets"><span class="header-section-number">8.1.4</span> Targets</a></li>
+  </ul></li>
+  <li><a href="#cloud-shadow-fill" id="toc-cloud-shadow-fill" class="nav-link" data-scroll-target="#cloud-shadow-fill"><span class="header-section-number">8.2</span> Cloud &amp; Shadow Fill</a>
+  <ul class="collapse">
+  <li><a href="#ml-type-1" id="toc-ml-type-1" class="nav-link" data-scroll-target="#ml-type-1"><span class="header-section-number">8.2.1</span> ML Type</a></li>
+  <li><a href="#ml-methods-1" id="toc-ml-methods-1" class="nav-link" data-scroll-target="#ml-methods-1"><span class="header-section-number">8.2.2</span> ML Methods</a></li>
+  <li><a href="#features-1" id="toc-features-1" class="nav-link" data-scroll-target="#features-1"><span class="header-section-number">8.2.3</span> Features</a></li>
+  <li><a href="#targets-1" id="toc-targets-1" class="nav-link" data-scroll-target="#targets-1"><span class="header-section-number">8.2.4</span> Targets</a></li>
+  </ul></li>
+  <li><a href="#sentinel-2-rgb-spatial-super-resolution" id="toc-sentinel-2-rgb-spatial-super-resolution" class="nav-link" data-scroll-target="#sentinel-2-rgb-spatial-super-resolution"><span class="header-section-number">8.3</span> Sentinel 2 RGB <em>Spatial</em> Super Resolution</a>
+  <ul class="collapse">
+  <li><a href="#ml-type-2" id="toc-ml-type-2" class="nav-link" data-scroll-target="#ml-type-2"><span class="header-section-number">8.3.1</span> ML Type</a></li>
+  <li><a href="#ml-methods-2" id="toc-ml-methods-2" class="nav-link" data-scroll-target="#ml-methods-2"><span class="header-section-number">8.3.2</span> ML Methods</a></li>
+  <li><a href="#features-2" id="toc-features-2" class="nav-link" data-scroll-target="#features-2"><span class="header-section-number">8.3.3</span> Features</a></li>
+  <li><a href="#targets-2" id="toc-targets-2" class="nav-link" data-scroll-target="#targets-2"><span class="header-section-number">8.3.4</span> Targets</a></li>
+  <li><a href="#loss-function-terms" id="toc-loss-function-terms" class="nav-link" data-scroll-target="#loss-function-terms"><span class="header-section-number">8.3.5</span> Loss Function Terms</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes"><span class="header-section-number">8.3.6</span> Notes</a></li>
+  </ul></li>
+  <li><a href="#sentinel-2-multiband-spatial-super-resolution" id="toc-sentinel-2-multiband-spatial-super-resolution" class="nav-link" data-scroll-target="#sentinel-2-multiband-spatial-super-resolution"><span class="header-section-number">8.4</span> Sentinel 2 Multiband <em>Spatial</em> Super Resolution</a>
+  <ul class="collapse">
+  <li><a href="#ml-type-3" id="toc-ml-type-3" class="nav-link" data-scroll-target="#ml-type-3"><span class="header-section-number">8.4.1</span> ML Type</a></li>
+  <li><a href="#ml-methods-3" id="toc-ml-methods-3" class="nav-link" data-scroll-target="#ml-methods-3"><span class="header-section-number">8.4.2</span> ML Methods</a></li>
+  <li><a href="#features-3" id="toc-features-3" class="nav-link" data-scroll-target="#features-3"><span class="header-section-number">8.4.3</span> Features</a></li>
+  <li><a href="#targets-3" id="toc-targets-3" class="nav-link" data-scroll-target="#targets-3"><span class="header-section-number">8.4.4</span> Targets</a></li>
+  <li><a href="#loss-function-terms-1" id="toc-loss-function-terms-1" class="nav-link" data-scroll-target="#loss-function-terms-1"><span class="header-section-number">8.4.5</span> Loss Function Terms</a></li>
+  </ul></li>
+  <li><a href="#sentinel-2-multiband-spectral-super-resolution" id="toc-sentinel-2-multiband-spectral-super-resolution" class="nav-link" data-scroll-target="#sentinel-2-multiband-spectral-super-resolution"><span class="header-section-number">8.5</span> Sentinel 2 Multiband <em>Spectral</em> Super Resolution</a>
+  <ul class="collapse">
+  <li><a href="#ml-type-4" id="toc-ml-type-4" class="nav-link" data-scroll-target="#ml-type-4"><span class="header-section-number">8.5.1</span> ML Type</a></li>
+  <li><a href="#ml-methods-4" id="toc-ml-methods-4" class="nav-link" data-scroll-target="#ml-methods-4"><span class="header-section-number">8.5.2</span> ML Methods</a></li>
+  <li><a href="#features-4" id="toc-features-4" class="nav-link" data-scroll-target="#features-4"><span class="header-section-number">8.5.3</span> Features</a></li>
+  <li><a href="#targets-4" id="toc-targets-4" class="nav-link" data-scroll-target="#targets-4"><span class="header-section-number">8.5.4</span> Targets</a></li>
+  <li><a href="#loss-function-terms-2" id="toc-loss-function-terms-2" class="nav-link" data-scroll-target="#loss-function-terms-2"><span class="header-section-number">8.5.5</span> Loss Function Terms</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Robot Team</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Abstract</div>
+    <p>Update required!</p>
+  </div>
+</div>
+
+</header>
+
+<section id="georectification" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="georectification"><span class="header-section-number">7.1</span> Georectification</h2>
+</section>
+<section id="georectification-1" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="georectification-1"><span class="header-section-number">7.2</span> georectification</h2>
+</section>
+<section id="supervised-ml-for-concentration" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="supervised-ml-for-concentration"><span class="header-section-number">7.3</span> supervised ML for concentration</h2>
+</section>
+<section id="super-resolution-if-we-have-time-and-open-data-cube" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="super-resolution-if-we-have-time-and-open-data-cube"><span class="header-section-number">7.4</span> super resolution if we have time (and open data cube)</h2>
+</section>
+<section id="solar-geometry" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="solar-geometry"><span class="header-section-number">7.5</span> solar geometry</h2>
+</section>
+<section id="reflectanceradiance" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="reflectanceradiance"><span class="header-section-number">7.6</span> reflectance/radiance</h2>
+</section>
+<section id="unsupervised-methods" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="unsupervised-methods"><span class="header-section-number">7.7</span> unsupervised methods</h2>
+</section>
+<section id="synthetic-data-generation" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="synthetic-data-generation"><span class="header-section-number">7.8</span> synthetic data generation</h2>
+</section>
+<section id="robotteam-papers" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="robotteam-papers"><span class="header-section-number">7.9</span> RobotTeam Papers</h2>
+<section id="robot-team-ii-electric-boogaloo-title-w.i.p." class="level3" data-number="7.9.1">
+<h3 data-number="7.9.1" class="anchored" data-anchor-id="robot-team-ii-electric-boogaloo-title-w.i.p."><span class="header-section-number">7.9.1</span> Robot Team II: Electric Boogaloo (title w.i.p.)</h3>
+<ul>
+<li>Discuss real time georectification, generation of reflectance data, etc…</li>
+<li>Combine Multiple days of observations</li>
+<li>Discuss need for both viewing geometry and solar geometry
+<ul>
+<li>make reference to highly nonuniform reflectance as a function of incident angle</li>
+<li>make reference to Beer’s law as justification for direct determination of concentration of concentration from spectra</li>
+<li>in depth discussion of fluorometers (maybe save this for the dissertation)</li>
+</ul></li>
+</ul>
+</section>
+<section id="unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams" class="level3" data-number="7.9.2">
+<h3 data-number="7.9.2" class="anchored" data-anchor-id="unsupervised-classification-of-hyperspectral-imagery-for-rapid-characterization-of-novel-environments-with-autonomous-robotic-teams"><span class="header-section-number">7.9.2</span> Unsupervised Classification of Hyperspectral Imagery for Rapid Characterization of Novel Environments with Autonomous Robotic Teams</h3>
+<section id="k-means-fuzzy-k-means" class="level4" data-number="7.9.2.1">
+<h4 data-number="7.9.2.1" class="anchored" data-anchor-id="k-means-fuzzy-k-means"><span class="header-section-number">7.9.2.1</span> K-means / Fuzzy K-means</h4>
+</section>
+<section id="self-organizing-maps" class="level4" data-number="7.9.2.2">
+<h4 data-number="7.9.2.2" class="anchored" data-anchor-id="self-organizing-maps"><span class="header-section-number">7.9.2.2</span> Self Organizing Maps</h4>
+<ul>
+<li>fit an SOM model to the data</li>
+<li>for each pixel in entire map, assign best matching unit (use distinguishable colors for a <span class="math inline">\(10\times 10\)</span> or <span class="math inline">\(25\times 25\)</span> SOM grid)</li>
+<li>For class, investigate the learned “spectrum” representation and compare against known chemical spectra.
+<ul>
+<li>is there a database we could try to use to look up possible species in the reflectance spectra?</li>
+</ul></li>
+</ul>
+</section>
+<section id="generative-topographic-mapping" class="level4" data-number="7.9.2.3">
+<h4 data-number="7.9.2.3" class="anchored" data-anchor-id="generative-topographic-mapping"><span class="header-section-number">7.9.2.3</span> Generative Topographic Mapping</h4>
+</section>
+<section id="analysis-ideas" class="level4" data-number="7.9.2.4">
+<h4 data-number="7.9.2.4" class="anchored" data-anchor-id="analysis-ideas"><span class="header-section-number">7.9.2.4</span> analysis ideas</h4>
+<ul>
+<li>The nice feature of both the SOM and the GTM is we can reinterpret them to be spectral-unmixing models. Each SOM node has a feature vector of identical length to the input vector. Similarly, the mean projection <span class="math inline">\(y(x;W)\)</span> in GTM represents the center of a gaussian in <em>data space</em>. Thus, we can reinterpret these feature vectors and gaussian centers as representative endmember spectra for the dataset. Further, the topographic properties of these methods ensure we have similarity between classes (at least in the latent space). For the GTM we are guarenteed that the data space projections of our GTM nodes will be similar. <strong>We should see if this holds for SOM</strong>. We can also interpret the cluster means from K-means as our endmembers.</li>
+<li>For SOM and GTM once we have fit the models, we can look at the map of “winning nodes” (BMU for SOM and Mean for GTM) and perform a secondary clustering (via K-means or DBSCAN). These new clusters can define our endmember-bundles for a spectral-unmixing model.</li>
+<li>Once we have these maps, we should color the point by which day the data came from to see if there are any interesting groups or if the data are distributd across observation days</li>
+<li>We should make sure we apply the method for unsupervised classification to the dye-released images (see if the maps mirror the diffusion of dye). Pick a day where we have &gt;1 dye flight. Make a map for both cases to illustrate how rapidly fitting an unsupervised model on the fly can enable near real time tracking of plume evolution (good for defense, oil spills, etc…). –&gt; can we then construct a vector field / flow field from the difference and predict the plume evolution? Maybe this would be a good excuse to try lagrangian particle tracking…</li>
+<li>Provided our GTM/SOM fits, we should try a secondary</li>
+<li>From nodes/node clusters, can we identify spectral endmembers that represent chemicals we measure (e.g.&nbsp;chlorophyll)?</li>
+<li>From node activations (SOM) or responsabilities (GTM) can we fit a good model that competes with predictions from full spectra? (dimensionality reduction demonstration)</li>
+<li>cluster viewing geometry separate from refelctances and use resulting viewing geo classes to color GTM/SOM map of reflectance data</li>
+</ul>
+</section>
+</section>
+<section id="spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml" class="level3" data-number="7.9.3">
+<h3 data-number="7.9.3" class="anchored" data-anchor-id="spectral-indices-for-rapid-hsi-surveys-unsupervised-and-supervised-methods-via-sciml"><span class="header-section-number">7.9.3</span> Spectral Indices for Rapid HSI Surveys: Unsupervised and Supervised Methods via SciML</h3>
+<ul>
+<li>Apply to PROSPECT database as a simple test case</li>
+<li>Apply to our own Data
+<ul>
+<li><a href="https://aviris.jpl.nasa.gov/proceedings/workshops/99_docs/46.pdf">Mutliple Endmember Spectral Mixture Analysis</a></li>
+<li>generalize <strong>Spectral Unmixing Models</strong> unmixing models… with gaussian process we could think of an infinite basis of gaussians describing “peaks” in the spectrum”. Can we try to kernelize this procedure?</li>
+</ul></li>
+</ul>
+</section>
+<section id="synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams" class="level3" data-number="7.9.4">
+<h3 data-number="7.9.4" class="anchored" data-anchor-id="synthetic-data-generation-for-hyperspectral-imaging-with-autonomous-robotic-teams"><span class="header-section-number">7.9.4</span> Synthetic Data Generation for Hyperspectral Imaging with Autonomous Robotic Teams</h3>
+<ul>
+<li>Variational Autoencoders</li>
+<li>Group transformations, e.g.&nbsp;rotations, reflections, translations, cropping, etc… (do these make sense if boat data is point observation)</li>
+<li>Advanced sampling methods for regions with</li>
+</ul>
+</section>
+<section id="uncertainty-quantification-via-partial-p." class="level3" data-number="7.9.5">
+<h3 data-number="7.9.5" class="anchored" data-anchor-id="uncertainty-quantification-via-partial-p."><span class="header-section-number">7.9.5</span> Uncertainty Quantification via <span class="math inline">\(\partial P\)</span>.</h3>
+<ul>
+<li>Categorize Methods into two categories:
+<ul>
+<li>quantifying uncertainty in collected data</li>
+<li>quantifying model uncertainty</li>
+</ul></li>
+<li>Conformal Prediction (we have a NN code for doing this in flux. Just need to apply it)</li>
+<li>Representativeness Uncertainty i.e.&nbsp;when georectifying HSI images and reducing spatial extend via <code>ilat</code> and <code>ilon</code> settings, also compute the stdev for each grainy pixel</li>
+<li>Measurements.jl <em>forward mode</em> once we have the representativeness uncertainty.</li>
+<li>Need a way to quantify uncertainty from Boat sensors…</li>
+<li>Sensativity Analysis with w/ automatic differentiation</li>
+</ul>
+<p>the stuff regarding the full robot team that appeared in our 2020 robot team paper that Dr.&nbsp;Lary was the first author on.</p>
+</section>
+</section>
+<section id="supervised-methods" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="supervised-methods"><span class="header-section-number">7.10</span> Supervised Methods</h2>
+<p>stuff from paper # 1</p>
+</section>
+<section id="unsupervised-methods-1" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="unsupervised-methods-1"><span class="header-section-number">7.11</span> Unsupervised Methods</h2>
+<p>stuff from paper # 2</p>
+</section>
+<section id="super-resolution" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Super Resolution</h1>
+<section id="cloud-shadow-mask-for-sentinel-2" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="cloud-shadow-mask-for-sentinel-2"><span class="header-section-number">8.1</span> Cloud &amp; Shadow Mask for Sentinel-2</h2>
+<section id="ml-type" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="ml-type"><span class="header-section-number">8.1.1</span> ML Type</h3>
+<ul>
+<li>Supervised Classification</li>
+</ul>
+</section>
+<section id="ml-methods" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="ml-methods"><span class="header-section-number">8.1.2</span> ML Methods</h3>
+<ul>
+<li>Single Pixel w/ Tree Based Methods</li>
+<li>Deep NN with Convolutional Layers</li>
+</ul>
+</section>
+<section id="features" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="features"><span class="header-section-number">8.1.3</span> Features</h3>
+<ul>
+<li>Sentinel 2 Multi-band Imagery</li>
+<li>Land Type</li>
+<li>Viewing Geometry</li>
+<li>Solar Geometry</li>
+</ul>
+</section>
+<section id="targets" class="level3" data-number="8.1.4">
+<h3 data-number="8.1.4" class="anchored" data-anchor-id="targets"><span class="header-section-number">8.1.4</span> Targets</h3>
+<ul>
+<li>Sentinel 2 Cloud Mask + Cloud Shadow Mask</li>
+</ul>
+</section>
+</section>
+<section id="cloud-shadow-fill" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="cloud-shadow-fill"><span class="header-section-number">8.2</span> Cloud &amp; Shadow Fill</h2>
+<section id="ml-type-1" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="ml-type-1"><span class="header-section-number">8.2.1</span> ML Type</h3>
+<ul>
+<li>supervised regression</li>
+</ul>
+</section>
+<section id="ml-methods-1" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="ml-methods-1"><span class="header-section-number">8.2.2</span> ML Methods</h3>
+<ul>
+<li>pixel based (Would it make sense to do something else here?)</li>
+</ul>
+</section>
+<section id="features-1" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="features-1"><span class="header-section-number">8.2.3</span> Features</h3>
+<ul>
+<li>Sentinel 2 Multi-band Imagery</li>
+<li>Sentinel 2 Cloud Mask &amp; Cloud Shadow Mask</li>
+<li>Sentinel 1 SAR Variables (GRD or SLC or both?)</li>
+<li>10 m Digital Elevation Map</li>
+<li>Viewing Geometry</li>
+<li>Solar Geometry</li>
+<li>Land Type</li>
+</ul>
+</section>
+<section id="targets-1" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="targets-1"><span class="header-section-number">8.2.4</span> Targets</h3>
+<ul>
+<li><em>Cloudless &amp; Shadowless</em> Sentinel 2 Multi-band imagery</li>
+</ul>
+</section>
+</section>
+<section id="sentinel-2-rgb-spatial-super-resolution" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="sentinel-2-rgb-spatial-super-resolution"><span class="header-section-number">8.3</span> Sentinel 2 RGB <em>Spatial</em> Super Resolution</h2>
+<section id="ml-type-2" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="ml-type-2"><span class="header-section-number">8.3.1</span> ML Type</h3>
+<ul>
+<li>Supervised Regression</li>
+</ul>
+</section>
+<section id="ml-methods-2" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="ml-methods-2"><span class="header-section-number">8.3.2</span> ML Methods</h3>
+<ul>
+<li>This has to be a Deep NN method using convolution to get the upsampling. I don’t think we can do this with pixel based models (using tree methods)</li>
+<li>Probably should use a GAN</li>
+</ul>
+</section>
+<section id="features-2" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="features-2"><span class="header-section-number">8.3.3</span> Features</h3>
+<ul>
+<li>High (spatial) Resolution NAIP RGB Image</li>
+<li>Sentinel 2 Multi-band Imagery</li>
+<li>Sentinel 1 SAR Variables (GRD or SLC or both?)</li>
+<li>10 m Digital Elevation Map</li>
+<li>Viewing Geometry</li>
+<li>Solar Geometry</li>
+<li>Land Type</li>
+</ul>
+</section>
+<section id="targets-2" class="level3" data-number="8.3.4">
+<h3 data-number="8.3.4" class="anchored" data-anchor-id="targets-2"><span class="header-section-number">8.3.4</span> Targets</h3>
+<ul>
+<li>Sentinel RGB Bands @ NAIP Resolution</li>
+</ul>
+</section>
+<section id="loss-function-terms" class="level3" data-number="8.3.5">
+<h3 data-number="8.3.5" class="anchored" data-anchor-id="loss-function-terms"><span class="header-section-number">8.3.5</span> Loss Function Terms</h3>
+</section>
+<section id="notes" class="level3" data-number="8.3.6">
+<h3 data-number="8.3.6" class="anchored" data-anchor-id="notes"><span class="header-section-number">8.3.6</span> Notes</h3>
+<p>We could make a model that uses all 3 bands (RGB) simultaneously, or we can make a model for a single band that we validate against R, G, and B bands individually. This has the added perc of increasing the training samples. This will be much easier to then apply to <em>all</em> bands of the sentinel imagery (and perhaps Sentinel 1, etc…) independently. We could try:</p>
+<ul>
+<li>Red, Green, Blue bands separately</li>
+<li>Black and White converted RGB image</li>
+<li>Data Augmentation via Scaling / Rotation / Reflection</li>
+</ul>
+</section>
+</section>
+<section id="sentinel-2-multiband-spatial-super-resolution" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="sentinel-2-multiband-spatial-super-resolution"><span class="header-section-number">8.4</span> Sentinel 2 Multiband <em>Spatial</em> Super Resolution</h2>
+<section id="ml-type-3" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="ml-type-3"><span class="header-section-number">8.4.1</span> ML Type</h3>
+<ul>
+<li>Supervised Regression</li>
+</ul>
+</section>
+<section id="ml-methods-3" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="ml-methods-3"><span class="header-section-number">8.4.2</span> ML Methods</h3>
+<ul>
+<li>This has to be a Deep NN method using convolution to get the upsampling. I don’t think we can do this with pixel based models (using tree methods)</li>
+<li>Probably should use a GAN</li>
+</ul>
+</section>
+<section id="features-3" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="features-3"><span class="header-section-number">8.4.3</span> Features</h3>
+<ul>
+<li>High (spatial) Resolution NAIP RGB Image</li>
+<li>Sentinel 2 Multi-band Imagery</li>
+<li>Sentinel 1 SAR Variables (GRD or SLC or both?)</li>
+<li>10 m Digital Elevation Map</li>
+<li>Viewing Geometry</li>
+<li>Solar Geometry</li>
+<li>Land Type</li>
+</ul>
+</section>
+<section id="targets-3" class="level3" data-number="8.4.4">
+<h3 data-number="8.4.4" class="anchored" data-anchor-id="targets-3"><span class="header-section-number">8.4.4</span> Targets</h3>
+<ul>
+<li>Sentinel RGB Bands @ NAIP Resolution</li>
+</ul>
+</section>
+<section id="loss-function-terms-1" class="level3" data-number="8.4.5">
+<h3 data-number="8.4.5" class="anchored" data-anchor-id="loss-function-terms-1"><span class="header-section-number">8.4.5</span> Loss Function Terms</h3>
+</section>
+</section>
+<section id="sentinel-2-multiband-spectral-super-resolution" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="sentinel-2-multiband-spectral-super-resolution"><span class="header-section-number">8.5</span> Sentinel 2 Multiband <em>Spectral</em> Super Resolution</h2>
+<section id="ml-type-4" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="ml-type-4"><span class="header-section-number">8.5.1</span> ML Type</h3>
+<ul>
+<li>Supervised Regression</li>
+</ul>
+</section>
+<section id="ml-methods-4" class="level3" data-number="8.5.2">
+<h3 data-number="8.5.2" class="anchored" data-anchor-id="ml-methods-4"><span class="header-section-number">8.5.2</span> ML Methods</h3>
+<ul>
+<li>This can be pixel based</li>
+</ul>
+</section>
+<section id="features-4" class="level3" data-number="8.5.3">
+<h3 data-number="8.5.3" class="anchored" data-anchor-id="features-4"><span class="header-section-number">8.5.3</span> Features</h3>
+<ul>
+<li>Sentinel 2 Multi-band Imagery</li>
+<li>Sentinel 1 SAR Variables (GRD or SLC or both?)</li>
+<li>10 m Digital Elevation Map</li>
+<li>Viewing Geometry</li>
+<li>Solar Geometry</li>
+<li>UAV Hyperspectral Image</li>
+</ul>
+</section>
+<section id="targets-4" class="level3" data-number="8.5.4">
+<h3 data-number="8.5.4" class="anchored" data-anchor-id="targets-4"><span class="header-section-number">8.5.4</span> Targets</h3>
+<ul>
+<li>Sentinel <em>Hyperspectral</em> Imagery (i.e.&nbsp;Sentinel at all HSI Bands)</li>
+</ul>
+</section>
+<section id="loss-function-terms-2" class="level3" data-number="8.5.5">
+<h3 data-number="8.5.5" class="anchored" data-anchor-id="loss-function-terms-2"><span class="header-section-number">8.5.5</span> Loss Function Terms</h3>
+<p>if we get to it… probably with a focus on Scotty’s Ranch</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../ML/Overview.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Machine Learning and Data-driven Methods</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../ChemicalMechanism/Overview.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chemical Data Assimilation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
