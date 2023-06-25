@@ -1,3 +1,10 @@
+::: {.content-visible when-format="html"}
+
+You can download the up-to-date pdf version of this [here](WiP--Physical-Sensing-Coupled-with-Physics-Based-Machine-Learning.pdf)
+
+:::
+
+
 # Introduction
 
 
