@@ -1,6 +1,5 @@
-# Key Technologies
+## Key Technologies
 
-## An Introduction to Some Key Tools Used in This Thesis
 
 ### Julia for Scientific Computing
 

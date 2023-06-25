@@ -1,1 +1,23 @@
 # Physical Context
+
+test text
+
+
+
+{{< include PollutionAndParticulateMatter.qmd >}}
+
+{{< include OpticalPropertiesOfAqueousSolutions.qmd >}}
+
+{{< include ChemicalReactionKinetics.qmd >}}
+
+{{< include Photolysis.qmd >}}
+
+{{< include IndoorAirQuality.qmd >}}
+
+{{< include HyperspectralImaging.qmd >}}
+
+{{< include RemoteSensing.qmd >}}
+
+{{< include SolarGeometry.qmd >}}
+
+

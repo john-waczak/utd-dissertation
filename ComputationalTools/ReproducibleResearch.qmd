@@ -2,3 +2,5 @@
 
 
 *principles & implementation*: version control, CI-CD, test-driven-development, containerization
+
+We should also discuss how *this dissertation is built* using quarto and github workflows. Similarly, we can discuss the process of building quarto templates via pandocs to target specific journals as well as pdf, web, and slides formats.

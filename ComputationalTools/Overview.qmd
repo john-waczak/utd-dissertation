@@ -1,1 +1,12 @@
 # Computational Tools
+
+
+{{< include Julia.qmd >}}
+
+{{< include ReproducibleResearch.qmd >}}
+
+{{< include SVD.qmd >}}
+
+{{< include OptimizationMethods.qmd >}}
+
+{{< include HighPerformanceComputing.qmd >}}

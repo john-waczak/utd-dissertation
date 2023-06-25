@@ -1,5 +1,9 @@
 # Introduction
 
+
+*NOTE*: For the proposal in particular, we should add a new section with timelines and a table of currently completed tasks.
+
+
 *NOTE*: We want to emphasize the need for reproducible research paradigms. This motivates 
 
 
@@ -24,64 +28,78 @@ Many advances in technology have enabled the creation of comprehensive sensing s
 
 
 
-Other sections to ponder: 
+{{< include Introduction/DissertationGoal.qmd >}}
 
-## Particulate Matter 
+{{< include Introduction/GlobalChange.qmd >}}
 
-- definitions 
-- sensing methods 
-- physics of... 
-- air quality
-- consequences of...
+{{< include Introduction/KeyTechnologies.qmd >}}
 
-## Optics of Aqueous Chemicals
-
-- incident solar radiation 
-- transport through the atmosphere
-- Motivating relationship: Beer-Lambert Law
-  - what happens when we have multiple dissolved species? i.e. justification for use of ML
-  - 
-- section in jackson about reflectivity of water
-- Types of spectra we deal with: 
-  - reflectance 
-  - radiance 
-  - solar irradiance
-- Solar Geometry 
-
-## Chemical Reaction Kinetics for the Working Physicist
-
-- reaction extent 
-- Gibbs free energy (mountain-valley-hill)
-- reaction order 
-- reaction networks 
-- graph theory for reaction networks 
-- fundamental reactions 
-- bimolecular, trimolecular 
-- derivation via kinetic theory 
-- the Maxwell-Boltzmann distribution 
-- Photolysis
-
-## Remote Sensing 
-
-- Hyper spectral images 
-- types of Imagers 
-- Vegetation Indices 
-- Orthorectification + Georeferencing = Georectification
+{{< include Introduction/ML.qmd >}}
 
 
-## On the calibration of measurement devices... 
-
-- discuss standard curve fitting used for *most* reference instrument calibration
-- discuss value of ML for doing the same 
-- stress importance of probabilistic models 
-- non-parametric, non-linear...
 
 
-## Uncertainty Quantification
+NOTE:  perhaps add section on increasing concerns about indoor air quality (use EPA RFI document). I think ideally we should break down the introduction by sensing domain
 
-- standard methods (linear propagation of uncertainty)
-- `Measurments.jl`, i.e., why Julia is awesome
-- Bayesian frameworks, Ensemble sampling, Markov-Chain-Monte-Carlo
-- Bayesian Regression
-- Kernelization and Gaussian Processes
-- Conformal Prediction and Frequentist Statistics
+
+<!-- Other sections to ponder:  -->
+
+<!-- ## Particulate Matter  -->
+
+<!-- - definitions  -->
+<!-- - sensing methods  -->
+<!-- - physics of...  -->
+<!-- - air quality -->
+<!-- - consequences of... -->
+
+<!-- ## Optics of Aqueous Chemicals -->
+
+<!-- - incident solar radiation  -->
+<!-- - transport through the atmosphere -->
+<!-- - Motivating relationship: Beer-Lambert Law -->
+<!--   - what happens when we have multiple dissolved species? i.e. justification for use of ML -->
+<!--   -  -->
+<!-- - section in jackson about reflectivity of water -->
+<!-- - Types of spectra we deal with:  -->
+<!--   - reflectance  -->
+<!--   - radiance  -->
+<!--   - solar irradiance -->
+<!-- - Solar Geometry  -->
+
+<!-- ## Chemical Reaction Kinetics for the Working Physicist -->
+
+<!-- - reaction extent  -->
+<!-- - Gibbs free energy (mountain-valley-hill) -->
+<!-- - reaction order  -->
+<!-- - reaction networks  -->
+<!-- - graph theory for reaction networks  -->
+<!-- - fundamental reactions  -->
+<!-- - bimolecular, trimolecular  -->
+<!-- - derivation via kinetic theory  -->
+<!-- - the Maxwell-Boltzmann distribution  -->
+<!-- - Photolysis -->
+
+<!-- ## Remote Sensing  -->
+
+<!-- - Hyper spectral images  -->
+<!-- - types of Imagers  -->
+<!-- - Vegetation Indices  -->
+<!-- - Orthorectification + Georeferencing = Georectification -->
+
+
+<!-- ## On the calibration of measurement devices...  -->
+
+<!-- - discuss standard curve fitting used for *most* reference instrument calibration -->
+<!-- - discuss value of ML for doing the same  -->
+<!-- - stress importance of probabilistic models  -->
+<!-- - non-parametric, non-linear... -->
+
+
+<!-- ## Uncertainty Quantification -->
+
+<!-- - standard methods (linear propagation of uncertainty) -->
+<!-- - `Measurments.jl`, i.e., why Julia is awesome -->
+<!-- - Bayesian frameworks, Ensemble sampling, Markov-Chain-Monte-Carlo -->
+<!-- - Bayesian Regression -->
+<!-- - Kernelization and Gaussian Processes -->
+<!-- - Conformal Prediction and Frequentist Statistics -->

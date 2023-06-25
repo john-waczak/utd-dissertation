@@ -1,6 +1,6 @@
 project:
   type: book
-  output-dir: docs
+  # output-dir: docs
 
 book:
   title: "WiP: Physical Sensing Coupled with Physics Based Machine Learning"  # Sensing, Simulation, and ... 
@@ -8,99 +8,23 @@ book:
   date: today
   chapters:
     - index.qmd
-    - Introduction/DissertationGoal.qmd
-    - Introduction/GlobalChange.qmd
-    - Introduction/KeyTechnologies.qmd
-    - Introduction/ML.qmd
-    # perhaps add section on increasing concerns about indoor air quality (use EPA RFI document). I think ideally we should break down the introduction by sensing domain
-
     - PhysicalContext/Overview.qmd
-    - PhysicalContext/PollutionAndParticulateMatter.qmd
-    - PhysicalContext/OpticalPropertiesOfAqueousSolutions.qmd
-    - PhysicalContext/ChemicalReactionKinetics.qmd
-    - PhysicalContext/Photolysis.qmd
-    - PhysicalContext/IndoorAirQuality.qmd  # PM, CoC, VOCs, SOA, etc...
-    - PhysicalContext/HyperspectralImaging.qmd
-    - PhysicalContext/RemoteSensing.qmd
-    - PhysicalContext/SolarGeometry.qmd
-
     - PhysicalSensing/Overview.qmd
-    - PhysicalSensing/LowCostOutdoorAir.qmd
-    - PhysicalSensing/SensingInWater.qmd
-    - PhysicalSensing/CoordinatedRobotTeams.qmd
-    - PhysicalSensing/HEART-chamber.qmd
-
     - ComputationalTools/Overview.qmd
-    - ComputationalTools/Julia.qmd
-    - ComputationalTools/ReproducibleResearch.qmd  
-    - ComputationalTools/SVD.qmd
-    - ComputationalTools/OptimizationMethods.qmd
-    - ComputationalTools/HighPerformanceComputing.qmd
-
-    - TheoreticalTools/Overview.qmd 
-    - TheoreticalTools/AutomaticDifferentiation.qmd
-    - TheoreticalTools/DualNumbers.qmd
-    - TheoreticalTools/EmbeddingTheorems.qmd
-    - TheoreticalTools/Koopman.qmd
-    - TheoreticalTools/BayesianStatistics.qmd  
-    - TheoreticalTools/MaximumLikelihoodEstimation.qmd
-    - TheoreticalTools/KL-divergence.qmd
-    - TheoreticalTools/MathematicalStructure.qmd 
-    - TheoreticalTools/UncertaintyPropagation.qmd 
-    - TheoreticalTools/Kernelization.qmd
-    - TheoreticalTools/DynamicalSystems.qmd  
-
+    - TheoreticalTools/Overview.qmd
     - ML/Overview.qmd
-    - ML/DataSampling.qmd
-    - ML/NeuralNetworks.qmd
-    - ML/DecisionTrees.qmd
-    - ML/GaussianProcessRegression.qmd
-    - ML/ModelEnsembling.qmd
-    - ML/SuperLearners.qmd
-    - ML/SelfOrganizingMaps.qmd
-    - ML/GenerativeTopographicMaps.qmd
-    - ML/DataAssimilation.qmd
-    - ML/ConformalPrediction.qmd
-    - ML/GenerativeMethods.qmd
-    - ML/TopologicalDataAnalysis.qmd
-    - ML/AutoEncoders.qmd
-    - ML/PhysicsInformed.qmd
-    - ML/UDEs.qmd
-
     - RobotTeam/Overview.qmd
-    - RobotTeam/Georectification.qmd
-    - RobotTeam/SupervisedMethods.qmd  # i.e. paper # 1 
-    - RobotTeam/UnsupervisedMethods.qmd  # i.e. paper # 2 
-    - RobotTeam/RobotTeam.qmd  # i.e. the stuff regarding the full robot team that appeared in our 2020 robot team paper.
-    - RobotTeam/SuperResolution.qmd  # if we get to it... probably with a focus on Scotty's Ranch
-
     - ChemicalMechanism/Overview.qmd
-    - ChemicalMechanism/Photolysis.qmd
-    - ChemicalMechanism/HEART.qmd
-    - ChemicalMechanism/MasterChemicalMechanism.qmd
-    - ChemicalMechanism/CRI.qmd
-    - ChemicalMechanism/AutoChem.qmd
-    - ChemicalMechanism/IonChemistry.qmd
-    - ChemicalMechanism/IndoorAirQuality.qmd          # tests sans-ActivePure
-    - ChemicalMechanism/PhotocatalyticIonization.qmd  # tests with ActivePure
-
-
     - TimeSeries/Overview.qmd
-    - TimeSeries/TimeSeries.qmd
-    - TimeSeries/SensorNetwork.qmd
-
     - Discussion/Overview.qmd
-    - Discussion/Limitations.qmd
-    - Discussion/FutureWork.qmd
-
     - Conclusions.qmd
-
     - Extras/TechnicalNotes.qmd
     - Extras/OtherTopics.qmd
 
     - references.qmd
   appendices:
     - Appendices/appendix.qmd
+    - Appendices/EEG-band-discovery.qmd
 
 bibliography: references.bib
 

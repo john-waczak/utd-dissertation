@@ -1,1 +1,10 @@
 # Physical Sensing
+
+
+{{< include LowCostOutdoorAir.qmd >}}
+
+{{< include SensingInWater.qmd >}}
+
+{{< include CoordinatedRobotTeams.qmd >}}
+
+{{< include HEART-chamber.qmd >}}
