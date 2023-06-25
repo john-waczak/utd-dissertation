@@ -16,17 +16,24 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Render Book project
-        uses: quarto-dev/quarto-actions/render@v2
         with:
-          to: html
+          tinytex: true
+
+      # - name: Render Website
+      #   uses: quarto-dev/quarto-actions/render@v2
+      #   with:
+      #     to: html
+
+      # - name: Render PDf
+      #   uses: quarto-dev/quarto-actions/render@v2
+      #   with:
+      #     to: utd-pdf
 
       - name: Publish HTML book
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
-          render: false
+          # render: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

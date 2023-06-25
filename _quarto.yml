@@ -66,6 +66,7 @@ format:
   html:
     theme: cosmo
   utd-pdf:
+#    pdf-engine: pdflatex
     keep-tex: true
 
 
