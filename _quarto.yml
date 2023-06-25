@@ -25,6 +25,8 @@ book:
     - Appendices/appendix.qmd
     - Appendices/EEG-band-discovery.qmd
 
+  downloads: [pdf]
+
 bibliography: references.bib
 
 spacing: "doublespacing"
@@ -62,10 +64,8 @@ execute:
 
 format:
   html:
-    toc: true
     theme: cosmo
   utd-pdf:
     keep-tex: true
-
 
 
