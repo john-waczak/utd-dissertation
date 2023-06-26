@@ -62,6 +62,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -224,8 +226,14 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#chemical-reaction-kinetics" id="toc-chemical-reaction-kinetics" class="nav-link" data-scroll-target="#chemical-reaction-kinetics"><span class="header-section-number">2.3</span> Chemical Reaction Kinetics</a></li>
   <li><a href="#photolysis" id="toc-photolysis" class="nav-link" data-scroll-target="#photolysis"><span class="header-section-number">2.4</span> Photolysis</a></li>
   <li><a href="#indoor-air-quality" id="toc-indoor-air-quality" class="nav-link" data-scroll-target="#indoor-air-quality"><span class="header-section-number">2.5</span> Indoor Air Quality</a></li>
-  <li><a href="#hyperspectral-imaging" id="toc-hyperspectral-imaging" class="nav-link" data-scroll-target="#hyperspectral-imaging"><span class="header-section-number">2.6</span> Hyperspectral Imaging</a></li>
-  <li><a href="#remote-sensing" id="toc-remote-sensing" class="nav-link" data-scroll-target="#remote-sensing"><span class="header-section-number">2.7</span> Remote Sensing</a></li>
+  <li><a href="#hyperspectral-imaging" id="toc-hyperspectral-imaging" class="nav-link" data-scroll-target="#hyperspectral-imaging"><span class="header-section-number">2.6</span> Hyperspectral Imaging</a>
+  <ul class="collapse">
+  <li><a href="#hyperspectal-imaging-sensors" id="toc-hyperspectal-imaging-sensors" class="nav-link" data-scroll-target="#hyperspectal-imaging-sensors"><span class="header-section-number">2.6.1</span> Hyperspectal Imaging Sensors</a></li>
+  </ul></li>
+  <li><a href="#remote-sensing" id="toc-remote-sensing" class="nav-link" data-scroll-target="#remote-sensing"><span class="header-section-number">2.7</span> Remote Sensing</a>
+  <ul class="collapse">
+  <li><a href="#infrared-sensing-phenomenology" id="toc-infrared-sensing-phenomenology" class="nav-link" data-scroll-target="#infrared-sensing-phenomenology"><span class="header-section-number">2.7.1</span> Infrared Sensing Phenomenology</a></li>
+  </ul></li>
   <li><a href="#solar-geometry" id="toc-solar-geometry" class="nav-link" data-scroll-target="#solar-geometry"><span class="header-section-number">2.8</span> Solar Geometry</a></li>
   </ul>
 </nav>
@@ -275,10 +283,145 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="hyperspectral-imaging" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="hyperspectral-imaging"><span class="header-section-number">2.6</span> Hyperspectral Imaging</h2>
+<p>The following are notes from the Manolakis textbook that I originally kept <a href="https://github.com/john-waczak/dissertation/blob/main/notes/remote_sensing/Manolakis/Introduction.md">here</a>. NOTE: we will need to either make new figures or correctly cite these for attribution.</p>
+<section id="hyperspectal-imaging-sensors" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="hyperspectal-imaging-sensors"><span class="header-section-number">2.6.1</span> Hyperspectal Imaging Sensors</h3>
+<ul>
+<li><strong>Hyperspectral Sensors</strong> aka imaging spectrometers
+<ul>
+<li>scanning mechanism</li>
+<li>imaging system</li>
+<li>spectrometer</li>
+</ul></li>
+<li>3 types of resolution</li>
+</ul>
+<ol type="1">
+<li>spatial</li>
+<li>spectral</li>
+<li>radiant</li>
+<li>(temporal?)</li>
+</ol>
+<section id="spectral-spatial-data-collection-and-organization" class="level4" data-number="2.6.1.1">
+<h4 data-number="2.6.1.1" class="anchored" data-anchor-id="spectral-spatial-data-collection-and-organization"><span class="header-section-number">2.6.1.1</span> Spectral-Spatial Data Collection and Organization</h4>
+<ul>
+<li>Data collected into <strong>Data Cube</strong>
+<ul>
+<li>2 spatial dimensions, 1 spectral dimension</li>
+</ul></li>
+</ul>
+<p><img src="./figures/datacube.png" class="img-fluid" alt="Data Cube"> <img src="./figures/pushbroom.png" class="img-fluid" alt="Pushbroom"></p>
+<ul>
+<li>Different types of rigs:
+<ul>
+<li>Pushbroom scanner (ours)</li>
+<li>Staring System</li>
+<li>Fourier Transform Imaging Spectrometer (FTIS)</li>
+</ul></li>
+</ul>
+</section>
+<section id="spatial-sampling" class="level4" data-number="2.6.1.2">
+<h4 data-number="2.6.1.2" class="anchored" data-anchor-id="spatial-sampling"><span class="header-section-number">2.6.1.2</span> Spatial Sampling</h4>
+<ul>
+<li>ground resolution elements are mapped to picture elements (pixels)</li>
+<li><strong>IFOV</strong>: Instantaneous Field of View</li>
+<li><strong>Cross track dimension</strong> the projection of the long axis of the slit (i.e.&nbsp;the axis of the pushbroom sensors)</li>
+<li><strong>Along track dimension</strong> the direction accumulated by traveling</li>
+<li><strong>Ground Sample Distance</strong> physical size of projected pixel element</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./figures/scanningProcedure.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">viewing</figcaption>
+</figure>
+</div>
+</section>
+<section id="spectral-sampling" class="level4" data-number="2.6.1.3">
+<h4 data-number="2.6.1.3" class="anchored" data-anchor-id="spectral-sampling"><span class="header-section-number">2.6.1.3</span> Spectral Sampling</h4>
+<ul>
+<li>Recovery of spectral info is <em>imperfect</em> due to finite sampling</li>
+<li><strong>Spectral Response Function</strong> is the weighing function that describes the wavelengths that are transmitted to a particular spectral sample</li>
+</ul>
+</section>
+<section id="radiometric-sampling" class="level4" data-number="2.6.1.4">
+<h4 data-number="2.6.1.4" class="anchored" data-anchor-id="radiometric-sampling"><span class="header-section-number">2.6.1.4</span> Radiometric Sampling</h4>
+<ul>
+<li>detector transforms radiant power to electrical signal</li>
+<li>electrical signal converted to numbe via analog-to-digital converter</li>
+<li>photon detectors</li>
+</ul>
+</section>
+<section id="signal-consideratiosn" class="level4" data-number="2.6.1.5">
+<h4 data-number="2.6.1.5" class="anchored" data-anchor-id="signal-consideratiosn"><span class="header-section-number">2.6.1.5</span> Signal Consideratiosn</h4>
+<p>Strength of signal is determined by: - <em>Terrain composition</em> <span class="math inline">\(\to\)</span> affects amount of radiant energy reflected/emitted from ground resolution element - <em>Range</em> Intensity drops off by inverse square law. Further you are away, the worse the signal - <em>Spectral Bandwidth</em> output signal of detector element is proportional to spectral bandwidth of the detector - <em>Instantaneous Field of View</em> Decreasing IFOV increases spatial resolution but weakens the signal - <em>Dwell Time</em> the time required to sweep the IFOV across the ground resolution element, i.e.&nbsp;the time-on-pixel. Longer dwell time <span class="math inline">\(\to\)</span> more accumulated photons <span class="math inline">\(\to\)</span> more signal.</p>
+</section>
+</section>
 </section>
 <section id="remote-sensing" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="remote-sensing"><span class="header-section-number">2.7</span> Remote Sensing</h2>
 <p>mention different types of satellite data platforms (mostly optical), differences in orbits, coverage, etc… Also good to discuss the increasing use of drones for a variety of applications including intelligent agriculture, geophysics, mapping, etc…</p>
+<ul>
+<li><strong>Remote Sensing</strong>: data acquisition, processing, and interpretation of images, and related data, obtained from aircraft and satellites that record the interaction between matter and electromagnetic radiation</li>
+<li><strong>Source</strong>: the source of electromagnetic radiation, e.g.&nbsp;the sun, black-body radiation, microwave radar, etc…</li>
+<li><strong>Atmospheric Radiation</strong>: The EM radiation propagating through the atmosphere. Moderated by various processes including absorption and scattering</li>
+<li><strong>Earth’s Surface Interation</strong>: Amount and spectral distribution of radiation emitted/reflected by the earth’s surface. This depends on
+<ul>
+<li>physical properties of the matter</li>
+<li>wavelength of EM radiation that is sensed</li>
+</ul></li>
+</ul>
+<section id="infrared-sensing-phenomenology" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="infrared-sensing-phenomenology"><span class="header-section-number">2.7.1</span> Infrared Sensing Phenomenology</h3>
+<ul>
+<li>Main passive sources of EM radiation for remote sensing are light emitted by the sun and the self-emission via black-body radiation of objects due to their temperature.</li>
+</ul>
+<section id="sources-of-infrared-radiation" class="level4" data-number="2.7.1.1">
+<h4 data-number="2.7.1.1" class="anchored" data-anchor-id="sources-of-infrared-radiation"><span class="header-section-number">2.7.1.1</span> Sources of Infrared Radiation</h4>
+<ul>
+<li><strong>spectral radiant exitance</strong> power per unit area emitted by the sun. We can treat this as a black body with temperature <span class="math inline">\(5800 K\)</span>, maximum emittance at <span class="math inline">\(\lambda = 0.50\)</span> <span class="math inline">\(\mu m\)</span>.</li>
+<li>The Earth is ~<span class="math inline">\(300 K\)</span> with maximum spectral radiant emittance at <span class="math inline">\(\lambda = 9.7\)</span> <span class="math inline">\(\mu m\)</span>. This is known as the <strong>thermal infrared</strong></li>
+</ul>
+</section>
+<section id="atmospheric-propagation" class="level4" data-number="2.7.1.2">
+<h4 data-number="2.7.1.2" class="anchored" data-anchor-id="atmospheric-propagation"><span class="header-section-number">2.7.1.2</span> Atmospheric Propagation</h4>
+<ul>
+<li>Key parameter is the <strong>path length</strong> of atmosphered traveled through before it arrives at the remote sensing system. Main effects are:
+<ul>
+<li><strong>Atmospheric Scattering</strong>: diffusion of radiation by particles in the atmosphere</li>
+<li><strong>Absorption</strong></li>
+</ul></li>
+<li>Useful remote sensing spectral regions are obtained via the <strong>Transmission Spectrum</strong>.
+<ul>
+<li><strong>Reflective Range</strong>: <span class="math inline">\(0.35-2.5\)</span> <span class="math inline">\(\mu m\)</span>. Dominated by solar illumination</li>
+<li><strong>Water Absorption</strong>: <span class="math inline">\(0.2-2.5\)</span> <span class="math inline">\(\mu m\)</span>.</li>
+</ul></li>
+<li><strong>Atmospheric Windows</strong>: Regions of low atmospheric absorption</li>
+</ul>
+</section>
+<section id="reflectance-and-emissivity-spectra" class="level4" data-number="2.7.1.3">
+<h4 data-number="2.7.1.3" class="anchored" data-anchor-id="reflectance-and-emissivity-spectra"><span class="header-section-number">2.7.1.3</span> Reflectance and Emissivity Spectra</h4>
+<p>There are three processes that occur when EM radiation meets and interface:</p>
+<ol type="1">
+<li><strong>Reflection</strong>: Solar illumination dominates here. Consequently, this part of the spectrum is used to characterize the surface
+<ul>
+<li><em>Specular Reflectors</em>: Flat surfaces that act like mirrors, i.e.&nbsp;<span class="math inline">\(\theta_i = \theta_r\)</span>.</li>
+<li><em>Diffuse (Lambertian) Reflectors</em>: Rough surfaces that reflect uniformly in all directions.</li>
+<li><em>Real Reflectors</em>: Somewhere between the specular and diffuse.</li>
+</ul></li>
+<li><strong>Absorption</strong></li>
+<li><strong>Transmission</strong></li>
+</ol>
+<ul>
+<li>Fractions vary as a function of <span class="math inline">\(\lambda\)</span></li>
+<li>Remote sensing usually cares about <em>diffuse</em> reflectors because this is the dominant type of most materials (water being an exception).</li>
+<li>Reflectance of a material is characterized by its <strong>Reflectance Spectrum</strong>, that is, the percent of incident light reflected as a function of wavelength.
+<ul>
+<li>Dips in reflectance spectrum are called <strong>absorption features</strong></li>
+<li>Peaks are called <strong>Reflectance Peaks</strong></li>
+</ul></li>
+<li><strong>Emissivity Spectrum</strong>: The ratio of radiant emittance at a given temperature to the radiant emittance of a black body at the same temperature.</li>
+</ul>
+</section>
+</section>
 </section>
 <section id="solar-geometry" class="level2" data-number="2.8">
 <h2 data-number="2.8" class="anchored" data-anchor-id="solar-geometry"><span class="header-section-number">2.8</span> Solar Geometry</h2>
