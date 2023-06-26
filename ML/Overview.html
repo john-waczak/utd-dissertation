@@ -344,7 +344,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="summary" class="level3" data-number="6.9.3">
 <h3 data-number="6.9.3" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.9.3</span> Summary</h3>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     &amp;u_k^{(t)} \in \mathbb{R}^n &amp;\text{the true state vector} \\
     &amp;u_k^{(b)} \in \mathbb{R}^n &amp;\text{the kth model forecast} \\
     &amp;u_k^{(a)} \in \mathbb{R}^n &amp;\text{the analysis} \\
@@ -356,24 +356,24 @@ ul.task-list li input[type="checkbox"] {
     &amp;\mathcal{M}:\mathbb{R}^n\to\mathbb{R}^n &amp;\text{the model update function}\\
     &amp;f:\mathbb{R}^n\to\mathbb{R}^n &amp;\text{differential equation model}\\
     &amp;h:\mathbb{R}^n\to\mathbb{R}^m  &amp;\text{observation function}
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 </section>
 <section id="assumptions" class="level3" data-number="6.9.4">
 <h3 data-number="6.9.4" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">6.9.4</span> Assumptions</h3>
 <p>To make possible the derivation of a <em>unique</em> analysis <span class="math inline">\(u^{(a)}\)</span>, the following assumptions are in order.</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     &amp;\mathbb{E}[\xi_k^{(b)}] = 0 &amp; &amp;\mathbb{E}[\xi_k^{(b)}(\xi_j^{(b)})^T] = 0 \text{ for } k\neq j\\
     &amp;\mathbb{E}[\xi_k^{(m)}] = 0 &amp; &amp;\mathbb{E}[\xi_k^{(m)}(\xi_j^{(m)})^T] = 0 \text{ for } k\neq j\\
     &amp;\mathbb{E}[\xi_k^{(b)}(u_0)^T] = 0 &amp; &amp;\mathbb{E}[\xi_k^{(m)}(u_0)^T] = 0\\
     &amp;\mathbb{E}[\xi_k^{(b)}\xi_j^{(m)}] = 0 &amp; &amp;  \\
     &amp;\mathbb{E}[u_k^{(t)}] = u_k^{(b)} &amp; &amp;
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>We also define the error covariance matrices</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     Q_k &amp;:= \mathbb{E}[\xi_k^{(p)}(\xi_k^{(p)})^T] \\
     R_k &amp;:= \mathbb{E}[\xi_k^{(m)}(\xi_k^{(m)})^T] \\
     B_k &amp;:= \mathbb{E}[\xi_k^{(b)}(\xi_k^{(b)})^T]
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>which we will use in our consideration of the final error of our analysis.</p>
 </section>
 <section id="kalman-filtering" class="level3" data-number="6.9.5">
@@ -381,10 +381,10 @@ ul.task-list li input[type="checkbox"] {
 <p>Given some model for the error covariance matrices <span class="math inline">\(Q_k\)</span> and <span class="math inline">\(R_k\)</span>, we would like a method that propagates <em>both</em> our model <strong>and</strong> the errors forward. This way we may guarantee that the accuracy of our analysis doesn’t come at the cost of higher uncertainty.</p>
 <p>The original implementation of the Kalman filter was for strictly linear systems. We will first develop the analysis for this simplified case adn then will generalize to the <strong>Extended Kalman Filter</strong> (EKF) that can handle fully nonlinear situations.</p>
 <p>In the linear case, our system may be written as</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     u_{k+1}^{(t)} &amp;= M_ku_k^{(t)} + \xi_{k+1}^{(p)} \\
     w_k &amp;= H_ku_k^{(t)} + \xi_k^{(m)}
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>where <span class="math inline">\(M_k\)</span> and <span class="math inline">\(H_k\)</span> are now matrices defining the linear problem.</p>
 <p>The goal of the Kalman filter is to derive the analysis <span class="math inline">\(u^{(a)}\)</span> which optimizes the trace of the analysis error covariance matrix (i.e.&nbsp;sum of squared errors):</p>
 <p><span class="math display">\[\begin{equation}
@@ -398,17 +398,17 @@ ul.task-list li input[type="checkbox"] {
     u_{k+1}^{(b)} = M_ku_k^{(a)}
 \end{equation}\]</span></p>
 <p>The background error is therefore</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     \xi_{k+1}^{(b)} &amp;= u_{k+1}^{(t)} - u_{k+1}^{(b)} \\
     &amp;= M_ku_k^{(t)}+\xi_{k+1}^{(p)} - M_{k}u_k^{(a)} \\
     &amp;= M_k\left(u_k^{(t)}-u_k^{(a)} \right) + \xi_{k+1}^{(p)} \\
     &amp;= M_k\xi_k^{(a)} + \xi_{k+1}^{(p)}
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>We may now evaluate the covariance matrix of our background estimate as:</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     B_{k+1} &amp;= \mathbb{E}[\xi_{k+1}^{(b)}(\xi_{k+1}^{(b)})^T] \\
     &amp;= \mathbb{E}\left[\left(M_k\xi_k^{(a)} + \xi_{k+1}^p \right) \left(M_k\xi_k^{(a)} + \xi_{k+1}^p \right)^T \right] \\
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>If we presume that <span class="math inline">\(\mathbb{E}[\xi_k^{(b)}(\xi_{k+1}^{(p)})^T] = 0\)</span>, then the cross terms vanish and we are left with</p>
 <p><span class="math display">\[\begin{equation}
     \boxed{B_{k+1} = M_kP_kM_k^T + Q_{k+1}}
@@ -422,7 +422,7 @@ ul.task-list li input[type="checkbox"] {
     u_{k+1}^{(a)} = \nu + K_{k+1}w_{k+1}
 \end{equation}\]</span></p>
 <p>for some vector <span class="math inline">\(\nu\in\mathbb{R}^n\)</span> and matrix <span class="math inline">\(K_{k+1}\in\mathbb{R}^{m\times n}\)</span>. In a perfect world, we would have <span class="math inline">\(\mathbb{E}[u_{k}^{(t)}-u_{k}^{(a)}] = 0\)</span>. Therefore,</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     0 &amp;= \mathbb{E}[u_k^{(t)} - u_k^{(a)}] \\
     &amp;= \mathbb{E}[(u_k^{(b)} + \xi_k^{(b)}) - (\nu + K_kw_k)] \\
     &amp;= \mathbb{E}[(u_k^{(b)} + \xi_k^{(b)}) - (\nu + K_kH_ku_k^{(t)} + K_k\xi_k^{(m)})] \\
@@ -430,13 +430,13 @@ ul.task-list li input[type="checkbox"] {
     &amp;= u_k^{(b)} + 0 - \nu - K_kH_ku_k^{(b)} - 0 \\
     &amp;= u_k^{(b)} - \nu - K_kH_ku_k^{(b)} \\
     \Rightarrow \nu &amp;= u_k^{(b)} - K_kH_ku_k^{(b)}
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>which we now substitute to obtain</p>
 <p><span class="math display">\[\begin{equation}
     \boxed{u_k^{(a)} = u_k^{(b)} + K_k(w_k - H_ku_k^{(b)})}
 \end{equation}\]</span></p>
 <p>Now that we know the form for the analysis we may derive the optimal matrix <span class="math inline">\(K_k\)</span> by optimization of <span class="math inline">\(P_k\)</span>. We have</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     \xi_k^{(a)} &amp;= u_k^{(t)} - u_k^{(a)} \\
                 &amp;= M_{k-1}u_{k-1}^{(t)} + \xi_{k}^{(p)} - u_k^{(b)} - K_k\left(w_k - H_ku_k^{(b)} \right) \\
                 &amp;= M_{k-1}u_{k-1}^{(t)} + \xi_{k}^{(p)} - M_{k-1}u_{k-1}^{(a)} - K_k\left(H_ku_k^{(t)} + \xi_k^{(m)} - H_ku_k^{(b)} \right) \\
@@ -449,34 +449,34 @@ ul.task-list li input[type="checkbox"] {
                 &amp;= M_{k-1}\xi_{k-1}^{(a)} + \xi_{k}^{(p)} - K_kH_kM_{k-1}(\xi_{k-1}^{(a)} + u_{k-1}^a) - K_kH_k\xi_k^{(b)} + K_kH_kM_{k-1}u_{k-1}^{(a)} - K_k\xi_k^{(m)}\\
                 &amp;= M_{k-1}\xi_{k-1}^{(a)} + \xi_{k}^{(p)} - K_kH_kM_{k-1}\xi_{k-1}^{(a)} - K_kH_k\xi_k^{(b)} - K_k\xi_k^{(m)}\\
                 &amp;= \big(I-K_kH_k \big)(M_{k-1}\xi_{k-1}^{(a)} - \xi_{k}^p) - K_k\xi_k^{(m)}\\
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>and therefore the covariance matrix is</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     P_k &amp;= \mathbb{E}[\xi_{k}^{(a)}(\xi_{k}^{(a)})^T] \\
         &amp;= \mathbb{E}\Big[\left(\big(I-K_kH_k \big)(M_{k-1}\xi_{k-1}^{(a)} - \xi_{k}^p) - K_k\xi_k^{(m)} \right) \left(\big(I-K_kH_k \big)(M_{k-1}\xi_{k-1}^{(a)} - \xi_{k}^p) - K_k\xi_k^{(m)} \right)^T \Big] \\
         &amp;= \big(I-K_kH_k \big)M_{k-1}\mathbb{E}[\xi_{k-1}^{(a)}(\xi_{k-1}^{(a)})^T]M_{k-1}^T\big(I-K_kH_k \big)^T + \big(I-K_kH_k \big)\mathbb{E}[\xi_k^{(p)}(\xi_k^{(p)})^T]\big(I-K_kH_k \big)^T \\
         &amp; \qquad \qquad - K_k\mathbb{E}[\xi_{k}^{(m)}(\xi_k^{(m)})^T]K_k^T \\
         &amp;= \big(I-K_kH_k \big)B_k\big(I-K_kH_k \big)^T - K_kR_kK_k^T
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 </section>
 <section id="deriving-k_k" class="level4" data-number="6.9.5.3">
 <h4 data-number="6.9.5.3" class="anchored" data-anchor-id="deriving-k_k"><span class="header-section-number">6.9.5.3</span> Deriving <span class="math inline">\(K_k\)</span></h4>
 <p>The Kalman filter is defined at that <span class="math inline">\(K_k\)</span> which which minimizes the sum of squared analysis errors, i.e.&nbsp;the trace of the analysis error covariance matrix. The following identies will be useful:</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     \mathop{\nabla}_{A}\text{tr}(AB) &amp;= B^T \\
     \mathop{\nabla}_{A}\text{tr}(BA^T) &amp;= B \\
     \mathop{\nabla}_{A}\text{tr}(ABA^T) &amp;= AB^T + AB  \\
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>from which we obtain</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     0 &amp;= \mathop{\nabla}_{K_k}\text{tr}(P_k) \\
       &amp;= \mathop{\nabla}_{K_k}\Big\{ B_k -B_kH_k^TK_k^T - K_kH_kB_k  + K_kH_kB_kH_k^TB_k^T - K_kR_kK_k^T \Big\} \\
       &amp;= -B_kH_k^T - (H_kB_k)^T + K_k\left[H_kB_kH_k^T + (H_kB_kH_k^T)^T - R_k+R_k^T\right] \\
       &amp;= -2B_kH_k^T + 2K_k\left(H_kB_kH_k^2 - R_k \right) \\
   \Rightarrow K_k &amp;= B_kH_k^T\Big[ H_kB_kH_k^T - R_k \Big]^{-1}
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>we now substitute this result to obtain a simplified form for <span class="math inline">\(P_k\)</span>.</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     P_k &amp;= \left(I - K_kH_k \right)B_k\left(I - K_kH_k \right)^T + K_kR_kK_k^T \\
         &amp;= \left(I - K_kH_k \right)B_k - \left(I - K_kH_k \right)B_k\left(K_kH_k \right)^T + K_kR_kK_k^T \\
         &amp;= \left(I - K_kH_k \right)B_k -\left\{ \left(I - K_kH_k \right)B_k\left(K_kH_k \right)^T + K_kR_kK_k^T \right\} \\
@@ -485,7 +485,7 @@ ul.task-list li input[type="checkbox"] {
         &amp;= \left(I - K_kH_k \right)B_k -\left\{ B_kH_k^T - K_k\left( H_kB_kH_k^T + R_k \right)  \right\}K_k^T \\
         &amp;= \left(I - K_kH_k \right)B_k -\left\{ B_kH_k^T - B_kH_k^T \right\}K_k^T \\
         &amp;= \left(I - K_kH_k \right)B_k
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p><strong>NOTE</strong>: we have used the fact that covariance matrices are symmetric.</p>
 </section>
 <section id="summary-1" class="level4" data-number="6.9.5.4">
@@ -495,45 +495,45 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Initialization We must set the system to some initial condition. This means we must define <span class="math inline">\(u_0^a\)</span> and <span class="math inline">\(P_0\)</span>. We must also come up with a model for the process noise covariance <span class="math inline">\(Q_k\)</span> and measurement error covariance <span class="math inline">\(R_k\)</span>.</p></li>
 <li><p>Forecast Step</p></li>
 </ol>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     u_k^{(b)} &amp;= M_{k-1}u_{k-1}^{(a)} \\
     B_k &amp;= M_{k-1}P_{k-1}M_{k-1}^T + Q_{k}
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <ol start="3" type="1">
 <li>Assimilation Step</li>
 </ol>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     K_k &amp;= B_kH_k^T\Big[ H_kB_kH_k^T - R_k \Big]^{-1}  \\
     u_k^{(a)} &amp;= u_k^{(b)} + K_k(w_k - H_ku_k^{(b)})\\
     P_k &amp;= \left(I - K_kH_k \right)B_k
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 </section>
 </section>
 <section id="extended-kalman-filter" class="level3" data-number="6.9.6">
 <h3 data-number="6.9.6" class="anchored" data-anchor-id="extended-kalman-filter"><span class="header-section-number">6.9.6</span> Extended Kalman Filter</h3>
 <p>Given the nonlinear nature of many scientific models it is desirable to extend the <strong>Kalman Filter</strong> to be able to handle nonlinear models <span class="math inline">\(f(\cdot)\)</span> (and by extension, their update function <span class="math inline">\(\mathcal{M}(\cdot)\)</span>), and nonlinear observation functions <span class="math inline">\(h(\cdot)\)</span>. This can be accomplished so long as these functions are sufficiently smooth (<span class="math inline">\(C^1\)</span> to be precise) so as to admit valid Taylor approximations to first order. That is,</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     \mathcal{M}(u_{k}) &amp;\approx \mathcal{M}(u_k^{(a)}) + D_{M}(u_k^{(a)})\xi_k^{(a)} &amp; h(u_k) &amp;\approx h(u_k^{(b)}) + D_h(u_k^{(b)})\xi_k^{(b)} \\
     D_{M} &amp;:= \left[\dfrac{\partial \mathcal{M}_i}{\partial u_j} \right] &amp; D_h &amp;:= \left[ \dfrac{\partial h_i}{\partial u_j}\right]
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>where <span class="math inline">\(\mathcal{M}_i\)</span> and <span class="math inline">\(h_i\)</span> denote the ith component functions of <span class="math inline">\(\mathcal{M}\)</span> and <span class="math inline">\(h\)</span>.</p>
 <p>Using these substitutions for the previously linear functions <span class="math inline">\(M_k\)</span> and <span class="math inline">\(H_k\)</span>, we may follow the same derivation to obtain the following procedure.</p>
 <ol type="1">
 <li><p>Initialization To begin we must choose values for <span class="math inline">\(u_0^{(a)}\)</span> and <span class="math inline">\(P_0\)</span>. We must also provide models for <span class="math inline">\(Q_k\)</span> and <span class="math inline">\(R_k\)</span>.</p></li>
 <li><p>Forecast Step</p></li>
 </ol>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     u_k^{(b)} &amp;= \mathcal{M}(u_{k-1}^{(a)}) \\
     B_k &amp;= D_M(u_{k-1}^{(a)})P_{k-1}D_M^T(u_{k-1}^{(a)}) + Q_k
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <ol start="3" type="1">
 <li>Assimilation Step</li>
 </ol>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     K_k &amp;= B_kD_M^T(u_k^{(b)})\left[ D_h(u_k^{(b)})B_kD_h^T(u_k^{(b)}) + R_k \right]^{-1}\\
     u_k^{(a)} &amp;= u_k^{(b)} + K_k(w_k - h(u_k^{(b)})) \\
     P_k &amp;= \left( I - K_kD_h(u_k^{(b)}) \right)B_k
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 </section>
 <section id="d-var" class="level3" data-number="6.9.7">
 <h3 data-number="6.9.7" class="anchored" data-anchor-id="d-var"><span class="header-section-number">6.9.7</span> 3D-Var</h3>
@@ -558,12 +558,12 @@ J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1
 <section id="linear-case" class="level4" data-number="6.9.7.1">
 <h4 data-number="6.9.7.1" class="anchored" data-anchor-id="linear-case"><span class="header-section-number">6.9.7.1</span> Linear Case</h4>
 <p>Suppose that we have <span class="math inline">\(h(u) = Hu\)</span> so that <span class="math inline">\(D_h(u) = H\)</span>. Then, we have</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     D_h^TR^{-1}(w-Hu^{(a)}) &amp;= B^{-1}(u^{(a)}-u^{(b)}) \\
     D_h^TR^{-1}w - D_h^TR^{-1}Hu^{(a)} &amp;= B^{-1}u^{(a)} - B^{-1}u^{(b)} \\
     \left(D_h^TR^{-1}H + B^{-1} \right)u^{(a)} &amp;= D_h^TR^{-1} + B^{-1}u^{(b)} \\
     \left(H^TR^{-1}H + B^{-1} \right)u^{(a)} &amp;= H^TR^{-1} + B^{-1}u^{(b)}
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>Thus we see that the analysis is given by</p>
 <p><span class="math display">\[\begin{equation}
     u^{(a)} = u^{(b)} + BH^T\left( R + HB^TH \right)^{-1}(w-Hu^{(b)})
@@ -577,11 +577,11 @@ J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1
     h(u^{(a)}) \approx h(u^{(c)}) + D_h(u^{(c)})\Delta u
 \end{equation}\]</span></p>
 <p>Using this, we have</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     D_h^T(u^{(a)})R^{-1}(w-h(u^{(a)})) &amp;= B^{-1}(u^{(a)} - u^{(b)}) \\
     D_h^T(u^{(a)})R^{-1}(w-h(u^{(c)})-D_h(u^{(c)})\Delta u) &amp;\approx B^{-1}(u^{(c)} + \Delta u - u^{(b)}) \\
     D_h^T(u^{(c)})R^{-1}(w-h(u^{(c)})-D_h(u^{(c)})\Delta u) &amp;\approx B^{-1}(u^{(c)} + \Delta u - u^{(b)})
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>which we now solve for the update <span class="math inline">\(\Delta u\)</span> to obtain the linear system</p>
 <p><span class="math display">\[\begin{equation}
     \left(B^{-1} + D_h^T(u^{(c)})R^{-1}D_h(u^{(c)}) \right)\Delta u = B^{-1}(u^{(b)}-u^{(c)}) + D_h^T(u^{(c)})R^{-1}(w-h(u^{(c)}))
@@ -607,22 +607,22 @@ J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1
 <h3 data-number="6.9.8" class="anchored" data-anchor-id="d-var-1"><span class="header-section-number">6.9.8</span> 4D-Var</h3>
 <p>The <strong>3D-Var</strong> algorithm attempts to optimize a cost function to obtain the ideal analysis <em>for each point where we have observation data</em>. This can become computationally expensive as we require model evaluations <em>and</em> an optimization routine for every observation point. An alternative approach is to simultaneously optimize accross all observations in order to obtain the ideal <em>initial condition</em> that acheive the best model fit. This approach is similar to sensitivity analysis which seeks to fit a model’s parameters to data.</p>
 <p>To begin, we construct the 4d-var cost function</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     J(u_0) &amp;= \frac{1}{2}\left( u_0 - u_0^{(b)} \right)^TB^{-1}\left( u_0 - u_0^{(b)} \right) + \frac{1}{2}\sum_k\left(w_k - h(u_k) \right)^TR_k^{-1}\left(w_k - h(u_k) \right) \\
            &amp;= J_b(u_0) + J_m(u_0)
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>The first term is usefull if we already have an initial guess <span class="math inline">\(u_0^{(b)}\)</span> for the inital condition in mind. If we do not have one, we may ommit this term.</p>
 <p>As before, we now want to optimize this cost function. To do so, we first observe that</p>
 <p><span class="math display">\[\begin{equation}
     u_k = \mathcal{M}^{(k)}(u_0; \theta)
 \end{equation}\]</span></p>
 <p>It is easy to obtain the gradient of <span class="math inline">\(J_0\)</span> so we shall focus on the second term. We find that</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     \nabla_{u_0}J_m &amp;= \nabla_{u_0}\Big\{ \sum_k \frac{1}{2}  \left(w_k - h(u_k) \right)^TR_k^{-1}\left(w_k - h(u_k) \right) \Big\}\\
                     &amp;= - \sum_k \left[\dfrac{\partial }{\partial u_0}h\left(\mathcal{M}^{(k-1)}(u_0)\right) \right]^T R_k^{-1}\left(w_k - h(u_k) \right)\\
                     &amp;= - \sum_k \left[D_h(u_k)D_M(u_{k-1})D_M(u_{k-2})\cdots D_M(u_0) \right]^T R_k^{-1}\left(w_k - h(u_k) \right)\\
                     &amp;= - \sum_k \left[D_M^T(u_0)D_M^T(u_1)\cdots D_M^T(u_{k-1})D_h^T(u_k) \right] R_k^{-1}\left(w_k - h(u_k) \right)\\
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>Given that we can now obtain the gradient of the cost function, the procedure is nearly identical to 3d-var:</p>
 <ol type="1">
 <li>Integrate your model forward to obtain <span class="math inline">\(\{u_k\}\)</span></li>
@@ -651,29 +651,29 @@ J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1
     \mathcal{L} := \int_0^T \left[ g(u;\theta) + \lambda^T(t)\left(f-\dfrac{du}{dt}\right) \right] dt
 \end{equation}\]</span></p>
 <p>From this, we find</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     \dfrac{\partial \mathcal{L}}{\partial \theta} &amp;:= \int_0^T\left[ \frac{\partial g}{\partial \theta} + \frac{\partial g}{u}\frac{\partial u}{\partial \theta} + \lambda^T(t)\left( \frac{\partial f}{\partial \theta} + \frac{\partial f}{\partial u}\frac{\partial u}{\partial \theta} - \frac{d}{dt}\frac{\partial u}{\partial \theta} \right)\right]dt \\
     &amp;= \int_0^T \left[ \frac{\partial g}{\partial \theta} + \lambda^T(t)\frac{\partial f}{\partial \theta} + \left( \frac{\partial g}{\partial u} + \lambda^T(t)\frac{\partial f}{\partial u} - \lambda^T(t)\frac{d}{dt} \right)\frac{\partial u}{\partial \theta} \right]dt
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>This reorganization is nice because the term <span class="math inline">\(\partial u/\partial \theta\)</span> is the one thats <em>hard</em> to compute. Therefore, if we can make the terms in the paretheses evaluate to 0, we will be able to remove this pesky term. Let’s use integration by parts to further rearrange by moving the <span class="math inline">\(d/dt\)</span>.</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     \int_0^T-\lambda^T(t)\frac{d}{dt}\frac{\partial u}{\partial \theta} dt &amp;= \left[-\lambda^T(t)\frac{\partial u}{\partial \theta} \right]_0^T + \int_0^T \frac{d\lambda^T(t)}{dt}\frac{\partial u}{\partial \theta}dt \\
     &amp;= \lambda^T(0)\frac{\partial u_0}{\partial \theta} - \lambda^T(T)\frac{\partial u(T)}{\partial \theta} + \int_0^T \left[ \frac{d\lambda}{dt} \right]^T\frac{\partial u}{\partial \theta}dt
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>so that plugging this back into our expression for <span class="math inline">\(\partial \mathcal{L}//\partial \theta\)</span>, we obtain</p>
 <p><span class="math display">\[\begin{equation}
     \frac{\partial \mathcal{L}}{\partial \theta} = \int_0^T \left[ \frac{\partial g}{\partial \theta} + \lambda^T\frac{\partial f}{\partial \theta} + \left( \frac{\partial g}{\partial u} + \lambda^T\frac{\partial f}{\partial u} + \left[\frac{d\lambda}{dt}\right]^T \right)\frac{\partial u}{\partial \theta}\right]dt + \lambda^T(0)\frac{\partial u_0}{\partial \theta} - \lambda^T(T)\frac{\partial u(T)}{\partial \theta}
 \end{equation}\]</span></p>
 <p>Thus, forcing the nasty terms to dissappear is equivalent find the <span class="math inline">\(\lambda(t)\)</span> subject to the differential equations</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
    \frac{\partial g}{\partial u} + \lambda^T(t)\frac{\partial f}{\partial u} + \frac{d\lambda^T(t)}{dt} &amp;= 0 \\
    \lambda^T(T) &amp;= 0
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <p>or by taking the transpose:</p>
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[\begin{align}
     \frac{d}{dt}\lambda &amp;= - \left[ \frac{\partial g}{\partial u} \right]^T - \left[ \frac{\partial f}{\partial u} \right]^T\lambda  \\
     \lambda(T) &amp;= 0
-\end{aligned}\]</span>
+\end{align}\]</span></p>
 <section id="summary-2" class="level4" data-number="6.9.9.1">
 <h4 data-number="6.9.9.1" class="anchored" data-anchor-id="summary-2"><span class="header-section-number">6.9.9.1</span> Summary</h4>
 <p>To find the sensitivities <span class="math inline">\(\partial J/\partial \theta\)</span>, we perform the following:</p>
