@@ -14,26 +14,25 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
+      #   # 2023 is broken for some reason... :(
+      # - name: Setup TeX Live 2022
+      #   uses: teatimeguest/setup-texlive-action@v2
+      #   with:
+      #     version: 2022
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render HTML Only
+        uses: quarto-dev/quarto-actions/render@v2
         with:
-          tinytex: true
-
-      # - name: Render Website
-      #   uses: quarto-dev/quarto-actions/render@v2
-      #   with:
-      #     to: html
-
-      # - name: Render PDf
-      #   uses: quarto-dev/quarto-actions/render@v2
-      #   with:
-      #     to: utd-pdf
+          to: html
 
       - name: Publish HTML book
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
-          # render: false
+          render: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
