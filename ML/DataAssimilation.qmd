@@ -49,7 +49,7 @@ Given our model predictions $u_{k}^{(b)}$ and observations $w_k$, we seek to obt
 
 ### Summary 
 
-\begin{aligned}
+\begin{align}
     &u_k^{(t)} \in \mathbb{R}^n &\text{the true state vector} \\ 
     &u_k^{(b)} \in \mathbb{R}^n &\text{the kth model forecast} \\ 
     &u_k^{(a)} \in \mathbb{R}^n &\text{the analysis} \\ 
@@ -61,27 +61,27 @@ Given our model predictions $u_{k}^{(b)}$ and observations $w_k$, we seek to obt
     &\mathcal{M}:\mathbb{R}^n\to\mathbb{R}^n &\text{the model update function}\\
     &f:\mathbb{R}^n\to\mathbb{R}^n &\text{differential equation model}\\ 
     &h:\mathbb{R}^n\to\mathbb{R}^m  &\text{observation function}
-\end{aligned}
+\end{align}
 
 
 ### Assumptions
 To make possible the derivation of a *unique* analysis $u^{(a)}$, the following assumptions are in order.
 
-\begin{aligned}
+\begin{align}
     &\E[\xi_k^{(b)}] = 0 & &\E[\xi_k^{(b)}(\xi_j^{(b)})^T] = 0 \text{ for } k\neq j\\
     &\E[\xi_k^{(m)}] = 0 & &\E[\xi_k^{(m)}(\xi_j^{(m)})^T] = 0 \text{ for } k\neq j\\
     &\E[\xi_k^{(b)}(u_0)^T] = 0 & &\E[\xi_k^{(m)}(u_0)^T] = 0\\
     &\E[\xi_k^{(b)}\xi_j^{(m)}] = 0 & &  \\ 
     &\E[u_k^{(t)}] = u_k^{(b)} & &
-\end{aligned}
+\end{align}
 
 We also define the error covariance matrices
 
-\begin{aligned}
+\begin{align}
     Q_k &:= \E[\xi_k^{(p)}(\xi_k^{(p)})^T] \\ 
     R_k &:= \E[\xi_k^{(m)}(\xi_k^{(m)})^T] \\ 
     B_k &:= \E[\xi_k^{(b)}(\xi_k^{(b)})^T] 
-\end{aligned}
+\end{align}
 
 which we will use in our consideration of the final error of our analysis.
 
@@ -94,10 +94,10 @@ The original implementation of the Kalman filter was for strictly linear systems
 
 In the linear case, our system may be written as 
 
-\begin{aligned}
+\begin{align}
     u_{k+1}^{(t)} &= M_ku_k^{(t)} + \xi_{k+1}^{(p)} \\ 
     w_k &= H_ku_k^{(t)} + \xi_k^{(m)}
-\end{aligned}
+\end{align}
 
 where $M_k$ and $H_k$ are now matrices defining the linear problem. 
 
@@ -118,19 +118,19 @@ Assume we have the analysis at time $t_k$ denoted $u_k^{(a)}$. Then the forecast
 
 The background error is therefore 
 
-\begin{aligned}
+\begin{align}
     \xi_{k+1}^{(b)} &= u_{k+1}^{(t)} - u_{k+1}^{(b)} \\ 
     &= M_ku_k^{(t)}+\xi_{k+1}^{(p)} - M_{k}u_k^{(a)} \\ 
     &= M_k\left(u_k^{(t)}-u_k^{(a)} \right) + \xi_{k+1}^{(p)} \\ 
     &= M_k\xi_k^{(a)} + \xi_{k+1}^{(p)}
-\end{aligned}
+\end{align}
 
 We may now evaluate the covariance matrix of our background estimate as: 
 
-\begin{aligned}
+\begin{align}
     B_{k+1} &= \E[\xi_{k+1}^{(b)}(\xi_{k+1}^{(b)})^T] \\ 
     &= \E\left[\left(M_k\xi_k^{(a)} + \xi_{k+1}^p \right) \left(M_k\xi_k^{(a)} + \xi_{k+1}^p \right)^T \right] \\ 
-\end{aligned}
+\end{align}
 
 If we presume that $\E[\xi_k^{(b)}(\xi_{k+1}^{(p)})^T] = 0$, then the cross terms vanish and we are left with 
 
@@ -149,7 +149,7 @@ Let's suppose that the analysis has the form
 
 for some vector $\nu\in\R^n$ and matrix $K_{k+1}\in\R^{m\times n}$. In a perfect world, we would have $\E[u_{k}^{(t)}-u_{k}^{(a)}] = 0$. Therefore, 
 
-\begin{aligned}
+\begin{align}
     0 &= \E[u_k^{(t)} - u_k^{(a)}] \\ 
     &= \E[(u_k^{(b)} + \xi_k^{(b)}) - (\nu + K_kw_k)] \\ 
     &= \E[(u_k^{(b)} + \xi_k^{(b)}) - (\nu + K_kH_ku_k^{(t)} + K_k\xi_k^{(m)})] \\ 
@@ -157,7 +157,7 @@ for some vector $\nu\in\R^n$ and matrix $K_{k+1}\in\R^{m\times n}$. In a perfect
     &= u_k^{(b)} + 0 - \nu - K_kH_ku_k^{(b)} - 0 \\ 
     &= u_k^{(b)} - \nu - K_kH_ku_k^{(b)} \\ 
     \Rightarrow \nu &= u_k^{(b)} - K_kH_ku_k^{(b)}
-\end{aligned}
+\end{align}
 
 which we now substitute to obtain 
 
@@ -167,7 +167,7 @@ which we now substitute to obtain
 
 Now that we know the form for the analysis we may derive the optimal matrix $K_k$ by optimization of $P_k$. We have
 
-\begin{aligned}
+\begin{align}
 	\xi_k^{(a)} &= u_k^{(t)} - u_k^{(a)} \\ 
                 &= M_{k-1}u_{k-1}^{(t)} + \xi_{k}^{(p)} - u_k^{(b)} - K_k\left(w_k - H_ku_k^{(b)} \right) \\ 
                 &= M_{k-1}u_{k-1}^{(t)} + \xi_{k}^{(p)} - M_{k-1}u_{k-1}^{(a)} - K_k\left(H_ku_k^{(t)} + \xi_k^{(m)} - H_ku_k^{(b)} \right) \\ 
@@ -180,40 +180,40 @@ Now that we know the form for the analysis we may derive the optimal matrix $K_k
                 &= M_{k-1}\xi_{k-1}^{(a)} + \xi_{k}^{(p)} - K_kH_kM_{k-1}(\xi_{k-1}^{(a)} + u_{k-1}^a) - K_kH_k\xi_k^{(b)} + K_kH_kM_{k-1}u_{k-1}^{(a)} - K_k\xi_k^{(m)}\\ 
                 &= M_{k-1}\xi_{k-1}^{(a)} + \xi_{k}^{(p)} - K_kH_kM_{k-1}\xi_{k-1}^{(a)} - K_kH_k\xi_k^{(b)} - K_k\xi_k^{(m)}\\ 
                 &= \big(I-K_kH_k \big)(M_{k-1}\xi_{k-1}^{(a)} - \xi_{k}^p) - K_k\xi_k^{(m)}\\
-\end{aligned}
+\end{align}
 
 and therefore the covariance matrix is 
 
-\begin{aligned}
+\begin{align}
     P_k &= \E[\xi_{k}^{(a)}(\xi_{k}^{(a)})^T] \\ 
         &= \E\Big[\left(\big(I-K_kH_k \big)(M_{k-1}\xi_{k-1}^{(a)} - \xi_{k}^p) - K_k\xi_k^{(m)} \right) \left(\big(I-K_kH_k \big)(M_{k-1}\xi_{k-1}^{(a)} - \xi_{k}^p) - K_k\xi_k^{(m)} \right)^T \Big] \\ 
         &= \big(I-K_kH_k \big)M_{k-1}\E[\xi_{k-1}^{(a)}(\xi_{k-1}^{(a)})^T]M_{k-1}^T\big(I-K_kH_k \big)^T + \big(I-K_kH_k \big)\E[\xi_k^{(p)}(\xi_k^{(p)})^T]\big(I-K_kH_k \big)^T \\ 
         & \qquad \qquad - K_k\E[\xi_{k}^{(m)}(\xi_k^{(m)})^T]K_k^T \\ 
         &= \big(I-K_kH_k \big)B_k\big(I-K_kH_k \big)^T - K_kR_kK_k^T
-\end{aligned}
+\end{align}
 
 ####  Deriving $K_k$
 The Kalman filter is defined at that $K_k$ which which minimizes the sum of squared analysis errors, i.e. the trace of the analysis error covariance matrix. The following identies will be useful: 
 
-\begin{aligned}
+\begin{align}
     \mathop{\nabla}_{A}\text{tr}(AB) &= B^T \\ 
     \mathop{\nabla}_{A}\text{tr}(BA^T) &= B \\ 
     \mathop{\nabla}_{A}\text{tr}(ABA^T) &= AB^T + AB  \\ 
-\end{aligned}
+\end{align}
 
 from which we obtain 
 
-\begin{aligned}
+\begin{align}
     0 &= \mathop{\nabla}_{K_k}\text{tr}(P_k) \\ 
       &= \mathop{\nabla}_{K_k}\Big\{ B_k -B_kH_k^TK_k^T - K_kH_kB_k  + K_kH_kB_kH_k^TB_k^T - K_kR_kK_k^T \Big\} \\ 
       &= -B_kH_k^T - (H_kB_k)^T + K_k\left[H_kB_kH_k^T + (H_kB_kH_k^T)^T - R_k+R_k^T\right] \\
       &= -2B_kH_k^T + 2K_k\left(H_kB_kH_k^2 - R_k \right) \\ 
   \Rightarrow K_k &= B_kH_k^T\Big[ H_kB_kH_k^T - R_k \Big]^{-1}
-\end{aligned}
+\end{align}
 
 we now substitute this result to obtain a simplified form for $P_k$. 
 
-\begin{aligned}
+\begin{align}
     P_k &= \left(I - K_kH_k \right)B_k\left(I - K_kH_k \right)^T + K_kR_kK_k^T \\ 
         &= \left(I - K_kH_k \right)B_k - \left(I - K_kH_k \right)B_k\left(K_kH_k \right)^T + K_kR_kK_k^T \\
         &= \left(I - K_kH_k \right)B_k -\left\{ \left(I - K_kH_k \right)B_k\left(K_kH_k \right)^T + K_kR_kK_k^T \right\} \\
@@ -222,7 +222,7 @@ we now substitute this result to obtain a simplified form for $P_k$.
         &= \left(I - K_kH_k \right)B_k -\left\{ B_kH_k^T - K_k\left( H_kB_kH_k^T + R_k \right)  \right\}K_k^T \\
         &= \left(I - K_kH_k \right)B_k -\left\{ B_kH_k^T - B_kH_k^T \right\}K_k^T \\
         &= \left(I - K_kH_k \right)B_k 
-\end{aligned}
+\end{align}
 
 **NOTE**: we have used the fact that covariance matrices are symmetric. 
 
@@ -234,28 +234,28 @@ We must set the system to some initial condition. This means we must define $u_0
 
 2. Forecast Step 
 
-\begin{aligned}
+\begin{align}
     u_k^{(b)} &= M_{k-1}u_{k-1}^{(a)} \\ 
     B_k &= M_{k-1}P_{k-1}M_{k-1}^T + Q_{k}
-\end{aligned}
+\end{align}
 
 3. Assimilation Step 
 
-\begin{aligned}
+\begin{align}
     K_k &= B_kH_k^T\Big[ H_kB_kH_k^T - R_k \Big]^{-1}  \\ 
     u_k^{(a)} &= u_k^{(b)} + K_k(w_k - H_ku_k^{(b)})\\ 
     P_k &= \left(I - K_kH_k \right)B_k 
-\end{aligned}
+\end{align}
 
 
 ### Extended Kalman Filter
 
 Given the nonlinear nature of many scientific models it is desirable to extend the **Kalman Filter** to be able to handle nonlinear models $f(\cdot)$ (and by extension, their update function $\mathcal{M}(\cdot)$), and nonlinear observation functions $h(\cdot)$. This can be accomplished so long as these functions are sufficiently smooth ($C^1$ to be precise) so as to admit valid Taylor approximations to first order. That is, 
 
-\begin{aligned}
+\begin{align}
     \mathcal{M}(u_{k}) &\approx \mathcal{M}(u_k^{(a)}) + D_{M}(u_k^{(a)})\xi_k^{(a)} & h(u_k) &\approx h(u_k^{(b)}) + D_h(u_k^{(b)})\xi_k^{(b)} \\ 
     D_{M} &:= \left[\dfrac{\partial \mathcal{M}_i}{\partial u_j} \right] & D_h &:= \left[ \dfrac{\partial h_i}{\partial u_j}\right]
-\end{aligned}
+\end{align}
 
 where $\mathcal{M}_i$ and $h_i$  denote the ith component functions of $\mathcal{M}$ and $h$. 
 
@@ -267,18 +267,18 @@ To begin we must choose values for $u_0^{(a)}$ and $P_0$. We must also provide m
 
 2. Forecast Step 
 
-\begin{aligned}
+\begin{align}
     u_k^{(b)} &= \mathcal{M}(u_{k-1}^{(a)}) \\ 
     B_k &= D_M(u_{k-1}^{(a)})P_{k-1}D_M^T(u_{k-1}^{(a)}) + Q_k
-\end{aligned}
+\end{align}
 
 3. Assimilation Step 
 
-\begin{aligned}
+\begin{align}
     K_k &= B_kD_M^T(u_k^{(b)})\left[ D_h(u_k^{(b)})B_kD_h^T(u_k^{(b)}) + R_k \right]^{-1}\\
     u_k^{(a)} &= u_k^{(b)} + K_k(w_k - h(u_k^{(b)})) \\ 
     P_k &= \left( I - K_kD_h(u_k^{(b)}) \right)B_k
-\end{aligned}
+\end{align}
 
 
 
@@ -316,12 +316,12 @@ As for Kalman filtering, let's begin with the assumption that our model and obse
 Suppose that we have $h(u) = Hu$ so that $D_h(u) = H$. Then, we have 
 
 
-\begin{aligned}
+\begin{align}
     D_h^TR^{-1}(w-Hu^{(a)}) &= B^{-1}(u^{(a)}-u^{(b)}) \\ 
     D_h^TR^{-1}w - D_h^TR^{-1}Hu^{(a)} &= B^{-1}u^{(a)} - B^{-1}u^{(b)} \\ 
     \left(D_h^TR^{-1}H + B^{-1} \right)u^{(a)} &= D_h^TR^{-1} + B^{-1}u^{(b)} \\
     \left(H^TR^{-1}H + B^{-1} \right)u^{(a)} &= H^TR^{-1} + B^{-1}u^{(b)}
-\end{aligned}
+\end{align}
 
 Thus we see that the analysis is given by 
 
@@ -341,11 +341,11 @@ To deal with the nonlinearity, we can expand $h$ about an initial guess $u^{(c)}
 
 Using this, we have 
 
-\begin{aligned}
+\begin{align}
     D_h^T(u^{(a)})R^{-1}(w-h(u^{(a)})) &= B^{-1}(u^{(a)} - u^{(b)}) \\ 
     D_h^T(u^{(a)})R^{-1}(w-h(u^{(c)})-D_h(u^{(c)})\Delta u) &\approx B^{-1}(u^{(c)} + \Delta u - u^{(b)}) \\ 
     D_h^T(u^{(c)})R^{-1}(w-h(u^{(c)})-D_h(u^{(c)})\Delta u) &\approx B^{-1}(u^{(c)} + \Delta u - u^{(b)}) 
-\end{aligned}
+\end{align}
 
 which we now solve for the update $\Delta u$ to obtain the linear system 
 
@@ -383,10 +383,10 @@ The **3D-Var** algorithm attempts to optimize a cost function to obtain the idea
 
 To begin, we construct the 4d-var cost function
 
-\begin{aligned}
+\begin{align}
     J(u_0) &= \frac{1}{2}\left( u_0 - u_0^{(b)} \right)^TB^{-1}\left( u_0 - u_0^{(b)} \right) + \frac{1}{2}\sum_k\left(w_k - h(u_k) \right)^TR_k^{-1}\left(w_k - h(u_k) \right) \\ 
            &= J_b(u_0) + J_m(u_0)
-\end{aligned}
+\end{align}
 
 The first term is usefull if we already have an initial guess $u_0^{(b)}$ for the inital condition in mind. If we do not have one, we may ommit this term. 
 
@@ -399,12 +399,12 @@ As before, we now want to optimize this cost function. To do so, we first observ
 
 It is easy to obtain the gradient of $J_0$ so we shall focus on the second term. We find that 
 
-\begin{aligned}
+\begin{align}
     \nabla_{u_0}J_m &= \nabla_{u_0}\Big\{ \sum_k \frac{1}{2}  \left(w_k - h(u_k) \right)^TR_k^{-1}\left(w_k - h(u_k) \right) \Big\}\\
                     &= - \sum_k \left[\dfrac{\partial }{\partial u_0}h\left(\mathcal{M}^{(k-1)}(u_0)\right) \right]^T R_k^{-1}\left(w_k - h(u_k) \right)\\
                     &= - \sum_k \left[D_h(u_k)D_M(u_{k-1})D_M(u_{k-2})\cdots D_M(u_0) \right]^T R_k^{-1}\left(w_k - h(u_k) \right)\\
                     &= - \sum_k \left[D_M^T(u_0)D_M^T(u_1)\cdots D_M^T(u_{k-1})D_h^T(u_k) \right] R_k^{-1}\left(w_k - h(u_k) \right)\\
-\end{aligned}
+\end{align}
 
 
 Given that we can now obtain the gradient of the cost function, the procedure is nearly identical to 3d-var: 
@@ -450,17 +450,17 @@ Our goal then is to find out how $J$ depends on the parameters $\theta$, in othe
 
 From this, we find 
 
-\begin{aligned}
+\begin{align}
     \dfrac{\partial \mathcal{L}}{\partial \theta} &:= \int_0^T\left[ \frac{\partial g}{\partial \theta} + \frac{\partial g}{u}\frac{\partial u}{\partial \theta} + \lambda^T(t)\left( \frac{\partial f}{\partial \theta} + \frac{\partial f}{\partial u}\frac{\partial u}{\partial \theta} - \frac{d}{dt}\frac{\partial u}{\partial \theta} \right)\right]dt \\ 
     &= \int_0^T \left[ \frac{\partial g}{\partial \theta} + \lambda^T(t)\frac{\partial f}{\partial \theta} + \left( \frac{\partial g}{\partial u} + \lambda^T(t)\frac{\partial f}{\partial u} - \lambda^T(t)\frac{d}{dt} \right)\frac{\partial u}{\partial \theta} \right]dt
-\end{aligned}
+\end{align}
 
 This reorganization is nice because the term $\partial u/\partial \theta$ is the one thats *hard* to compute. Therefore, if we can make the terms in the paretheses evaluate to 0, we will be able to remove this pesky term. Let's use integration by parts to further rearrange by moving the $d/dt$.
 
-\begin{aligned}
+\begin{align}
     \int_0^T-\lambda^T(t)\frac{d}{dt}\frac{\partial u}{\partial \theta} dt &= \left[-\lambda^T(t)\frac{\partial u}{\partial \theta} \right]_0^T + \int_0^T \frac{d\lambda^T(t)}{dt}\frac{\partial u}{\partial \theta}dt \\ 
     &= \lambda^T(0)\frac{\partial u_0}{\partial \theta} - \lambda^T(T)\frac{\partial u(T)}{\partial \theta} + \int_0^T \left[ \frac{d\lambda}{dt} \right]^T\frac{\partial u}{\partial \theta}dt
-\end{aligned}
+\end{align}
 
 so that plugging this back into our expression for $\partial \mathcal{L}//\partial \theta$, we obtain
 
@@ -470,17 +470,17 @@ so that plugging this back into our expression for $\partial \mathcal{L}//\parti
 
 Thus, forcing the nasty terms to dissappear is equivalent find the $\lambda(t)$ subject to the differential equations 
 
-\begin{aligned}
+\begin{align}
    \frac{\partial g}{\partial u} + \lambda^T(t)\frac{\partial f}{\partial u} + \frac{d\lambda^T(t)}{dt} &= 0 \\ 
    \lambda^T(T) &= 0
-\end{aligned}
+\end{align}
 
 or by taking the transpose: 
 
-\begin{aligned}
+\begin{align}
     \frac{d}{dt}\lambda &= - \left[ \frac{\partial g}{\partial u} \right]^T - \left[ \frac{\partial f}{\partial u} \right]^T\lambda  \\ 
     \lambda(T) &= 0
-\end{aligned}
+\end{align}
 
 
 #### Summary
