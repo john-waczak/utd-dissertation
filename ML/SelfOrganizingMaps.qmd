@@ -1,7 +1,14 @@
 ## Self Organizing Maps
 
 
+
 Self organizing maps (SOMs) are an unsupervised machine learning technique developed by Kohonen [see @kohonen-original] based on the simple biological principle that *neurons near each other fire together*. This observation that the toplogical *closeness* of similar computational units is a critical feature of intelligent systems leads to a natural reinterpretation of the familiar perceptron model into a new form amenable for a variety of clustering and dimensionality reduction tasks. In particular, the SOM enables a rapid unsupervised classification of multidimensional data into a (typically) one or two dimensional *simplicial complex*, the discrete realization of a topological manifold, whose vertices correspond to representative points in the original data space $\mathcal{D}$. While a tad esoteric compared to other popular unsupervised methods like KMeans clustering or DBSCAN, the SOM distinguishes itself with the added benefit that it's training procedure guarantees nodes (i.e. classes) which are topologically close in the SOM simplex share similar weights. This additional structure makes the SOM particularly attractive when an interpretation of the discovered clusters *as well as* the relationships between them is desired.
+
+::: {.callout-note}
+
+We should add some more context (and references) for how the SOM has been used here. Perhaps we can ask David about his diatom identification from the Saharan dust sources.
+
+:::
 
 The original treatment of the SOM by Kohonen was made in terms of processing units, sensory signals, and relaying networks [@kohonen-original], however, in the modern era of deep learning, a more palatable derivation can be obtained by re-interpreting the weights of a simple perceptron model to provide the foundation for a clustering approach.
 
