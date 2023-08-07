@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.427">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -222,53 +241,48 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#data-sampling" id="toc-data-sampling" class="nav-link active" data-scroll-target="#data-sampling"><span class="header-section-number">6.1</span> Data Sampling</a></li>
-  <li><a href="#neural-networks" id="toc-neural-networks" class="nav-link" data-scroll-target="#neural-networks"><span class="header-section-number">6.2</span> Neural Networks</a></li>
+  <li><a href="#sec-neural-networks" id="toc-sec-neural-networks" class="nav-link" data-scroll-target="#sec-neural-networks"><span class="header-section-number">6.2</span> Neural Networks</a></li>
   <li><a href="#decision-trees" id="toc-decision-trees" class="nav-link" data-scroll-target="#decision-trees"><span class="header-section-number">6.3</span> Decision Trees</a></li>
   <li><a href="#gaussian-process-regression" id="toc-gaussian-process-regression" class="nav-link" data-scroll-target="#gaussian-process-regression"><span class="header-section-number">6.4</span> Gaussian Process Regression</a>
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">6.4.1</span> Introduction</a></li>
   <li><a href="#weight-space-view" id="toc-weight-space-view" class="nav-link" data-scroll-target="#weight-space-view"><span class="header-section-number">6.4.2</span> Weight-Space View</a></li>
   <li><a href="#making-it-bayesian" id="toc-making-it-bayesian" class="nav-link" data-scroll-target="#making-it-bayesian"><span class="header-section-number">6.4.3</span> Making it Bayesian</a></li>
+  <li><a href="#doing-more-with-less-kernelization" id="toc-doing-more-with-less-kernelization" class="nav-link" data-scroll-target="#doing-more-with-less-kernelization"><span class="header-section-number">6.4.4</span> Doing More with Less: Kernelization</a></li>
+  <li><a href="#the-function-space-view" id="toc-the-function-space-view" class="nav-link" data-scroll-target="#the-function-space-view"><span class="header-section-number">6.4.5</span> The Function-space View</a></li>
+  <li><a href="#doing-it-in-julia" id="toc-doing-it-in-julia" class="nav-link" data-scroll-target="#doing-it-in-julia"><span class="header-section-number">6.4.6</span> Doing it in Julia</a></li>
+  <li><a href="#fitting-the-gaussian-process" id="toc-fitting-the-gaussian-process" class="nav-link" data-scroll-target="#fitting-the-gaussian-process"><span class="header-section-number">6.4.7</span> Fitting the Gaussian Process</a></li>
+  <li><a href="#bayesian-model-selection" id="toc-bayesian-model-selection" class="nav-link" data-scroll-target="#bayesian-model-selection"><span class="header-section-number">6.4.8</span> Bayesian Model Selection</a></li>
   </ul></li>
-  <li><a href="#doing-more-with-less-kernelization" id="toc-doing-more-with-less-kernelization" class="nav-link" data-scroll-target="#doing-more-with-less-kernelization"><span class="header-section-number">6.5</span> Doing More with Less: Kernelization</a>
+  <li><a href="#model-ensembling" id="toc-model-ensembling" class="nav-link" data-scroll-target="#model-ensembling"><span class="header-section-number">6.5</span> Model Ensembling</a></li>
+  <li><a href="#super-learners" id="toc-super-learners" class="nav-link" data-scroll-target="#super-learners"><span class="header-section-number">6.6</span> Super Learners</a></li>
+  <li><a href="#self-organizing-maps" id="toc-self-organizing-maps" class="nav-link" data-scroll-target="#self-organizing-maps"><span class="header-section-number">6.7</span> Self Organizing Maps</a>
   <ul class="collapse">
-  <li><a href="#bayesian-regression-with-feature-mappings" id="toc-bayesian-regression-with-feature-mappings" class="nav-link" data-scroll-target="#bayesian-regression-with-feature-mappings"><span class="header-section-number">6.5.1</span> Bayesian Regression with Feature Mappings</a></li>
+  <li><a href="#reinterpreting-the-perceptron" id="toc-reinterpreting-the-perceptron" class="nav-link" data-scroll-target="#reinterpreting-the-perceptron"><span class="header-section-number">6.7.1</span> Reinterpreting the Perceptron</a></li>
+  <li><a href="#the-training-process" id="toc-the-training-process" class="nav-link" data-scroll-target="#the-training-process"><span class="header-section-number">6.7.2</span> The Training Process</a></li>
+  <li><a href="#common-som-topologies" id="toc-common-som-topologies" class="nav-link" data-scroll-target="#common-som-topologies"><span class="header-section-number">6.7.3</span> Common SOM topologies</a></li>
+  <li><a href="#a-simple-example-partitioning-color-spaces" id="toc-a-simple-example-partitioning-color-spaces" class="nav-link" data-scroll-target="#a-simple-example-partitioning-color-spaces"><span class="header-section-number">6.7.4</span> A simple example: partitioning color spaces</a></li>
+  <li><a href="#drawbacks-of-the-som-model" id="toc-drawbacks-of-the-som-model" class="nav-link" data-scroll-target="#drawbacks-of-the-som-model"><span class="header-section-number">6.7.5</span> Drawbacks of the SOM model</a></li>
   </ul></li>
-  <li><a href="#the-function-space-view" id="toc-the-function-space-view" class="nav-link" data-scroll-target="#the-function-space-view"><span class="header-section-number">6.6</span> The Function-space View</a>
+  <li><a href="#generative-topographic-maps" id="toc-generative-topographic-maps" class="nav-link" data-scroll-target="#generative-topographic-maps"><span class="header-section-number">6.8</span> Generative Topographic Maps</a></li>
+  <li><a href="#data-assimilation" id="toc-data-assimilation" class="nav-link" data-scroll-target="#data-assimilation"><span class="header-section-number">6.9</span> Data Assimilation</a>
   <ul class="collapse">
-  <li><a href="#gaussian-processes" id="toc-gaussian-processes" class="nav-link" data-scroll-target="#gaussian-processes"><span class="header-section-number">6.6.1</span> Gaussian Processes</a></li>
-  <li><a href="#bayesian-regression-is-a-gaussian-process" id="toc-bayesian-regression-is-a-gaussian-process" class="nav-link" data-scroll-target="#bayesian-regression-is-a-gaussian-process"><span class="header-section-number">6.6.2</span> Bayesian Regression is a Gaussian Process</a></li>
-  <li><a href="#prediction-with-noise-free-observations" id="toc-prediction-with-noise-free-observations" class="nav-link" data-scroll-target="#prediction-with-noise-free-observations"><span class="header-section-number">6.6.3</span> Prediction with Noise-free Observations</a></li>
-  <li><a href="#conditioning-the-joint-distribution" id="toc-conditioning-the-joint-distribution" class="nav-link" data-scroll-target="#conditioning-the-joint-distribution"><span class="header-section-number">6.6.4</span> Conditioning the Joint Distribution</a></li>
-  <li><a href="#prediction-with-gaussian-processes" id="toc-prediction-with-gaussian-processes" class="nav-link" data-scroll-target="#prediction-with-gaussian-processes"><span class="header-section-number">6.6.5</span> Prediction with Gaussian Processes</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">6.9.1</span> Overview</a></li>
+  <li><a href="#framing-the-problem" id="toc-framing-the-problem" class="nav-link" data-scroll-target="#framing-the-problem"><span class="header-section-number">6.9.2</span> Framing the Problem</a></li>
+  <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1"><span class="header-section-number">6.9.3</span> Summary</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">6.9.4</span> Assumptions</a></li>
+  <li><a href="#kalman-filtering" id="toc-kalman-filtering" class="nav-link" data-scroll-target="#kalman-filtering"><span class="header-section-number">6.9.5</span> Kalman Filtering</a></li>
+  <li><a href="#extended-kalman-filter" id="toc-extended-kalman-filter" class="nav-link" data-scroll-target="#extended-kalman-filter"><span class="header-section-number">6.9.6</span> Extended Kalman Filter</a></li>
+  <li><a href="#d-var" id="toc-d-var" class="nav-link" data-scroll-target="#d-var"><span class="header-section-number">6.9.7</span> 3D-Var</a></li>
+  <li><a href="#d-var-1" id="toc-d-var-1" class="nav-link" data-scroll-target="#d-var-1"><span class="header-section-number">6.9.8</span> 4D-Var</a></li>
+  <li><a href="#sensitivity-analysis-for-differential-equations" id="toc-sensitivity-analysis-for-differential-equations" class="nav-link" data-scroll-target="#sensitivity-analysis-for-differential-equations"><span class="header-section-number">6.9.9</span> Sensitivity Analysis for Differential Equations</a></li>
   </ul></li>
-  <li><a href="#doing-it-in-julia" id="toc-doing-it-in-julia" class="nav-link" data-scroll-target="#doing-it-in-julia"><span class="header-section-number">6.7</span> Doing it in Julia</a></li>
-  <li><a href="#fitting-the-gaussian-process" id="toc-fitting-the-gaussian-process" class="nav-link" data-scroll-target="#fitting-the-gaussian-process"><span class="header-section-number">6.8</span> Fitting the Gaussian Process</a>
-  <ul class="collapse">
-  <li><a href="#bayesian-model-selection" id="toc-bayesian-model-selection" class="nav-link" data-scroll-target="#bayesian-model-selection"><span class="header-section-number">6.8.1</span> Bayesian Model Selection</a></li>
-  </ul></li>
-  <li><a href="#model-ensembling" id="toc-model-ensembling" class="nav-link" data-scroll-target="#model-ensembling"><span class="header-section-number">6.9</span> Model Ensembling</a></li>
-  <li><a href="#super-learners" id="toc-super-learners" class="nav-link" data-scroll-target="#super-learners"><span class="header-section-number">6.10</span> Super Learners</a></li>
-  <li><a href="#self-organizing-maps" id="toc-self-organizing-maps" class="nav-link" data-scroll-target="#self-organizing-maps"><span class="header-section-number">6.11</span> Self Organizing Maps</a></li>
-  <li><a href="#generative-topographic-maps" id="toc-generative-topographic-maps" class="nav-link" data-scroll-target="#generative-topographic-maps"><span class="header-section-number">6.12</span> Generative Topographic Maps</a></li>
-  <li><a href="#data-assimilation" id="toc-data-assimilation" class="nav-link" data-scroll-target="#data-assimilation"><span class="header-section-number">6.13</span> Data Assimilation</a>
-  <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">6.13.1</span> Overview</a></li>
-  <li><a href="#framing-the-problem" id="toc-framing-the-problem" class="nav-link" data-scroll-target="#framing-the-problem"><span class="header-section-number">6.13.2</span> Framing the Problem</a></li>
-  <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1"><span class="header-section-number">6.13.3</span> Summary</a></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">6.13.4</span> Assumptions</a></li>
-  <li><a href="#kalman-filtering" id="toc-kalman-filtering" class="nav-link" data-scroll-target="#kalman-filtering"><span class="header-section-number">6.13.5</span> Kalman Filtering</a></li>
-  <li><a href="#extended-kalman-filter" id="toc-extended-kalman-filter" class="nav-link" data-scroll-target="#extended-kalman-filter"><span class="header-section-number">6.13.6</span> Extended Kalman Filter</a></li>
-  <li><a href="#d-var" id="toc-d-var" class="nav-link" data-scroll-target="#d-var"><span class="header-section-number">6.13.7</span> 3D-Var</a></li>
-  <li><a href="#d-var-1" id="toc-d-var-1" class="nav-link" data-scroll-target="#d-var-1"><span class="header-section-number">6.13.8</span> 4D-Var</a></li>
-  <li><a href="#sensitivity-analysis-for-differential-equations" id="toc-sensitivity-analysis-for-differential-equations" class="nav-link" data-scroll-target="#sensitivity-analysis-for-differential-equations"><span class="header-section-number">6.13.9</span> Sensitivity Analysis for Differential Equations</a></li>
-  </ul></li>
-  <li><a href="#conformal-prediction" id="toc-conformal-prediction" class="nav-link" data-scroll-target="#conformal-prediction"><span class="header-section-number">6.14</span> Conformal Prediction</a></li>
-  <li><a href="#generative-methods" id="toc-generative-methods" class="nav-link" data-scroll-target="#generative-methods"><span class="header-section-number">6.15</span> Generative Methods</a></li>
-  <li><a href="#topological-data-analysis" id="toc-topological-data-analysis" class="nav-link" data-scroll-target="#topological-data-analysis"><span class="header-section-number">6.16</span> Topological Data Analysis</a></li>
-  <li><a href="#auto-encoders" id="toc-auto-encoders" class="nav-link" data-scroll-target="#auto-encoders"><span class="header-section-number">6.17</span> Auto Encoders</a></li>
-  <li><a href="#physics-informed-neural-networks" id="toc-physics-informed-neural-networks" class="nav-link" data-scroll-target="#physics-informed-neural-networks"><span class="header-section-number">6.18</span> Physics Informed Neural Networks</a></li>
-  <li><a href="#universal-differential-equations" id="toc-universal-differential-equations" class="nav-link" data-scroll-target="#universal-differential-equations"><span class="header-section-number">6.19</span> Universal Differential Equations</a></li>
+  <li><a href="#conformal-prediction" id="toc-conformal-prediction" class="nav-link" data-scroll-target="#conformal-prediction"><span class="header-section-number">6.10</span> Conformal Prediction</a></li>
+  <li><a href="#generative-methods" id="toc-generative-methods" class="nav-link" data-scroll-target="#generative-methods"><span class="header-section-number">6.11</span> Generative Methods</a></li>
+  <li><a href="#topological-data-analysis" id="toc-topological-data-analysis" class="nav-link" data-scroll-target="#topological-data-analysis"><span class="header-section-number">6.12</span> Topological Data Analysis</a></li>
+  <li><a href="#auto-encoders" id="toc-auto-encoders" class="nav-link" data-scroll-target="#auto-encoders"><span class="header-section-number">6.13</span> Auto Encoders</a></li>
+  <li><a href="#physics-informed-neural-networks" id="toc-physics-informed-neural-networks" class="nav-link" data-scroll-target="#physics-informed-neural-networks"><span class="header-section-number">6.14</span> Physics Informed Neural Networks</a></li>
+  <li><a href="#universal-differential-equations" id="toc-universal-differential-equations" class="nav-link" data-scroll-target="#universal-differential-equations"><span class="header-section-number">6.15</span> Universal Differential Equations</a></li>
   </ul>
 </nav>
     </div>
@@ -308,8 +322,8 @@ ul.task-list li input[type="checkbox"] {
 <p>cross-validation techniques</p>
 <p>Dr.&nbsp;Lary’s method (from Gaussian Process Code) for representative sampling to reduce data size</p>
 </section>
-<section id="neural-networks" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="neural-networks"><span class="header-section-number">6.2</span> Neural Networks</h2>
+<section id="sec-neural-networks" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-neural-networks"><span class="header-section-number">6.2</span> Neural Networks</h2>
 <p>From a perspective of basic function composition… as in Rackauckas’s blog</p>
 </section>
 <section id="decision-trees" class="level2" data-number="6.3">
@@ -462,9 +476,8 @@ Note
     \boxed{p(y_* \vert \mathbf{x}_*, \mathbf{y}, X) = \mathcal{N}\left(\mathbf{x}_*^T\mathbf{w},\;  \mathbf{x}_*^TA^{-1}\mathbf{x}_*\right)}
 \end{equation}\]</span></p>
 </section>
-</section>
-<section id="doing-more-with-less-kernelization" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="doing-more-with-less-kernelization"><span class="header-section-number">6.5</span> Doing More with Less: Kernelization</h2>
+<section id="doing-more-with-less-kernelization" class="level3" data-number="6.4.4">
+<h3 data-number="6.4.4" class="anchored" data-anchor-id="doing-more-with-less-kernelization"><span class="header-section-number">6.4.4</span> Doing More with Less: Kernelization</h3>
 <p>Let’s take a break from our Bayesian regression and return to the standard linear regression model for a moment. The key drawback of linear models like this is, of course, that they’re <em>linear</em>!. Considering that many (most?) <em>interesting</em> relationships are not linear, how can we extend our simple linear model to enable us to perform complicated non-linear fits?</p>
 <p>In the parlance of machine learning, the simple solution is to do <a href="https://en.wikipedia.org/wiki/Feature_engineering"><strong>feature engineering</strong></a>. If our inital feature vector is <span class="math display">\[\begin{equation}
     \mathbf{x} = (x_1, ..., x_n)
@@ -521,8 +534,8 @@ Important
 </div>
 </div>
 </div>
-<section id="bayesian-regression-with-feature-mappings" class="level3" data-number="6.5.1">
-<h3 data-number="6.5.1" class="anchored" data-anchor-id="bayesian-regression-with-feature-mappings"><span class="header-section-number">6.5.1</span> Bayesian Regression with Feature Mappings</h3>
+<section id="bayesian-regression-with-feature-mappings" class="level4" data-number="6.4.4.1">
+<h4 data-number="6.4.4.1" class="anchored" data-anchor-id="bayesian-regression-with-feature-mappings"><span class="header-section-number">6.4.4.1</span> Bayesian Regression with Feature Mappings</h4>
 <p>Let’s update our Bayesian regression scheme to reflect the use of our feature projection map <span class="math inline">\(\phi\)</span>. First we define <span class="math display">\[\begin{align}
     \Phi &amp;:= \phi(X) \\
     \phi_* &amp;:= \phi(\mathbf{x}_*)
@@ -560,8 +573,9 @@ Important
 <p>Thus, we have the equivalent form for our predictive distribution: <span class="math display">\[\begin{equation}
     \boxed{p(y_*\vert \mathbf{x}_*, X, \mathbf{y}) =\\ \mathcal{N}\left( \phi_*^T\Sigma_p\Phi(K+\sigma_n^2I)^{-1}\mathbf{y}, \; \phi_*^T\Sigma_p\phi_* - \phi_*^T\Sigma_p\Phi(K+\sigma_n^2I)^{-1}\Phi^T\Sigma_p\phi_*\right)}
 \end{equation}\]</span> where the pesky <span class="math inline">\(N\times N\)</span> term has been replaced by the <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\Phi^T\Sigma_p\Phi\)</span>.</p>
-<section id="kernelization" class="level4" data-number="6.5.1.1">
-<h4 data-number="6.5.1.1" class="anchored" data-anchor-id="kernelization"><span class="header-section-number">6.5.1.1</span> Kernelization</h4>
+</section>
+<section id="kernelization" class="level4" data-number="6.4.4.2">
+<h4 data-number="6.4.4.2" class="anchored" data-anchor-id="kernelization"><span class="header-section-number">6.4.4.2</span> Kernelization</h4>
 <p>We now make the the <em>key</em> observation that the only matrices that appear in the above expression are <span class="math display">\[\begin{align}
     &amp;\Phi^T\Sigma_p\Phi, &amp;\phi_*^T\Sigma_p\phi_* \\
     &amp;\phi_*^T\Sigma_p\Phi, &amp;\Phi^T\Sigma_p\phi_*
@@ -588,12 +602,11 @@ Important
 <p>This is the <em>end-result</em> of Gaussian Process Regression acheived via the <em>weight-space view</em>.</p>
 </section>
 </section>
-</section>
-<section id="the-function-space-view" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="the-function-space-view"><span class="header-section-number">6.6</span> The Function-space View</h2>
+<section id="the-function-space-view" class="level3" data-number="6.4.5">
+<h3 data-number="6.4.5" class="anchored" data-anchor-id="the-function-space-view"><span class="header-section-number">6.4.5</span> The Function-space View</h3>
 <p>So far our approach has been to generalize the standard linear regression model to allow for fitting over a (possibly infinite) basis of features <em>with</em> consideration for measurement and model uncertainty (our Bayesian priors). In essence, the idea was to fit <em>the distribution of all possible weights conditioned on the available training data</em>, <span class="math inline">\(p(\mathbf{w} \vert X, \mathbf{y})\)</span>. A second <em>equivalent</em> approach is to instead consider the distribution of all possible model function <span class="math inline">\(f(\mathbf{x})\)</span>. By constructing a Bayesian prior of this space, we constrain the space of possible model functions and fit a <em>distribution over all allowed model functions</em>, <span class="math inline">\(p(f \vert X, \mathbf{y})\)</span>. To do so we will need to develop the abstract machinery of distributions over function spaces. When these distributions are Gaussian in nature, the result is called a <em>Gaussian process</em>.</p>
-<section id="gaussian-processes" class="level3" data-number="6.6.1">
-<h3 data-number="6.6.1" class="anchored" data-anchor-id="gaussian-processes"><span class="header-section-number">6.6.1</span> Gaussian Processes</h3>
+<section id="gaussian-processes" class="level4" data-number="6.4.5.1">
+<h4 data-number="6.4.5.1" class="anchored" data-anchor-id="gaussian-processes"><span class="header-section-number">6.4.5.1</span> Gaussian Processes</h4>
 <p>By this point, we are all familiar with the Gaussian distribution, aka the Normal distribtion <span class="math inline">\(\mathcal{N}(\mu, \sigma^2)\)</span>. This distribution is defined by a mean value <span class="math inline">\(\mu\)</span> and a variance <span class="math inline">\(\sigma^2\)</span>. It’s <em>big brother</em> is the <strong>Multivariate Normal Distribution</strong>, <span class="math inline">\(\mathcal{N}(\mathbf{\mu}, \Sigma)\)</span>, described be a vector of means <span class="math inline">\(\mathbf{\mu}\)</span> and a covariance matrix <span class="math inline">\(\Sigma\)</span>. A natural question, then, is can we generalize the concept of the Gaussian distribution from <span class="math inline">\(N\)</span> dimensions to being defined over a continuous field? This question leads naturally to the definition of a <strong>Gaussian Process</strong></p>
 <p><strong>Definition:</strong> A <em>Gaussian Process</em>, <span class="math inline">\(\mathcal{GP}\)</span>, is a collection of random variables for which any finite subset are described by a joint Gaussian distribution.</p>
 <p>To see where this comes from, recall that in our previous derivation, we already made the assumption that all our our data points <span class="math inline">\(\mathcal{D}\)</span> are i.i.d. Gaussian distributed. A gaussian process is the natural extension of this and makes the assumption that the continuous set from which are data are sampled are <strong>so Guassian</strong> that any finite sample will be jointly Gaussian distributed. The term <em>process</em> is used to distinguish between finite collections of random variables (distributions) and their continuous counterparts described here.</p>
@@ -601,8 +614,8 @@ Important
     f(\mathbf{x}) \sim \mathcal{GP}(m(\mathbf{x}), k(\mathbf{x},\mathbf{x}'))
 \end{equation}\]</span></p>
 </section>
-<section id="bayesian-regression-is-a-gaussian-process" class="level3" data-number="6.6.2">
-<h3 data-number="6.6.2" class="anchored" data-anchor-id="bayesian-regression-is-a-gaussian-process"><span class="header-section-number">6.6.2</span> Bayesian Regression is a Gaussian Process</h3>
+<section id="bayesian-regression-is-a-gaussian-process" class="level4" data-number="6.4.5.2">
+<h4 data-number="6.4.5.2" class="anchored" data-anchor-id="bayesian-regression-is-a-gaussian-process"><span class="header-section-number">6.4.5.2</span> Bayesian Regression is a Gaussian Process</h4>
 <p>To see this in action, recall our Bayesian regression model <span class="math display">\[\begin{equation}
     f(\mathbf{x} = \phi(\mathbf{x})^T\mathbf{w} \qquad \mathbf{w}\sim\mathcal{N}(\mathbf{0}, \Sigma_p)
 \end{equation}\]</span> where we have set the prior on <span class="math inline">\(\mathcal{w}\)</span> to have zero mean.</p>
@@ -612,15 +625,15 @@ Important
 \mathbb{E}[f(\mathbf{x})f(\mathbf{x'})] = \phi(\mathbf{x})^T\mathbb{E}[\mathbf{w}\mathbf{w}^T]\phi(\mathbf{x}') = \phi(\mathbf{x})^T\Sigma_p\phi(\mathbf{x}')
 \end{equation}\]</span></p>
 </section>
-<section id="prediction-with-noise-free-observations" class="level3" data-number="6.6.3">
-<h3 data-number="6.6.3" class="anchored" data-anchor-id="prediction-with-noise-free-observations"><span class="header-section-number">6.6.3</span> Prediction with Noise-free Observations</h3>
+<section id="prediction-with-noise-free-observations" class="level4" data-number="6.4.5.3">
+<h4 data-number="6.4.5.3" class="anchored" data-anchor-id="prediction-with-noise-free-observations"><span class="header-section-number">6.4.5.3</span> Prediction with Noise-free Observations</h4>
 <p>To repeat the point, the key feature of Gaussian processes is that finite subsets are jointly Gaussian distributed. Thus we can we can split our data into the testpoints <span class="math inline">\(\mathcal{D}=(X,\mathbf{y})\)</span> and testpoints <span class="math inline">\(X_*\)</span> t and treat each collection as joint distributions with the following priors:</p>
 <p><span class="math display">\[\begin{equation}\begin{bmatrix} \mathbf{f} \\ \mathbf{f}_* \end{bmatrix} \sim \mathcal{N}\left(\mathbf{0},\begin{bmatrix} K(X,X) &amp; K(X,X_*) \\ K(X_*,X) &amp; K(X_*,X_*) \end{bmatrix}\right)
 \end{equation}\]</span></p>
 <p>where <span class="math inline">\(\mathbf{f}:= f(X)\)</span> and <span class="math inline">\(\mathbf{f}_* = f(X_*)\)</span>.</p>
 </section>
-<section id="conditioning-the-joint-distribution" class="level3" data-number="6.6.4">
-<h3 data-number="6.6.4" class="anchored" data-anchor-id="conditioning-the-joint-distribution"><span class="header-section-number">6.6.4</span> Conditioning the Joint Distribution</h3>
+<section id="conditioning-the-joint-distribution" class="level4" data-number="6.4.5.4">
+<h4 data-number="6.4.5.4" class="anchored" data-anchor-id="conditioning-the-joint-distribution"><span class="header-section-number">6.4.5.4</span> Conditioning the Joint Distribution</h4>
 <p>To obtain our predictive distribution, <span class="math inline">\(p(\mathbf{f}_* \vert X_*, X, \mathbf{y})\)</span>, we <em>condition the joint prior distribution</em> on the observations. To see how this works, consider a general joint gaussian distribution given by <span class="math display">\[\begin{equation}
 \begin{bmatrix} x \\ y \end{bmatrix} \sim \mathcal{N}\left( \begin{bmatrix}\mu_x \\ \mu_y\end{bmatrix},\; \begin{bmatrix} \Sigma_{xx} &amp; \Sigma_{xy} \\ \Sigma_{yx} &amp; \Sigma_{yy} \end{bmatrix}\right)
 \end{equation}\]</span></p>
@@ -671,8 +684,8 @@ Important
 \end{equation}\]</span></p>
 <p>armed with this identity for joint Guassian distributions, we are ready to derive the predictive distribution for Gaussian Process Regression</p>
 </section>
-<section id="prediction-with-gaussian-processes" class="level3" data-number="6.6.5">
-<h3 data-number="6.6.5" class="anchored" data-anchor-id="prediction-with-gaussian-processes"><span class="header-section-number">6.6.5</span> Prediction with Gaussian Processes</h3>
+<section id="prediction-with-gaussian-processes" class="level4" data-number="6.4.5.5">
+<h4 data-number="6.4.5.5" class="anchored" data-anchor-id="prediction-with-gaussian-processes"><span class="header-section-number">6.4.5.5</span> Prediction with Gaussian Processes</h4>
 <p>Applying these results for our gaussian process, we find <span class="math display">\[\begin{equation}
     p(\mathbf{f}_* \vert X_*, X, \mathbf{y} = \mathcal{N}\left( K_*^TK^{-1}\mathbf{f},\; K_{**}-K_*^TK^{-1}K_*\right)
 \end{equation}\]</span></p>
@@ -684,8 +697,8 @@ Important
 \end{equation}\]</span></p>
 </section>
 </section>
-<section id="doing-it-in-julia" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="doing-it-in-julia"><span class="header-section-number">6.7</span> Doing it in Julia</h2>
+<section id="doing-it-in-julia" class="level3" data-number="6.4.6">
+<h3 data-number="6.4.6" class="anchored" data-anchor-id="doing-it-in-julia"><span class="header-section-number">6.4.6</span> Doing it in Julia</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><embed src="figures/gpr/training-data.pdf" class="img-fluid"></p>
@@ -721,8 +734,8 @@ Important
 <figcaption class="figure-caption">Gaussian process fit with vanilla hyperparameters</figcaption>
 </figure>
 </div>
-<section id="summary" class="level4" data-number="6.7.0.1">
-<h4 data-number="6.7.0.1" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.7.0.1</span> Summary:</h4>
+<section id="summary" class="level4" data-number="6.4.6.1">
+<h4 data-number="6.4.6.1" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.4.6.1</span> Summary:</h4>
 <p>So far we have shown how to:</p>
 <ol type="1">
 <li>Build a kernel function <span class="math inline">\(k(\cdot, \cdot)\)</span> via composition using <code>KernelFunctions.jl</code></li>
@@ -734,11 +747,12 @@ Important
 </ol>
 </section>
 </section>
-<section id="fitting-the-gaussian-process" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="fitting-the-gaussian-process"><span class="header-section-number">6.8</span> Fitting the Gaussian Process</h2>
+<section id="fitting-the-gaussian-process" class="level3" data-number="6.4.7">
+<h3 data-number="6.4.7" class="anchored" data-anchor-id="fitting-the-gaussian-process"><span class="header-section-number">6.4.7</span> Fitting the Gaussian Process</h3>
 <p>You may think we have <em>already</em> fit the Guassian process however, we were forced to choose values for both <span class="math inline">\(\ell\)</span> and <span class="math inline">\(\sigma^2\)</span>. How can we optimally select the ideal hyperparameters for our Gaussian Process? This leads us into the realm of <a href="https://gaussianprocess.org/gpml/chapters/RW5.pdf">Bayesian Model Selection</a></p>
-<section id="bayesian-model-selection" class="level3" data-number="6.8.1">
-<h3 data-number="6.8.1" class="anchored" data-anchor-id="bayesian-model-selection"><span class="header-section-number">6.8.1</span> Bayesian Model Selection</h3>
+</section>
+<section id="bayesian-model-selection" class="level3" data-number="6.4.8">
+<h3 data-number="6.4.8" class="anchored" data-anchor-id="bayesian-model-selection"><span class="header-section-number">6.4.8</span> Bayesian Model Selection</h3>
 <p>There are several levels of parameters in machine learning. At the lowest level, we have the model weights <span class="math inline">\(\mathbf{w}\)</span>. Above that, we have model hyperparameters, <span class="math inline">\(\theta\)</span>. At the top we have model structure <span class="math inline">\(\mathcal{H}\)</span>. In our Bayesian framework, we can consider distributions defined at each of these levels. At the bottom, we have <span class="math display">\[\begin{equation}
     p(\mathbf{w} \vert X, \mathbf{y}, \theta, \mathcal{H}_i) = \frac{p(\mathbf{y} \vert X, \mathbf{w}, \theta, \mathcal{H}_i) p(\mathbf{w}\vert \theta, \mathcal{H}_i) }{p(\mathbf{y}\vert X, \theta, \mathcal{H}_i)}
 \end{equation}\]</span></p>
@@ -817,33 +831,72 @@ Note
 <p>``</p>
 </section>
 </section>
-<section id="model-ensembling" class="level2" data-number="6.9">
-<h2 data-number="6.9" class="anchored" data-anchor-id="model-ensembling"><span class="header-section-number">6.9</span> Model Ensembling</h2>
+<section id="model-ensembling" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="model-ensembling"><span class="header-section-number">6.5</span> Model Ensembling</h2>
 <p>Boosting vs Bagging</p>
 <p>XGBoost vs RandomForest (and other implementations)</p>
 <p>MLJ and SciKitLearn documentation sites will have good references for this, I think.</p>
 </section>
-<section id="super-learners" class="level2" data-number="6.10">
-<h2 data-number="6.10" class="anchored" data-anchor-id="super-learners"><span class="header-section-number">6.10</span> Super Learners</h2>
+<section id="super-learners" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="super-learners"><span class="header-section-number">6.6</span> Super Learners</h2>
 <p>Use the example of model stacking from MLJ documentation to describe our approach.</p>
 </section>
-<section id="self-organizing-maps" class="level2" data-number="6.11">
-<h2 data-number="6.11" class="anchored" data-anchor-id="self-organizing-maps"><span class="header-section-number">6.11</span> Self Organizing Maps</h2>
+<section id="self-organizing-maps" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="self-organizing-maps"><span class="header-section-number">6.7</span> Self Organizing Maps</h2>
+<p>Self organizing maps (SOMs) are an unsupervised machine learning technique developed by Kohonen <span class="citation" data-cites="kohonen-original">(see <a href="../references.html#ref-kohonen-original" role="doc-biblioref">Kohonen 1982</a>)</span> based on the simple biological principle that <em>neurons near each other fire together</em>. This observation that the toplogical <em>closeness</em> of similar computational units is a critical feature of intelligent systems leads to a natural reinterpretation of the familiar perceptron model into a new form amenable for a variety of clustering and dimensionality reduction tasks. In particular, the SOM enables a rapid unsupervised classification of multidimensional data into a (typically) one or two dimensional <em>simplicial complex</em>, the discrete realization of a topological manifold, whose vertices correspond to representative points in the original data space <span class="math inline">\(\mathcal{D}\)</span>. While a tad esoteric compared to other popular unsupervised methods like KMeans clustering or DBSCAN, the SOM distinguishes itself with the added benefit that it’s training procedure guarantees nodes (i.e.&nbsp;classes) which are topologically close in the SOM simplex share similar weights. This additional structure makes the SOM particularly attractive when an interpretation of the discovered clusters <em>as well as</em> the relationships between them is desired.</p>
+<p>The original treatment of the SOM by Kohonen was made in terms of processing units, sensory signals, and relaying networks <span class="citation" data-cites="kohonen-original">(<a href="../references.html#ref-kohonen-original" role="doc-biblioref">Kohonen 1982</a>)</span>, however, in the modern era of deep learning, a more palatable derivation can be obtained by re-interpreting the weights of a simple perceptron model to provide the foundation for a clustering approach.</p>
+<section id="reinterpreting-the-perceptron" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="reinterpreting-the-perceptron"><span class="header-section-number">6.7.1</span> Reinterpreting the Perceptron</h3>
+<p>As described in <a href="#sec-neural-networks"><span>Section&nbsp;6.2</span></a>, a perceptron is a function of the form</p>
+<p><span class="math display">\[\begin{equation}
+    \mathbf{y} = \sigma.\left(W\mathbf{x}\right)
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(W\in\mathbb{R}^{n\times m}\)</span> is a matrix of weights which transform the input <span class="math inline">\(\mathbf{x}\in\mathbb{R}^m\)</span> into <span class="math inline">\(\mathbb{R}^n\)</span> and <span class="math inline">\(\sigma\)</span> is a nonlinear <em>activation function</em> applied element-wise to the outputs of the matrix multiplication (indicated by the <span class="math inline">\(.\)</span> syntax). If we instead think of the weight matrix as an ordered collection of vectors <span class="math inline">\(\{\mathbf{w}_i\}_{i=1}^{n}\)</span>, then this formula can be further decomposed into</p>
+<p><span class="math display">\[\begin{equation}
+    \mathbf{y} = \sum_{i=1}^n \sigma(\mathbf{w}_i^T\mathbf{x}) = \sum_{i=1}^n \sigma(\langle \mathbf{w}_i, \mathbf{x} \rangle)
+\end{equation}\]</span></p>
+<p>The function of the perceptron is now clear: given an input vector <span class="math inline">\(\mathbf{x}\)</span> and a collection of <span class="math inline">\(n\)</span>-many weight vectors <span class="math inline">\(\mathbf{w}_i\)</span>, compute the inner product of <span class="math inline">\(\mathbf{x}\)</span> with each weight vector, apply the nonlinear activation function <span class="math inline">\(\sigma\)</span>, and concatenate the results. If we allow ourselves to imagine the weight vectors <span class="math inline">\(\mathbf{w}_i\)</span> as members of the same space as the inputs <span class="math inline">\(\mathbf{x}\)</span>, a reasonable question to ask is: <em>how similar is the input <span class="math inline">\(\mathbf{x}\)</span> to each <span class="math inline">\(\mathbf{w}_i\)</span></em>. Further, the application of the inner product <span class="math inline">\(\langle \cdot,\cdot \rangle\)</span> suggests we may answer this question in terms of the distance</p>
+<p><span class="math display">\[\begin{equation}
+    \langle \mathbf{w}_i-\mathbf{x},  \mathbf{w}_i-\mathbf{x}\rangle = d(\mathbf{w}_i, \mathbf{x})^2.
+\end{equation}\]</span></p>
+<p>In other words, given a set of weight vectors <span class="math inline">\(\mathbf{w}_i\)</span> which we may now think of as the clusters for our unsupervised model, we can measure the similarity between a given datum <span class="math inline">\(\mathbf{x}_j\)</span> and each cluster by computing the distance</p>
+<p><span class="math display">\[\begin{equation}
+    d_{ij} = d\left(\mathbf{w}_i, \mathbf{x}_j \right)
+\end{equation}\]</span></p>
 </section>
-<section id="generative-topographic-maps" class="level2" data-number="6.12">
-<h2 data-number="6.12" class="anchored" data-anchor-id="generative-topographic-maps"><span class="header-section-number">6.12</span> Generative Topographic Maps</h2>
+<section id="the-training-process" class="level3" data-number="6.7.2">
+<h3 data-number="6.7.2" class="anchored" data-anchor-id="the-training-process"><span class="header-section-number">6.7.2</span> The Training Process</h3>
 </section>
-<section id="data-assimilation" class="level2" data-number="6.13">
-<h2 data-number="6.13" class="anchored" data-anchor-id="data-assimilation"><span class="header-section-number">6.13</span> Data Assimilation</h2>
+<section id="common-som-topologies" class="level3" data-number="6.7.3">
+<h3 data-number="6.7.3" class="anchored" data-anchor-id="common-som-topologies"><span class="header-section-number">6.7.3</span> Common SOM topologies</h3>
+<ul>
+<li>Square</li>
+<li>Cylindrical</li>
+<li>Toroidal</li>
+<li>Spherical</li>
+</ul>
+</section>
+<section id="a-simple-example-partitioning-color-spaces" class="level3" data-number="6.7.4">
+<h3 data-number="6.7.4" class="anchored" data-anchor-id="a-simple-example-partitioning-color-spaces"><span class="header-section-number">6.7.4</span> A simple example: partitioning color spaces</h3>
+</section>
+<section id="drawbacks-of-the-som-model" class="level3" data-number="6.7.5">
+<h3 data-number="6.7.5" class="anchored" data-anchor-id="drawbacks-of-the-som-model"><span class="header-section-number">6.7.5</span> Drawbacks of the SOM model</h3>
+</section>
+</section>
+<section id="generative-topographic-maps" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="generative-topographic-maps"><span class="header-section-number">6.8</span> Generative Topographic Maps</h2>
+</section>
+<section id="data-assimilation" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="data-assimilation"><span class="header-section-number">6.9</span> Data Assimilation</h2>
 <!-- Add some commands to make life easier -->
 <p><strong>NOTE</strong>: It would be nice to provide additional derivations (where possible) in a Bayesian framework… We should also liberally cite Dr.&nbsp;Lary’s original papers on the chemical 4d-var implementation.</p>
-<section id="overview" class="level3" data-number="6.13.1">
-<h3 data-number="6.13.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">6.13.1</span> Overview</h3>
+<section id="overview" class="level3" data-number="6.9.1">
+<h3 data-number="6.9.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">6.9.1</span> Overview</h3>
 <p>The proper application of scientific models to make real-world predictions requires that we commit ourselves to a full accounting of all possible sources of uncertainty when reporting results. Further, the explosion of <em>big data</em> across scientific fields provieds a plethora observational data that our models are typically unequipped to incorporate when making predictions. The field of <strong>Data Assimilation</strong> addresses this problem by providing a family of techniques engineered to combine model output together with observational data whilst enabling a complete accounting the sources of uncertainty. For chaotic systems in particular, data assimilation enables integration on long time scales that would be impossible via models alone.</p>
 <p>In this overview, we will follow the examples from <a href="https://www.mdpi.com/2311-5521/5/4/225/htm">this nice paper</a>.</p>
 </section>
-<section id="framing-the-problem" class="level3" data-number="6.13.2">
-<h3 data-number="6.13.2" class="anchored" data-anchor-id="framing-the-problem"><span class="header-section-number">6.13.2</span> Framing the Problem</h3>
+<section id="framing-the-problem" class="level3" data-number="6.9.2">
+<h3 data-number="6.9.2" class="anchored" data-anchor-id="framing-the-problem"><span class="header-section-number">6.9.2</span> Framing the Problem</h3>
 <p>Data assimilation can be understood most generally in terms of dyscrete dynamical systems. This enables us to apply the methods to most mathematical models from gridded PDE solvers to systems of ordinary differential equations. Our goal is to find the best prediction for the system state vector <span class="math inline">\(u\)</span> that combines our model predictions, also known as forecasts, with observational data. Model predictions are summarized via the discrete update equation:</p>
 <p><span class="math display">\[\begin{equation}
     u_{k+1} = \mathcal{M}(u_k; \theta)
@@ -863,8 +916,8 @@ Note
 \xi^{(a)} = u^{(t)} - u^{(a)}
 \end{equation}\]</span></p>
 </section>
-<section id="summary-1" class="level3" data-number="6.13.3">
-<h3 data-number="6.13.3" class="anchored" data-anchor-id="summary-1"><span class="header-section-number">6.13.3</span> Summary</h3>
+<section id="summary-1" class="level3" data-number="6.9.3">
+<h3 data-number="6.9.3" class="anchored" data-anchor-id="summary-1"><span class="header-section-number">6.9.3</span> Summary</h3>
 <p><span class="math display">\[\begin{align}
     &amp;u_k^{(t)} \in \mathbb{R}^n &amp;\text{the true state vector} \\
     &amp;u_k^{(b)} \in \mathbb{R}^n &amp;\text{the kth model forecast} \\
@@ -879,8 +932,8 @@ Note
     &amp;h:\mathbb{R}^n\to\mathbb{R}^m  &amp;\text{observation function}
 \end{align}\]</span></p>
 </section>
-<section id="assumptions" class="level3" data-number="6.13.4">
-<h3 data-number="6.13.4" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">6.13.4</span> Assumptions</h3>
+<section id="assumptions" class="level3" data-number="6.9.4">
+<h3 data-number="6.9.4" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">6.9.4</span> Assumptions</h3>
 <p>To make possible the derivation of a <em>unique</em> analysis <span class="math inline">\(u^{(a)}\)</span>, the following assumptions are in order.</p>
 <p><span class="math display">\[\begin{align}
     &amp;\mathbb{E}[\xi_k^{(b)}] = 0 &amp; &amp;\mathbb{E}[\xi_k^{(b)}(\xi_j^{(b)})^T] = 0 \text{ for } k\neq j\\
@@ -897,8 +950,8 @@ Note
 \end{align}\]</span></p>
 <p>which we will use in our consideration of the final error of our analysis.</p>
 </section>
-<section id="kalman-filtering" class="level3" data-number="6.13.5">
-<h3 data-number="6.13.5" class="anchored" data-anchor-id="kalman-filtering"><span class="header-section-number">6.13.5</span> Kalman Filtering</h3>
+<section id="kalman-filtering" class="level3" data-number="6.9.5">
+<h3 data-number="6.9.5" class="anchored" data-anchor-id="kalman-filtering"><span class="header-section-number">6.9.5</span> Kalman Filtering</h3>
 <p>Given some model for the error covariance matrices <span class="math inline">\(Q_k\)</span> and <span class="math inline">\(R_k\)</span>, we would like a method that propagates <em>both</em> our model <strong>and</strong> the errors forward. This way we may guarantee that the accuracy of our analysis doesn’t come at the cost of higher uncertainty.</p>
 <p>The original implementation of the Kalman filter was for strictly linear systems. We will first develop the analysis for this simplified case adn then will generalize to the <strong>Extended Kalman Filter</strong> (EKF) that can handle fully nonlinear situations.</p>
 <p>In the linear case, our system may be written as</p>
@@ -912,8 +965,8 @@ Note
     \mathrm{Tr}\left( P_k\right) := \mathbb{E}[(u_k^{(t)}-u_k^{(a)})^T(u_k^{(t)}-u_k^{(a)})]
 \end{equation}\]</span></p>
 <p>Finding the analysis consists of two steps: the forecast step and the assimilation step.</p>
-<section id="forecast-step" class="level4" data-number="6.13.5.1">
-<h4 data-number="6.13.5.1" class="anchored" data-anchor-id="forecast-step"><span class="header-section-number">6.13.5.1</span> Forecast Step</h4>
+<section id="forecast-step" class="level4" data-number="6.9.5.1">
+<h4 data-number="6.9.5.1" class="anchored" data-anchor-id="forecast-step"><span class="header-section-number">6.9.5.1</span> Forecast Step</h4>
 <p>Assume we have the analysis at time <span class="math inline">\(t_k\)</span> denoted <span class="math inline">\(u_k^{(a)}\)</span>. Then the forecast for time <span class="math inline">\(t_{k+1}\)</span> is</p>
 <p><span class="math display">\[\begin{equation}
     u_{k+1}^{(b)} = M_ku_k^{(a)}
@@ -936,8 +989,8 @@ Note
 \end{equation}\]</span></p>
 <p>Thus we now have the background (i.e forecast) estimate of the state at <span class="math inline">\(t_{k+1}\)</span> and its covariance matrix. Given a measurement <span class="math inline">\(w_{k+1}\)</span> at the same time with covariance matrix <span class="math inline">\(R_{k+1}\)</span>, then we may now perform the assimilation step where we fuse the two sources of information to obtain <span class="math inline">\(u_{k+1}^{(a)}\)</span> and <span class="math inline">\(P_{k+1}\)</span>.</p>
 </section>
-<section id="data-assimilation-step" class="level4" data-number="6.13.5.2">
-<h4 data-number="6.13.5.2" class="anchored" data-anchor-id="data-assimilation-step"><span class="header-section-number">6.13.5.2</span> Data Assimilation Step</h4>
+<section id="data-assimilation-step" class="level4" data-number="6.9.5.2">
+<h4 data-number="6.9.5.2" class="anchored" data-anchor-id="data-assimilation-step"><span class="header-section-number">6.9.5.2</span> Data Assimilation Step</h4>
 <p>Let’s suppose that the analysis has the form</p>
 <p><span class="math display">\[\begin{equation}
     u_{k+1}^{(a)} = \nu + K_{k+1}w_{k+1}
@@ -980,8 +1033,8 @@ Note
         &amp;= \big(I-K_kH_k \big)B_k\big(I-K_kH_k \big)^T - K_kR_kK_k^T
 \end{align}\]</span></p>
 </section>
-<section id="deriving-k_k" class="level4" data-number="6.13.5.3">
-<h4 data-number="6.13.5.3" class="anchored" data-anchor-id="deriving-k_k"><span class="header-section-number">6.13.5.3</span> Deriving <span class="math inline">\(K_k\)</span></h4>
+<section id="deriving-k_k" class="level4" data-number="6.9.5.3">
+<h4 data-number="6.9.5.3" class="anchored" data-anchor-id="deriving-k_k"><span class="header-section-number">6.9.5.3</span> Deriving <span class="math inline">\(K_k\)</span></h4>
 <p>The Kalman filter is defined at that <span class="math inline">\(K_k\)</span> which which minimizes the sum of squared analysis errors, i.e.&nbsp;the trace of the analysis error covariance matrix. The following identies will be useful:</p>
 <p><span class="math display">\[\begin{align}
     \mathop{\nabla}_{A}\text{tr}(AB) &amp;= B^T \\
@@ -1009,8 +1062,8 @@ Note
 \end{align}\]</span></p>
 <p><strong>NOTE</strong>: we have used the fact that covariance matrices are symmetric.</p>
 </section>
-<section id="summary-2" class="level4" data-number="6.13.5.4">
-<h4 data-number="6.13.5.4" class="anchored" data-anchor-id="summary-2"><span class="header-section-number">6.13.5.4</span> Summary</h4>
+<section id="summary-2" class="level4" data-number="6.9.5.4">
+<h4 data-number="6.9.5.4" class="anchored" data-anchor-id="summary-2"><span class="header-section-number">6.9.5.4</span> Summary</h4>
 <p>Let’s summarize the whole process. We have</p>
 <ol type="1">
 <li><p>Initialization We must set the system to some initial condition. This means we must define <span class="math inline">\(u_0^a\)</span> and <span class="math inline">\(P_0\)</span>. We must also come up with a model for the process noise covariance <span class="math inline">\(Q_k\)</span> and measurement error covariance <span class="math inline">\(R_k\)</span>.</p></li>
@@ -1030,8 +1083,8 @@ Note
 \end{align}\]</span></p>
 </section>
 </section>
-<section id="extended-kalman-filter" class="level3" data-number="6.13.6">
-<h3 data-number="6.13.6" class="anchored" data-anchor-id="extended-kalman-filter"><span class="header-section-number">6.13.6</span> Extended Kalman Filter</h3>
+<section id="extended-kalman-filter" class="level3" data-number="6.9.6">
+<h3 data-number="6.9.6" class="anchored" data-anchor-id="extended-kalman-filter"><span class="header-section-number">6.9.6</span> Extended Kalman Filter</h3>
 <p>Given the nonlinear nature of many scientific models it is desirable to extend the <strong>Kalman Filter</strong> to be able to handle nonlinear models <span class="math inline">\(f(\cdot)\)</span> (and by extension, their update function <span class="math inline">\(\mathcal{M}(\cdot)\)</span>), and nonlinear observation functions <span class="math inline">\(h(\cdot)\)</span>. This can be accomplished so long as these functions are sufficiently smooth (<span class="math inline">\(C^1\)</span> to be precise) so as to admit valid Taylor approximations to first order. That is,</p>
 <p><span class="math display">\[\begin{align}
     \mathcal{M}(u_{k}) &amp;\approx \mathcal{M}(u_k^{(a)}) + D_{M}(u_k^{(a)})\xi_k^{(a)} &amp; h(u_k) &amp;\approx h(u_k^{(b)}) + D_h(u_k^{(b)})\xi_k^{(b)} \\
@@ -1056,8 +1109,8 @@ Note
     P_k &amp;= \left( I - K_kD_h(u_k^{(b)}) \right)B_k
 \end{align}\]</span></p>
 </section>
-<section id="d-var" class="level3" data-number="6.13.7">
-<h3 data-number="6.13.7" class="anchored" data-anchor-id="d-var"><span class="header-section-number">6.13.7</span> 3D-Var</h3>
+<section id="d-var" class="level3" data-number="6.9.7">
+<h3 data-number="6.9.7" class="anchored" data-anchor-id="d-var"><span class="header-section-number">6.9.7</span> 3D-Var</h3>
 <p>For the <strong>Kalman Filter</strong> and the <strong>EKF</strong>, we derived the optimal way to combine observation with simulation so as to minimize the trace of the analysis error covariance matrix, <span class="math inline">\(P_k\)</span>. An alternative approach is to recast the problem as a pure optimzation problem where rather than finding a filter <span class="math inline">\(K_k\)</span> that will add an innovation to <span class="math inline">\(u_k^{(b)}\)</span> to obtain the analysis <span class="math inline">\(u_k^{(a)}\)</span>, we obtain the analysis by optimizing the following cost function</p>
 <p><span class="math display">\[\begin{equation}
 J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1}{2}\left(u - u^{(b)} \right)^TB^{-1}\frac{1}{2}\left(u - u^{(b)} \right)
@@ -1076,8 +1129,8 @@ J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1
     a-D_h^TR^{-1}(w-h(u^{(a)})) + B^{-1}(u^{(a)}-u^{(b)}) = 0
 \end{equation}\]</span></p>
 <p>As for Kalman filtering, let’s begin with the assumption that our model and observation function are linear.</p>
-<section id="linear-case" class="level4" data-number="6.13.7.1">
-<h4 data-number="6.13.7.1" class="anchored" data-anchor-id="linear-case"><span class="header-section-number">6.13.7.1</span> Linear Case</h4>
+<section id="linear-case" class="level4" data-number="6.9.7.1">
+<h4 data-number="6.9.7.1" class="anchored" data-anchor-id="linear-case"><span class="header-section-number">6.9.7.1</span> Linear Case</h4>
 <p>Suppose that we have <span class="math inline">\(h(u) = Hu\)</span> so that <span class="math inline">\(D_h(u) = H\)</span>. Then, we have</p>
 <p><span class="math display">\[\begin{align}
     D_h^TR^{-1}(w-Hu^{(a)}) &amp;= B^{-1}(u^{(a)}-u^{(b)}) \\
@@ -1091,8 +1144,8 @@ J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1
 \end{equation}\]</span></p>
 <p>which agrees with what we found for the Linear Kalman Filter.</p>
 </section>
-<section id="nonlinear-case" class="level4" data-number="6.13.7.2">
-<h4 data-number="6.13.7.2" class="anchored" data-anchor-id="nonlinear-case"><span class="header-section-number">6.13.7.2</span> Nonlinear Case</h4>
+<section id="nonlinear-case" class="level4" data-number="6.9.7.2">
+<h4 data-number="6.9.7.2" class="anchored" data-anchor-id="nonlinear-case"><span class="header-section-number">6.9.7.2</span> Nonlinear Case</h4>
 <p>To deal with the nonlinearity, we can expand <span class="math inline">\(h\)</span> about an initial guess <span class="math inline">\(u^{(c)}\)</span> which we will later choose to be <span class="math inline">\(u^{(b)}\)</span> for convenience.</p>
 <p><span class="math display">\[\begin{equation}
     h(u^{(a)}) \approx h(u^{(c)}) + D_h(u^{(c)})\Delta u
@@ -1124,8 +1177,8 @@ J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1
 <p>In both the linear and nonlinear case, it should be noted that we have not added time indices to our state vectors. This is an indication that the 3d-var procedure is performed <strong>at every time where you have observation data</strong>.</p>
 </section>
 </section>
-<section id="d-var-1" class="level3" data-number="6.13.8">
-<h3 data-number="6.13.8" class="anchored" data-anchor-id="d-var-1"><span class="header-section-number">6.13.8</span> 4D-Var</h3>
+<section id="d-var-1" class="level3" data-number="6.9.8">
+<h3 data-number="6.9.8" class="anchored" data-anchor-id="d-var-1"><span class="header-section-number">6.9.8</span> 4D-Var</h3>
 <p>The <strong>3D-Var</strong> algorithm attempts to optimize a cost function to obtain the ideal analysis <em>for each point where we have observation data</em>. This can become computationally expensive as we require model evaluations <em>and</em> an optimization routine for every observation point. An alternative approach is to simultaneously optimize accross all observations in order to obtain the ideal <em>initial condition</em> that acheive the best model fit. This approach is similar to sensitivity analysis which seeks to fit a model’s parameters to data.</p>
 <p>To begin, we construct the 4d-var cost function</p>
 <p><span class="math display">\[\begin{align}
@@ -1154,8 +1207,8 @@ J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1
 </ol>
 <p>You can of course substitute another optimzation scheme after step 3.</p>
 </section>
-<section id="sensitivity-analysis-for-differential-equations" class="level3" data-number="6.13.9">
-<h3 data-number="6.13.9" class="anchored" data-anchor-id="sensitivity-analysis-for-differential-equations"><span class="header-section-number">6.13.9</span> Sensitivity Analysis for Differential Equations</h3>
+<section id="sensitivity-analysis-for-differential-equations" class="level3" data-number="6.9.9">
+<h3 data-number="6.9.9" class="anchored" data-anchor-id="sensitivity-analysis-for-differential-equations"><span class="header-section-number">6.9.9</span> Sensitivity Analysis for Differential Equations</h3>
 <p>Provided some model for a physical system in the form of a set of differential equations, a natural question is: How can we select the parameters for our model in order to get the best possible fit to some experimental data. Similarly, one may wonder what would happen to the prediction of your model if you were to slightly change the values of some parameters. In other words, how <em>sensitive</em> is the output of our model to your choice of parameter values?</p>
 <p>In the most general sense, we may frame the problem as follows. Suppose we have a model of the form</p>
 <p><span class="math display">\[\begin{equation}
@@ -1195,8 +1248,8 @@ J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1
     \frac{d}{dt}\lambda &amp;= - \left[ \frac{\partial g}{\partial u} \right]^T - \left[ \frac{\partial f}{\partial u} \right]^T\lambda  \\
     \lambda(T) &amp;= 0
 \end{align}\]</span></p>
-<section id="summary-3" class="level4" data-number="6.13.9.1">
-<h4 data-number="6.13.9.1" class="anchored" data-anchor-id="summary-3"><span class="header-section-number">6.13.9.1</span> Summary</h4>
+<section id="summary-3" class="level4" data-number="6.9.9.1">
+<h4 data-number="6.9.9.1" class="anchored" data-anchor-id="summary-3"><span class="header-section-number">6.9.9.1</span> Summary</h4>
 <p>To find the sensitivities <span class="math inline">\(\partial J/\partial \theta\)</span>, we perform the following:</p>
 <ol type="1">
 <li>Integrate the model <span class="math inline">\(du/dt = f(u,t,\theta)\)</span> forward to obtain <span class="math inline">\(u(t)\)</span>.</li>
@@ -1206,30 +1259,35 @@ J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1
 </section>
 </section>
 </section>
-<section id="conformal-prediction" class="level2" data-number="6.14">
-<h2 data-number="6.14" class="anchored" data-anchor-id="conformal-prediction"><span class="header-section-number">6.14</span> Conformal Prediction</h2>
+<section id="conformal-prediction" class="level2" data-number="6.10">
+<h2 data-number="6.10" class="anchored" data-anchor-id="conformal-prediction"><span class="header-section-number">6.10</span> Conformal Prediction</h2>
 <p>The focus of this section can be on the concept of uncertainty quantification. For many physics theories that are nicely linearized, uncertainty analysis can be easily accomplished at the level of first order sensitivites. That is, we can look at the Jacobian of our model to infer the behavior of small deviations about initial conditions. This approach does not easily extend to more complicated domains where the nonlinear effects dominate. Further, we also often want to establish ways to think about the fundamental instrument uncertainty for a measuring device. This can require meticulous calibrations which often assume a linear or polynomial fit… We can do better. Why not let the data tell us what the measurement uncertainty really is?</p>
 <p>A good motivating example for the discussion of instrumental uncertainty is the use of a thermistor to measure temperature. One must assume a reasonable range of temperatures to establish the linear relationship between temperature and resistivity that is used determine the temperature. However, the material characteristics of the thermistor that introduce nonlinearities at extreme temperatures don’t necessarily mean we should have to throw out measurements that do not fall within this well-behaved range. Rather, we can preform a more sophisticated <em>calibration</em> to learn a model mapping resistivity to temperature that can account for these effects.</p>
 <p>This is the bread-and-butter of the MINTS sensing efforts. Often low-cost sensing solutions provide decent measurements within a limit domain. With quality data from superior (but often prohibitively expensive) reference instruments, we can improve the default calibration to improve the reliability of data (by reducing uncertainty) and extend it’s domain of usefulness.</p>
 </section>
-<section id="generative-methods" class="level2" data-number="6.15">
-<h2 data-number="6.15" class="anchored" data-anchor-id="generative-methods"><span class="header-section-number">6.15</span> Generative Methods</h2>
+<section id="generative-methods" class="level2" data-number="6.11">
+<h2 data-number="6.11" class="anchored" data-anchor-id="generative-methods"><span class="header-section-number">6.11</span> Generative Methods</h2>
 </section>
-<section id="topological-data-analysis" class="level2" data-number="6.16">
-<h2 data-number="6.16" class="anchored" data-anchor-id="topological-data-analysis"><span class="header-section-number">6.16</span> Topological Data Analysis</h2>
+<section id="topological-data-analysis" class="level2" data-number="6.12">
+<h2 data-number="6.12" class="anchored" data-anchor-id="topological-data-analysis"><span class="header-section-number">6.12</span> Topological Data Analysis</h2>
 </section>
-<section id="auto-encoders" class="level2" data-number="6.17">
-<h2 data-number="6.17" class="anchored" data-anchor-id="auto-encoders"><span class="header-section-number">6.17</span> Auto Encoders</h2>
+<section id="auto-encoders" class="level2" data-number="6.13">
+<h2 data-number="6.13" class="anchored" data-anchor-id="auto-encoders"><span class="header-section-number">6.13</span> Auto Encoders</h2>
 <p>This is a good place to talk about dimensionality reduction in general, e.g.&nbsp;PCA and other linear methods…</p>
 </section>
-<section id="physics-informed-neural-networks" class="level2" data-number="6.18">
-<h2 data-number="6.18" class="anchored" data-anchor-id="physics-informed-neural-networks"><span class="header-section-number">6.18</span> Physics Informed Neural Networks</h2>
+<section id="physics-informed-neural-networks" class="level2" data-number="6.14">
+<h2 data-number="6.14" class="anchored" data-anchor-id="physics-informed-neural-networks"><span class="header-section-number">6.14</span> Physics Informed Neural Networks</h2>
 </section>
-<section id="universal-differential-equations" class="level2" data-number="6.19">
-<h2 data-number="6.19" class="anchored" data-anchor-id="universal-differential-equations"><span class="header-section-number">6.19</span> Universal Differential Equations</h2>
+<section id="universal-differential-equations" class="level2" data-number="6.15">
+<h2 data-number="6.15" class="anchored" data-anchor-id="universal-differential-equations"><span class="header-section-number">6.15</span> Universal Differential Equations</h2>
 <p>It may also be nice to add a section on model evaluation criteria. Similarly, we can have a section on <em>Feature selection and dimensionality reduction</em></p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-kohonen-original" class="csl-entry" role="listitem">
+Kohonen, Teuvo. 1982. <span>“Self-Organized Formation of Topologically Correct Feature Maps.”</span> <em>Biological Cybernetics</em> 43 (1): 59–69.
+</div>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
