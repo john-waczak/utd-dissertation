@@ -27,7 +27,10 @@ book:
 
   downloads: [pdf]
 
-bibliography: references.bib
+bibliography:
+  - references.bib
+  - Introduction/references.bib
+  - PhysicalContext/references.bib
 
 spacing: "doublespacing"
 degreetype: "Dissertation"
