@@ -1,1 +1,57 @@
 ## Self Organizing Maps
+
+
+
+Self organizing maps (SOMs) are an unsupervised machine learning technique developed by Kohonen [see @kohonen-original] based on the simple biological principle that *neurons near each other fire together*. This observation that the toplogical *closeness* of similar computational units is a critical feature of intelligent systems leads to a natural reinterpretation of the familiar perceptron model into a new form amenable for a variety of clustering and dimensionality reduction tasks. In particular, the SOM enables a rapid unsupervised classification of multidimensional data into a (typically) one or two dimensional *simplicial complex*, the discrete realization of a topological manifold, whose vertices correspond to representative points in the original data space $\mathcal{D}$. While a tad esoteric compared to other popular unsupervised methods like KMeans clustering or DBSCAN, the SOM distinguishes itself with the added benefit that it's training procedure guarantees nodes (i.e. classes) which are topologically close in the SOM simplex share similar weights. This additional structure makes the SOM particularly attractive when an interpretation of the discovered clusters *as well as* the relationships between them is desired.
+
+::: {.callout-note}
+
+We should add some more context (and references) for how the SOM has been used here. Perhaps we can ask David about his diatom identification from the Saharan dust sources.
+
+:::
+
+The original treatment of the SOM by Kohonen was made in terms of processing units, sensory signals, and relaying networks [@kohonen-original], however, in the modern era of deep learning, a more palatable derivation can be obtained by re-interpreting the weights of a simple perceptron model to provide the foundation for a clustering approach.
+
+
+### Reinterpreting the Perceptron
+
+As described in @sec-neural-networks, a perceptron is a function of the form 
+
+\begin{equation}
+    \mathbf{y} = \sigma.\left(W\mathbf{x}\right)
+\end{equation}
+
+where $W\in\mathbb{R}^{n\times m}$ is a matrix of weights which transform the input $\mathbf{x}\in\mathbb{R}^m$ into $\mathbb{R}^n$ and $\sigma$ is a nonlinear *activation function* applied element-wise to the outputs of the matrix multiplication (indicated by the $.$ syntax). If we instead think of the weight matrix as an ordered collection of vectors $\{\mathbf{w}_i\}_{i=1}^{n}$, then this formula can be further decomposed into
+
+\begin{equation}
+    \mathbf{y} = \sum_{i=1}^n \sigma(\mathbf{w}_i^T\mathbf{x}) = \sum_{i=1}^n \sigma(\langle \mathbf{w}_i, \mathbf{x} \rangle)
+\end{equation}
+
+The function of the perceptron is now clear: given an input vector $\mathbf{x}$ and a collection of $n$-many weight vectors $\mathbf{w}_i$, compute the inner product of $\mathbf{x}$ with each weight vector, apply the nonlinear activation function $\sigma$, and concatenate the results. If we allow ourselves to imagine the weight vectors $\mathbf{w}_i$ as members of the same space as the inputs $\mathbf{x}$, a reasonable question to ask is: *how similar is the input $\mathbf{x}$ to each $\mathbf{w}_i$*. Further, the application of the inner product $\langle \cdot,\cdot \rangle$ suggests we may answer this question in terms of the distance
+
+\begin{equation}
+    \langle \mathbf{w}_i-\mathbf{x},  \mathbf{w}_i-\mathbf{x}\rangle = d(\mathbf{w}_i, \mathbf{x})^2.
+\end{equation}
+
+In other words, given a set of weight vectors $\mathbf{w}_i$ which we may now think of as the clusters for our unsupervised model, we can measure the similarity between a given datum $\mathbf{x}_j$ and each cluster by computing the distance 
+
+\begin{equation}
+    d_{ij} = d\left(\mathbf{w}_i, \mathbf{x}_j \right)
+\end{equation}
+    
+
+
+### The Training Process
+
+### Common SOM topologies
+
+- Square
+- Cylindrical
+- Toroidal
+- Spherical
+
+### A simple example: partitioning color spaces
+
+
+### Drawbacks of the SOM model
+
