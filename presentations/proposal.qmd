@@ -1,0 +1,436 @@
+---
+title: "Physcial Sensing and Physics-based Machine Learning for Actionable Environmental Insights"
+author: "John Waczak"
+date: today
+format:
+    revealjs:
+        theme: default
+        margin: 0.05
+---
+
+
+## Overview
+
+1. Context/Relevance
+2. Limitations of Sensing & Simulation
+3. Machine Learning: Value Added
+3. MINTS Research Group
+4. Robot Team
+5. Air Quality Sensor Network
+6. Chemical Data Assimilation for Indoor Air Quality
+
+# Context
+
+## Maui Fires
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](./assets/maui-article-1.png)
+
+:::
+
+::: {.column width="50%"}
+
+![](./assets/maui-article-2.png)
+
+:::
+
+
+
+::::
+
+## Canada Fires
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](./assets/canada-article-1.png)
+
+:::
+
+::: {.column width="50%"}
+
+![](./assets/canada-article-2.png)
+
+:::
+::::
+
+
+## Global Change
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](./assets/noaa-june-report.png)
+:::
+
+::: {.column width="50%"}
+![](./assets/ecmwf-report.png)
+:::
+
+::::
+
+
+## Palestine Ohio
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](./assets/palestine-article-1.png)
+:::
+
+::: {.column width="50%"}
+![](./assets/palestine-article-2.png)
+:::
+
+::::
+
+
+## COVID-19 and Indoor Air Quality
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](./assets/covid-article-1.png)
+:::
+
+::: {.column width="50%"}
+![](./assets/covid-article-2.png)
+:::
+
+::::
+
+
+
+# Limitations of Sensing & Simulation
+
+## Cost vs Quality {.smaller}
+
+*how many vs how much*
+
+:::: {.columns}
+
+
+::: {.column width="50%"}
+**Reference Sensors**
+
+- typical reference monitors range in price from the order of \$10,000 to \$100,000 and more.[^1]
+- reference sensors can be large and difficult to move (immobile)
+- Often require complicated calibration procedures and materials
+- Require specialized software for control/collection/analysis
+- Long operating lifetime (years) if well maintained
+
+[^1]: Source: https://www.epa.gov/sites/default/files/2018-01/documents/collocation_instruction_guide.pdf
+
+:::
+::: {.column width="50%"}
+
+**Low-cost Sensors**
+
+- Price typically ranges on the order of \$10 to \$1,000
+- Usually smaller in size & weight
+- Easy to operate & read data
+- Poor calibration standards and uncertainty quantification
+- Poor operating lifetime- *you get what you pay for*
+
+:::
+::::
+
+## Applicability of Measurements {.smaller}
+
+- Often, the measurements we have are at best *indirectly* related to the quantities we care about
+- *Example*: aerosol optical depth v.s. particulate matter concentration
+  - AOD measures the amount of light scattered by a column of air (as viewed from space)
+  - PM is the concentration of particulates of a particular size
+- *Example*: Reflectance spectra vs chemical concentration
+  - Reflectance is the ratio of reflected to incident light as a function of $\lambda$
+  - Absorptive properties of chemical species and their concentrations impact the shape of measured reflectance spectra (clear water vs water with food coloring)
+![](./assets/spectrophotometry-1.png){.absolute bottom=0 right=400 width="400"}
+
+## Speed & Complexity
+
+![](./assets/xkcd/arcane_bullshit.png)
+
+![](./assets/xkcd/compiler_complaint.png)
+
+
+# MINTS Research Group
+
+## {background-image="./assets/MINTS-sentinels.jpg" background-size=contain}
+
+
+# Relevant Projects
+
+1. Robot Team (water quality)
+2. Air Quality Network (outdoor air quality)
+3. ActivePure Air Quality Lab (indoor air quality)
+
+
+# Robot Team
+
+Guiding Question: *Can we utilize spectral properties of aqueous solutions to infer the concentrations of a variety of chemicals from a drone-based hyperspectral imager?*
+
+
+## Sensing Sentinels
+
+![](./assets/robotteam-1.png){width=900}
+
+- Autonomous Boat with a variety of fluorometers measuring chemical concentrations (ex: Crude Oil)
+- Drone with Hyper-spectral Imager surveys entire lake
+- Collocation of boat data points with drone imagery provides training data for ML concentration models
+
+##
+
+![](./assets/drone-full.png)
+
+::: {.notes}
+- give overview of various drone components
+- mention that gimbal was actually removed (not needed; georectification is good enough)
+:::
+
+##
+
+![](./assets/drone-camera.png)
+
+## Georectification
+
+- Raw imagery collected with the HSI need to be georectified
+- This means assigning ground coordinates to each pixel in the image
+- To do so we need to use the location (lat,lon,alt) and orientation (roll, pitch, yaw) provided by the IMU
+- We can then transform the coordinates of each pixel from the *image frame* to the *Earth frame*
+- Our Resonon HSI is a *scan-line imager*
+
+##
+
+In the end, everything always boils down to  *linear algebra*[^2]
+
+\begin{equation}
+    \begin{pmatrix}
+    x \\ y \\ z
+    \end{pmatrix}_{\text{Object}}^{\text{UTM}} = f_{\text{geo}}^{\text{UTM}}\begin{pmatrix}
+        \lambda \\ 
+        \Phi \\ 
+        z
+    \end{pmatrix}_{\text{GPS}}^{\text{geo}} + sR_{\text{IMU}}^{\text{UTM}}R_{\text{sensor}}^{\text{IMU}}(\kappa, \phi, \omega)\begin{pmatrix}
+    0 \\
+    y_i \\
+    f
+    \end{pmatrix}_{\text{object}}^{\text{sensor}}
+\end{equation}
+
+![](./assets/georectification.svg){height=300}
+
+[^2]: We even found use for *Euler Angles*!
+
+
+## Radiance to Reflectance Conversion
+
+- Raw spectra are captured in units of Radiance
+- We want to *mod out* effects of the incident sunlight by converting to Reflectance (assuming a Lambertian surface)
+
+## 
+
+:::: {.columns}
+::: {.column width="50%"}
+![](./assets/radiance.svg)
+![](./assets/solar_irradiance.svg)
+:::
+::: {.column width="50%"}
+![](./assets/reflectance_rainbow.svg){.absolute top=175}
+:::
+::::
+
+## Result: Georectified Reflectance Cube
+
+![](./assets/HyperSpectralDataCube.png)
+
+::: {.notes}
+- it would be nice to do a similar plot with the spectra through the Rhodamine section.
+:::
+
+## Collection of Training Data
+
+<!-- :::: {.columns} -->
+<!-- ::: {.column width="50%"} -->
+<!-- ![](./assets/boat-and-dye.png) -->
+<!-- ::: -->
+<!-- ::: {.column width="50%"} -->
+![](./assets/CO_dataMap.png)
+<!-- ::: -->
+<!-- :::: -->
+
+## ML Fit
+
+![](./assets/rfr_CO_scatter.png)
+
+## Ranked Feature Importance
+
+![](./assets/rfr_CO_featureImportance.png)
+
+## Applying the Model
+
+![](./assets/CrudeOil-CDOM-Maps.png)
+
+# Air Quality Network
+
+
+Guiding Question: *How can we model the time series data from low-cost air quality monitors to produce actionable insights?*
+
+
+## The Sensors
+
+:::: {.columns}
+::: {.column width="50%"}
+![](./assets/central-node.png)
+:::
+::: {.column width="50%"}
+![](./assets/lora-node.png)
+:::
+::::
+
+## SharedAirDFW
+
+![](./assets/sharedairdfw-homepage.png)
+
+## Containerization & Real-time Dashboards
+
+:::: {.columns}
+::: {.column width="25%"}
+![](./assets/docker-elements.png)
+:::
+::: {.column width="75%"}
+![](./assets/grafana-dashboard-1.png)
+:::
+::::
+
+
+## Open Data via the Open Storage Network
+
+![](./assets/osn-1.png)
+
+## Time-series Uncertainty Quantification
+
+Low cost sensors often have poor uncertainty quantification (if at all). Provided estimates tend to be overly conservative. Given just a time-series alone, can we estimate *reasonable* values for the measurements uncertainty? We suggest two approaches:
+
+1. (basic) Evaluate the *representativeness* of a value for a window by estimating the mean $\mu$ and standard deviation $\sigma$ or mean absolute deviation $\delta$
+2. (advanced) Estimate the nugget of the time series Variogram
+
+## Variogram {.smaller}
+The temporal semi-variogram of a time series $Z(t)$ is defined to be
+
+:::: {.columns}
+::: {.column width="40%"}
+\begin{equation}
+    \gamma(\Delta t) = \frac{1}{2N}\sum_{i=1}^{N}\mathbb{E}\left[ Z(t_i + \Delta t) - Z(t_i) \right]^2
+\end{equation}
+:::
+::: {.column width="60%"}
+![](./assets/variogram-comparison.png){.absolute right=0 width=500}
+:::
+::::
+
+
+## Time-series Modeling & Forecasting
+
+- The microphysics of particulate matter dynamics depend on many parameters that are difficult to estimate from first principals
+- Nevertheless, given the prevalence of highly periodic meteorological phenomenon (diurnal cycle, seasonality, etc...) it may be possible to model the dynamics of particulate matter with a simplified model
+- Idea: dynamics are mostly linear except for intermittent external forcing events (car parks by sensor, thunderstorm, etc.)
+
+## Hankel Alternative View Of Koopman (HAVOK) {.smaller}
+
+- Taken's embedding theorem suggests that entire dynamics can be obtained from a single observable times series provided a sufficiently large sampling window
+- We can therefore take a measurement time series and attempt to construct a model using lagged measurements that reconstructs the dynamics of observations
+- Idea: transform your lagged time series vector $(Z_i(t), Z_{i-1}(t), ... Z_{i-k}(t))$ into a new bases $(V_1, ... V_n)$ via the SVD
+- Obtain an additional function $u(t)$ which models the intermittent forcing
+
+\begin{equation}
+    \frac{d}{dt}\mathbf{V}(t) = A\mathbf{V}(t) + \mathbf{b}u(t)
+\end{equation}
+
+## Modeled Attractor
+
+:::: {.columns}
+::: {.column width="50%"}
+![Delay-embedding attractor for PM 2.5](./assets/attractor_reconstructed.png)
+:::
+::: {.column width="50%"}
+![Attractor with forcing identified](./assets/attractor_w_forcing.png)
+:::
+::::
+
+## Time Series Fits
+
+![](./assets/timeseries_reconstructed_zoomed-in.png)
+
+## (Forcing Statistics)
+![](./assets/forcing-stats.png)
+
+::: {.notes}
+- This demonstrates that the forcing is intermittent
+:::
+
+
+# ActivePure
+
+Guiding Question: *Can we accurately model the complex chemistry of indoor air?*
+
+::: {.notes}
+
+- The pandemic has led to a large refocus on indoor air-quality concerns
+- What kinds of technologies can help improve indoor air quality without sacrificing comfort, energy use, and cost?
+
+:::
+
+## Air Chemistry is Complicated {.smaller}
+
+:::: {.columns}
+::: {.column width="40%"}
+
+- chemistry of indoor air depends on complex interactions of thousands of chemical species
+- much of the reactive chemistry is driven by light (Photolysis)
+- Different chemical species have dramatically different lifetimes
+- Longer lived species are directly measurable
+- Shorter lived species responsible for oxidation are almost *always* below detection limits in typical settings
+
+:::
+::: {.column width="60%"}
+![](./assets/chemical-cycle.png)
+:::
+::::
+
+## HEART Chamber
+
+![](./assets/heart-chamber-1.png)
+
+## Data Assimilation
+
+![](./assets/ekf-summary.png)
+
+##
+
+![](./assets/ekf-example.png)
+
+
+## Inferred Concentrations (with Uncertainty)
+
+![](./assets/H2O2.png)
+
+##
+
+![](./assets/OH.png)
+
+## Thanks for listening!
+
+# Research Reproducibility
+
+- Open source repositories created
+- Automatic documentation and CI/CD test suite via github + github workflows
+- Grafana+InfluxDB+NodeRed observability platform created
+- Open Storage Network (OSN)
+
+<!-- # Summary -->
+
+<!-- - Provide a table for three different tasks with check-marks for completed and dates for estimated completion -->
