@@ -1,0 +1,158 @@
+\documentclass[doublespacing]{utdthesis}
+
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{url}
+
+\usepackage{xcolor}
+
+\usepackage[authoryear]{natbib}
+\bibliographystyle{chicago}
+\setlength{\bibsep}{12pt plus 1pt minus 1pt}
+
+\let\cite=\citep
+
+\usepackage{rotating}
+
+\usepackage{ifpdf}
+\ifpdf
+  \usepackage{hyperref}
+\fi
+%
+
+
+%
+\providecommand{\hyperref}[2][]{#2}
+
+\newenvironment{exampleclasscode}
+ {\parindent=1cm\vskip0pt plus2pt minus0pt\begin{verse}}
+ {\end{verse}\vskip0pt plus2pt minus0pt}
+%
+%%% End of personal macro definitions.
+
+
+%%% The following definitions MUST come before the document begins.
+%
+\author{John Waczak}
+\title{Physical Sensing and Physics-based Machine Learning for Actionable Insights}
+\thesistype{Dissertation}  % or "Thesis"
+\degreefull{Doctor of Philosophy}
+\degreeabbr{PhD}
+\subject{Physics}
+\graduationmonth{September}
+\graduationyear{2024}
+\prevdegrees{BS, PhD} % comma-separated list of PREVIOUS degrees
+
+% List committee members in order.  Mark chairpersons with a "*":
+\committeemember*{David J. Lary}
+\committeemember{Christopher Simmons}
+\committeemember{David Lumley}
+\committeemember{Lindsay King}
+\committeemember{Joseph Izen}
+
+
+%%% Beginning of actual thesis document.
+
+\begin{document}
+
+\frontmatter
+
+\signaturepage
+
+\copyrightpage{2024} % optional
+
+\begin{dedication} % optional
+  \color{red}
+  \textbf{UPDATE REQUIRED!}
+\end{dedication}
+
+
+\maketitle
+
+\begin{acks}{August 2024} % date when thesis first submitted to committee
+  \color{red}
+  \textbf{UPDATE REQUIRED!} Make sure to include lab colleagues *and* ActivePure colleagues and a nod to Dr. Cooper, OSU teachers, and friends...
+\end{acks}
+
+\begin{abstract}
+  \color{red}
+  \textbf{UPDATE REQUIRED!}
+\end{abstract}
+
+\tableofcontents
+\listoffigures % required if you have any figures
+\listoftables % required if you have any tables
+
+\mainmatter
+
+\include{./Introduction/introduction.tex}
+
+
+\include{./WaterQuality/water-quality.tex}
+
+
+\chapter{Outdoor Air Quality}
+\section{Physical Context}
+\section{Physical Sensing}
+\section{Theoretical Tools}
+\section{Computational Tools}
+\section{Machine Learning Methods}
+\section{Results}
+\subsection{MINTS Air Quality Network}
+\subsection{Data Collection }
+\subsection{Time-Series Methods for Uncertainty Quantification}
+\subsubsection{Metrics for Representative Uncertainty of combined Pseudo-Observations}
+\subsubsection{Uncertainty Quantification with Temporal Variograms}
+\subsection{Physics Informed modeling techniques for Air Quality Data}
+\subsubsection{Extended-HAVOK}
+\subsubsection{Hamiltonian Neural Networks}
+\section{Further Work}
+
+\chapter{Indoor Air Quality}
+\section{Physical Context}
+\section{Physical Sensing}
+\section{Theoretical Tools}
+\section{Computational Tools}
+\section{Machine Learning Methods}
+\section{Results}
+\subsection{Characterization of Photolysis}
+\subsection{HEART Chamber Sensing System}
+\subsection{Chemical Data Assimilation}
+\subsection{Photocatalytic Ionization}
+\section{Further Work}
+
+\chapter{Discussion}
+
+\chapter{Conclusion}
+\textcolor{red}{\textbf{UPDATE REQUIRED!!!}}
+
+
+
+\appendix % required only if you have appendixes
+
+\chapter{First Appendix}
+\textcolor{red}{\textbf{UPDATE REQUIRED!}}
+
+\chapter{Second Appendix}
+\textcolor{red}{\textbf{UPDATE REQUIRED!}}
+
+% Begin the bibliography:
+
+\begin{thesisbib}  % <--- THIS LINE IS REQUIRED!
+  \bibliography{./references.bib}
+\end{thesisbib}  % <-- THIS LINE IS REQUIRED!
+
+\begin{biosketch}
+  \textcolor{red}{\textbf{UPDATE REQUIRED!!!}}
+\end{biosketch}
+
+
+\begin{vita}  % <-- THIS LINE IS REQUIRED!
+  \textbf{UPDATE REQUIRED!}
+\end{vita}  % <-- THIS LINE IS REQUIRED!
+
+
+\end{document}
+
+
