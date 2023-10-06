@@ -3,9 +3,11 @@
 \usepackage{microtype}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{graphicx}
+\graphicspath{{./figures}}
 \usepackage{url}
 
 \usepackage{xcolor}
+\usepackage{enumitem}
 
 \usepackage[authoryear]{natbib}
 \bibliographystyle{chicago}
@@ -16,10 +18,11 @@
 \usepackage{rotating}
 
 \usepackage{ifpdf}
-\ifpdf
-  \usepackage{hyperref}
-\fi
-%
+\usepackage{hyperref}
+%% \ifpdf
+%%   \usepackage{hyperref}
+%% \fi
+%% %
 
 
 %
@@ -88,54 +91,33 @@
 
 \include{./Introduction/introduction.tex}
 
+NOTE: we may want to merge the Introduction with the Physical Context chapter.
 
-\include{./WaterQuality/water-quality.tex}
-
-
-\chapter{Outdoor Air Quality}
-\section{Physical Context}
-\section{Physical Sensing}
-\section{Theoretical Tools}
-\section{Computational Tools}
-\section{Machine Learning Methods}
-\section{Results}
-\subsection{MINTS Air Quality Network}
-\subsection{Data Collection }
-\subsection{Time-Series Methods for Uncertainty Quantification}
-\subsubsection{Metrics for Representative Uncertainty of combined Pseudo-Observations}
-\subsubsection{Uncertainty Quantification with Temporal Variograms}
-\subsection{Physics Informed modeling techniques for Air Quality Data}
-\subsubsection{Extended-HAVOK}
-\subsubsection{Hamiltonian Neural Networks}
-\section{Further Work}
-
-\chapter{Indoor Air Quality}
-\section{Physical Context}
-\section{Physical Sensing}
-\section{Theoretical Tools}
-\section{Computational Tools}
-\section{Machine Learning Methods}
-\section{Results}
-\subsection{Characterization of Photolysis}
-\subsection{HEART Chamber Sensing System}
-\subsection{Chemical Data Assimilation}
-\subsection{Photocatalytic Ionization}
-\section{Further Work}
-
-\chapter{Discussion}
-
-\chapter{Conclusion}
-\textcolor{red}{\textbf{UPDATE REQUIRED!!!}}
+\include{./PhysicalContext/physical-context.tex}
+\include{./PhysicalSensing/physical-sensing.tex}
+\include{./ComputationalTools/computational-tools.tex}
+\include{./TheoreticalTools/theoretical-tools.tex}
+\include{./MachineLearning/machine-learning.tex}
+\include{./RobotTeam/robot-team.tex}
+\include{./ChemicalMechanism/chemical-mechanism.tex}
+\include{./SensorNetwork/sensor-network.tex}
+\include{./TimeSeries/time-series.tex}
+\include{./Limitations/limitations-and-future-work.tex}
+\include{./Conclusion/conclusion.tex}
 
 
 
 \appendix % required only if you have appendixes
 
-\chapter{First Appendix}
-\textcolor{red}{\textbf{UPDATE REQUIRED!}}
+\include{./Appendices/reproducible-research.tex}
 
-\chapter{Second Appendix}
-\textcolor{red}{\textbf{UPDATE REQUIRED!}}
+\include{./Appendices/optimization-methods.tex}
+
+\include{./Appendices/high-performance-computing.tex}
+
+\include{./Appendices/chemical-mechanism.tex}
+
+
 
 % Begin the bibliography:
 
