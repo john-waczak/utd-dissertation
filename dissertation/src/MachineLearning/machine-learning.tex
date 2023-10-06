@@ -540,6 +540,44 @@ where we have employed the natural logarithm remove the pesky exponentials and a
 \section{Unsupervised Classification}
 \subsection{k-Means Clustering}
 \subsection{Self Organizing Maps}
+
+Self organizing maps (SOMs) are an unsupervised machine learning technique developed by Kohonen \cite{kohonen-original} based on the simple biological principle that *neurons near each other fire together*. This observation that the toplogical *closeness* of similar computational units is a critical feature of intelligent systems leads to a natural reinterpretation of the familiar perceptron model into a new form amenable for a variety of clustering and dimensionality reduction tasks. In particular, the SOM enables a rapid unsupervised classification of multidimensional data into a (typically) one or two dimensional *simplicial complex*, the discrete realization of a topological manifold, whose vertices correspond to representative points in the original data space $\mathcal{D}$. While a tad esoteric compared to other popular unsupervised methods like KMeans clustering or DBSCAN, the SOM distinguishes itself with the added benefit that it's training procedure guarantees nodes (i.e. classes) which are topologically close in the SOM simplex share similar weights. This additional structure makes the SOM particularly attractive when an interpretation of the discovered clusters *as well as* the relationships between them is desired.
+
+\textcolor{red}{We should add some more context (and references) for how the SOM has been used here. Perhaps we can ask David about his diatom identification from the Saharan dust sources.}
+
+The original treatment of the SOM by Kohonen was made in terms of processing units, sensory signals, and relaying networks [@kohonen-original], however, in the modern era of deep learning, a more palatable derivation can be obtained by re-interpreting the weights of a simple perceptron model to provide the foundation for a clustering approach. As described in @sec-neural-networks, a perceptron is a function of the form
+
+\begin{equation}
+    \mathbf{y} = \sigma.\left(W\mathbf{x}\right)
+\end{equation}
+where $W\in\mathbb{R}^{n\times m}$ is a matrix of weights which transform the input $\mathbf{x}\in\mathbb{R}^m$ into $\mathbb{R}^n$ and $\sigma$ is a nonlinear *activation function* applied element-wise to the outputs of the matrix multiplication (indicated by the $.$ syntax). If we instead think of the weight matrix as an ordered collection of vectors $\{\mathbf{w}_i\}_{i=1}^{n}$, then this formula can be further decomposed into
+\begin{equation}
+    \mathbf{y} = \sum_{i=1}^n \sigma(\mathbf{w}_i^T\mathbf{x}) = \sum_{i=1}^n \sigma(\langle \mathbf{w}_i, \mathbf{x} \rangle)
+\end{equation}
+
+The function of the perceptron is now clear: given an input vector $\mathbf{x}$ and a collection of $n$-many weight vectors $\mathbf{w}_i$, compute the inner product of $\mathbf{x}$ with each weight vector, apply the nonlinear activation function $\sigma$, and concatenate the results. If we allow ourselves to imagine the weight vectors $\mathbf{w}_i$ as members of the same space as the inputs $\mathbf{x}$, a reasonable question to ask is: *how similar is the input $\mathbf{x}$ to each $\mathbf{w}_i$*. Further, the application of the inner product $\langle \cdot,\cdot \rangle$ suggests we may answer this question in terms of the distance
+\begin{equation}
+    \langle \mathbf{w}_i-\mathbf{x},  \mathbf{w}_i-\mathbf{x}\rangle = d(\mathbf{w}_i, \mathbf{x})^2.
+\end{equation}
+In other words, given a set of weight vectors $\mathbf{w}_i$ which we may now think of as the clusters for our unsupervised model, we can measure the similarity between a given datum $\mathbf{x}_j$ and each cluster by computing the distance
+\begin{equation}
+    d_{ij} = d\left(\mathbf{w}_i, \mathbf{x}_j \right)
+\end{equation}
+
+\subsubsection{The Training Process}
+
+\subsubsection{Common SOM topologies}
+\begin{itemize}
+\item Square
+\item Cylindrical
+\item Toroidal
+\item Spherical
+\end{itemize}
+
+\subsubsection{A simple example: partitioning color spaces}
+\subsubsection{Drawbacks of the SOM model}
+
+
 \subsection{Generative Topographic Maps}
 
 
@@ -554,12 +592,13 @@ where we have employed the natural logarithm remove the pesky exponentials and a
 %------------------------------------------------------------------------------------------%
 
 \section{Model Ensembling}
+MLJ and SciKitLearn documentation sites will have good references for this, I think.
 \subsection{Bagging}
 e.g. Random Forests
 \subsection{Boosting}
 e.g. XGBoost
 \subsection{Stacking}
-e.g. Super Learners
+e.g. Super Learners. Use the example of model stacking from MLJ documentation to describe our approach.
 
 
 
@@ -600,12 +639,344 @@ e.g. discuss models like the GPR which fundamentally produce \textit{distributio
 %------------------------------------------------------------------------------------------%
 
 \section{Data Assimilation}
-\subsection{4d-Var}
+
+\textcolor{red}{NOTE: We should add further derivations from a Bayesian framework to fit in with what we've done for the Gaussian process regression and generative topographic maps. We should also add some more generic background to the topic of Data Assimilation, it's first uses in Meteorology, }
+
+
+The proper application of scientific models to make real-world predictions requires that we commit ourselves to a full accounting of all possible sources of uncertainty when reporting results. Further, the explosion of \textit{big data} across scientific fields provieds a plethora observational data that our models are typically unequipped to incorporate when making predictions. The field of \textit{Data Assimilation} addresses this problem by providing a family of techniques engineered to combine model output together with observational data whilst enabling a complete accounting the sources of uncertainty. For chaotic systems in particular, data assimilation enables integration on long time scales that would be impossible via models alone. In this overview, we will follow the examples from \cite{pyda}.
+
+Data assimilation can be cleanly developed in the framework of discrete dynamical systems. Since, at the end of the day, all of our scientific models must be discretized to be evaluated numerically, this is a reasonable course of action. Our goal is to find the best prediction for the system state vector $u$ that combines our model predictions, also known as \textit{forecasts}, with observational data. Model predictions are described via the discrete update equation:
+\begin{equation}
+    u_{k+1} = \mathcal{M}(u_k; \theta)
+\end{equation}
+For ODE systems, $\mathcal{M}$ represents the time integration scheme for a models like
+\begin{equation}
+    \dfrac{du}{dt} = f(u, t; \theta),
+\end{equation}
+in other words, a particular choice of ODE integration scheme (Runge Kutta for example) used to evolve the state vector $\u$ from time $u_k$ to $u_{k+1}$.
+
+To measure the performance of our assimilation scheme, we denote the \textit{true} value of the state vector as $u^{(t)}$. The output of our model is denoted $u^{(b)}$ (\textit{b} superscript for \textit{background}). The discrepancy between the true value and our forecast is denoted $\xi^{(b)} = u^{(t)} - u^{(b)}$ characterizing the extent to which our model prediction is imperfect. The observations of our system are denoted by $w_k = w(t_k)$. These observations do not necessarily need to be components of the state vector $u$, but rather, are related to it via the \textit{observation function}, $h:u_k\mapsto w_k$. For example, one may attempt to predict surface sea temperatures using data assimilation with data from satellite observations. The function $h$ would then be the Stefan-Boltzmann relating the measured spectra to temperature. However, real world data is \textit{also} imperfect, which we must take into account let we over constrain our model with poor quality data. We write
+\begin{equation}
+    w_k = h(u_k) + \xi_k^{(m)}
+\end{equation}
+where $\xi_k^{(m)}$ denotes this measurement error.
+
+Given our model predictions $u_{k}^{(b)}$ and observations $w_k$, we seek to obtain the \textit{optimal} or best-possible prediction called the \textbf{analysis}, $u^{(a)}$. Despite our care, this analysis will still be imperfect, so we further define the analysis error as
+\begin{equation}
+\xi^{(a)} = u^{(t)} - u^{(a)}
+\end{equation}
+
+In summary, we have defined the following relevant quantities (at time $t_k$):
+\begin{align}
+  &u_k^{(t)} \in \mathbb{R}^n &\text{the true state vector} \\
+  &u_k^{(b)} \in \mathbb{R}^n &\text{the model forecast} \\
+  &u_k^{(a)} \in \mathbb{R}^n &\text{the analysis} \\
+  &w_k \in \mathbb{R}^m &\text{the observation vector} \\
+  &\xi^{(b)} \in \mathbb{R}^n &\text{the model forecast error}\\
+  &\xi^{(m)} \in \mathbb{R}^m &\text{the observation noise vector}\\
+  &\xi^{(a)} \in \mathbb{R}^n &\text{the analysis error}\\
+  &\xi^{(p)} \in \mathbb{R}^n &\text{the process noise if we used our model on the true state}\\
+  &\mathcal{M}:\mathbb{R}^n\to\mathbb{R}^n &\text{the discrete model evolution function}\\
+  &f:\mathbb{R}^n\to\mathbb{R}^n &\text{differential equation model (the right hand side)}\\
+  &h:\mathbb{R}^n\to\mathbb{R}^m  &\text{observation function}
+\end{align}
+
+To move forward, we now establish the following (prior) assumptions about the distribution of errors in each component in order to make it possible to derive a closed form for the final analysis. We require
+\begin{align}
+  &\E[\xi_k^{(b)}] = 0 & &\E[\xi_k^{(b)}(\xi_j^{(b)})^T] = 0 \text{ for } k\neq j\\
+  &\E[\xi_k^{(m)}] = 0 & &\E[\xi_k^{(m)}(\xi_j^{(m)})^T] = 0 \text{ for } k\neq j\\
+  &\E[\xi_k^{(b)}(u_0)^T] = 0 & &\E[\xi_k^{(m)}(u_0)^T] = 0\\
+  &\E[\xi_k^{(b)}\xi_j^{(m)}] = 0 & &  % \\
+  %% &\E[u_k^{(t)}] = u_k^{(b)} & &
+\end{align}
+or in words, the errors in our model and observation are unbiased (e.g. mean zero) and uncorrelated.
+
+We also define the error covariance matrices
+\begin{align}
+  Q_k &:= \E[\xi_k^{(p)}(\xi_k^{(p)})^T] \\
+  R_k &:= \E[\xi_k^{(m)}(\xi_k^{(m)})^T] \\
+  B_k &:= \E[\xi_k^{(b)}(\xi_k^{(b)})^T]
+\end{align}
+which we will use in our consideration of the final error of our analysis.
+
 \subsection{Kalman Filter}
+Given some model for the error covariance matrices $Q_k$ and $R_k$, we would like a method that propagates \textit{both} our model \emph{and} the errors forward. This way we may guarantee that the accuracy of our analysis doesn't come at the cost of higher uncertainty.
+
+The original implementation of the Kalman filter was for strictly linear systems, in particular as a filter for signal processing. We will first develop the analysis for this simplified case adn then will generalize to the \textit{Extended Kalman Filter} (EKF) that can handle fully nonlinear situations.
+
+In the linear case, our system may be written as
+\begin{align}
+    u_{k+1}^{(t)} &= M_ku_k^{(t)} + \xi_{k+1}^{(p)} \\
+    w_k &= H_ku_k^{(t)} + \xi_k^{(m)}
+\end{align}
+where $M_k$ and $H_k$ are now matrices defining the linear problem.
+
+The goal of the Kalman filter is to derive the analysis $u^{(a)}$ which minimizes the trace of the analysis error covariance matrix (i.e. sum of squared errors):
+\begin{equation}
+    \mathrm{Tr}\left( P_k\right) := \E[(u_k^{(t)}-u_k^{(a)})^T(u_k^{(t)}-u_k^{(a)})]
+\end{equation}
+Finding the analysis consists of two steps: the forecast step and the assimilation step.
+
+Beginning with the forecasting step, assume we have the analysis at time $t_k$ denoted $u_k^{(a)}$. Then the forecast for time $t_{k+1}$ is
+\begin{equation}
+    u_{k+1}^{(b)} = M_ku_k^{(a)},
+\end{equation}
+or in words, we obtain the next prediction by evolving the previous analysis forward. The background error is therefore
+\begin{align}
+    \xi_{k+1}^{(b)} &= u_{k+1}^{(t)} - u_{k+1}^{(b)} \\
+    &= M_ku_k^{(t)}+\xi_{k+1}^{(p)} - M_{k}u_k^{(a)} \\
+    &= M_k\left(u_k^{(t)}-u_k^{(a)} \right) + \xi_{k+1}^{(p)} \\
+    &= M_k\xi_k^{(a)} + \xi_{k+1}^{(p)}
+\end{align}
+
+We may now evaluate the covariance matrix of our background estimate as:
+\begin{align}
+    B_{k+1} &= \E[\xi_{k+1}^{(b)}(\xi_{k+1}^{(b)})^T] \\
+    &= \E\left[\left(M_k\xi_k^{(a)} + \xi_{k+1}^p \right) \left(M_k\xi_k^{(a)} + \xi_{k+1}^p \right)^T \right] \\
+\end{align}
+
+If we presume that $\E[\xi_k^{(b)}(\xi_{k+1}^{(p)})^T] = 0$, then the cross terms vanish and we are left with
+\begin{equation}
+    \boxed{B_{k+1} = M_kP_kM_k^T + Q_{k+1}}
+\end{equation}
+
+Thus we now have the background (i.e forecast) estimate of the state at $t_{k+1}$ and its covariance matrix. Given a measurement $w_{k+1}$ at the same time with covariance matrix $R_{k+1}$, we may now perform the assimilation step where we fuse the two sources of information to obtain $u_{k+1}^{(a)}$ and $P_{k+1}$.
+
+Let's suppose that the analysis has the form
+\begin{equation}
+    u_{k+1}^{(a)} = \nu + K_{k+1}w_{k+1}
+\end{equation}
+
+for some vector $\nu\in\R^n$ and matrix $K_{k+1}\in\R^{m\times n}$. In a perfect world, we would have $\E[u_{k}^{(t)}-u_{k}^{(a)}] = 0$. Therefore,
+
+\begin{align}
+    0 &= \E[u_k^{(t)} - u_k^{(a)}] \\
+    &= \E[(u_k^{(b)} + \xi_k^{(b)}) - (\nu + K_kw_k)] \\
+    &= \E[(u_k^{(b)} + \xi_k^{(b)}) - (\nu + K_kH_ku_k^{(t)} + K_k\xi_k^{(m)})] \\
+    &= \E[u_k^{(b)}] + \E[\xi_k^{(b)}] - \E[\nu] -K_kH_k\E[u_k^{(t)}] - K_k\E[\xi_k^{(m)}]\\
+    &= u_k^{(b)} + 0 - \nu - K_kH_ku_k^{(b)} - 0 \\
+    &= u_k^{(b)} - \nu - K_kH_ku_k^{(b)} \\
+    \Rightarrow \nu &= u_k^{(b)} - K_kH_ku_k^{(b)}
+\end{align}
+
+which we now substitute to obtain
+
+\begin{equation}
+    \boxed{u_k^{(a)} = u_k^{(b)} + K_k(w_k - H_ku_k^{(b)})}
+\end{equation}
+
+Now that we know the form for the analysis we may derive the optimal matrix $K_k$ by optimization of $P_k$. We have
+
+\begin{align}
+	\xi_k^{(a)} &= u_k^{(t)} - u_k^{(a)} \\
+                &= M_{k-1}u_{k-1}^{(t)} + \xi_{k}^{(p)} - u_k^{(b)} - K_k\left(w_k - H_ku_k^{(b)} \right) \\
+                &= M_{k-1}u_{k-1}^{(t)} + \xi_{k}^{(p)} - M_{k-1}u_{k-1}^{(a)} - K_k\left(H_ku_k^{(t)} + \xi_k^{(m)} - H_ku_k^{(b)} \right) \\
+                &= M_{k-1}u_{k-1}^{(t)} + \xi_{k}^{(p)} - M_{k-1}u_{k-1}^{(a)} - K_kH_ku_k^{(t)} - K_k\xi_k^{(m)} + K_kH_ku_k^{(b)} \\
+                &= M_{k-1}u_{k-1}^{(t)} + \xi_{k}^{(p)} - M_{k-1}u_{k-1}^{(a)} - K_kH_ku_k^{(t)} - K_k\xi_k^{(m)} + K_kH_ku_k^{(b)} \\
+                &= \Big\{ M_{k-1}(\xi_{k-1}^{(a)}+u_{k-1}^{(a)}) + \xi_{k}^{(p)} - M_{k-1}u_{k-1}^{(a)} \Big\} - K_kH_ku_k^{(t)} - K_k\xi_k^{(m)} + K_kH_ku_k^{(b)} \\
+                &= \Big\{ M_{k-1}\xi_{k-1}^{(a)} + \xi_{k}^{(p)} \Big\} - K_kH_ku_k^{(t)} + K_kH_ku_k^{(b)} - K_k\xi_k^{(m)}\\
+                &= M_{k-1}\xi_{k-1}^{(a)} + \xi_{k}^{(p)} - K_kH_k(M_{k-1}u_{k-1}^{(t)} + \xi_k^{(b)}) + K_kH_ku_k^{(b)} - K_k\xi_k^{(m)}\\
+                &= M_{k-1}\xi_{k-1}^{(a)} + \xi_{k}^{(p)} - K_kH_kM_{k-1}(\xi_{k-1}^{(a)} + u_{k-1}^a) - K_kH_k\xi_k^{(b)} + K_kH_ku_k^{(b)} - K_k\xi_k^{(m)}\\
+                &= M_{k-1}\xi_{k-1}^{(a)} + \xi_{k}^{(p)} - K_kH_kM_{k-1}(\xi_{k-1}^{(a)} + u_{k-1}^a) - K_kH_k\xi_k^{(b)} + K_kH_kM_{k-1}u_{k-1}^{(a)} - K_k\xi_k^{(m)}\\
+                &= M_{k-1}\xi_{k-1}^{(a)} + \xi_{k}^{(p)} - K_kH_kM_{k-1}\xi_{k-1}^{(a)} - K_kH_k\xi_k^{(b)} - K_k\xi_k^{(m)}\\
+                &= \big(I-K_kH_k \big)(M_{k-1}\xi_{k-1}^{(a)} - \xi_{k}^p) - K_k\xi_k^{(m)}\\
+\end{align}
+
+and therefore the covariance matrix is
+
+\begin{align}
+    P_k &= \E[\xi_{k}^{(a)}(\xi_{k}^{(a)})^T] \\
+        &= \E\Big[\left(\big(I-K_kH_k \big)(M_{k-1}\xi_{k-1}^{(a)} - \xi_{k}^p) - K_k\xi_k^{(m)} \right) \left(\big(I-K_kH_k \big)(M_{k-1}\xi_{k-1}^{(a)} - \xi_{k}^p) - K_k\xi_k^{(m)} \right)^T \Big] \\
+        &= \big(I-K_kH_k \big)M_{k-1}\E[\xi_{k-1}^{(a)}(\xi_{k-1}^{(a)})^T]M_{k-1}^T\big(I-K_kH_k \big)^T \\
+        &\qquad \qquad + \big(I-K_kH_k \big)\E[\xi_k^{(p)}(\xi_k^{(p)})^T]\big(I-K_kH_k \big)^T \notag\\
+        & \qquad \qquad - K_k\E[\xi_{k}^{(m)}(\xi_k^{(m)})^T]K_k^T \notag\\
+        &= \big(I-K_kH_k \big)B_k\big(I-K_kH_k \big)^T - K_kR_kK_k^T
+\end{align}
+
+Now all that remains is to derive the specific form for $K_k$. The Kalman filter is defined as that $K_k$ which which minimizes the sum of squared analysis errors, i.e. the trace of the analysis error covariance matrix. Therefore, the following identities from matrix calculus will be useful:
+\begin{align}
+    \mathop{\nabla}_{A}\text{tr}(AB) &= B^T \\
+    \mathop{\nabla}_{A}\text{tr}(BA^T) &= B \\
+    \mathop{\nabla}_{A}\text{tr}(ABA^T) &= AB^T + AB  \\
+\end{align}
+from which we obtain
+\begin{align}
+    0 &= \mathop{\nabla}_{K_k}\text{tr}(P_k) \\
+      &= \mathop{\nabla}_{K_k}\Big\{ B_k -B_kH_k^TK_k^T - K_kH_kB_k  + K_kH_kB_kH_k^TB_k^T - K_kR_kK_k^T \Big\} \\
+      &= -B_kH_k^T - (H_kB_k)^T + K_k\left[H_kB_kH_k^T + (H_kB_kH_k^T)^T - R_k+R_k^T\right] \\
+      &= -2B_kH_k^T + 2K_k\left(H_kB_kH_k^2 - R_k \right) \\
+  \Rightarrow K_k &= B_kH_k^T\Big[ H_kB_kH_k^T - R_k \Big]^{-1}
+\end{align}
+we now substitute this result to obtain a simplified form for $P_k$:
+\begin{align}
+    P_k &= \left(I - K_kH_k \right)B_k\left(I - K_kH_k \right)^T + K_kR_kK_k^T \\
+        &= \left(I - K_kH_k \right)B_k - \left(I - K_kH_k \right)B_k\left(K_kH_k \right)^T + K_kR_kK_k^T \\
+        &= \left(I - K_kH_k \right)B_k -\left\{ \left(I - K_kH_k \right)B_k\left(K_kH_k \right)^T + K_kR_kK_k^T \right\} \\
+        &= \left(I - K_kH_k \right)B_k -\left\{ \left(I - K_kH_k \right)B_kH_k^TK_k^T + K_kR_kK_k^T \right\} \\
+        &= \left(I - K_kH_k \right)B_k -\left\{ \left(I - K_kH_k \right)B_kH_k^T + K_kR_k \right\}K_k^T \\
+        &= \left(I - K_kH_k \right)B_k -\left\{ B_kH_k^T - K_k\left( H_kB_kH_k^T + R_k \right)  \right\}K_k^T \\
+        &= \left(I - K_kH_k \right)B_k -\left\{ B_kH_k^T - B_kH_k^T \right\}K_k^T \\
+        &= \left(I - K_kH_k \right)B_k
+\end{align}
+where we have used the fact that covariance matrices are symmetric.
+
+
+Now that we have all of the pieces, let's summarize the procedure:
+\begin{enumerate}
+\item \textbf{Initialization}: We must set the system to some initial condition. This means we must define $u_0^a$ and $P_0$. We must also come up with a model for the process noise covariance $Q_k$ and measurement error covariance $R_k$.
+\item \textbf{Forecast Step}: Starting with the analysis state vector $u^{(a)}_{k-1}$ and covariance $P_{k-1}$, we apply the model time evolution operator $M_{k-1}$ to obtain the predicted state $u^{(b)}_{k}$ and covariance $B_k$ at the next time step.
+  \begin{align}
+    u_k^{(b)} &= M_{k-1}u_{k-1}^{(a)} \\
+    B_k &= M_{k-1}P_{k-1}M_{k-1}^T + Q_{k}
+  \end{align}
+\item \textbf{Assimilation Step}: Combine our observations $w_k$ and their associated uncertainties contained in $R_k$ together with the background prediction $u^{(b)}_k$ and it's error covariance matrix $B_k$ to obtain the analysis state $u^{(a)}_k$ and error covariance $P_k$.
+  \begin{align}
+    K_k &= B_kH_k^T\Big[ H_kB_kH_k^T - R_k \Big]^{-1}  \\
+    u_k^{(a)} &= u_k^{(b)} + K_k(w_k - H_ku_k^{(b)})\\
+    P_k &= \left(I - K_kH_k \right)B_k
+  \end{align}
+\end{enumerate}
+
+
 \subsection{Extended Kalman Filter}
+
+Given the nonlinear nature of many scientific models, it is desirable to extend out notion of the \textit{Kalman Filter} to be able to handle nonlinear models $f(\cdot)$ (and by extension, their update function $\mathcal{M}(\cdot)$), and nonlinear observation functions $h(\cdot)$. This can be accomplished so long as these functions are sufficiently smooth ($C^1$ to be precise) so as to admit valid Taylor approximations to first order. That is,
+\begin{align}
+    \mathcal{M}(u_{k}) &\approx \mathcal{M}(u_k^{(a)}) + D_{M}(u_k^{(a)})\xi_k^{(a)} & h(u_k) &\approx h(u_k^{(b)}) + D_h(u_k^{(b)})\xi_k^{(b)} \\
+    D_{M} &:= \left[\dfrac{\partial \mathcal{M}_i}{\partial u_j} \right] & D_h &:= \left[ \dfrac{\partial h_i}{\partial u_j}\right]
+\end{align}
+where $\mathcal{M}_i$ and $h_i$  denote the ith component functions of $\mathcal{M}$ and $h$ respectively. For the so-called \textit{Extended Kalman Filter} (EKF), approach. We assume that the analysis errors can be reasonably approximated to evolve linearly such that we can use the above \textit{linearized} approximations to our model update and observation functions to reasonably model our uncertainties.
+
+We therefore replace the (previously) linear functions $M_k$ and $H_k$ with their nonlinear Jacobian derived counterparts to obtain the following procedure
+\begin{enumerate}
+\item \textbf{Initialization}: To begin we must choose values for $u_0^{(a)}$ and $P_0$. We must also provide models for $Q_k$ and $R_k$.
+\item \textbf{Forecast Step}:
+\begin{align}
+    u_k^{(b)} &= \mathcal{M}(u_{k-1}^{(a)}) \\
+    B_k &= D_M(u_{k-1}^{(a)})P_{k-1}D_M^T(u_{k-1}^{(a)}) + Q_k
+\end{align}
+\item \textbf{Assimilation Step}:
+\begin{align}
+    K_k &= B_kD_M^T(u_k^{(b)})\left[ D_h(u_k^{(b)})B_kD_h^T(u_k^{(b)}) + R_k \right]^{-1}\\
+    u_k^{(a)} &= u_k^{(b)} + K_k(w_k - h(u_k^{(b)})) \\
+    P_k &= \left( I - K_kD_h(u_k^{(b)}) \right)B_k
+\end{align}
+\end{enumerate}
+Note that the most challenging piece in this implementation is to stably compute the model update Jacobian $D_M$, as this is not just the Jacobian of our continuous model $f(\cdot)$. For example, if we are modeling the state of the system via a set of ODEs, then $D_M$ is the Jacobian of the output of a single integrator step with respect to the initial starting state. This can pose significant computational challenges where adaptive solvers are desired as we must be able to back-propagate out derivative information for all evaluations of the function $f(\cdot)$ taken during the step.
+
+
 \subsection{continuous-discrete Extended Kalman Filter}
+
+\textcolor{red}{UPDATE REQUIRED! SEE NOTEBOOK}
+
+\subsection{3d-Var}
+
+For the \textit{Kalman Filter} and the \textit{EKF}, we derived an optimal way to combine observation with simulation so as to minimize the trace of the analysis error covariance matrix, $P_k$. An alternative approach is to recast the problem as a pure optimzation problem where rather than finding a filter $K_k$ that will add an innovation to $u_k^{(b)}$ to obtain the analysis $u_k^{(a)}$, we obtain the analysis by directly optimizing a cost function
+\begin{equation}
+J(u) = \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) + \frac{1}{2}\left(u - u^{(b)} \right)^TB^{-1}\frac{1}{2}\left(u - u^{(b)} \right)
+\end{equation}
+which we can justify as coming from the joint probability distribution (assuming Gaussian errors)
+\begin{equation}
+\mathcal{P}(u|w) = C\exp\left(- \frac{1}{2}\left(u - u^{(b)} \right)^TB^{-1}\frac{1}{2}\left(u - u^{(b)} \right) \right)\cdot\exp\left(-  \frac{1}{2}\left(w - h(u) \right)^TR^{-1}\left(w - h(u) \right) \right)
+\end{equation}
+with model error covariance $B$ and measurement error covariance $R$ as before. This is clearly a \textit{very strong assumption}.
+
+To optimize $J(u)$, we begin by taking it's gradient.
+\begin{equation}
+    \nabla_uJ(u) = -D_h^TR^{-1}(w-h(u)) + B^{-1}(u-u^{(b)})
+\end{equation}
+Thus, finding the analysis $u^{(a)}$ ammounts to solving the system
+\begin{equation}
+    a-D_h^TR^{-1}(w-h(u^{(a)})) + B^{-1}(u^{(a)}-u^{(b)}) = 0
+\end{equation}
+
+As for Kalman filtering, let's begin with the assumption that our model and observation function are linear. Suppose that we have $h(u) = Hu$ so that $D_h(u) = H$. It follows that
+\begin{align}
+  D_h^TR^{-1}(w-Hu^{(a)}) &= B^{-1}(u^{(a)}-u^{(b)}) \\
+  D_h^TR^{-1}w - D_h^TR^{-1}Hu^{(a)} &= B^{-1}u^{(a)} - B^{-1}u^{(b)} \\
+  \left(D_h^TR^{-1}H + B^{-1} \right)u^{(a)} &= D_h^TR^{-1} + B^{-1}u^{(b)} \\
+  \left(H^TR^{-1}H + B^{-1} \right)u^{(a)} &= H^TR^{-1} + B^{-1}u^{(b)}
+\end{align}
+
+Thus we see that the analysis is given by
+\begin{equation}
+  u^{(a)} = u^{(b)} + BH^T\left( R + HB^TH \right)^{-1}(w-Hu^{(b)})
+\end{equation}
+which agrees with what we found for the Linear Kalman Filter.
+
+
+Moving on to the non-linear case, we can expand $h$ about an initial guess $u^{(c)}$ which we will later choose to be $u^{(b)}$ for convenience.
+\begin{equation}
+    h(u^{(a)}) \approx h(u^{(c)}) + D_h(u^{(c)})\Delta u
+\end{equation}
+
+Using this, we have
+\begin{align}
+    D_h^T(u^{(a)})R^{-1}(w-h(u^{(a)})) &= B^{-1}(u^{(a)} - u^{(b)}) \\
+    D_h^T(u^{(a)})R^{-1}(w-h(u^{(c)})-D_h(u^{(c)})\Delta u) &\approx B^{-1}(u^{(c)} + \Delta u - u^{(b)}) \\
+    D_h^T(u^{(c)})R^{-1}(w-h(u^{(c)})-D_h(u^{(c)})\Delta u) &\approx B^{-1}(u^{(c)} + \Delta u - u^{(b)})
+\end{align}
+which we now solve for the update $\Delta u$ to obtain the linear system
+\begin{equation}
+    \left(B^{-1} + D_h^T(u^{(c)})R^{-1}D_h(u^{(c)}) \right)\Delta u = B^{-1}(u^{(b)}-u^{(c)}) + D_h^T(u^{(c)})R^{-1}(w-h(u^{(c)}))
+\end{equation}
+
+Thus we have the following prescription
+\begin{enumerate}
+\item To begin, take $u^{(c)} == u^{(b)}$.
+\item Solve the system
+  \begin{equation}
+    \left(B^{-1} + D_h^T(u^{(c)})R^{-1}D_h(u^{(c)}) \right)\Delta u = B^{-1}(u^{(b)}-u^{(c)}) + D_h^T(u^{(c)})R^{-1}(w-h(u^{(c)}))
+  \end{equation}
+to obtain $\Delta u$
+\item Update your guess using your favorite optimization algorithm. For example, in steppest descent, choose a learning rate $\eta$ and set
+  \begin{equation}
+    u_{\text{new}}^{(c)}  = u_{\text{prev}}^{(c)} - \eta\Delta u
+  \end{equation}
+\item Repeat the procedure until $\lvert u_{\text{new}}^{(c)} - u_{\text{prev}}^{(c)} \rvert$ converges to a desired tolerance.
+\end{enumerate}
+
+
+In both the linear and nonlinear case, it should be noted that we have not added time indices to our state vectors. This is an indication that the 3d-var procedure is performed \textit{at every time where you have observation data}.
+
+
+\subsection{4d-Var}
+
+The \textit{3d-Var} algorithm attempts to optimize a cost function point-by-point to obtain the ideal analysis at each time where we have observation data. This can become computationally expensive as we require model evaluations \textit{and} an optimization routine for every observation point. An alternative approach is to simultaneously optimize across all observations in order to obtain the ideal \textit{initial condition} which achieves the best model fit. In other words, this amounts to parameter fitting for our model where we think of the initial conditions as the parameters. The difference is two-fold: We extend the usual $\ell_2$ function into a quadratic form utilizing the observation error covariance matrix $R_k$. We also typically only have a small number of observables related to the state vector (potentially non-linearly) and therefore must transform the state vector $u_k$ into the observation space via $h$ before computing the loss against our observations $w_k$. This results in a loss function of the form
+\begin{align}
+    J(u_0) &= \frac{1}{2}\left( u_0 - u_0^{(b)} \right)^TB^{-1}\left( u_0 - u_0^{(b)} \right) + \frac{1}{2}\sum_k\left(w_k - h(u_k) \right)^TR_k^{-1}\left(w_k - h(u_k) \right) \\
+           &= J_b(u_0) + J_m(u_0) \notag.
+\end{align}
+Note that the first term is usefull if we already have an initial guess $u_0^{(b)}$ for the inital condition in mind. If we do not have one, we may ommit this term.
+
+
+As before, we now want to optimize this cost function. To do so, we first observe that
+\begin{equation}
+    u_k = \mathcal{M}^{(k)}(u_0; \theta)
+\end{equation}
+
+It is easy to obtain the gradient of $J_b$ so we shall focus on the second term. We find that
+\begin{align}
+    \nabla_{u_0}J_m &= \nabla_{u_0}\Big\{ \sum_k \frac{1}{2}  \left(w_k - h(u_k) \right)^TR_k^{-1}\left(w_k - h(u_k) \right) \Big\}\\
+                    &= - \sum_k \left[\dfrac{\partial }{\partial u_0}h\left(\mathcal{M}^{(k-1)}(u_0)\right) \right]^T R_k^{-1}\left(w_k - h(u_k) \right)\\
+                    &= - \sum_k \left[D_h(u_k)D_M(u_{k-1})D_M(u_{k-2})\cdots D_M(u_0) \right]^T R_k^{-1}\left(w_k - h(u_k) \right)\\
+                    &= - \sum_k \left[D_M^T(u_0)D_M^T(u_1)\cdots D_M^T(u_{k-1})D_h^T(u_k) \right] R_k^{-1}\left(w_k - h(u_k) \right)
+\end{align}
+
+With this in hand, the procedure is nearly identical to 3d-var:
+\begin{enumerate}
+\item Integrate your model forward to obtain $\{u_k\}$
+\item Evaluate each of the $D_M^T(u_{k-1:0})$ and $D_h(u_k)$.
+\item Using these values, compute $\nabla J_m(u)$
+\item Set $u_0^{(new)} = u_0^{(prev)} - \eta \nabla J(u_0^{(prev)})$
+\item Stop when $\lvert u_0^{(new)} - u_0^{(prev)} \rvert$ converges to your desired tolerance.
+\end{enumerate}
+You can of course substitute another optimzation scheme after step 3.
+
+There are a few further observations that we can make about this procedure. The first, is that should we feel our model $f(\cdot)$ is not sufficient to fit the entire time series without the periodic corrections of the Kalman filter (perhaps there is some missing physics we haven't captured in our model), then it may be ideal to restrict the optimization to a subset of the full time series of observations. The second observation is that the above formulation has assumed the adjoint $D_M^T$ can be computed easily. We can take advantage of the methods from the \textit{Adjoint Sensativity Analysis} of ODEs to take advantage of modern methods for automatic differentiation of ODE solutions. Finally, it should be noted that the $4d-var$ algorithm yields the optimal starting conditions assuming our model is perfect. At the sacrifice of smoothness, it is often desirable to first obtain the ideal initial condition with $4d-var$ and \textit{then} employ a filtering method like the EKF to obtain the final analysis.
+
 
 
 %------------------------------------------------------------------------------------------%
 
-\section{Topological Data Analysis}
+%% \section{Topological Data Analysis}
