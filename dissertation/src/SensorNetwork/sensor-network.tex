@@ -9,3 +9,32 @@
 
 \section{Making Data Publicly Accessible via S3 and the Open Storage Network}
 discuss Rclone and using OSN to make data highly available
+
+
+\begin{itemize}
+\item LoRa wan devices
+\item Docker, NodeRed, InfluxDB, Grafana
+\item Hamiltonian NN stuff
+\item neural ode
+\item TDA
+\end{itemize}
+
+Sensor Network + SciML
+Evaluation of local chaos in SharedAirDFWNetwork
+
+\begin{itemize}
+\item This gives me an excuse to work with the sensor data
+\item Train GTM, SOM, and Variational Autoencoder to produce lower dimensional representation of all data from a central node, e.g. in $\mathbb{R}^2$.
+\item For VAE, test a range of dimensions from the number of sensors down to 2 (better for visualization)
+\item Analyze the variety of methods from [DataDrivenDiffEq.jl](https://docs.sciml.ai/DataDrivenDiffEq/stable/) to infer dynamics in the low dimensional space
+\item Can we infer some kind of Hamiltonian from the data and do a HamiltonianNN approach?
+\item Start of with a standard kinetic-energy style Hamiltonian e.g. $\sum_i \frac{1}{2} \dot{x}_i^2$ where $x_i$ is the
+\item use DataDrivenDiffEq approach to learn the associated potential energy term
+\item alternatively, attempt to capture diurnal cycle (or other relevant time scales) by *learning* coordinate representation that forces dynamics to be uncoupled harmonic oscillators a la Hamilton-Jacobi theory.
+\item Test if this hamiltonian NN model can then be transfered to another central node with an appropriate shift in the "total energy"
+\item Attempt to analyze the 2d data to infer Koopman operator. We should treat the original sensor values as observables on which the learned koopman operator acts. This should be doable if the NN is just a function.
+\item use DMD appraoch to identify a "forcing" coordinate that can identify when we switch nodes as in \cite{brunton-havok}
+\item \href{https://www.youtube.com/watch?v=lx-msllg1kU&ab_channel=SteveBrunton}{video on Physics Informed DMD}
+\item \href{https://www.youtube.com/watch?v=KmQkDgu-Qp0&list=PLMrJAkhIeNNQ0BaKuBKY43k4xMo6NSbBa&ab_channel=SteveBrunton}{Deep Learning to Discover Coordinates for Dynamics: Autoencoders and Physics Informed Machine Learning}
+\item \textbf{NOTE:} we may need to impute missing values. We shoud do so with either my GPR code or with other ML methods + ConformalPrediction. Provided uncertainty estimates, we should then think about how to propagate errors through our analysis via \href{https://github.com/JuliaPhysics/Measurements.jl}{Measurements.jl}, \href{https://juliaintervals.github.io/pages/packages/intervalarithmetic/}{IntervalArithmetic.jl}.
+\end{itemize}
