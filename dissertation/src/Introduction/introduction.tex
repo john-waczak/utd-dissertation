@@ -204,7 +204,6 @@ This statement serves as the foundation for The Clean Air in Buildings Challenge
 
 The real challenges posed by global environmental change, combined with rising utility costs as a result of inflation and geopolitical shocks to energy supply chains, have created an implicit dichotomy between climate and public health goals. As Prof. Bahnfleth has said,
 
-\section{Photolysis}
 
 
 \section{Physics of Chemical Reactions: Chemical Reaction Kinetics}
@@ -310,37 +309,161 @@ so that by exponentiation, we arrive at the simple expression:
 \begin{equation}
   \frac{\prod\limits_j^{\text{products}}\left(\frac{P_j}{P_0}\right)^{\nu_j}}{\prod\limits_i^{\text{reactants}}\left(\frac{P_i}{P_0}\right)^{\nu_i}} = \exp(-\Delta G^0/RT)
 \end{equation}
-with further use of the ideal gas law, we can obtain
+which through further application of the ideal gas law yields
 \begin{equation}
   \label{eq:law-of-mass-action}
   \boxed{\frac{\prod\limits_j^{\text{products}}\left(X_j\right)^{\nu_j}}{\prod\limits_i^{\text{reactants}}\left(X_i\right)^{\nu_i}} = K_{\text{eq}}}
 \end{equation}
-where $K_{\text{eq}}$ is a temperature dependent constant called the \textit{equilibrium constant} for the reaction. Equation \ref{eq:law-of-mass-action} is called the \textit{law of mass action}.
-
+Here $K_{\text{eq}}$ is a temperature dependent constant called the \textit{equilibrium constant} for the reaction, and equation \ref{eq:law-of-mass-action} is called the \textit{law of mass action}. This expression indicates what we can expect to find if we allow our reactive system to proceed far enough to reach equilibrium. We shall later utilize this expression to perform a thermodynamic \textit{sanity check} as is described in \cite{boldi-thesis}. 
 
 
 \subsection{Reaction Rate Laws}
 
-A generic chemical reaction can be written as
+Having established the expected behavior at equilibrium, our task now is to establish the correct dynamical laws describing the variety of reactions which take place. To begin, let us consider again a generic chemical reaction of the form
 \begin{equation}
-  \nu_{A}A + \nu_{B}B + \cdots \longrightarrow \nu_{X}X + \nu_{Y}Y + \cdots
+  \nu_{1}X_1 + \nu_{2}X_2 + \cdots \longrightarrow \nu_{3}X_3 + \nu_{4}X_4 + \cdots
 \end{equation}
-where $A$, $B$, $X$, $Y$, etc denote reactant and product species while the coefficients $\nu_{A}$, $\nu_{B}$, $\nu_{X}$, $\nu_{Y}$, etc.  denote stoichiometric coefficients. To describe the dynamical process of a reaction, we can introduce a parameter $\xi$ called the \textit{reaction extent}. The such that at any time we have
+
+To describe the dynamical process of a reaction, we can introduce a parameter $\xi$ called the \textit{reaction extent} such that at any time we have
 \begin{equation}
   \xi(t) = \frac{\lvert N_i(t) - N_i(0) \rvert}{ \nu_i}
 \end{equation}
-where $N_i(t)$ is the number  of the $i^{th}$ species and $\nu_i$ is the stoichiometric coefficient. The reaction rate is then
+where $N_i(t)$ is the number  of the $i^{th}$ species and $\nu_i$ is the stoichiometric coefficient. The reaction rate is then easily understood as the rate of change of the reaction extent,
 \begin{equation}
-  r := \frac{d\xi}{dt} = \frac{1}{\nu_i}\left\lvert \frac{dN_i(t)} { dt} \right\rvert
+  r := \frac{d\xi}{dt} = \frac{1}{\nu_i}\left\lvert \frac{dN_i(t)} { dt} \right\rvert.
 \end{equation}
 Manipulating this expression to introduce the volume then leads us to
 \begin{equation}
-  r(t) = \frac{1}{\nu_i}\left\lvert\frac{dN_i}{dt}\frac{V}{V} \right\rvert = \frac{V}{\nu_i}\left\lvert \frac{d[\;i\;]}{dt} \right\rvert
+  r(t) = \frac{1}{\nu_i}\left\lvert\frac{dN_i}{dt}\frac{V}{V} \right\rvert = \frac{V}{\nu_i}\left\lvert \frac{d[X_i]}{dt} \right\rvert
 \end{equation}
-where $[\;i\;]$ denotes the concentration (number density) of the $i^{th}$ species in the reaction. All this is to say that upon rearranging the expression, we find
+where $[X_i]$ denotes the concentration (number density) of the $i^{th}$ species participating in the reaction. All this is to say that upon rearranging the expression, we find
 \begin{equation}
-  \left\lvert \frac{d[\;i\;]}{dt} \right\rvert = \nu_i\frac{r(t)}{V} = \nu_iv,
+  \left\lvert \frac{d[X_i]}{dt} \right\rvert = \nu_i\frac{r(t)}{V} = \nu_iv,
 \end{equation}
 or in words, the absolute change in concentration of the $i^{th}$ species as a function of time is proportional the quantity $v=r(t)/V$ (called the reaction \textit{velocity}) scaled by the stoichiometric coefficient $\nu_i$ of the $i^{th}$ species. For the purposes of our modeling tasks, we must now establish appropriate forms for the reaction velocity in terms of the relevant thermodynamic variables (i.e. temperature, and pressure) and constituent concentrations.
 
+To begin, let us consider a bimolecular reaction
+\begin{equation}
+  A + B \longrightarrow \text{Products}.
+\end{equation}
+The simplest approach to modeling the reaction velocity for reactions of this type is to make the assumption that \textit{each molecular collision leads to a reaction}. From this perspective, should then be able to derive the reaction velocity using the established statistics of molecular velocities together with appropriate data for the size of each reactant.
 
+Let us treat reacting species as \textit{hard spheres} of radii $r_{A}$ and $r_{B}$ respectively, or in other words, the molecules are spheres which only interact by contact (no long range interactions). Then a collision will occurs if the separation $d_{AB}$ satisfies
+\begin{equation}
+  d_{AB} = r_{A} + r_{B}
+\end{equation}
+
+\textcolor{red}{NOTE: Add image of hard spheres here}
+
+To start, let's consider collisions where $B$ are stationary and $A$ is seen to move with velocity $\mathbf{v}_{A}$.
+
+\textcolor{red}{NOTE: Add image of hard spheres forming cylinder here}
+
+Then during a time $dt$, the molecule $A$ sweeps out a cylindrical volume
+\begin{equation}
+  dV = \pi d_{AB}^2 v_{A}dt
+\end{equation}
+in which collisions may occur. Supposing we have a density $N_{B}/V$ of species $B$, then the collision rate (collisions per second) for a single particle of $A$ will be
+\begin{equation}
+  \frac{dV}{dt}\frac{N_{B}}{V} = \frac{\pi d_{AB}^2 v_{A}N_{B}}{V}
+\end{equation}
+and therefore, the reaction velocity for $N_{A}$ particles with average velocity $\overline{\mathbf{v}}_{A}$ is
+\begin{equation}
+  v = \frac{\pi d_{AB}^2 \overline{v}_{A}N_AN_B}{V^2}
+\end{equation}
+
+if instead particles of both $A$ and $B$ move relative to each other, then their \textit{relative} velocity is given by the law of cosines:
+\begin{equation}
+  v_{AB}^2 = v_{A}^2 + v_{B}^2 - 2v_{A}v_{B}\cos(\theta)
+\end{equation}
+which, since all directions are equally probable, yields an average relative velocity of
+\begin{equation}
+  \overline{v_{AB}}^2 = \sqrt{\overline{v_{A}}^2 + \overline{v_{B}}^2}.
+\end{equation}
+
+The relative velocity describes the motion of the reduced mass $\mu=m_{A}m_{B}/(m_{A}+m_{B})$ and therefore under the standard Maxwellian velocity distribution, leads to
+\begin{equation}
+  \overline{v_{AB}} = \sqrt{\frac{8kT}{\pi \mu}}
+\end{equation}
+Combining everything together yields the reaction velocity
+\begin{equation}
+  v = \pi d_{AB}^2\frac{N_{A}}{V}\frac{N_{B}}{V}\sqrt{\frac{8kT}{\pi \mu}} = \pi d_{AB}^2[A][B]\sqrt{\frac{8kT}{\pi \mu}}
+\end{equation}
+which we might further simplify as
+\begin{align}
+  v &= k[A][B] \\
+  k &= \pi d_{AB}^2\sqrt{\frac{8kT}{\pi \mu}} = \sigma \sqrt{\frac{8k_BT}{\pi \mu}}
+\end{align}
+where $k$ is called the \textit{reaction rate coefficient} and $\sigma$ is the \textit{reaction cross section}.
+
+Excellent! We have discovered a couple of key features for the reaction velocity, namely, that it depends on a polynomial combination of reactant concentrations, \textit{and} that there is clear temperature dependence due to the relationship between molecular velocities and temperature.
+
+There are, however, some obvious limitations.
+\begin{enumerate}
+  \item Not all collisions occur with orientations favorable for reaction (i.e. the hard sphere model isn't realistic for species).
+  \item Not all collisions will have enough enough energy for the reaction to proceed.
+\end{enumerate}
+These limitations were well known, and in particular, Arrhenius suggested a competing function based on empirical studies of with
+\begin{equation}
+  k = A\exp(-\alpha/T)
+\end{equation}
+where $\alpha$ is some constant that depends on the reaction taking place. We can address the first point in a \textit{hand-wavy} manner by simply including a geometric correction factor, $g\leq 1$, to account for the distribution of favorable orientations. To address the second point, it is worth establishing some minimal energy required for the reaction, $E_a$, by examining our Maxwellian distribution in closer detail. As we shall see, this will allow us to recover the exponential dependence suggested by Arrhenius.
+
+The velocities $\mathbf{v}_{A}$ and $\mathbf{v}_{B}$ of each colliding pair of reactants define a plane. Therefore, for ease of calculation, we approximate the distribution of velocities near the collision site by the 2-dimensional Maxwellian speed distribution:
+\begin{equation}
+  f(v) = \frac{\mu}{k_BT}v\exp\left(-\frac{\mu v^2}{k_BT}\right)
+\end{equation}
+so that the fraction of particles with speed in the range $[v, v+dv]$ is
+\begin{equation}
+  \frac{dN(v)}{N_{tot}} = f(v)dv = \frac{\mu}{k_BT}v\exp\left(-\frac{\mu v^2}{k_BT}\right)dv.
+\end{equation}
+For an ideal gas under no external forces, we may identify the energy $\epsilon = \mu v^2/2$ so that $d\epsilon = \mu vdv$. Therefore, in energy space, this ratio becomes
+\begin{equation}
+  \frac{dN(\epsilon)}{N_{tot}} = \frac{1}{k_BT}\exp(-\epsilon/k_BT)d\epsilon
+\end{equation}
+If $E_a$ is the minimum (\textit{activation}) Energy required to engage the reactants, then the ratio of reactants with sufficient energy for the reaction to proceed is determined by integration to be
+\begin{equation}
+  \left.\frac{N(\epsilon)}{N_{tot}}\right\rvert_{\epsilon > E_{a}} = \int\limits_{\E_{a}}^{\infty}\frac{1}{k_BT}\exp(-\epsilon/k_BT)d\epsilon = \exp(-E_a/k_bT)
+\end{equation}
+so that we may justify an additional correction to our reaction rate coefficient
+\begin{equation}
+  k = g\pi d_{AB}^2\sqrt{\frac{8k_BT}{\pi \mu}}\exp(-E_{a}/k_BT)
+\end{equation}
+
+The final augmentation we can perform without before leaving collision theory behind is to observe that the cross-section $\sigma$ was treated independently from the requirement of a minimum activation energy. With that in mind, suppose instead that a reaction cross section \textit{only makes sense} if the reactants have the required minimum energy, that is
+\begin{equation}
+  \sigma(\epsilon) = \begin{cases}
+    \pi d_{AB}^2 & \epsilon > E_{A} \\
+    0 & \text{otherwise}
+  \end{cases}
+\end{equation}
+If this is true, we can not keep the cross section outside of the ensemble average.
+
+Allowing ourselves to utilize the full, three-dimensional Maxwellian speed distribution, we have
+\begin{equation}
+  \begin{aligned}
+  k &= \int\limits_0^\infty \sigma(v)v f(v) dv \\
+  &= 4\left(\frac{\mu}{2\pi k_BT} \right)^{3/2}\int\limits_0^\infty \sigma(v)v \cdot v^2\exp\left(-\frac{\mu v^2}{2k_BT} \right)dv
+  \end{aligned}
+\end{equation}
+which in terms of energy yields
+\begin{equation}
+  \begin{aligned}
+  k(T) &= \left(\frac{1}{\pi \mu} \right)^{1/2}\left(\frac{2}{k_BT}\right)^{3/2}\int\limits_{0}^{\infty}\epsilon\sigma(\epsilon)\exp(-\epsilon/k_BT)d\epsilon \\
+  &= \left(\frac{1}{\pi \mu} \right)^{1/2}\left(\frac{2}{k_BT}\right)^{3/2}\int\limits_{E_a}^{\infty}\epsilon\pi d_{AB}^2\exp(-\epsilon/k_BT)d\epsilon \\
+  &= \pi d_{AB}^2 \sqrt{\frac{8k_BT}{\pi \mu}}\left(1 + \frac{E_a}{k_BT} \right)\exp(-E_a/k_BT)
+  \end{aligned}
+\end{equation}
+
+In summary, we have established that for bimolecular reactions, the (simple) theory of molecular collisions allows us to model the reaction velocity by
+\begin{align}
+  v &= k(T)[A][B] \\
+  k(T) &\approx \pi d_{AB}^2 \sqrt{\frac{8k_BT}{\pi \mu}}\left(1 + \frac{E_a}{k_BT}\right)\exp(-E_a/k_BT)
+\end{align}
+
+To derive a more accurate form for the rate coefficient $k$, we can result to PES, simulation, and statistical sampling techniques \cite[for example]{pes-h-h2, pes-for-k}. For our purposes, it is enough to have justified the kinds of functional dependence on temperature we can expect to encounter when when collating available data on rate coefficients in the present literature.
+
+\section{Photolysis}
+
+
+\section{Summary of Chemical Mechanism Kinetics}
