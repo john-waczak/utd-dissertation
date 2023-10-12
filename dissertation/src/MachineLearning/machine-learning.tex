@@ -13,6 +13,162 @@ also discuss statistical v.s. deep learning
 
 %------------------------------------------------------------------------------------------%
 
+\section{Adjoint Methods for Optimization}
+
+The fundamental task of machine learning is to build data-driven models. To do this we must \textit{fit} model parameters by taking advantage of the available training data. In many cases, this is straight forward: the sensitivities of model outputs to changes in model parameters can be backpropagated by application of the chain rule through each layer of our model. However, this naive propagation can become prohibitively expensive as we increase the size and complexity of our models. To efficiently determine these sensitivities and thereby enable the optimization of complicated models, we can instead turn the problem on it's side and consider a parallel \textit{adjoint} system. Due to the utility of this technique for enabling the optimization of models involving implicit linear and nonlinear relationships and even differential equations, we shall begin our discussion of machine learning with a handful of these techniques which will be utilized in the remainder of this work.
+
+\subsection{Adjoint Methods for Linear Systems}
+To begin, suppose a component of our model is given by the $\theta$-parameterized linear system
+\begin{equation}
+  A(\theta)u = b(\theta).
+\end{equation}
+If we wish to find the ideal $\theta$ subject to some loss function $J(u)$ we must obtain the gradients $dJ/d\theta$ which upon expansion yields
+\begin{equation}
+  \frac{dJ}{d\theta} = \frac{\partial J}{\partial \theta} + \frac{\partial J}{\partial u}\frac{du}{d\theta}.
+\end{equation}
+The Jacobian $du/d\theta$ will be challenging to compute and depends on solving the above implicit system:
+\begin{align*}
+  \frac{d}{d\theta}(Au) &= \frac{d}{d\theta}b \\
+  \left(\frac{dA}{d\theta}\right)u + A\left(\frac{du}{d\theta}\right) &= \frac{db}{d\theta}
+\end{align*}
+which with some slight abuse of notation in the, yields
+\begin{equation}
+  \frac{du}{d\theta} = A^{-1}\left(\frac{db}{d\theta} - \frac{dA}{d\theta}u \right)
+\end{equation}
+and therefore
+\begin{equation}
+  \frac{dJ}{d\theta} = \frac{\partial J}{\partial \theta} + \frac{\partial J}{\partial u}A^{-1}\left(\frac{db}{d\theta} - \frac{dA}{d\theta}u \right)
+\end{equation}
+must require $p$ linear solves if there are $p$ parameters in $\theta$. Can we do better?
+
+If we perform a clever \textit{re-bracketing} so that
+\begin{equation}
+  \frac{dJ}{d\theta} = \frac{\partial J}{\partial \theta} + \left(\frac{\partial J}{\partial u}A^{-1}\right)\left(\frac{db}{d\theta} - \frac{dA}{d\theta}u \right)
+\end{equation}
+then we can see that the vector $\frac{\partial J}{\partial u}A^{-1}$ is the solution to \textit{some} problem, say
+\begin{equation}
+  \lambda^TA = \frac{\partial J}{\partial u}
+\end{equation}
+then, we need only solve
+\begin{equation}
+  A^T\lambda = \left(\frac{\partial J}{\partial u}\right)^T
+\end{equation}
+once! This leaves us with the following procedure:
+\begin{enumerate}
+\item Solve the system $Au = b$ for $u$
+\item Solve the adjoint system $A^T\lambda = \left(\dfrac{\partial J}{\partial u}\right)^T$ for $\lambda$
+\item compute $\dfrac{dJ}{d\theta} = \dfrac{\partial J}{\partial\theta} + \lambda^T\left(\dfrac{db}{d\theta} -  \dfrac{dA}{d\theta} u \right)$
+\end{enumerate}
+
+
+\subsection{Adjoint Methods for Nonlinear Systems}
+Having demonstrated an effective strategy for computing the gradients of cost functions with respect to underlying linear systems, a natural next step is to ask: can we do the same for nonlinear systems? Suppose now that we instead we find a component of our model to be of the form
+\begin{equation}
+  f(u;\theta) = 0
+\end{equation}
+Then the gradient of some loss function $J(u;\theta)$ which depends indirectly on the solution of this system will be
+\begin{equation}
+  \frac{dJ}{d\theta} = \frac{\partial J}{\partial \theta} + \frac{\partial J}{\partial u}\frac{du}{d\theta}
+\end{equation}
+while the nonlinear system satisfies
+\begin{equation}
+  \frac{df}{d\theta} = \frac{\partial f}{\partial u}\frac{du}{d\theta} + \frac{\partial f}{\partial \theta} = 0.
+\end{equation}
+Therefore, the linear system that resulting from the differentiation procedure leads to
+\begin{equation}
+  \frac{du}{d\theta} = -\left(\frac{\partial f}{\partial u}\right)^{-1} \frac{\partial f}{\partial \theta}
+\end{equation}
+which we may substitute to find
+\begin{equation}
+  \frac{dJ}{d\theta} = \frac{\partial J}{\partial \theta} - \left(\frac{\partial J}{\partial u}\left(\frac{\partial f}{\partial u}\right)^{-1} \right)\frac{\partial f}{\partial \theta}
+\end{equation}
+so that again, by cleverly re-bracketing the above equations we my identify that
+\begin{equation*}
+  \frac{\partial J}{\partial u}\left(\frac{\partial f}{\partial u}\right)^{-1}
+\end{equation*}
+is the solution to \textit{some} linear system of the form
+\begin{equation}
+  \lambda^T\left(\frac{\partial f}{\partial u}\right) = \frac{\partial J}{\partial u}.
+\end{equation}
+Therefore, we have arrived at a procedure similar to the linear case which is as follows:
+\begin{enumerate}
+\item Solve $f(u\;\theta)=0$ for $u$ by your favorite algorithm.
+\item Solve $\left(\dfrac{\partial f}{\partial u} \right)^T\lambda = \left( \dfrac{\partial J}{\partial u}\right)^T$ for the adjoints $\lambda$.
+\item Compute the gradient $\dfrac{dJ}{d\theta} = \dfrac{\partial J}{\partial \theta} - \lambda^T\left(\frac{\partial f}{\partial \theta}\right)$. 
+\end{enumerate}
+
+
+\subsection{Adjoint Methods for ODEs}
+To complete the discussion, suppose that we instead seek to fit a model described by an Ordinary Differential Equations (ODE) initial-value problem (IVP) of the form
+\begin{equation}
+  \begin{cases}
+    \dfrac{du}{dt} = f(u, t; \theta) \\
+    u_0 = u(t=0)
+  \end{cases}
+\end{equation}
+where $u\in\R^n$ denotes the time-dependent state vector, and $f$ is a function of the state $u$, time $t$, and some number of parameters $\theta$.
+
+To \textit{fit} such a model to data, we need to be able to compute the sensitivity of some cost function $J(u)$ to the parameters $\theta$, that is, we need the gradient $d J/ d \theta$. Obtaining these sensitivities by direct forward-mode automatic differentiation or with tape/tracer based backpropagation demands we be able to establish the derivatives for any class of ODE integrator we want to choose. This task is further complicated if we desire to use modern differential equation solver suites, like those provided by the \texttt{DifferentialEquations.jl} Julia library, which employ complicated adaptive stepping schemes. How could we possibly know \textit{a priori} how many function evaluations will be needed to produce the output for each ODE step, and thereby how to compute the partial derivatives? One approach is to establish language-wide automatic differentiation capability for generic computer code (dubbed $\partial P$) \cite{differentiable-programming}. An alternative approach, which we shall describe here, is to develop a set of adjoint differential equations whose solution we can use to compute the desired derivatives.
+
+Let us suppose our loss function can be written in the form
+\begin{equation}
+  J(u;\theta) = \int\limits_0^T g(u;\theta)dt
+\end{equation}
+where $g$ is some function like the quadratic loss $u^TRu$ of 4d-var. To find our desired sensitivities, we can utilize the method of Lagrange multipliers by introducing a Lagrangian of the form
+\begin{equation}
+  \begin{aligned}
+    \mathcal{L}(u,\lambda;\theta) &:= J(u;\theta) + \int\limits_0^T\lambda^T\left(f - \frac{du}{dt} \right)dt \\
+    &= \int\limits_0^T \left[g(u;\theta) + \lambda^T(t) \left(f - \frac{du}{dt} \right) \right]dt
+  \end{aligned}
+\end{equation}
+The $\lambda$ are the so-called Lagrange multipliers, and the integrand, $f-du/dt$, is a clever way of adding $0$ so that $d\mathcal{L}/d\theta = dJ/d\theta$. Evaluating this derivative, we find
+\begin{equation}
+  \frac{d\mathcal{L}}{d\theta} = \int\limits_0^T \left\{ \left( \frac{\partial g}{\partial \theta} + \frac{\partial g}{\partial u}\frac{du}{d\theta}\right)  + \lambda^T(t) \left[ \frac{\partial f}{\partial \theta} + \frac{\partial f}{\partial u}\frac{du}{d\theta} - \frac{d}{dt}\frac{du}{d\theta} \right] \right\}dt.
+\end{equation}
+The difficult term to compute is $du/d\theta$ and so we group the terms so that
+\begin{equation}
+  \frac{d\mathcal{L}}{d\theta} = \int\limits_0^T \left[ \frac{\partial g}{\partial \theta} + \lambda^T(t)\frac{\partial f}{\partial \theta} + \left(\frac{\partial g}{\partial u} + \lambda^T(t)\frac{\partial f}{\partial u} - \lambda^T(t)\frac{d}{dt}\right)\frac{du}{d\theta} \right] dt.
+\end{equation}
+We now observe that if we pick the $\lambda^T(t)$ such that
+\begin{equation}
+  \lambda^T(t)\frac{\partial f}{\partial \theta} + \left(\frac{\partial g}{\partial u} + \lambda^T(t)\frac{\partial f}{\partial u} - \lambda^T(t)\frac{d}{dt}\right)\frac{du}{d\theta}  = 0,
+\end{equation}
+we will not have to compute this pesky term at all! To proceed, let's apply integration by parts to move the time derivative of the final term and simplify the matter:
+\begin{equation}
+  \begin{aligned}
+    \int\limits_0^T-\lambda^T\frac{d}{dt}\frac{du}{d\theta}dt &= \left. -\lambda^T\frac{du}{d\theta}\right\rvert_0^T + \int\limits_0^T \frac{d\lambda^T}{dt}\frac{du}{d\theta}dt \\
+    &= \lambda^T(0)\frac{du}{d\theta}(0) - \lambda^T(T)\frac{du}{d\theta}(T) + \int_0^T\dot{\lambda}^T\frac{du}{d\theta}dt.
+    \end{aligned}
+\end{equation}
+Plugging this back in to our previous expression yields
+\begin{equation}
+  \frac{d\mathcal{L}}{d\theta} = \int_0^T\left[\frac{\partial g}{\partial \theta} + \lambda^T\frac{\partial f}{\partial \theta} + \left(\frac{\partial g}{\partial u} + \lambda^T\frac{\partial f}{\partial u} + \dot{\lambda}^T \right)\frac{du}{d\theta} \right]dt + \lambda^T(0)\frac{du}{d\theta}(0) - \lambda^T(T)\frac{du}{d\theta}(T).
+\end{equation}
+Great! In order to make the pesky term disappear, it suffices to find the $\lambda^T(t)$ such that
+\begin{equation}
+  \begin{cases}
+    \dfrac{\partial g}{\partial u} + \lambda^T\dfrac{\partial f}{\partial u} + \dfrac{d\lambda^T}{dt} = 0 \\
+    \lambda(T) = 0
+  \end{cases}
+\end{equation}
+which amounts simply solving a second differential equation from the ending time $T$ back to $t=0$. Transposing the above, we can obtain the new ODE in the standard form:
+\begin{equation}
+  \boxed{\begin{cases}
+      \dfrac{d\lambda}{dt} = -\left(\dfrac{\partial f}{\partial u} \right)^T\lambda - \left(\dfrac{\partial g}{\partial u} \right)^T \\
+      \lambda(T) = 0
+  \end{cases}}
+\end{equation}
+
+Better yet, this system is linear in $\lambda$ even though the original differential equation may be fully nonlinear with no restrictions on $f$! To summarize, the procedure for determining the desired gradients is as follows:
+\begin{enumerate}
+\item Solve the ODE system given by $du/dt=f(u,t;\theta)$ forward in time from $t=0$ to $t=T$ to obtain the solution $u(t)$.
+\item Solve the Adjoint ODE system given by $d\lambda/dt = -(\partial f/\partial u)^T\lambda - (\partial g/ \partial u)^T$ from $t=T$ to $t=0$ to obtain the adjoints $\lambda^T(t)$
+\item Compute the gradient $dJ/d\theta = d\mathcal{L}/d\theta = \int_0^T[(\partial g/\partial \theta) + \lambda^T(t)(\partial{f}/\partial\theta)] dt + \lambda(0)du\_0/d\theta$ by quadrature.
+\end{enumerate}
+
+
+%------------------------------------------------------------------------------------------%
+
 \section{Exploratory Data Analysis}
 \subsection{Correlation}
 \subsection{Mutual Information}
@@ -631,9 +787,9 @@ e.g. discuss models like the GPR which fundamentally produce \textit{distributio
 
 %------------------------------------------------------------------------------------------%
 
-\section{Generative Methods}
-\subsection{Auto Encoders}
-\subsection{Generative Adversarial Networks}
+%% \section{Generative Methods}
+%% \subsection{Auto Encoders}
+%% \subsection{Generative Adversarial Networks}
 
 
 %------------------------------------------------------------------------------------------%
