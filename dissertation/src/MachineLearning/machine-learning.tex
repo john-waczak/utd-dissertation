@@ -694,7 +694,9 @@ where we have employed the natural logarithm remove the pesky exponentials and a
 %------------------------------------------------------------------------------------------%
 
 \section{Unsupervised Classification}
-\subsection{k-Means Clustering}
+
+%% \subsection{k-Means Clustering}
+
 \subsection{Self Organizing Maps}
 
 Self organizing maps (SOMs) are an unsupervised machine learning technique developed by Kohonen \cite{kohonen-original} based on the simple biological principle that \textit{neurons near each other fire together}. This observation that the toplogical \textit{closeness} of similar computational units is a critical feature of intelligent systems leads to a natural reinterpretation of the familiar perceptron model into a new form amenable for a variety of clustering and dimensionality reduction tasks. In particular, the SOM enables a rapid unsupervised classification of multidimensional data into a (typically) one or two dimensional \textit{simplicial complex}, the discrete realization of a topological manifold, whose vertices correspond to representative points in the original data space $\mathcal{D}$. While a tad esoteric compared to other popular unsupervised methods like KMeans clustering or DBSCAN, the SOM distinguishes itself with the added benefit that it's training procedure guarantees nodes (i.e. classes) close to each other in the feature manifold share similar weights. This additional structure makes the SOM particularly attractive when an interpretation of the discovered clusters as well as the relationships between them is desired.
@@ -767,16 +769,35 @@ As an illustrative example, consider the minimal dataset formed by the colors re
 \end{align}
 Now let us suppose we want to train an SOM to generate a classification for colors using only these three as the supplied training data. Figure \ref{fig:som-demo} shows exactly this. Here we have trained an SOM of size $25 \times 25$ cells in a flat hexagonal topology. As the weight vectors are themselves vectors of length $3$, we can then visualize the trained SOM by coloring each corresponding node by the color learned in its weight vector. What we find is that the resulting map has clearly separated red, green, and blue into distinct regions in the grid, and more importantly, there is a smooth gradient between neighboring cells reflecting the fact that neighboring classes are more \textit{similar} than cells with a large separation distance. This is not the case for many other common clustering techniques like k-nearest neighbors or DBSCAN for which relationship between learned classes is challenging to interpret.
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.75\columnwidth]{ml-figures/som/SOM_demo.pdf}
   \caption{A trained Self Organizing Map of $25\times 25$ cells in a hexagonal topology trained on a dataset consisting of the three colors red, green, and blue.}
   \label{fig:som-demo}
 \end{figure}
 
-To enable the above demonstration and its subsequent use throughout the rest of this dissertation, I have created a new open-source implementation of the SOM algorithm for the Julia programming language called \texttt{SelfOrganizingMaps.jl} which has been added to the general registry and can by freely downloaded for use by anyone. The repository for the code as well as the associated documentation can be found at \href{https://github.com/john-waczak/SelfOrganizingMaps.jl}{this site}.
+To enable this demonstration and its subsequent use throughout the rest of this dissertation, I have created a new open-source implementation of the SOM algorithm for the Julia programming language called \texttt{SelfOrganizingMaps.jl} which has been added to the general registry and can by freely downloaded for use by anyone. The repository for the code as well as the associated documentation can be found at \href{https://github.com/john-waczak/SelfOrganizingMaps.jl}{this site}.
 
 \subsection{Generative Topographic Maps}
+
+Now that we've developed the SOM algorithm, we see upon reflection that there are a few drawbacks to the methods, namely
+\begin{itemize}
+\item There is no probabilistic interpretation of the fitted SOM? Are we to trust the fit results with $100\%$ certainty?
+\item There is no clearly stopping criteria for the learning process? How many epochs should be performed? Do you simply stop the training once the neighbor radius $\sigma_t$ is less than the minimum neighbor distance?
+\end{itemize}
+With this in mind, we now seek to introduce a new method based on the SOM which will allow us to address the shortcomings by taking a principled, probabilistic approach, which will be called the \textit{Generative Topographic Mapping} (GTM). This technique was first introduced by Bishop et al. in  \cite{gtm-orig} and our derivation of the method will follow their presentation closely.
+
+Both the SOM and GTM rely on the assumption that our high dimensional dataset $\D\subseteq\R^D$ can be accurately represented as being constrained to a lower dimensional submanifold. In the SOM this is acheived by assigning coordinates to each of the weight vectors according to some predetermined grid. In the GTM, however, we make a slight change in our perspective and say that the high dimensional data we have are \textit{generated} from some lower dimensional set of \textit{latent vectors} living in $\R^L$ with $L < D$. For ease of visualization, it is standard to chose $L=2$. Our goal, then, is to learn a mapping from the latent space to the data space which \textit{maximizes the likelihood} of obtaining our dataset given the set of latent variables.
+
+In the coming derivation, we shall assume the following notations:
+\begin{equation}
+  \begin{aligned}
+    \mathbf{x}\in\R^L &\quad \text{The latent vector} \\
+    \mathbf{t}_n\in\R^D &\quad \text{The data vector(s) }n=1,...,D \\
+    \mathbf{y}=\mathbf{y}(\mathbf{x};W) &\quad \text{The transformation } \mathbf{y}:\R^L\to\R^D
+    W &\quad \text{The model weights}
+  \end{aligned}
+\end{equation}
 
 
 %------------------------------------------------------------------------------------------%
