@@ -792,20 +792,134 @@ Both the SOM and GTM rely on the assumption that our high dimensional dataset $\
 In the coming derivation, we shall assume the following notations:
 \begin{equation}
   \begin{aligned}
-    \mathbf{x}\in\R^L &\quad \text{The latent vector} \\
-    \mathbf{t}_n\in\R^D &\quad \text{The data vector(s) }n=1,...,D \\
-    \mathbf{y}=\mathbf{y}(\mathbf{x};W) &\quad \text{The transformation } \mathbf{y}:\R^L\to\R^D
+    \mathbf{x}\in\R^L &\quad \text{A latent vector} \\
+    \mathbf{t}\in\R^D &\quad \text{A data vector}\\
+    \mathbf{y}=\mathbf{y}(\mathbf{x};W) &\quad \text{The transformation } \mathbf{y}:\R^L\to\R^D \\
     W &\quad \text{The model weights}
   \end{aligned}
 \end{equation}
 
+To get started, let us assume that our data can be reasonably described by a multivariate normal distrubtion such that
+\begin{equation}
+  p(\mathbf{t} \vert \mathbf{x}; W, \beta) = \N\left(\mathbf{y}(\mathbf{x};W), \frac{1}{\beta}\right),
+\end{equation}
+that is, our data follow a normal distribution with mean given by the transformation function $\mathbf{y}$ applied to the latent variables $\mathbf{x}$ with covariance $\mathbf{1}{\beta}$. Suppose that we have some model for the prior distribution of our latent variables, $p(\mathbf{x})$, then by integration would find
+\begin{equation}
+  p(\mathbf{t}\vert W, \beta) = \int d\mathbf{x} p(\mathbf{t}\vert \mathbf{x};W,\beta) p(\mathbf{x})
+\end{equation}
+which is the distribution we really care about, namely, the distribution of data $\mathbf{t}\in\D$ given our choice of model weights $W$ and covariance $\beta^{-1}$. To make the problem tractible, we need an integrable distribution for $p(\mathbf{x})$. We therefore take inspiration from the SOM and choose $\mathbf{x}$ to be precisely distributed over a regular grid of points with equal weights. That is
+\begin{equation}
+  p(\mathbf{x}) = \frac{1}{K}\sum_k^K\delta(\mathbf{x}-\mathbf{x}_k)
+\end{equation}
+where $\mathbf{x}_k$ are the $K$-many grid points such that for any $\mathbf{x}$, there is a probability of precisely $\mathbf{1}{K}$ that it \textit{came from} one of the nodes $\mathbf{x}_k$.
+
+\textcolor{red}{NOTE: Add figure of GTM grid here. (See pg 27 of notebook)}
+
+As mathematicians (or physicists, or data scientists, etc...) we rejoice at the wise decision to incorporate the integral-zapping Dirac-delta distributions which enables us to simplify the data distribution to become
+\begin{equation}
+  \begin{aligned}
+    p(\mathbf{t}\vert W, \beta) &= \int d\mathbf{x} p(\mathbf{t}\vert\mathbf{x};W,\beta)\frac{1}{K}\sum_k^K\delta(\mathbf{x}-\mathbf{x}_k) \\
+    &= \frac{1}{K}\sum_k^Kp(\mathbf{t}\vert\mathbf{x}_k;W,\beta).
+  \end{aligned}
+\end{equation}
+
+Now provided we have in supply a dataset with $N$-many records, i.e. $\D^N\subseteq\D =\{\mathbf{t}_1,\mathbf{t}_2,...,\mathbf{t}_N \}$, how do we chose the \textit{optimal} parameters $W$ and $\beta$? We need an objective to optimize!
+
+If we assume the $\mathbf{t}_i$ are independently, identically distributed, then the \textit{likelihood} of obtaining the data given a choice of parameters (i.e. $p(\D^N\vert W,\beta)$) is
+\begin{equation}
+  \begin{aligned}
+  \mathcal{L}(W,\beta) &= \prod\limits_{n}^N p(\mathbf{t}_n \vert W,\beta) \\
+  &= \prod\limits_n^N \left(\frac{1}{K}\sum_k^K p(\mathbf{t}_n \vert \mathbf{x}_k; W, \beta) \right).
+  \end{aligned}
+\end{equation}
+
+Taking the logarithm (which must share the same optimum as it is a monotonically increasing function) yields the simpler expression
+\begin{equation}
+  \ell(W,\beta) = \log(\mathcal{L}(W,\beta)) = \sum_n^N\log\left(\frac{1}{K}\sum_k^K p(\mathbf{t}_n \vert \mathbf{x}_k; W, \beta \right)
+\end{equation}
+Maximizing this log-likelihood function is known as \textit{maximum likelihood estimation} (MLE). But how should we optimize this function? We could use techniques like gradient descent or ADAM, however the probabilistic nature of the GTM suggests we may be able to obtain an \textit{expectation-maximization} (EM) routine for a suitable choice of transformation $\mathbf{y}(\mathbf{x},W)$.
+
+Suppose we already have some guesses $W_o$ and $\beta_o$ for the parameters ($o$ for \textit{old}). To simplify the derivation, we define $\theta_o=(W_o..., \beta_o)$. Then we can compute the responsibilities $r_{kn}$ as
+\begin{equation}
+  \begin{aligned}
+    r_{kn} &:= p(\mathbf{x}_k \vert \mathbf{t}_n,\theta_o) \\
+    &= \frac{p(\mathbf{t}_n\vert \mathbf{x}_k, \theta_o)p(\mathbf{x}_k \vert \theta_o)}{p(\mathbf{t}_n\vert\theta_o)} \\
+    &= \frac{p(\mathbf{t}_n\vert \mathbf{x}_k,\theta_o)p(\mathbf{x}_k\vert \theta_o)}{\sum_{k'}^Kp(\mathbf{t}_n\vert \mathbf{x}_{k'},\theta_o)p(\mathbf{x}_{k'}\vert\theta_o)} \\
+    &= \frac{p(\mathbf{t}_n\vert \mathbf{x}_k,\theta_o)\frac{p(\mathbf{x}_k,\theta_o)}{p(\theta_o)}}{\sum_{k'}^Kp(\mathbf{t}_n\vert \mathbf{x}_{k'},\theta_o)\frac{p(\mathbf{x}_{k'},\theta_o)}{p(\theta_o)}} \\
+    &= \frac{p(\mathbf{t}_n\vert \mathbf{x}_k,\theta_o)p(\mathbf{x}_k,\theta_o)}{\sum_{k'}^Kp(\mathbf{t}_n\vert \mathbf{x}_{k'},\theta_o)p(\mathbf{x}_{k'},\theta_o)} \\
+    &= \frac{p(\mathbf{t}_n\vert \mathbf{x}_k,\theta_o)p(\mathbf{x}_k)p(\theta_o)}{\sum_{k'}^Kp(\mathbf{t}_n\vert \mathbf{x}_{k'},\theta_o)p(\mathbf{x}_{k'})p(\theta_o)} \\
+    &= \frac{p(\mathbf{t}_n\vert \mathbf{x}_k,\theta_o)p(\mathbf{x}_k)}{\sum_{k'}^Kp(\mathbf{t}_n\vert \mathbf{x}_{k'},\theta_o)p(\mathbf{x}_{k'})} \\
+    &= \frac{p(\mathbf{t}_n\vert \mathbf{x}_k,\theta_o)\frac{1}{K}}{\sum_{k'}^K\mathbf{t}_n\vert \mathbf{x}_{k'},\theta_o)\frac{1}{K}} \\
+    &= \frac{p(\mathbf{t}_n\vert \mathbf{x}_k,\theta_o)}{\sum_{k'}^K\mathbf{t}_n\vert \mathbf{x}_{k'},\theta_o)}
+  \end{aligned}
+\end{equation}
+which we will soon utilize in our EM procedure.
+
+Now, we must chose a form for the transformation $\mathbf{y}(\mathbf{x},W)$ after which we will have all of the information we need to perform the computation. A convenient choice is to use a kernelized regression strategy so that
+\begin{equation}
+  \mathbf{y} := \mathbf{\phi}^T(\mathbf{x})W
+\end{equation}
+where $W\in\R^{M\times D}$ are some constant parameters and $\mathbf{\phi}:\R^L\to\R^M$ is a transformation employing $M$-many basis functions $\phi_m$. To capture linear and nonlinear effects, we chose
+\begin{equation}
+  \phi_m(\mathbf{x}) = \begin{cases}
+    \quad \exp(-\frac{\lvert \mathbf{x}-\mu_m\rvert^2}{2\sigma}), & m < M \\
+    \quad 1, & m = M
+  \end{cases}
+\end{equation}
+that is, $M-1$ Gaussians and a term for a bias offset. If we apply the transformation to each of the $K$-many latent nodes, then we may collect the resulting vectors into a matrix,
+\begin{equation}
+  Y = \Phi W,
+\end{equation}
+where $\Phi\in\R^{K\times M}$ with $\Phi_{km}=\phi_m(\mathbf{x}_k)$.
+
+Now that we are able to compute the responsibilities of each latent node to the observed data (the expectation step), we need to compute the relevant derivatives which we will use in the maximization step. For this, we treat the responsibilities $r_{kn}$ as fixed, and solve for the relevant updates to $W$ and $\beta$ which make there derivatives $0$ and therefore optimize $\ell$. Let's begin by differentiating $\ell$ with respect to the weight matrix $W$. We have
+\begin{align}
+    0 &= \frac{\partial}{\partial W_{md}}\ell(W,\beta) \\
+    &= \frac{\partial}{\partial W_{md}}\sum_n^N\log\left( \frac{1}{K}\sum_k^Kp(\mathbf{t}_n \vert \mathbf{x}_k; W, \beta \right) \\
+    &= \sum_n^N \frac{1}{\frac{1}{K}\sum_{k'}^Kp(\mathbf{t}_n\vert \mathbf{x}_{k'};W,\beta)}\frac{1}{K}\frac{\partial}{\partial W_{md}}\sum_k^Kp(\mathbf{t}_n\vert \mathbf{x}_k;W,\beta)
+\end{align}
+Noting that $p(\mathbf{t}_n\vert\mathbf{x}_k;W,\beta)=\N(\mathbf{y}_k,\beta^{-1})$, then the derivative of the exponential yields
+\begin{align}
+  0 &= \sum_n^N\sum_k^K \frac{p(\mathbf{t}_n\vert\mathbf{x}_k;W,\beta)}{\sum_{k'}^Kp(\mathbf{t}_n\vert\mathbf{x}_{k'};W,\beta)}\frac{\partial}{\partial W_{md}}\left(-\frac{\beta}{2}\lvert \mathbf{t}_n-\mathbf{y}_k \rvert^2 \right) \\
+  &= \sum_n^N\sum_k^K r_{kn}\frac{\partial}{\partial W_{md}}\left(-\frac{\beta}{2}\lvert \mathbf{t}_n-\mathbf{y}_k \rvert^2 \right) \\
+  &= \sum_n^N\sum_k^K (-\beta) r_{kn} \sum_q^D(y_k^q-t_n^q)\frac{\partial}{\partial W_{md}}\sum_s^M \phi_s(\mathbf{x}_k)W_{sq} \\
+  &= \sum_n^N\sum_k^K\sum_q^D(-\beta)r_{kn}(y_k^q-t_k^q)\sum_s^M \phi_s(\mathbf{x}_k)\delta_{sm}\delta_{qd} \\
+  &= \sum_n^N\sum_k^K (-\beta)r_{kn}(y_k^d-t_k^d) \phi_m(\mathbf{x}_k) 
+\end{align}
+
+Looking closely at the above expression, we see that there are two free indices suggesting we may write the above as a matrix expression. To do so, let's introduce a diagonal matrix $G$ such that $G_{kk} = \sum_nr_{kn}$. Then upon rearrangement, we find
+\begin{align}
+  \sum_n^N\sum_k^K r_{kn}y_k^d\phi_m(\mathbf{x}_k) &= \sum_n^N\sum_k^K r_{kn}t_n^d\phi_m(\mathbf{x}_k) \\
+  \sum_n\sum_k r_{kn}\left(\sum_sW_{sd}\phi_s(\mathbf{x}_k)\right)\phi_m(\mathbf{x}_k) &= \sum_n\sum_k r_{kn}t_n^d\phi_m(\mathbf{x}_k) \\
+  \sum_n\sum_k\sum_s r_{kn}\Phi_{ks}W_{sd}\Phi_{km} &= \sum_n\sum_k r_{kn}t_n^d\Phi_{km} \\
+  \sum_k\sum_s \left( \sum_n r_{kn}\right)\Phi_{ks}W_{sd}\Phi_{km} &= \sum_n\sum_k r_{kn}t_n^d\Phi_{km} \\
+  \sum_k\sum_s G_{kk}\Phi_{ks}W_{sd}\Phi_{km} &= \sum_n\sum_k r_{kn}t_n^d\Phi_{km} \\
+  \sum_k\sum_s (\Phi_{km})^TG_{kk}\Phi_{ks}W_{sd} &= \sum_n\sum_k (\Phi_{km})^Tr_{kn}t_n^d \\
+  \left( \Phi^TG\Phi W \right)_{md} &= \left( \Phi^TRT \right)_{md}
+\end{align}
+where we have defined $T_{nd}=t_n^d$ and $R_{kn} = r_{kn}$.
+
+By the same procedure, we find that differentiation with respect to $\beta$ leads to
+\begin{equation}
+  \frac{1}{\beta} = \frac{1}{ND}\sum_n^N\sum_k^K r_{kn}\lvert \mathbf{y}_k-\mathbf{t}_n\rvert^2
+\end{equation}
+so that together the maximization step amounts to solving
+\begin{equation}
+  \begin{cases}
+    \quad \Phi^TG_{\text{old}}\Phi W_{\text{new}} = \Phi^T R_{\text{old}} T \\
+    \quad \dfrac{1}{\beta_{\text{new}}} = \dfrac{1}{ND}\sum\limits_n^N\sum\limits_k^KR_{kn}^{\text{(old)}}\lvert \mathbf{y}_k - \mathbf{t}_n \rvert^2
+  \end{cases}
+\end{equation}
+
+
+
 
 %------------------------------------------------------------------------------------------%
 
-\section{Dimensionality Redution}
-\subsection{PCA}
-\subsection{ICA}
-\subsection{t-SNE}
+%% \section{Dimensionality Redution}
+%% \subsection{PCA}
+%% \subsection{ICA}
+%% \subsection{t-SNE}
 
 
 %------------------------------------------------------------------------------------------%
