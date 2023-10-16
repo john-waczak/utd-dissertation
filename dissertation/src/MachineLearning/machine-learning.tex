@@ -987,19 +987,89 @@ e.g. Super Learners. Use the example of model stacking from MLJ documentation to
 
 %------------------------------------------------------------------------------------------%
 
-\section{Uncertainty Quantification}
-The focus of this section can be on the concept of uncertainty quantification. For many physics theories that are nicely linearized, uncertainty analysis can be easily accomplished at the level of first order sensitivites. That is, we can look at the Jacobian of our model to infer the behavior of small deviations about initial conditions. This approach does not easily extend to more complicated domains where the nonlinear effects dominate. Further, we also often want to establish ways to think about the fundamental instrument uncertainty for a measuring device. This can require meticulous calibrations which often assume a linear or polynomial fit... We can do better. Why not let the data tell us what the measurement uncertainty really is?
+\section{Uncertainty Quantification via Conformal Prediction}
 
-A good motivating example for the discussion of instrumental uncertainty is the use of a thermistor to measure temperature. One must assume a reasonable range of temperatures to establish the linear relationship between temperature and resistivity that is used determine the temperature. However, the material characteristics of the thermistor that introduce nonlinearities at extreme temperatures don't necessarily mean we should have to throw out measurements that do not fall within this well-behaved range. Rather, we can preform a more sophisticated *calibration* to learn a model mapping resistivity to temperature that can account for these effects.
+Having established a variety of machine learning methods which we will use throughout the rest of this dissertation, a natural next question is: How can we evaluate our confidence in the predictions of machine learning models? For some methods like Gaussian Process Regression, our models naturally output distributions which we can evaluate to provide predictions via the mean, and uncertainty estimates via the standard deviation or some similar statistic. For models like Neural Networks and Decision Tress which are not inherently probabilistic, there is no obvious way to extract uncertainty estimates purely from the model's predictions. One standard approach is to attempt to evaluate our confidence in a particular model by comparing the predictions of many copies of the same model trained on complementary cross validation folds of the original training set. By examining the prediction variance due to variation in the supplied training data, we can establish some expectation for uncertainty in our model's output.
 
-This is the bread-and-butter of the MINTS sensing efforts. Often low-cost sensing solutions provide decent measurements within a limit domain. With quality data from superior (but often prohibitively expensive) reference instruments, we can improve the default calibration to improve the reliability of data (by reducing uncertainty) and extend it's domain of usefulness.
+Clearly this approach is far from perfect. Therefore, in order to prevent ourselves from biasing towards using only those methods like Gaussian Process Regression which output distributions by default, we would like to develop a robust procedure for augmenting \textit{any} regression model with the capability to simultaneously estimate target values and\textit{confidence intervals} by taking advantage of our (often) large datasets to establish sufficient statistics. Further, we do not wish to make any assumptions about the particular target distributions; without sufficient reason to expect a variable to be normally distributed why should we make this \textit{strong} assumption? This is the approach taken by \textit{Conformal Prediction} which we will develop in this section and utilize throughout the rest of this dissertation. 
 
-\subsection{Quantile Regression}
-\subsection{Probabilistic Models}
-e.g. discuss models like the GPR which fundamentally produce \textit{distributions}. Similarly for models like Neural Networks that can produce multiple outputs, we can train a model to predict both $\mu$ and $\sigma$ to make the model probabilistic.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\columnwidth]{ml-figures/conformal-prediction/cp-demo.pdf}
+  \caption{An example of conformal prediction for a model estimating a noisy one-dimensional target. The blue shaded region illustrates the learned confidence interval. Image taken from  \cite{conformalprediction.jl}}
+\end{figure}
 
-\subsection{Conformal Prediction}
 
+As discussed in the previous section, the typical machine learning procedure involves partitioning our dataset into independent training and testing batches (or $k$-many cross-validation folds) so that we can evaluate a trained model's performance and ensure we have not run afoul of over/under-fitting. In conformal prediction, we introduce an additional split so that our original dataset $\D$ can be decomposed into $\D = \D_{\text{train}}\cup \D_{\text{cal}} \cup \D_{\text{test}}$. We then start with \textit{any} heuristic notion of model uncertainty, and make the estimated confidence interval rigorous by adjusting the output to \textit{guarantee} the desired coverage is satisfied on the calibration set $\D_{\text{cal}}$.
+
+A high level outline of the procedure is as follows
+\begin{enumerate}
+\item Define a score function $s(x,y)\in\R$ using some heuristic notion of uncertainty so that large $s$ means \textit{worse} agreement between $\hat{f}(x)$ and the target $y$.
+\item Compute $\hat{q}$ as the $\dfrac{\lceil (n+1)(1-\alpha) \rceil}{n}$ quantile of the scores $s_i = s(x_i, y_i)$ generated from the calibration set $\D_{\text{cal}}$.
+  \item Use $\hat{q}$ to form valid prediction intervals.
+\end{enumerate}
+
+The question then becomes: How can we obtain accurate uncertainty estimates if the score function $s$ need not be accurate? So long as the scores $s_i$ accurately rank estimates from best to worst model error, then all we need to do is \textit{calibrate} the scores to achieve a confidence interval with the desired coverage, i.e. so that the interval is always large enough to guarantee the coverage we require. It may be that our predicted interval is \textit{too large} for a poor scoring function. As an example, let's demonstrate how we can form correct estimates for the specific problem of quantile regression.
+
+\subsection{Conformalizing Quantile Regression}
+
+In quantile regression the goal is to predict the $\gamma^{th}$ quantile of the targets $y$ given the input features $x$. Let us denote $t_\gamma(x)$ as the true value for the $\gamma^{th}$ quantile and $\hat{t}_\gamma(x)$ as our predicted value. In this framework, we could then expect the interval $[t_{0.05}, t_{0.95}]$ to constitute a $90\%$ coverage confidence interval. However, our fitted values $\hat{t}_\gamma$ will certainly be imperfect so that the actual interval obtained will not conform to the desired $90\%$. Suppose we have a holdout dataset $\D_{\text{cal}}$ as previously mentioned, and for notational consistency, let $\alpha$ be the coverage so that we may write our predicted interval as $[\hat{t}_{\alpha/2}, \hat{t}_{1-\alpha/2}]$. A reasonable score function (i.e. uncertainty heuristic) would be
+\begin{equation}
+  s(x,y) = \max\left\{\hat{t}_{\alpha/2}(x)-y, y-\hat{t}_{1-\alpha/2}(x) \right\}
+\end{equation}
+so that the score is the distance to the nearest of our predicted quantiles. From this score, we may then form
+\begin{equation}
+  \hat{q} = \text{Quantile}\left(\left\{ s(x_i,y_i) \vert (x_i,y_i)\in\D_{\text{cal}}\right\}, \frac{\lceil (n+1)(1-\alpha) \rceil}{n}\right),
+\end{equation}
+that is, $\hat{q}$ is the  $\frac{\lceil (n+1)(1-\alpha) \rceil}{n}$-th quantile of the scores from our calibration set. Using these corrections, we then output the \textit{conformalized} interval
+\begin{equation}
+  C(x) = \left[ \hat{t}_{\alpha/2}(x)-\hat{q}, \hat{t}_{1-\alpha/2}(x)+\hat{q} \right]
+\end{equation}
+which we have guaranteed achieves the desired coverage on the holdout set. If $\D_{\text{cal}}$ is sufficiently representative, then we will have achieved a rigorous interval for a coverage of $\alpha$. The effect is that $\hat{q}$ adjusts our previously estimated interval so that a positive $\hat{q}$ widens the interval and a negative $\hat{q}$ shrinks it in order to obtain the appropriate coverage.
+
+How do we implement this in practice? Any model that we fit by minimizing the mean squared error (e.g. a Neural Network) can be agumented to instead fit the so-called \textit{pinball loss}
+\begin{equation}
+  L_\gamma(\hat{t}_{\gamma}, y) = \begin{cases}
+    (y-\hat{t}_{\gamma})\gamma; & \hat{t}_{\gamma} < y \\
+    (\hat{t}_{\gamma}-y)(1-\gamma); & \hat{t}_{\gamma} \geq y
+    \end{cases}
+\end{equation}
+For $\gamma=0.5$, this reduces to the standard $\ell_1$ loss $\ell_1(\hat{t},y) = \lvert \hat{t}-y\rvert/2$ which encourages models to learn the median (i.e. the $0.5$ quantile).
+
+\textcolor{red}{NOTE: Add plot of pinball loss for reference}
+
+\subsection{Conformalizing Scalar Uncertainty Estimates}
+
+Another common method for producing uncertainty estimates it to simultaneously predict the mean and standard deviation of the target distribution by assuming a Gaussian shape. More generally, we may seek to estimate a model uncertainty directly by first training a model, $\hat{f}(x)$, to predict the target $y$, and then train a second model $\hat{r}(x)$ to predict the residual error, that is
+\begin{equation}
+  \hat{r} = \lvert y - \hat{f}(x)\rvert.
+\end{equation}
+In either case, one could then form a confidence interval as
+\begin{equation}
+  \left[ \hat{f}(x) - \hat{r}(x), \hat{f}(x) + \hat{r}(x) \right].
+\end{equation}
+
+Other reasonable approaches to extract a heuristic uncertainty from a trained model might include
+\begin{itemize}
+\item Compute the output variance of an ensemble model $\hat{f}$
+\item Compute the prediction variance obtained when randomly dropping out nodes from a neural network.
+\item Estimate the variance of $\hat{f}$ resulting from small perturbations of the input $x$.
+\end{itemize}
+For all of these cases, we may call the uncertainty estimate $u(x)$ and form the score function
+\begin{equation}
+  s(x,y) = \frac{\lvert y - \hat{f}(x) \rvert}{u(x)}
+\end{equation}
+so that the score function $s$ measures how well our uncertainty estimate $u(x)$ matches the actual error $\lvert y -\hat{f}(x)$. If the error is large our predicted uncertainty is small, then $s$ will be large. Consequently, the score function tells us the correction we must apply to our estimate $u(x)$ in order to predict the actual model error, that is,
+\begin{equation}
+  \lvert y - \hat{f}(x) \rvert = s(x,y)u(x).
+\end{equation}
+
+If we now take $\hat{q}$ to be the $\frac{\lceil(n+1)(1-\alpha) \rceil}{n}$-th quantile as before, we are guaranteed that
+\begin{equation}
+  p(s(x_{\text{cal}}, y_{\text{call}}) \leq \hat{q}) \geq 1 - \alpha
+\end{equation}
+
+An easy-to-use implementation of these methods is provided by the open-source Julia package \texttt{ConformalPrediction.jl} which is designed to integrate into the larger \texttt{MLJ.jl} machine learning framework. We will utilize these techniques throughout the remainder of this dissertation in order to establish uncertainty estimates for \textit{all} of our regression models.
 
 
 %------------------------------------------------------------------------------------------%
