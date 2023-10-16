@@ -911,8 +911,58 @@ so that together the maximization step amounts to solving
   \end{cases}
 \end{equation}
 
+The last piece we need for the training algorithm is a method to initialize the parameters $W$ and $\beta$. As before with the SOM, there are a few different options. In particular we might
+\begin{itemize}
+  \item Randomly initialize the weight matrix $W$
+  \item Use PCA to initialize the weights to a linear model. To do this, one computes the data covariance matrix $U$ keeping only the first two columns. We then initialize $W$ so that
+      \begin{equation}
+        W\Phi^T \approx UX^T
+      \end{equation}
+      and then set $\beta^{-1}$ to the third principal component variance.
+\end{itemize}
 
+In summary, the GTM training procedure is as follows
+\begin{enumerate}
+  \item Generate a grid of latent points $\{\mathbf{x}_k\}_{k=1}^K$.
+  \item Generate basis function centers $\{\mu_m\}_{m=1}^M$.
+  \item Select an basis function width $\sigma$.
+  \item Compute the matrix of activations $\Phi$ where
+    \begin{equation}
+      \Phi_{mk} = \Phi_m(\mathbf{x}_k)
+    \end{equation}
+  \item Initialize the weight matrix $W$ randomly or with PCA
+  \item Initialize $\beta$ randomly or with PCA
+  \item (Optional) select a value for $\alpha$ to enable weight regularization, i.e. $(\Phi^TG\Phi + \frac{\alpha}{\beta}I)W=\Phi^TRT$. This corresponds to specifying a prior distribution on the weights $W$ such that $p(W)\propto \exp(-\alpha||W||^2/2)$.
+  \item Compute the difference matrix $\Delta := \lvert T - \Phi W\rvert^2$
+  \item Repeat the following until convergence:
+    \begin{enumerate}
+      \item (Expectation step) Compute the responsibility matrix $R$ using $\Delta$ and $\beta$.
+      \item Compute $G$ from $R$
+      \item (Maximization step) Compute the update to the weight matrix $W$ with $W_{\text{new}} = \left(\Phi^TG\Phi\right)^{-1}\Phi^TRT$
+      \item Compute the updated difference matrix $\Delta$
+      \item Compute the updated $\beta$
+    \end{enumerate}
+\end{enumerate}
 
+Excellent! We now have a robust procedure to fit the GTM model. With a fitted GTM in hand, how do we utilize the results? The main idea is that the fitted GTM provides us all of the relevant probability distributions to explain how we obtained our current data $\mathbf{t}_n$ from the latent vectors $\mathbf{x}_k$. Using Baye's rule, we can invert this relationship using our responsibility matrix $R$ to understand the contributions of each latent vector $\mathbf{x}_k$ to each data. Since this would lead to a different $R$ matrix for each datapoint, one often computes a handful of summary statistics using $R$ rather then using the entire result. For example, we find the mean of the distribution to be
+\begin{equation}
+  \begin{aligned}
+    \langle \mathbf{x} \vert \mathbf{t}_n; W,\beta\rangle &= \int d\mathbf{x} p(\mathbf{x}\vert\mathbf{t}_n;W,\beta)\mathbf{x} \\
+    &= \int d\mathbf{x}\frac{p(\mathbf{t}_n\vert\mathbf{x};W,\beta)p(\mathbf{x})}{\int d\xi p(\mathbf{t}_n\vert \xi; W,\beta)p(\xi)}\mathbf{x} \\
+    &= \int \sum_k \frac{p(\mathbf{t}_n\vert \mathbf{x},W,\beta)\mathbf{x}\delta(\mathbf{x}-\mathbf{x}_k)}{\sum_{k'}p(\mathbf{t}_n\vert\mathbf{x}_{k'};W,\beta)} d\mathbf{x}  \\
+    &= \sum_k \frac{p(\mathbf{t}_n\vert \mathbf{x}_k; W, \beta)\mathbf{x}_k}{\sum_{k'}p(\mathbf{t}_n\vert\mathbf{x}_{k'};W,\beta)} \\
+    &= \sum_k^K R_{kn}\mathbf{x}_k
+  \end{aligned}
+\end{equation}
+However, in cases where the distribution is multi-modal, the mean can be misleading. It can therefore also be useful to compute the mode of the distribution which is given by
+\begin{equation}
+  \mathbf{x}_{\text{mode}} = \mathbf{x}_{k_\text{max}}
+\end{equation}
+where $k_{\text{max}} = \text{arg}\max_{k}(R_{kn})$.
+
+To provide an easy to use open-source implementation of the GTM algorithm, I have created a publicly accessible github repo with a Julia implementation that comports with the \texttt{MLJ.jl} machine learning framework. The repo can be found \href{https://github.com/john-waczak/GenerativeTopographicMapping.jl/tree/main}{here} and makes it easy to incorporate GTMs into complicated machine learning pipelines.
+
+\textcolor{red}{UPDATE REQUIRED: Add demo use for GTM like we did for the SOM}.
 
 %------------------------------------------------------------------------------------------%
 
@@ -957,9 +1007,9 @@ e.g. discuss models like the GPR which fundamentally produce \textit{distributio
 \section{Scientific Machine Learning}
 \subsection{Physics-Informed Neural Networks}
 \subsection{Universal Differential Equations}
-\subsection{Adjoint Methods for ODEs: Neural Ordinary Differential Equations}
-\subsection{Hamiltonian Neural Networks}
 
+%% \subsection{Hamiltonian Neural Networks}
+%% We can save this section for the time-series results
 
 
 %------------------------------------------------------------------------------------------%
