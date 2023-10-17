@@ -1,15 +1,41 @@
 \chapter{Introduction}
 
-The rapid pace of global change poses a significant and everpresent threat to human prosperity. To facilitate the development of remediation technologies and enable effective mitigation strategies, we must make \textit{data-driven decisions}. However, the limitations posed by the lack of highly available, highly resolved data coupled together with the computational challenges posed by direct simulation of physics \textit{at scale} severely constrains our ability to make low uncertainty predictions to meaningfully address these challenges. The goal of this dissertation is to expand the boundary of what is possible in the domain of physical sensing by leveraging the ever-expanding field of machine learning in a \textit{principled way} to produce actionable insights. 
+
+
+
+- first we should discuss global change and the necessity for improved sensing and simulation
+- justify the use of machine learning in order to fill the gaps where theory provides the motivation between what we measure and what we want to predict but no easily-represented physical relationship exists.
+- this is a good place to bring in the
+- we can then discuss the advent of physics-informed machine learning, and better, scientific machine learning to fill in the gaps and not be Snake Oil Salesmen (TM). In particular the role of numerical methods has not been subsumed by machine learning. At best these techniques are complementary and any performance claims need to be carefully benchmarked so as to not oversell the abilities of machine learning.
+- Many of these emerging methods are promising but have seen little application to noisy, real-world data. One can only examine the Lorentz equations so much before transitioning to actual atmospheric dynamics
+- We can do a paragraph on the specific areas we are trying to address: (1) using machine learning to establish the nonlinear relationship between measured spectra and constituent concentrations in water, (2) data-based techniques for evaluating the uncertainty of single sensor time series with application to low cost sensing, (3) physics based models for time series dynamics of Air Quality data (i.e. there will never be enough sensors on a low cost station to explain variability -- we would need a car presence sensor, etc... but we can model most of the dynamics and treat the rest as intermittent forcing), (3) how can we fuse sensing and simulation in order to infer the abundance of chemicals below detectable limits (in particular with application to indoor air chemistry).
+
+
+
+
+
+The rapid pace of global change poses a significant and ever-present threat to human prosperity. To facilitate the development of remediation technologies and enable effective mitigation strategies, we must make \textit{data-driven decisions}. However, the limitations posed by the lack of highly available, highly resolved data coupled together with the computational difficulties posed by direct simulation of physics \textit{at scale} severely constrains our ability to make the low uncertainty predictions needed meaningfully address these challenges. The goal of this applied physics dissertation is to expand the boundary of what is possible in realm of sensing by leveraging machine learning in a \textit{principled way} to produce actionable insights. To that end, 
+
+Much of the current machine learning landscape is dominated by highly abstract problems like image recognition, language prediction
+
+In particular, this work focuses on three key areas
 
 we should not throw the baby out with the bath water. Nor should we attempt to reinvent the wheel... we can use machine learning to \textit{fill in the gaps} where our current theory can not easily provide a direct link between the data we have and the target we wish to model but a relationship is easily justified on physical grounds. Further, we can use our knowledge of physical laws to impose strong constraints on the space of available models that may significantly improve the capability of machine learning models to extrapolate beyond the boundaries of their training data sets. 
 
 make the point that for physical theories are typically only amenable to analytic techniques when sufficiently constrained to domains with high symmetry or where nonlinear interactions can be controlled so that linear effects dominate over bounded of higher order effects (re: perturbation theory). For common real world scenarios where edges are sharp, functions aren't smooth, and approximating assumptions can not be readily applied, we typically must resort to numerical methods which seek to solve the dynamical laws on computational domains with well posed boundary and initial conditions.
 
-In the first proposed project, we will apply machine learning techniques to provide a sensor calibration where theory suggests 
+In the first proposed project, we will apply machine learning techniques to provide a sensor calibration where theory suggests
 
 
 To that end, this work focuses on improving sensing capabilities in three key domains: water quality, outdoor air quality, and indoor air quality.
+
+
+
+
+
+
+
+
 
 This goal is pursued by applying physics informed approaches together with a suite of sensing and computational technologies, implementing the reusable paradigm of software defined sensors, i.e. physical sensing elements wrapped in a software layer. This software layer can serve a variety of purposes such as calibration and the provision of enhanced or derived data products. It is part of a broader effort in the MINTS-AI laboratory at the University of Texas at Dallas. Where MINTS-AI is an acronym, Multi-Scale Multi-Use Integrated Intelligent Interactive Sensing in Service of Society for Actionable Insights.
 
@@ -24,14 +50,13 @@ Many advances in technology have enabled the creation of comprehensive sensing s
 Today, the most well known application of machine learning techniques
 
 
-\section{Completed Work}
+%% \section{Completed Work}
 
-\subsection{An Autonomous Robotic Team}
-\subsection{A Distributed Network of Low-Cost Air Quality Monitors}
-\subsection{}
+%% \subsection{An Autonomous Robotic Team}
+%% \subsection{A Distributed Network of Low-Cost Air Quality Monitors}
 
+%% \section{Proposed Work}
 
-\section{Proposed Work}
-
-\section{Timeline}
-
+%% \subsection{Robot Team}
+%% \subsection{Air Quality Network}
+%% \subsection{HEART Chamber}
