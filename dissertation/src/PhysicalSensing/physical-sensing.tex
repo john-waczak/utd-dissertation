@@ -186,7 +186,36 @@ The outdoor part here is optional. Here I seek to provide specific details of th
 
 
 
+Photocatalytic Oxidation (PCO) technology aims to reproduce the outdoor process of photolysis indoors, yielding oxidative molecules that can effectively reduce viruses, bacteria, fungi, and other contaminants, including VOCs. While the technology’s benefits have been well documented and replicated numerous times in real-world settings, we will focus attention, as directed by the RFI, on a highly rigorous approach to comprehensive measurements of indoor air quality and the resulting impacts that a technology, like Advanced Photocatalysis would have on any indoor atmosphere.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{introduction/HEART-Details.pdf}
+	\caption{Details of comprehensive chemical and aerosol testing for IAQ using HEART: Holistic Environmental Aerosol and Reactive Component Auto Response Testing.}
+	\label{Figure.HEART-Details}
+\end{figure}
+
+The HEART test chamber is designed for comprehensive characterization of air quality including the chemical composition (characterizing hundreds of chemicals), positive and negative ion density, aerosol size (from 5 nm to 100 microns), detailed morphology (shape), and composition, and individual bio-aerosol particle recognition, along with the accurately characterized illumination environment characterized in more than 4,000 wavelengths from the UV to the near-infrared (190 — 1,100 nm) using a NIST calibrated spectrometer. The lighting environment is important, as, after all, air quality is atmospheric photochemistry in the indoor built environment, and photolysis is a key driver. Furthermore, some of the frequently advocated families of technologies make use of various parts of the ultraviolet spectrum. This high-energy region of the spectrum has important implications for indoor air quality.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{introduction/LabOverview.png}
+	\caption{Visual overview of the various infrastructure components of the ActivePure lab. Note that the lab uses multiple instruments of those shown to accommodate the stated range of analytes.}
+	\label{Figure.InstrumentOverview}
+\end{figure}
+
+
+This testing capability can be used in two modalities. The first is in a static test chamber with the same volume (3,000 cubic feet) as the EPA test chamber. The chamber is equipped with a comprehensive suite of sensors just described, holistically characterizing hundreds of chemicals, the size of individual aerosols from 5 nm to 100 microns, their morphology, and their composition. This is critical because remediation technologies, such as UV lights or various oxidation-based cleaners, may have a direct impact on the air's composition. Being able to comprehensively measure the gas phase oxygenated volatile organic compounds (OVOCs) and aerosol chemical composition is critical. Further, various cleaning compounds are often used in the indoor environment, introducing the possibility of significant levels of halogens. So as well as a suite of individual reference grade analyzers there is also a Syft 8 reagent ion mass spectrometer with a standard library of over 1,000 chemicals. The usual configuration used for the Syft is a large number of repeated sequential scans, each scan measuring a different family of species covering the nitrogen, hydrogen, sulfur, chlorine, bromine, and iodine families as well as the large range of volatile organic compounds. So for each measurement cycle, hundreds of species are measured. This is complemented by four  aerosol instruments characterizing the aerosol/bio-aerosol size distribution between 5 nm and 100 $\mu$m, the aerosol/bio-aerosol morphology, composition (using an aerosol mass spectrometer), and identity (with real-time machine learning providing a thousand member fingerprint for each individual particle,  so that once trained it can recognize on the fly every single aerosol/bio-aerosol and identify what mold, pollen, pathogen, etc that it is).
+
+Further, it is inevitable that some chemical species, for example, reactive components such as OH, will typically be below the detection limit of the measurement systems. Information on these unmeasured reactive components is naturally embedded in the shape of the time-series observations of the chemical species they are reacting with and in the partitioning between the large number of measured components that they are reacting with. This information can be effectively extracted, together with associated uncertainty, using chemical data assimilation \cite{ISI:A1995TA29300008, Lary1999a, Lary2003a}, a technique we pioneered at the University of Cambridge and NASA, and now used routinely by the EPA, NASA and NOAA in providing air quality analyses and forecasts.
+
+Hundreds of chemicals measured in real-time in the HEART chamber, along with high-resolution irradiance spectra used to calculate real-time photolysis rates and real-time aerosol measurements, are assimilated in a full chemical data assimilation system with a master chemical mechanism containing 4,000+ chemical species and 14,000+ chemical reactions. This enables us to accurately infer the abundance of unmeasured species, such as OH, with associated uncertainty. We use both 4D-Var chemical assimilation to initialize our system, followed by a full Kalman filter to time evolve the error covariance matrix. The chemical simulation and assimilation system won six NASA technology awards. This is the premier global approach for studying indoor air quality. Given the magnitude of the societal impacts of indoor air quality and preparing for any future pandemics, it is appropriate that the EPA uses a best-in-class methodology.
+
+Furthermore, multiple HVAC configurations can readily be set up, with inlets located in the floor, ceiling, and walls. Further, the flow rates, humidity, and temperature can easily be adjusted, as can the length of the ductwork between any air quality remediation devices and the room inlets. In addition, various combinations or suites of remediation technologies can be used together.
+
+In built-environment spaces, dead zones are a common issue. Fifteen inlets are strategically placed throughout the chamber to characterize the variability. The inlets are distributed across five vertical transects, with inlets at three vertical locations on each transect, 18 inches above the floor, on the centerline, and 18 inches below the ceiling.
+
+The second modality for the test chamber is a mobile lab. This allows the performance of various remediation technologies to be tested in a wide range of ambient conditions. It also allows for the comprehensive exploration of the remediation technologies' effectiveness in a wide range of environments, from highly polluted such as in the Houston shipping channel, or downwind of a major forest fire, near a large composting facility, too unpolluted rural environments.
 
 
 
