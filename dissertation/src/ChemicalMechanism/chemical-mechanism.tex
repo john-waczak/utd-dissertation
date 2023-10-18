@@ -280,16 +280,103 @@ Give a summary of kinetics for each of the 3 reaction types. Then finish by writ
 
 \section{Characterization of Photolysis}
 
+
 \subsection{Absorption Cross Sections}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/O3/cross-section/o3-data.svg}
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-data.png}
+  \caption{The collected absorption cross section data for Ozone, $\mathrm{O_3}$, across a variety of temperatures.}
+  \label{fig:cs-o3-data}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-data-distribution.png}
+  \caption{The distribution of cross section data available for $\mathrm{O_3}$.}
+  \label{fig:cs-o3-dist}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-representative-subsample.png}
+  \caption{The distribution of subsampled $\mathrm{O}_3$ cross section data}
+  \label{fig:cs-o3-repr}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-gpr-scatter.png}
+  \caption{A scatter plot of the resulting GPR fit evaluated on the training set (green) and a holdout testing dataset (red).}
+  \label{fig:cs-o3-scatter}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-prediction.png}
+  \caption{Predicted $\mathrm{O_3}$ cross section as a function of temperature.}
+  \label{fig:cs-o3-pred}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-prediction-uncertainty.png}
+  \caption{Predicted $\mathrm{O_3}$ cross section for two temperatures with the associated uncertainty visualized. At $T=293$ K, we have many data points and therefore the associated fit uncertainty is small. For $T=295$ K, there are many fewer data points available above $800$ nm leading to a larger fit uncertainty.}
+  \label{fig:cs-o3-fit-unc}
 \end{figure}
 
 
 \subsection{Quantum Yields}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-data.png}
+  \caption{Data for the quantum yield of $\mathrm{O_3}$. Sources of data are far more sparse than for the absorption cross section.}
+  \label{fig:qy-o3-data}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-distribution.png}
+  \caption{Distribution for the $\mathrm{O_3}$ quantum yield data.}
+  \label{fig:qy-o3-dist}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-fit.png}
+  \caption{Resulting GPR fit for $\mathrm{O_3}$ quantum yield data. Left: A scatter plot. Right: a quantile-quantile plot.}
+  \label{fig:qy-o3-fit}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-prediction.png}
+  \caption{Predicted quantum yield as a function of temperature for $\mathrm{O_3}$. Despite the goodness of fit, setting the mean to nearly zero to prevent edge effects causes the GPR to approach in wavelength regions with little data.}
+  \label{fig:qy-o3-pred}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-final.png}
+  \caption{Final quantum yield predictions where we have forced the value to be $1$ below a reasonable threshold wavelength.}
+  \label{fig:qy-o3-final}
+\end{figure}
+
+
+\subsection{Irradiance Spectra}
+
+Here we can discuss the collection of irradiance spectra using our UV-VIS Ocean Optics spectrometer. Importantly, we can discuss the correct unit conversion so as to obtain \textit{photon fluxes} rather than just $\mu$Ws energy units.
+
 \subsection{Photolysis Rate Determination}
+
+Here we can discuss how we perform the numerical integration together with the captured intensity spectra
+
+\subsection{Next Steps}
+
+Discuss use of Conformal Prediction as a way to enable fits using different regressors (ideally XGBoost or some other boosted/bagged tree method) without sacrificing the necessary uncertainty estimates. Discuss the potential propagation of uncertainty
+
 
 
 \section{HEART Chamber Sensing System}
