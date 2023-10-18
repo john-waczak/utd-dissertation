@@ -367,27 +367,122 @@ Give a summary of kinetics for each of the 3 reaction types. Then finish by writ
 
 \subsection{Irradiance Spectra}
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/mean_irradiance.png}
+  \caption{A plot of the spectral irradiance captured within a typical office building and averaged over 8 hours.}
+  \label{fig:mean-irradiance}
+\end{figure}
+
+
 Here we can discuss the collection of irradiance spectra using our UV-VIS Ocean Optics spectrometer. Importantly, we can discuss the correct unit conversion so as to obtain \textit{photon fluxes} rather than just $\mu$Ws energy units.
 
 \subsection{Photolysis Rate Determination}
 
 Here we can discuss how we perform the numerical integration together with the captured intensity spectra
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/photolysis_plot.pdf}
+  \caption{A comparison of the absorption cross section, quantum yield, and captured irradiance spectrum used to determine the photolysis rate for an $\mathrm{O_3}$ photolysis channel.}
+  \label{fig:phot-rate-example}
+\end{figure}
+
 \subsection{Next Steps}
 
 Discuss use of Conformal Prediction as a way to enable fits using different regressors (ideally XGBoost or some other boosted/bagged tree method) without sacrificing the necessary uncertainty estimates. Discuss the potential propagation of uncertainty
 
 
+\section{HEART Chamber Data}
 
-\section{HEART Chamber Sensing System}
+Initial data collected for evaluation of different PCO configurations.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/H2O.pdf}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/formaldehyde.pdf}
+\end{figure}
+
+
+The $\mathrm{H_2O_2}$ is a good demonstrate of a high uncertainty instrument close to the detection limits.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/H2O2.pdf}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/humidity.pdf}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/temperature.pdf}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/negative_ions.pdf}
+\end{figure}
 
 
 \section{Chemical Data Assimilation}
 
+Discuss the mechanisms used. Also discuss the generation of pseudo observations with uncertainties determined by considering both the temporal variogram and the representativeness for the pseudo-observation period. We should probably also come up with some number of observations performed...
 
 
-\section{An Evaluation of Photocatalytic Ionization}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/assimilation/4dvar/losses.pdf}
+\end{figure}
+Here we can discuss the 2 stage procedure where we first use ADAM and then we finish with BFGS to prevent getting stuck in a local minimum.
+
+
+
+EKF results
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/assimilation/EKF/H2O2.pdf}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/assimilation/EKF/HCHO.pdf}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/assimilation/EKF/OH.pdf}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{heart-chamber/assimilation/ions/ion_totals.png}
+\end{figure}
+
+
+Add in numbers/plots for $\mathrm{NO_3^-}$ ions from latest implementation of the mechanism.
+
+
+\section{Next Steps}
+
+
+- Extend mechanism to include heterogeneous (mixed phase) reaction types
+- Extend mechanism to include fixed rate surface deposition
+- Extend mechanism to include direct generation of $\mathrm{O_2^-}$ at some rate (learned via 4d-var) for the PCO on portions
+- Incorporate the cd-EKF and continue to refine integration techniques
+- Perform fixed temperature/pressure long time integration tests per the Boldi thesis.
+- Update reaction rates further with recent JPL Kinetic evaluations.
+
+%% \section{An Evaluation of Photocatalytic Ionization}
 
 
 

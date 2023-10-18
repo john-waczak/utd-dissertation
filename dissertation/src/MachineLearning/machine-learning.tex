@@ -177,35 +177,35 @@ Better yet, this system is linear in $\lambda$ even though the original differen
 \end{enumerate}
 
 
-%------------------------------------------------------------------------------------------%
+%% %------------------------------------------------------------------------------------------%
 
-\section{Exploratory Data Analysis}
-\subsection{Correlation}
-\subsection{Mutual Information}
+%% \section{Exploratory Data Analysis}
+%% \subsection{Correlation}
+%% \subsection{Mutual Information}
 
 
-%------------------------------------------------------------------------------------------%
+%% %------------------------------------------------------------------------------------------%
 
-\section{Model Training Methodology}
-\subsection{Data Sampling}
-Dr. Lary's method (from Gaussian Process Code) for representative sampling to reduce data size
-\begin{itemize}
-\item Testing holdout set
-\item k-fold Cross Validation
-\end{itemize}
-We should use this subsection to discuss why k-fold cross validation is ideal where data size/time permits so that you can get a sense of each model's dependence on the input data. Similarly, it is important we end the discussion by pointing out that the final \textbf{production} model is to be trained on the \textit{entire} dataset after we have evaluated which model is best to use and the ideal hyperparameters, etc...
-\subsection{Model Evaluation}
-Here we should discuss how we evaluate models, e.g. scatter plots, quantile-quantile plots, histograms, confusion matrices, various correctness metrics, etc...
-\subsection{Hyperaprameter Selection}
-Discuss grid search vs random search vs Bayesian Optimization, etc...
-\subsection{Occam's Razor and Feature Importance Ranking}
-I should point out my contributions to various julia packages in MLJ for doing feature importance determination here
-\subsubsection{Linear Regression}
-\subsubsection{Tree Based Methods}
-\subsubsection{Neural Networks}
-Perhaps explore ideas from Chris Olah's blog??? From a perspective of basic function composition... as in Rackauckas's blog
-\subsubsection{Shapley Values}
-Here we can discuss Shapley Values as a model agnostic method for feature importance rankings with the caveat that their computation can take quite a while...
+%% \section{Model Training Methodology}
+%% \subsection{Data Sampling}
+%% Dr. Lary's method (from Gaussian Process Code) for representative sampling to reduce data size
+%% \begin{itemize}
+%% \item Testing holdout set
+%% \item k-fold Cross Validation
+%% \end{itemize}
+%% We should use this subsection to discuss why k-fold cross validation is ideal where data size/time permits so that you can get a sense of each model's dependence on the input data. Similarly, it is important we end the discussion by pointing out that the final \textbf{production} model is to be trained on the \textit{entire} dataset after we have evaluated which model is best to use and the ideal hyperparameters, etc...
+%% \subsection{Model Evaluation}
+%% Here we should discuss how we evaluate models, e.g. scatter plots, quantile-quantile plots, histograms, confusion matrices, various correctness metrics, etc...
+%% \subsection{Hyperaprameter Selection}
+%% Discuss grid search vs random search vs Bayesian Optimization, etc...
+%% \subsection{Occam's Razor and Feature Importance Ranking}
+%% I should point out my contributions to various julia packages in MLJ for doing feature importance determination here
+%% \subsubsection{Linear Regression}
+%% \subsubsection{Tree Based Methods}
+%% \subsubsection{Neural Networks}
+%% Perhaps explore ideas from Chris Olah's blog??? From a perspective of basic function composition... as in Rackauckas's blog
+%% \subsubsection{Shapley Values}
+%% Here we can discuss Shapley Values as a model agnostic method for feature importance rankings with the caveat that their computation can take quite a while...
 
 
 %------------------------------------------------------------------------------------------%
@@ -984,14 +984,14 @@ To provide an easy to use open-source implementation of the GTM algorithm, I hav
 
 %------------------------------------------------------------------------------------------%
 
-\section{Model Ensembling}
-MLJ and SciKitLearn documentation sites will have good references for this, I think.
-\subsection{Bagging}
-e.g. Random Forests
-\subsection{Boosting}
-e.g. XGBoost
-\subsection{Stacking}
-e.g. Super Learners. Use the example of model stacking from MLJ documentation to describe our approach.
+%% \section{Model Ensembling}
+%% MLJ and SciKitLearn documentation sites will have good references for this, I think.
+%% \subsection{Bagging}
+%% e.g. Random Forests
+%% \subsection{Boosting}
+%% e.g. XGBoost
+%% \subsection{Stacking}
+%% e.g. Super Learners. Use the example of model stacking from MLJ documentation to describe our approach.
 
 
 
@@ -1086,9 +1086,9 @@ An easy-to-use implementation of these methods is provided by the open-source Ju
 
 %------------------------------------------------------------------------------------------%
 
-\section{Scientific Machine Learning}
-\subsection{Physics-Informed Neural Networks}
-\subsection{Universal Differential Equations}
+%% \section{Scientific Machine Learning}
+%% \subsection{Physics-Informed Neural Networks}
+%% \subsection{Universal Differential Equations}
 
 %% \subsection{Hamiltonian Neural Networks}
 %% We can save this section for the time-series results
