@@ -1,23 +1,94 @@
 \chapter{Time Series Methods for Air Quality}
 
-With the proliferation of low-cost sensors for a wide range of IoT and wearable biometric applications, a systematic approach to both quality control and performing comprehensive time series analysis has significant value. It is highly desirable to be able to answer some basic questions using \textit{just} the time series alone. For example: What is the likely sensor uncertainty given a time series of observations? How frequently should observations be made to adequately resolve typical temporal variability? How representative is a single observation of what one expects to see over a temporal (and spatial) window? Can we construct predictive models for the time series of a single sensor given a sufficient volume of sample data? I this chapter we seek to address these questions with direct application to the data collected by our low cost air quality sensor network. First, we will demonstrate how the \textit{temporal variogram} provides a way to assess the intrinsic sensor uncertainty from a time series. Next, we present two techniques for physics inspired time series modeling: the Hankel Alternative View Of Koopman (HAVOK) method, and the Hamiltonian Neural Network.
+With the proliferation of low-cost sensors for a wide range of IoT and wearable biometric applications, a systematic approach to both quality control and performing comprehensive time series analysis has significant value. It is highly desirable to be able to answer some basic questions using \textit{just} the time series alone. For example: What is the likely sensor uncertainty given a time series of observations? How frequently should observations be made to adequately resolve typical temporal variability? How representative is a single observation of what one expects to see over a temporal (and spatial) window? Can we construct predictive models for the time series of a single sensor given a sufficient volume of sample data? In this chapter we seek to address these questions with direct application to the data collected by our low cost air quality sensor network. First, we will demonstrate how the \textit{temporal variogram} provides a way to assess the intrinsic sensor uncertainty from a time series, and in the process, develop an open-source Julia implementation of a variety of variogram methods that can be used for any generic time series. Next, we present two techniques for physics-based time series modeling: the Hankel Alternative View Of Koopman (HAVOK) method, and the Hamiltonian Neural Network. It should be noted that despite the rapid pace of development in the fields of data-driven and scientific machine learning, many recently developed techniques like the Universal Differential Equations (UDEs), Hamiltonian Neural Networks, and others have yet to see application on noisy real-world datasets. Our secondary goal for this chapter is therefore to demonstrate how with some slight modifications, these techniques can find to real scientific problems.
 
 
 
 \section{Time-Series Methods for Uncertainty Quantification}
 
-As we've already demonstrated, the shrinking cost of sensing technologies has improved our ability to create dense sensing networks. In order to make effective use of these sensors, and to provide high quality data that can be used for critical decision making, it is vital we establish both the relevant sampling time scale and reasonable uncertainty estimates for measurements obtained by these sensors. For low cost sensors in particular, the manufacture supplied uncertainty estimates tend to be highly conservative so as to minimize manufacturer responsibility for variation in device performance. To address this, we have developed a technique using a data-driven temporal variogram to estimate reasonable values for sensor uncertainties from their time series data.
-
-\subsection{Uncertainty Quantification with Temporal Variograms}
-
-
+As we've already demonstrated, the shrinking cost of sensing technologies has improved our ability to create dense sensing networks. In order to make effective use of these sensors, and to provide high quality data that can be used for critical decision making, it is vital we establish both the relevant sampling time scale and reasonable uncertainty estimates for measurements obtained by these sensors. For low cost sensors in particular, the manufacture supplied uncertainty estimates tend to be highly conservative so as to minimize their responsibility for variation in device performance, and in general, to prevent unnecessary returns. Consider for example, the sample time series for particulate matter concentrations at a variety of size fractions collected by one of our low-cost sensing nodes for a single 24-hour period (figure \ref{fig:pm-single-day}:
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/variogram/single-day/IPS_single-day.pdf}
-  \caption{Time series of particulate matter at size fractions $1.0$, $2.5$, and $10.0$ $\mu m$ for a single day}
+  \caption{Time series of particulate matter at size fractions $1.0$, $2.5$, and $10.0$ $\mu m$ captured at a single location over one 24-hour day.}
   \label{fig:pm-single-day}
 \end{figure}
+These sample data illustrate many typical features of air quality time series: there is a baseline level of noise, there are general periodic trends (an increase in concentration at all size fractions near morning traffic around hour 10), and there are intermittent transient events. If we suppose that we \textit{already} know what the shortest time resolution needed to resolve the important transients is, say $\Delta t$, then a straight forward approach to develop a baseline notion of uncertainty for a time series, $z(t)$, is to convolve a rolling window of width $\Delta t$ across the signal so that at any time $t$ we may define the associated \textit{pseudo-observation} to be
+\begin{equation}
+  \bar{z}(t) = \text{mean}\left(\left\{z_j \right\}\right) \pm \text{std}\left(\left\{z_j \right\}\right); \quad \text{where } j \in \left\{ \left. j \right\vert t - \frac{\Delta t}{2} \leq t_j  \leq t + \frac{\Delta t}{2}\right\}
+\end{equation}
+where $\text{std}\left(\left\{z_j\right\}\right)$ is called the \textit{representativeness uncertainty} as it measures how representative a single measurement is for the entire sampling window.
 
+Unfortunately it may be difficult to know the relevant times scales of key transient events in advance. Given the fact that it is increasingly common for modern sensing systems (like our low-cost PM monitors) to provide sampling rates north of 1 Hz, we do not want to \textit{shoot ourselves in the foot} by arbitrarily choosing an averaging window that will smooth away all the relevant features. Therefore, we seek to develop an alternative technique that can simultaneously establish the relevant temporal resolution for sampling whilst also enabling us to estimate the aleatoric, that is, intrinsic uncertainty of the sensing system.
+
+\subsection{Uncertainty Quantification with Temporal Variograms}
+
+The key feature that differentiates time series from other data sources is that at short time scales, neighboring samples are not independent; measurements taken close in time tend to be more correlated than measurements taken far apart. One way to measure this idea of self-similarity is by the auto-correlation function, which for a continuous signal $z(t)$ is
+\begin{equation}
+  R_{zz}(\Delta t) = \int_\infty^\infty z(t +\Delta t)z^*(\Delta t)dt.
+\end{equation}
+This can be efficiently computed for real-valued time series in $\mathcal{O}(n\log n)$ using the \textit{Fast Fourier Transform} via
+\begin{equation}
+  R_{zz}(\Delta t) = \mathcal{F}^{-1}\left[\mathcal{F}(z)\cdot (\mathcal{F}(z))^*\right]
+\end{equation}
+The first peak of this autocorrelation function is an excellent method to identify the relevant time-scale: high autocorrelation means we gain little extra information between points offset by a time lag of $\Delta t$. This puts us on the right track but does not provide a straight forward interpretation for an intrinsic uncertainty. Taking motivation from the representativeness uncertainty, let us instead consider the expected variance between neighboring samples as a function of the time lag $\Delta t$. That is,
+\begin{equation}
+  2\gamma(\Delta t) =  \text{Var}\left(z(t+\Delta t) - z(t)\right)
+\end{equation}
+where $\gamma$ is called the \textit{semi-variogram} for $z(t)$. Expanding this definition yields
+\begin{equation}
+  2\gamma(\Delta t) = \E\left[\left(z(t+\delta t) - z(t) - \E\left(z(t+\Delta t) - z(t) \right) \right)^2 \right]
+\end{equation}
+which for timescales where $z(t)$ is sufficiently stationary simplifies to yield
+\begin{equation}
+  \gamma(\Delta t) = \frac{1}{2}\E\left[ \left(z(t+\Delta t) - z(t) \right)^2\right].
+\end{equation}
+
+For a perfect measurement system we would expect that taking $\lim_{\Delta t \to 0}\gamma(\Delta t) = 0$, since measurements taken at the same time by the same instrument \textit{should} be identical. Intrinsic uncertainty will therefore manifest as a non-zero limit and taking the square-root of the variogram will yield units that match our original time series and provide a reasonable uncertainty estimate. For a given set of samples, we construct the \textit{empircal variogram} as
+\begin{equation}
+  \hat{\gamma}(\Delta t) = \frac{1}{2N(\Delta t)}\sum_i^{N(\Delta t)}\left(z(t_i + \Delta t) - z(t_i) \right)^2
+\end{equation}
+where $N(\Delta t)$ are the number of available observation pairs $(z_i, z(t_i+\Delta t))$ for a lag of $\Delta t$.
+
+There are three key parameters of the variogram $\gamma(\Delta t)$ which we want to estimate from $\hat{\gamma}(\Delta t)$:
+\begin{itemize}
+\item \textbf{Nugget}: The $y$-intercept of $\gamma(\Delta t)$ representing the limit as $\Delta t \to 0$.
+\item \textbf{Sill}: The value of $\gamma(\Delta t)$ as $\Delta t \to \infty$. In other words, the expected variance for uncorrelated samples of our time series. \textit{Note} the \textbf{partial sill} is defined to be the sill minus the nugget.
+\item \textbf{Range}: The $\Delta t$ at which $\gamma$ realizes it asymptote. Effectively this is the time lag beyond which samples are uncorrelated and can be used as a proxy for the relevant sampling time scale.
+\end{itemize}
+
+To do this, we first compute $\hat{\gamma}(\Delta t)$ as above and then fit a model to $\gamma(\Delta t)$. There are a number of popular choices depending on the structure of a particular time series. In my open source Julia implementation, \texttt{TimeSeriesTools.jl}, the following models are made available:
+\begin{itemize}
+\item \textbf{Spherical}:
+  \begin{equation}
+    \gamma(\Delta t) = b + C_0\left(1.5\frac{\Delta t}{r} - 0.5 \frac{(\Delta t)^2}{r^2} \right)
+  \end{equation}
+\item \textbf{Exponential}:
+  \begin{equation}
+    \gamma(\Delta t) = b + C_0\left( 1 - \exp\left(-\frac{\Delta t}{r}\right)\right)
+  \end{equation}
+\item \textbf{Gaussian}:
+  \begin{equation}
+    \gamma(\Delta t) = b + C_0\left( 1 - \exp\left(-\frac{(\Delta t)^2}{r^2}\right)\right)
+  \end{equation}
+\item \textbf{Circular}:
+  \begin{equation}
+    \gamma(\Delta t) = b + C_0\left(1 - (2\pi)\cos^{-1}\left(\frac{\Delta t}{r}\right) + \frac{2\Delta t}{\pi r}\sqrt{1-\frac{(\Delta t)^2}{r^2}} \right)
+  \end{equation}
+\item \textbf{Cubic}:
+  \begin{equation}
+    \gamma(\Delta t) = b + C_0\left(7\left(\frac{\Delta t}{r} \right)^2 - 8.75 \left(\frac{\Delta t}{r} \right)^3 + 3.5\left(\frac{\Delta t}{r} \right)^5 - 0.75\left(\frac{\Delta t}{r} \right)^7 \right)
+  \end{equation}
+\item \textbf{Pentaspherical}:
+  \begin{equation}
+    \gamma(\Delta t) = b + C_0 \left( \frac{15}{8}\left(\frac{\Delta t}{r} \right) - \frac{5}{4}\left(\frac{\Delta t}{r} \right)^3 + \frac{3}{8}\left(\frac{\Delta t}{r}\right)^5 \right)
+  \end{equation}
+\item \textbf{Sine Hole}
+  \begin{equation}
+    \gamma(\Delta t) = b + C_0\left(1 - \frac{\sin(\pi\Delta t/r)}{\pi\Delta t/r}\right)
+  \end{equation}
+\end{itemize}
+where $C_0$ is the partial sill, $b$ is the nugget, and $r$ is the range. Figure \ref{fig:pm10-variogram-fits} demonstrates these fits for the $\text{PM}_{10}$ time series from above.
 
 \begin{figure}[h]
   \centering
@@ -28,16 +99,17 @@ As we've already demonstrated, the shrinking cost of sensing technologies has im
 
 \subsection{Next Steps}
 
-The next step is to apply the methods to examine the trends in uncertainty estimates for each of the models for a longer period of time (like a year) for a handful of sensors. Do we see any trends that suggest seasonal variability in the uncertainty or a general trend that might suggest end of life for the sensors? 
+As of right now, I have developed an open source library to compute the temporal variogram and extract the estimated uncertainty for generic time series data. I have also developed a pipeline for the acquisition and storage of time series data in publicly available S3 buckets on the Open Storage Network. My plan now is to evaluate the uncertainty for a variety of sensors from our network for data collected across the previous 1-3 years. We will then be able to investigate how stable these uncertainty estimates are as a function of time. For example, do we see any seasonal trends during the coldest winter months and warmest summer months? Does the uncertainty appear to increase over time so that we might be able to automatically identify when a sensor should be serviced/replaced? 
 
 
 
 \section{Physics Informed modeling techniques for Air Quality Data}
-%% \subsection{Embedding Theorems}
-%% Discuss Taken's embedding theorem and other relevant information for the time-series work.
-%% \subsection{Koopman Theory}
-%% Give an overview of continuous and discrete Koopman operator theory.
+
+
+\subsection{Embedding Theorems}
+\subsection{Koopman Operator Theory and Time Series Embeddings}
 \subsection{A Hybrid HAVOK UDE Approach}
+
 
 Motivating example: the Lorenz attractor.
 
