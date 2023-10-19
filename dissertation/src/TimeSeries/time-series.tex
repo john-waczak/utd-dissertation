@@ -1,6 +1,6 @@
 \chapter{Time Series Methods for Air Quality}
 
-With the proliferation of low-cost sensors for a wide range of IoT and wearable biometric applications, a systematic approach to both quality control and performing comprehensive time series analysis has significant value. It is highly desirable to be able to answer some basic questions using \textit{just} the time series alone. For example: What is the likely sensor uncertainty given a time series of observations? How frequently should observations be made to adequately resolve typical temporal variability? How representative is a single observation of what one expects to see over a temporal (and spatial) window? Can we construct predictive models for the time series of a single sensor given a sufficient volume of sample data? In this chapter we seek to address these questions with direct application to the data collected by our low cost air quality sensor network. First, we will demonstrate how the \textit{temporal variogram} provides a way to assess the intrinsic sensor uncertainty from a time series, and in the process, develop an open-source Julia implementation of a variety of variogram methods that can be used for any generic time series. Next, we present two techniques for physics-based time series modeling: the Hankel Alternative View Of Koopman (HAVOK) method, and the Hamiltonian Neural Network. It should be noted that despite the rapid pace of development in the fields of data-driven and scientific machine learning, many recently developed techniques like the Universal Differential Equations (UDEs), Hamiltonian Neural Networks, and others have yet to see application on noisy real-world datasets. Our secondary goal for this chapter is therefore to demonstrate how with some slight modifications, these techniques can find to real scientific problems.
+With the proliferation of low-cost sensors for a wide range of IoT and wearable biometric applications, a systematic approach to both quality control and performing comprehensive time series analysis has significant value. It is highly desirable to be able to answer some basic questions using \textit{just} the time series alone. For example: What is the likely sensor uncertainty given a time series of observations? How frequently should observations be made to adequately resolve typical temporal variability? How representative is a single observation of what one expects to see over a temporal (and spatial) window? Can we construct predictive models for the time series of a single sensor given a sufficient volume of sample data? In this chapter we seek to address these questions with direct application to the data collected by our low cost air quality sensor network. First, we will demonstrate how the \textit{temporal variogram} provides a way to assess the intrinsic sensor uncertainty from a time series, and in the process, develop an open-source Julia implementation of a variety of variogram methods that can be used for any generic time series. Next, we present two techniques for physics-based time series modeling: the Hankel Alternative View Of Koopman (HAVOK) method, and the Hamiltonian Neural Network. It should be noted that despite the rapid pace of development in the fields of data-driven and scientific machine learning, many recently developed techniques like the Universal Differential Equations (UDEs), Hamiltonian Neural Networks, and others have yet to see wide spread application on noisy, real-world datasets. Our secondary goal for this chapter is therefore to demonstrate how, with some slight modifications, these techniques can be applied to real-world problems.
 
 
 
@@ -108,107 +108,172 @@ As of right now, I have developed an open source library to compute the temporal
 
 In order to provide actionable insights we must be able to effectively model the dynamics of our collected time series. In a perfect world, we would measure all relevant physical quantities such that the time evolution of local air quality at each sensor could be obtained by simulating the relevant micro-physics. However, low cost sensor networks are not equipped with all the necessary reference grade instruments needed to perform such simulations; accurate winds speed and direction sensors alone can cost hundreds to thousands of dollars and remote sensing data products are often unreliable at the ground level (i.e. in the human head space). We therefore are motivated to develop techniques to model our collected time series using only the data provided at a single node. There are many approaches to this task in the statistics and machine learning literature including statistical models like ARIMA and deep learning methods like Recurrent Neural Networks \cite{intro-to-time-series-models, time-series-rnns}. While these methods can often lead to robust short term predictions, they do not incorporate prior physics knowledge and therefore are not primed to take advantage of underlying dynamical laws. Recently two interesting physics-informed, data driven techniques have been developed for just this type of scenario. The first we shall examine is the so-called \textit{Hankel Alternative View Of Koopman} (HAVOK) framework which extends the principle of dynamic mode decomposition to nonlinear systems \cite{brunton-havok}. The second is an technique dubbed the \textit{Hamiltonian Neural Network} which extends the notion of a Neural Ordinary Differential Equation to allow a neural network to learn coordinate transformations or the original time series data which satisfy \textit{Hamiltons equations} \cite{greydanus-hnn}.
 
-\subsection{Embedding Theorems}
-\subsection{Koopman Operator Theory and Time Series Embeddings}
 \subsection{A Hybrid HAVOK UDE Approach}
 
+If we are to take a physics informed approach to modeling our time series, a good place to start is with the question: \textit{How much information about the physical state of a system can be extracted from a single time series}. The answer, surprisingly, is \textit{more than you might expect}. For simplicity let us consider a discrete, deterministic dynamical system described by a smooth function $f:M\to M$ that maps points in the state-space manifold $M$ to new points in the same manifold. We can define an \textit{observable} $y:M\to\R$ as a smooth function which maps a state $x_t\in M$ to a number. The Takens Embedding Theorem then suggests that if the dynamical system described by $f$ has a strange attractor of box counting dimension $d$, then there exists a $k\geq 2d$ such that the embedding $\mathbf{y}:M\to\R^k$ given by
+\begin{equation}
+  \mathbf{y}(x) = \left(y(x), y(f(x)), y(f^2(x)), ..., y(f^{k-1}(x)) \right)
+\end{equation}
+is a diffeomorphism. In other words, the time series $(y(x_t), y(x_{t+1}), y(x_{t+2}),...)$ formed by tracking the evolution of a single point $x_t$ in the state manifold $M$ under the dynamical law $x_k\mapsto x_{k+1}=f(x_k)$ captures the entire structure of the original dynamics in the state manifold \cite{takens-theorem}. This remarkable result provides justification for our modeling and suggests that for practical purposes, we will want to construct our models by considering dynamics on vectors formed by so called \textit{time delay embeddings} like that of the previous equation.
 
-Motivating example: the Lorenz attractor.
+With this justification in hand, the next logical step is to propose a model for the dynamics which describe the evolution of such delay-embeddings. To do this, we will utilize technqieus from Koopman Operator theory. Koopman operator theory provides a framework for understanding the time evolution of a dynamical system at the level of observable functions rather than directly from the state itself. This is highly analogous to the equivalence between the Schrodinger and Heisenberg pictures in Quantum Mechanics where the former provides time evolution via dynamics of the state vector, $\vert \alpha(t) \rangle$, and the later provides dynamics on the observable operators, $X(t)$, of a system \cite[p 80-84]{sakurai-qm}. In this same spirit, we seek to identify an operator $\mathcal{K}$, called the \textit{Koopman Operator} for our dynamical system which satisfies
+\begin{equation}
+  \mathcal{K}\left[y(x_k) \right] = y(f(x_k)) = y(x_{k+1}),
+\end{equation}
+that is, $\mathcal{K}$ takes an observable $y$ and maps it to a new value which is just the observable evaluated at the \textit{next} state after an update from $f$. This is highly appealing because such an operator (if it exists) is \textit{linear} and results in a \textit{linear} dynamical system for the time series of an observable, namely
+\begin{equation}
+  y_t = \mathcal{K}^t(y_0) = y(f^t(x_0)).
+\end{equation}
 
+The goal should now be clear: if we are able to utilize the data from our time series (interpreted as an \textit{observable} of the underlying system's state space) to estimate the operator $\mathcal{K}$, then we will be able to model the dynamics of our time series for which a time delay embedding of sufficient length should produce an attractor that is diffeomorphic to the underlying dynamics of the system's true state. Unfortunately, the price paid for the linearity of $\mathcal{K}$ is that its representation may demand an infinite dimensional basis \cite{brunton-modern-koopman}. Therefore, in practice, we hope that sufficient data will enable us to identify a suitable subspace of $M$ for which a finite approximation of $\mathcal{K}$, say $K$, keeps our observables bounded. One approach \textcolor{red}{(add citation for Mezic et al here)} is to attempt an eigen decomposition of $K$ using our time series data which relies on carefully crafting the observable functions $y$. In our case, we do not have direct control over the available observables; we are limited to the sensors provided by each sensing node. As an alternative approach, we take inspiration from the popular method of Dynamic Mode Decomposition (DMD) to enable approximations of the Koopman operator from time series observations.
+
+Originally, DMD was introduced to allow for the decomposition of expensive fluid dynamics simulations into a basis of \textit{modes} (in the spirit of normal modes) such that the time evolution across the entire domain can be obtained by a linear combination of such modes with some simple time-dependent coefficients. With this as our inspiration, we can take a similar approach by forming a so called \textit{Hankel matrix}, $H$, from our time series as
+\begin{equation}
+  H = \begin{bmatrix}
+    y_1 & y_2 & ... & y_p \\
+    y_2 & y_3 & ... & y_{p+1} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    y_q & y_{q+1} & ... & y_{p+q}
+    \end{bmatrix}
+\end{equation}
+\textcolor{red}{(NOTE: we should update this to match our definition i.e. starting at $y_1$ or $y_q$ as the first element)} where each column is a shifted time delay embedding of length $q$ and each row corresponds to a subsample of our observable time series of length $p$. We can decompose this matrix using the SVD so that
+\begin{equation}
+  H = U\Sigma V^T,
+\end{equation}
+where the singular values $\sigma_k=\Sigma_{kk}$ are ranked hierarchically by the relative contribution to $H$. If the singular values drop off fast enough, a reasonable approximation to $H$ can be obtained by keeping only $r$-many singular values and singular vectors from the decomposition. This provides us a data-driven approach to approximating the Koopman operator for a subspace (that is a subset of singular vectors) that is approximately invariant. To see this, we can rewrite our Hankel matrix in terms of $\mathcal{K}$ so that
+\begin{equation}
+  H = \begin{bmatrix}
+    y_1 & \mathcal{K}(y_1) & ... & \mathcal{K}^{p-1}(y_1) \\
+    \mathcal{K}(y_1) & \mathcal{K}^2(y_1) & ... & \mathcal{K}^p(y_1) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \mathcal{K}^{q-1}(x_1) & \mathcal{K}^q(x_1) & ... & \mathcal{K}^{p+q-1}(x_1)
+    \end{bmatrix}
+\end{equation}
+this direct connection to the propagation by $\mathcal{K}$ suggests we \textit{should} be able to successfully obtain a linear model describing the dynamics of the singular vectors $v_i(t)$. The potential for multiple attractors as well as the challenges of noise in real datasets suggests that a linear model alone may not be good enough to recover the full dynamics and therefore the HAVOK model proposed by Brunton seeks to fit a model on the first $r-1$ singular vectors with \textit{external forcing} provided by the r\textsuperscript{th} component:
+\begin{equation}
+  \frac{d}{dt}\mathbf{v}(t) = A\mathbf{v}(t) + Bv_r(t)
+\end{equation}
+where $\mathbf{v} = \left(v_1, v_2, ..., v_{r-1}\right)^T$. To demonstrate this approach, consider the famous Lorenz dynamical system given by
+\begin{align}
+  \dot{x} = \sigma(y-x) \\
+  \dot{y} = x(\rho-z) -y \\
+  \dot{z} = xy - \beta z
+\end{align}
+with parameters chosen so that $\sigma = 10$, $\rho=20$, and $\beta=8/3$. Because the SVD provides a hierarchical ranking of the singular vectors by the relative scale of the singular values, we imagine this $v_r(t)$ to be an intermitent external forcing do the the fact that it represents a low energy mode. A visualizualition of a sample trajectory for this system as well as the \textit{embedded} attractor formed from the first three principal vectors $v_1, v_2, v_3$ of the singular value decomposition of the associated Hankel matrix for the ``observable'' $x(t)$ are illustrated in Figure \ref{fig:lorenz-attractor}.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/lorenz/havok/attractors1.png}
   \caption{Comparing the original Lorenz attractor (left) to the embedded attractor learned after performing the SVD (right). Color indicates the time along the trajectory.}
+  \label{fig:lorenz-attractor}
 \end{figure}
 
-\begin{figure}[h]
+This is a clear demonstration of Takens embedding theorem in action: the attractor formed from the first three singular vectors of the Hankel matrix for the single observable $x(t)$ appear to capture key features of the original attractor formed from the state vector $(x(t), y(t), z(t))^T$. The rows of the matrix $U$ correspond to the \textit{modes} of the singular value decomposition and allow us to decompose the original delay embedding of the observable time series into this new representation. In this example, we have chosen $r=15$ as is done in \cite{brunton-havok}. A more programmatic approach is to evaluate $r$ based on some information criterion. Alternatively, this can be left as a hyperparameter and adjusted to achieve a better fit. These modes are visualized in Figure \ref{fig:lorenz-modes} below.
+
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/lorenz/havok/eigenmodes.pdf}
   \caption{Eigenmodes of the embedded attractor extracted from the SVD.}
+  \label{fig:lorenz-modes}
 \end{figure}
 
-\begin{figure}[h]
+The matrices $A$ and $B$ for our HAVOK model are obtained by standard linear regression. \textcolor{red}{(We should add further description of how to form the linear system here, .e.g. we do linear regression on a non-square matrix of weights to let us fit A and B simultaneously.)} The coefficients of these matrices for the Lorenz system described above are illustrated in Figure \ref{fig:lorenz-coeffs}. We note that the form of the $A$ matrix appears to closely follow the Toeplitz structure one would expect from the matrix of a finite difference stencil.
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/lorenz/havok/heatmap.pdf}
   \caption{Heatmap of the linear Koopman operator together with the forcing activation.}
+  \label{fig:lorenz-coeffs}
 \end{figure}
-
-\begin{figure}[h]
+We can then examine the time series obtained by integrating the HAVOK model forward to see how well we model the original dynamics of the singular vectors $v_i$. The first of these is shown in Figure \ref{fig:lorenz-v1}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/lorenz/havok/timeseries_reconstructed.pdf}
   \caption{The reconstructed timeseries for $v_1$ via the learned HAVOK model.}
+  \label{fig:lorenz-v1}
 \end{figure}
-
-\begin{figure}[h]
+To further evaluate the quality of the resulting model, we can visualize the scatter diagram of the predicted values for $v_1(t)$ on training data (the points that were used in the Hankel Matrix) as well as some holdout data. The results are shown in Figure \ref{fig:lorenz-scatter}.
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/lorenz/havok/scatterplot.pdf}
   \caption{A scatterplot of the resulting HAVOK fit}
+  \label{fig:lorenz-scatter}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/lorenz/havok/forcing-stats.pdf}
   \caption{The statistics of the learned forcing function. The sharpness of the distribution (in comparison to a Normal distribution) indicates that the forcing is \textit{intermittent}}
 \end{figure}
 
-\begin{figure}[h]
+
+Finally, we can visualize the original time series series and the embedded attractor by differentiating regions with high externel forcing (salmon colored) from the regions where the observable is approximately linear (green colored), that is where the dynamics of the observable are invariant to our learned Koopman operator. This is illustrated in Figures \ref{fig:lorenz-forcing} and \ref{fig:lorenz-attractor-forcing}.
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/lorenz/havok/v1_forcing_identified.pdf}
   \caption{The time series for $v_1$ marked where the forcing function is above a specified threshold.}
+  \label{fig:lorenz-forcing}
 \end{figure}
 
-
-\begin{figure}[h]
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/lorenz/havok/attractor_w_forcing.png}
   \caption{The embedded attractor colored by the presence of external forcing.}
+  \label{fig:lorenz-attractor-forcing}
 \end{figure}
 
-Now what happens if we attempt this procedure on a real, noisy dataset:
 
+\subsubsection{Results so far}
 
-
-\begin{figure}[h]
+What happens if we try and apply this HAVOK approach to a sample of our PM time series? This section details preliminary results with the method. Figure \ref{fig:attractor-pm} illustrated the embedded attractor obtained by visualizing the first 3 singular vectors of the SVD for a $\text{PM}_{2.5}$ time series.
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/sharedair/havok/attractor.png}
   \caption{The embedded attractor for PM $2.5$ time-series data.}
+  \label{fig:attractor-pm}
 \end{figure}
-
-
+After attempting a variety of cut of values $r$ as well as a variable number of forcing terms, the \textit{best fit} values for the $A$ and $B$ matrices are visualized in \ref{fig:pm-a-b-mats}. As in the case of the Lorenz system, the $A$ matrix has an interesting structure of alternating positive and negative coefficients in an anti-symmetric pattern along the diagonals. The learned coefficients of the external forcing activation matrix $B$ appear to be biased towards negative values.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/sharedair/havok/heatmap.pdf}
   \caption{Heatmap of the linear Koopman operator together with the forcing activation.}
+  \label{fig:pm-a-b-mats}
 \end{figure}
-
-
+Time series obtained for the first three components are visualized in Figure \ref{fig:pm-timeseris-long}. In figure \ref{fig:pm-timeseries-zoomed} we show the same data limited to the first 2.5 hours. This appears to suggest that the HAVOK models has learned a reasonable representation of the dynamics, however errors appear to accumulate over past 2.5 hours such that the model fails for long time integration.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/sharedair/havok/timeseries_reconstructed__r-18__c-10.pdf}
   \caption{The reconstructed time-series for the first three embedding coordinates using the HAVOK fit.}
+  \label{fig:pm-timeseries-long}
 \end{figure}
-
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/sharedair/havok/timeseries_reconstructed_zoomed-in.pdf}
   \caption{A zoomed in view of the same time-series reconstruction for the first $2.5$ hours showing a very decent fit. Some kind of error appears to be accumulating over time.}
+  \label{fig:pm-timeseries-zoomed}
 \end{figure}
 
+Finally, if we examine the original time series and embedded attractor colored by the magnitude of the first forcing vector, we obtain Figures \ref{fig:pm-timeseries-forcing}, and \ref{fig:pm-attractor-forcing}.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/sharedair/havok/v1_forcing_identified.pdf}
   \caption{The first embedding coordinate with forcing above a critical threshold identified.}
+  \label{fig:pm-timeseries-forcing}
 \end{figure}
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HAVOK/sharedair/havok/attractor_w_forcing.png}
   \caption{The original attractor now colored by external forcing above a threshold.}
+  \label{fig:pm-attractor-forcing}
 \end{figure}
 
 
-Now we can justify the use of a UDE approach to fit missing non-linear terms once we have a trained HAVOK model.
+\subsubsection{Next Steps}
 
+The preliminary results of our application of HAVOK to model PM data are very encouraging. The time series obtained in Figure \ref{fig:pm-timeseries-zoomed} suggest we have achieved a reasonable first order model, however as the integration period extends, the agreement is quickly lost. This is likely due to our observations not being entirely invariant under the approximated Koopman operator and therefore it is unreasonable to expect that our model will be successful with linear and external forcing terms alone. To address this, I plan to combine the HAVOK approach with the Universal Differential Equations (UDEs) framework established by Rackauckas et al in \cite{rackauckas2020universal}. That is, we can augment our learned HAVOK model to become
+\begin{equation}
+  \frac{d\mathbf{v}}{dt} = A\mathbf{v}(t) + Bv_{r}(t) + \text{NN}(\mathbf{v}, t)
+\end{equation}
+where $\text{NN}(\mathbf{v}, t)$ is a neural network. Since neural networks are universal function approximators, we can train the NN to learn the missing dynamics not present in our simple HAVOK model. Once we have accomplished this, we can then use sparse regression techniquese such as SINDy as in \cite{brunton-sindy} to obtain a functional form for the missing nonlinear terms which complete the model.
 
 
 \subsection{Hamiltonian Neural Networks}
