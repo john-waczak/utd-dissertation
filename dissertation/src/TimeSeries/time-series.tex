@@ -278,16 +278,54 @@ where $\text{NN}(\mathbf{v}, t)$ is a neural network. Since neural networks are 
 
 \subsection{Hamiltonian Neural Networks}
 
-An alternative approach to modeling the time series is to consider a system under no external forcing. We can describe the dynamics for this system using \textit{some} set of generalized coordinates via Hamiltons equations. Now we suggest to learn an appropriate set of coordinates $(q,p)$ via an auto-encoder structure so that we can then \textit{learn} a Hamiltonian function for which these coordinates satisfy Hamilton's equations for short times. Once we have this model, we can then analyze the motion of our systems state on the Hamiltonian surface. When there is some kind of external forcing driving us away from the level sets of $H$ can we expect to see large jumps in PM concentration? Further, does the Hamiltonian function learned for a single system generalize well to multiple distributed sensors?
+The HAVOK modeling approach outlined in the previous section can largely be understood as a \textit{data-driven} method. By carefully curating the Hankel matrix from our time series observations, we open the door to techniques from linear algebra that enable the generation of a straight-froward dynamical model. As an alternative method, let us now consider how we can use neural networks to directly model our time series data by forcing a neural network to learn useful transformations that simplify the modeling task.
 
+For a number of years one of the most popular deep learning approaches for time series forecasting was the family of so-called \textit{recurrent neural networks} \cite{time-series-rnns}. These models take the form
+\begin{equation}
+  u_k = u_{k-1} + \text{NN}(u_{k-1};\theta)
+\end{equation}
+so that the output of the k\textsuperscript{th} layer is formed by starting with the previous output and correcting by the output of a neural network $\text{NN}(u_{k-1},\theta)$. Recently Chen et al observed that this equation can be understood to be the discrete Euler scheme implementation for a continuous ODE of the form
+\begin{equation}
+  \dot{u} = \text{NN}(u, \theta).
+\end{equation}
+Therefore, by utilizing our adjoint method for determining the sensitivity of an ODE model to the parameters $\theta$, once can construct ODE layers whose output is the solution to a differential equations \cite{neural-odes}. By extension, a reasonable time series forecasting approach would be to learn a model such that our time series $z(t)$ satisfies
+\begin{equation}
+  \dot{z}(t) = \text{NN}(z, t; \theta).
+\end{equation}
+
+This technique is very general however it does not take advantage of any physical constraints imposed for time series sampling real, physical processes. Much effort is now being spent on how to regularize this approach to produce physics-informed Neural ODEs such that obey physical constraints like energy conservation \cite{pinode}. Still, these physics-informed constraints are not themselves built into the model (i.e. the neural network) but rather the weights are encouraged during training to conform to physics priors. An interesting alternative development came from Greydanus et al who took a different approach by incorporating physical laws directly into the neural network structure \cite{greydanus-hnn}. Their method, the Hamiltonian Neural Network, seeks to train a neural network so that it satisfies Hamilton's equations, namely
+\begin{equation}
+  \begin{aligned}
+    H &= \text{NN}(q,p,\theta) \\
+    \dot{q} &= \frac{\partial H}{\partial p} \\
+    \dot{p} &= -\frac{\partial H}{\partial q}
+  \end{aligned}
+\end{equation}
+where $q$ and $p$ are the generalized coordinates and momenta for a system. By constructing a loss function of the form
+\begin{equation}
+  \mathcal{L}_{\text{HNN}} = \left\lvert \frac{\partial H}{\partial p} - \dot{q}\rvert_2 + \lvert \frac{\partial H}{\partial q} + \dot{p}\right\rvert_2
+\end{equation}
+they found that the HNN is able to learn a valid representation of the Hamiltonian for a variety of physical systems (spring, double pendulum, etc.). Further, since Hamilton's equations must be integrated to obtain trajectories for a system, the learned Hamiltonian can easily explore counterfactual configurations not present in the supplied training data by simply adjusting the Hamiltonian by addition of a constant (i.e. shifting the total energy). Because the total energy is a constant of motion, learning a representation of the Hamiltonian also improved the long term energy conservation of integrated trajectories as compared to directly attempting to predict $\dot{q},\dot{p}$ with a neural network alone.
+
+To make approach feasible for real data, one must supply both position and momenta time series which may not be readily available. In their final example, the authors demonstrate how to accomplish this with an autoencoder network. By using additional encoder/decoder models, they were able to take the raw images of a \textit{video} of a swinging pendulum and \textit{learn} an effective transformation into a $q,p$ pair that they then use to learn the Haniltonian. Specifically, the HNN loss function is augmented to include two additional terms. The first is the standard autoencoder loss which demands an input that is encoded and then decoded be similar to the original input. The second is an additional loss term used to encourage the moment portion of the encoder to be some function of the velocity of the position component, that is,
+\begin{equation}
+  \mathcal{L}_{\text{momentum}} = \left\lvert p^t - (q^{t+1} - q^{t}) \right\rvert_2
+\end{equation}
+
+
+
+\subsubsection{Results}
+
+I have implemented the HNN model for time series data collected by one of our central nodes. For this implementation I have joined time smoothed time series for $\text{PM}_{2.5}$ together with temperature, pressure, and humidity time series from the same node. Using this dataset with the HNN training procedure outlined above, I have been able to generate preliminary mappings of the learned Hamiltonian such as those in Figure \ref{fig:learned-hamiltonian}
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\columnwidth]{time-series/HNN/hamiltonian_cn_1--2022.pdf}
+  \label{fig:learned-hamiltonian}
 \end{figure}
 
+\subsubsection{Next Steps}
 
-
-
+Now that I've developed the code to train an HNN, my plan is to attempt to train one for a data set consisting of roughly 1 week of observations from a Central Node to make sure we include a few iterations of the diurnal cycle. With the trained HNN we can visualize the trajectory of the system through phase space, in particular, as it relates to the level surfaces of the learned Hamiltonian. I expect that for relatively calm conditions and short time scales, the trajectories will conform to the level sets of $H$ so that the total energy is conserved. I am particularly interested in whether or not the magnitude of the gradient of $H$ can be used as an indicator of potential externel pollution sources. Similarly, I am curious about how long a trained HNN will be valid for a single sensor, as well as whether or not an HNN trained for a single node will be transferable to multiple nodes. 
 
 
 
