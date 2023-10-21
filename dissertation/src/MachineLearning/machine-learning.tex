@@ -214,11 +214,10 @@ Better yet, this system is linear in $\lambda$ even though the original differen
 \subsection{Neural Networks}
 \subsection{Gaussian Process Regression}
 
-Based on my notes from \href{https://github.com/john-waczak/MLJGaussianProcesses.jl/blob/main/notebooks/gpr/gaussian_process_regression_overview.ipynb}{this repo}
+%% Based on my notes from \href{https://github.com/john-waczak/MLJGaussianProcesses.jl/blob/main/notebooks/gpr/gaussian_process_regression_overview.ipynb}{this repo}
+%% The following is based on the book \textbf{Gaussian Processes for Machine Learning} by Carl Edward Rasmussen and Christopher K. I. Williams \cite{gaussian-process-book}. You can find the free online book \href{https://gaussianprocess.org/gpml/}{here}.
 
-The following is based on the book \textbf{Gaussian Processes for Machine Learning} by Carl Edward Rasmussen and Christopher K. I. Williams \cite{gaussian-process-book}. You can find the free online book \href{https://gaussianprocess.org/gpml/}{here}.
-
-To explain/derive the Gaussian Process model for regression, let's first consider a motivating example: \textbf{Linear Regression}. We will use this guiding example to derive GRP from a \textit{weight space view}. After this derivation, we will suggest a simpler, but more abstract derivation using a \textit{function space view}. First let's set up some data we can use for training:
+Gaussian Process Regression (GPR) is a powerful technique for non-linear, non-parametric supervised machine learning. In this section we present a pedagogical overview of the method (the kind the author wishes he had access when getting started) as we will use the technique for both the Robot Team and to model absorption cross sections and quantum yields for photolysis reactions in Chapter 6. To begin, let's first consider a motivating example: \textbf{Linear Regression}. We will use this guiding example to derive GRP from a \textit{weight space view}. After this derivation, we will suggest a simpler, but more abstract derivation using a \textit{function space view}. First let's set up some data we can use for training:
 
 \subsubsection{The Weight Space View}
 

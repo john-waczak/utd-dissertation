@@ -1,7 +1,10 @@
-\chapter{A Chemical Data Assimilation Framework for Indoor Air Quality}
+\chapter{A Chemical Data Assimilation Framework for Indoor Air Quality Assessment}
 
+As described in the introduction, the COVID-19 pandemic has catalyzed global concern for indoor air quality. In order to provide actionable insights, a comprehensive analysis of the relevant chemistry is needed to establish how chemical constituents interact in indoor spaces. Much of outdoor air chemistry is driven by light; short wavelength photons can break bonds through photolysis and changing light conditions due to the rotation of the Earth introduce diurnal variations in both temperature and the abundance of light to initialize relevant reactions. Very little UV light makes it through building windows and into the indoor space. Additionally there is a large variability in indoor light sources including LED, fluorescent, incandescent and others which each have very different spectral properties. Therefore to establish a baseline for the relevant chemical processes indoors pertaining to air quality, we have developed an advanced sensing suite called the HEART chamber. By combining high quality measurements for a variety of source gases and aerosols together with detailed characterization of indoor photolysis we are able to produce rich data sets constraining the breadth of possible reactions in indoor spaces.
 
+Another consequence of increased interest in indoor air quality (IAQ), many emerging technologies are now in development which seek to improve IAQ by denaturing airborne pathogens and removing chemicals of concern. In collaboration with a Dallas-based company called ActivePure, we are developing a highly detailed chemical kinetics model which when combined with the high quality data from our HEART chamber using data assimilation techniques, will enable us to identify the key reactive species involved in their advanced photocatalytic oxidation technology.
 
+In this chapter we first introduce the relevant physics for reaction kinetics and photolysis. Then we present preliminary results on a detailed evaluation of photolysis rates as well as initial measurements from our HEART chamber as well as chemical kinetics evaluations.
 
 \section{Physics of Chemical Reactions: Chemical Reaction Kinetics}
 
@@ -263,22 +266,33 @@ To derive a more accurate form for the rate coefficient $k$, we can result to PE
 
 
 
-
-\section{Photolysis}
-
-Give an overview for photolysis (perhaps borrow from Dr. Lary's Textbook)
-
-For experimental reasons, the wavelengths ($\lambda$) most commonly used for initiating photochemical processes vary between the ultraviolet ($200-250$ nm) and the near infrared ($750-800$ nm). Light at these wavelengths has an energy which corresponds roughly to $600-50 $ kJ $\text{mol}^{-1}$, which is very close to the energies of many chemical bonds.
-
-
-
 \section{Summary of Chemical Mechanism Kinetics}
+
+With this justification in hand, we are now ready to describe the chemical kinetics for each of the reaction types we will utilize in our chemical mechanism. We have already introduced bimolelcular reactions which involve the collision of two chemical species. These are reactions of the form
+\begin{equation}
+  \mathrm{A} + \mathrm{B} \longrightarrow \text{Products}
+\end{equation}
+
+The next relevant reaction type we will utilize are so called \textit{trimolecular} (also, termolecular) reactions. These require the collision of three species such that
+\begin{equation}
+  \mathrm{A} + \mathrm{B} + \mathrm{M} \longrightarrow \text{Products}
+\end{equation}
+
+
 
 Give a summary of kinetics for each of the 3 reaction types. Then finish by writing the form of the combined differential equations for the entire system (and it's Jacobian)
 
 
 
 \section{Characterization of Photolysis}
+
+
+
+Give an overview for photolysis (perhaps borrow from Dr. Lary's Textbook)
+
+For experimental reasons, the wavelengths ($\lambda$) most commonly used for initiating photochemical processes vary between the ultraviolet ($200-250$ nm) and the near infrared ($750-800$ nm). Light at these wavelengths has an energy which corresponds roughly to $600-50 $ kJ $\text{mol}^{-1}$, which is very close to the energies of many chemical bonds.
+
+
 
 
 \subsection{Absorption Cross Sections}
