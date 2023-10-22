@@ -115,22 +115,23 @@ Figure \ref{fig:annotated-hsi} illustrates the reflectance spectra for a variety
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Timing Results}
+\section{Timing Results and Discussion}
 
+The above procedure was implemented in the Julia programming language. Using the package \texttt{BenchmarkTools.jl} the following timings were obtained for each step of the pipeline with results indicating that a hyperspectral datacube of size $1000\times 1600\times 462$ can be georeferenced, resampled, and converted to reflectance in less than 5 seconds at a final spatial resolution of 25 cm.
 
-\begin{table}[h]
+\begin{table}[!hbt]
   \centering
   \begin{tabular}{ |c|c| }
-    \hline 
+    \hline
     \textbf{Number of scan lines}	& \textbf{Execution time (s)}\\
-    \hline 
-    371		&   2.060	\\
-    725     &   4.227	\\
-    1000    &   5.901  \\
-    \hline 
+    \hline
+    371		  &   0.548	\\
+    462     &   0.702	\\
+    1000    &   1.478  \\
+    \hline
   \end{tabular}
-  \caption{Reflectance conversion time as a function of number of scanlines}
-  \label{tab:reflectance-times}
+  \caption{Loading and georeferencing time as a function of number of scanlines}
+  \label{tab:georeference-times}
 \end{table}
 
 \begin{figure}[!hbt]
@@ -139,146 +140,116 @@ Figure \ref{fig:annotated-hsi} illustrates the reflectance spectra for a variety
   \label{fig-regridding-timing}
 \end{figure}
 
+\begin{table}[h]
+  \centering
+  \begin{tabular}{ |c|c| }
+    \hline
+    \textbf{Number of scan lines}	& \textbf{Execution time (s)}\\
+    \hline
+    371		  &   0.161	\\
+    462     &   0.197	\\
+    1000    &   0.195  \\
+    \hline
+  \end{tabular}
+  \caption{Loading and georeferencing time as a function of number of scanlines}
+  \label{tab:reflectance-times}
+\end{table}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Discussion}
 
 
 
 \section{Supervised Regression with Uncertainty Quantification}
 
-\subsection{Hyperspectral Imaging and Remote Sensing}
-paper creating new spectral index for wheat rust \cite{SpectralIndexWheat} \\ 
-overview of NDVI \cite{SpectralIndexNDVI} \\ 
-paper using spectral indices for desertification \cite{SpectralIndexDesertification}
+The primary modality of our autonomous robotic team is to rapidly characterize the concentrations of chemicals-of-concern in novel aquatic environments. To demonstrate this capability, we performed a sequence of data collections throughout 2020 and 2021 at a ranch in North Texas. Over 3 Tb of hyperspectral imagery were collected across three separate deployments together with ~10,00 in-situ measurements from our autonomous boat. Together these data allow us to train machine learning models whereby direct concentration measurements are utilized to train a family of machine learning models to predict a variety of chemicals of concern. In the rest of this section we present preliminary results demonstrating machine learning models trained to estimate Colored Dissolved Organic Matter (CDOM) concentrations using these datasets.
 
-
-\subsubsection{HSI sattelite systems}
-\subsubsection{HSI drone systems}
-\subsubsection{Machine Learning using HSI}
-add Xiao He reference here \cite{yu2021pm2}
-
-\subsection{In-situ Measurements / Robot Teams}
-\subsubsection{Meteorology}
-\subsubsection{Atmospheric Sensing}
-add in reference to our AQ sensor network
-
-\subsection{Julia Programming Language}
-\subsubsection{scientific computing}
-\subsubsection{differentiable programming ($\partial P$)}
-\subsubsection{MLJ}
-discuss general \textit{learning network} framework and utilization of
-Directed Acyclic Graphs for pipeline construction
-
-basic overview of MLJ as a Julia package \cite{MLJ1}\\ 
-
-detailed description of \textit{learning networks} \cite{MLJ2}
-
-
-
-\section{Materials and Methods}
-\subsection{Autonomous Collection and Processing of Hyperspectral Images}
-
-website for alta x \cite{freeflyAltaX}
-
-
-\subsection{Exploratory Data Analysis}
-\subsubsection{Variable Correlations}
-
-\begin{figure}[h]
-\includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/correlation/target_cor.png}
-\caption{Correlation Matrix for Target variables measured by the boat.\label{target_cor}}
-\end{figure}
-
-\begin{figure}[h]
-\includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/correlation/radiance_cor.png}
-\caption{Correlation Matrix for Radiance measurements versus Target Variables.\label{rad_cor}}
-\end{figure}
-
-\begin{figure}[h]
-\includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/correlation/reflectance_cor.png}
-\caption{Correlation Matrix for Reflectance measurements versus Target Variables.\label{ref_cor}}
-\end{figure}
-
-\begin{figure}[h]
-\includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/correlation/derived_cor.png}
-\caption{Correlation Matrix for derived measurements versus Target Variables.\label{derived_cor}}
-\end{figure}
-
-
-
-\subsubsection{Machine Learning Models}
-include Linear Models, Neural Networks, Decision Trees, Bagging, Boosting, and Stacking\\
-
-The field of Machine Learning has seen the invention of a plethora of models able to perform inference for regression tasks. Naturally, this leads to the challenge of evaluating which model is best for a given problem. In 1992 David Wolpert developed the notion of Stacked Generalization to divorce arbitrary human choice from the model selection process. [1] The key idea is as follows: fit an instance of each model compatible with your dataset. Each model learns different features of the data so that an adjudicating model (called the super-learner) can then be trained to map the predictions from each individual learner to a final output prediction. This is incredibly easy to accomplish in the Julia programming language via the MLJ machine learning framework [2]. We train a variety of learners including artificial neural networks, bagged decision trees, boosted decision trees, polynomial regressors, quantile regressors, LASSO regressors, and K-nearest-neighbors regressors. To ensure proper data hygiene, individual learners are first trained on separate cross validation folds so as not to bias the super-learner. After training the super-learner, each individual model is then trained on the full dataset to produce the best possible model.
-
-
-paper on stacking \cite{ModelStacking}
-
-\subsection{Model Analysis}
-aleatoric and epistemic uncertainty
-
-The black-box nature most machine learning methods makes it difficult to consider how errors propagate through a trained model during the inference process. For many problems such as image classification this is not an issue, however, in physical sensing error considerations are vital to establish detection limits and prediction confidence. Typically, there are three considerations we must make: measurement uncertainty– how much we can trust our model’s inputs, measurement representativeness– how well each data point represents data within a local neighborhood, and model error– how far the prediction is from the true value. Machine learning models are typically trained to minimize the model error. The Julia programming language makes it possible to handle all three. 
-
-
-To address measurement uncertainty, we take advantage of Julia’s advanced automatic differentiation capabilities to enable differentiable programming (∂P). This means that we can take derivatives of our trained ML model with respect to each input feature to perform a sensitivity analysis. The final output uncertainty is then given via linear error propagation theory. [5]
-
-Measurement representativeness can be trickier to handle. For example, in fluids it is common for two species to form a mixing layer that presents as a sharp discontinuity in measurement values. To quantify the degree to which neighboring points diverge we compute the average deviation across input measurements in a neighborhood around each data sample. This information can then be presented with model outputs to identify the regions where our model is valid. Similarly for ensemble ML models we compute the prediction deviation across all base learners to identify the representativeness of a data sample. Inputs that cause a large spread in base learner predictions indicate low representativeness in the training set. This analysis can then be used to plan further data collection missions that minimize time spent collecting data we have already present in our models. 
-
-\subsubsection{Uncertainty Propagation via ($\partial P$)}
-
-\subsubsection{Feature Ranking via SHAP values}
-
-shape value paper used in ShapML.jl \cite{SHAPvalues1}
-
-\subsubsection{Data Representativeness}
-i.e. the average deviation across pixels used average during collocation process.
-Also, we can look at relative disagreement between model predictions in bagged ensemble. 
+%% \begin{figure}[!hbt]
+%%   \includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/CO/CO_dataMap.png}
+%%   \caption{Target distribution of Crude Oil at the ranch in North Texas.}
+%%   \label{fig:co-distribution}
+%% \end{figure}
 
 \section{Results}
-\subsection{CO}
-
-\begin{figure}[h]
-\includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/CO/CO_dataMap.png}
-\caption{Target distribution of CO at Scotty's Ranch.\label{CO_targetMap}}
+\begin{figure}[!hbt]
+  \includegraphics[width=0.75\columnwidth]{robot-team/supervised-2/CDOM/marginalhist.pdf}
+  \caption{Stratified train-test split for CDOM}
+  \label{fig:train-test-hist}
 \end{figure}
 
-\begin{figure}[h]
-\includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/CO/CO_train-test_hist.png}
-\caption{Stratified train-test split for CO.\label{CO_trainTestHist}}
-\end{figure}
+Figure \ref{fig:train-test-hist} visualizes a sample distribution of in-situ crude oil concentrations collected by the autonomous boat during our deployments. To build models, each of these records is collocated with associated reflectance spectrum from the HSIs forming a large tabular dataset with spectra as features and concentrations as targets. Additionally, we include a number of derived spectral indices like the Normalized Difference Vegetation Index (NDVI) as well as the drone orientation angles and the relevant solar geometry to provide the model important contextual information about the illumination of the water. The solar zenith, azimuth, and elevation are determined for each pixel using an open source code we implemented in Julia based on a matlab script by Darin Koblick. To train our machine learning models we partition the entire dataset into a train/test split. The bulk of the data is used to train our machine learning models with a representative subsample used as a holdout dataset to evaluate model performance.
 
 \begin{figure}[h]
+  \includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/correlation/reflectance_cor.png}
+  \caption{Correlation Matrix for Reflectance measurements versus Target Variables.\label{ref_cor}}
+  \label{fig:correlation}
+\end{figure}
+
+Figure \ref{fig:correlation} illustrates the correlation matrix between reflectances (as a function of wavelength) and each of the measured targets of the boat. In particular we can see that for CDOM, there is positive correlation between reflectances at long wavelengths  and negative correlation at short wavelengths. This makes sense as crude CDOM tends to absorb broadly in the visible portion of the spectrum and reflects strongly in the infrared leaving water redish-brown. Figure \ref{fig:correlation} also demonstrates how different chemicals of concern can be discerned by absorption features in different wavelength bins.
+
+%% \begin{figure}[h]
+%% \includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/correlation/target_cor.png}
+%% \caption{Correlation Matrix for Target variables measured by the boat.\label{target_cor}}
+%% \end{figure}
+
+%% \begin{figure}[h]
+%% \includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/correlation/radiance_cor.png}
+%% \caption{Correlation Matrix for Radiance measurements versus Target Variables.\label{rad_cor}}
+%% \end{figure}
+
+%% \begin{figure}[h]
+%% \includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/correlation/derived_cor.png}
+%% \caption{Correlation Matrix for derived measurements versus Target Variables.\label{derived_cor}}
+%% \end{figure}
+
+\subsubsection{Results So Far}
+
+For our machine learning approach, we've employed a an ensembling strategy called \textit{model stacking} (also known as a \textit{super-learner}) \cite{ModelStacking}. Rather than arbitrarily choosing a single model such as a neural network or decision tree, we form a \textit{stack} of many models including linear regression, neural networks, decision trees, gaussian process regression, random forest, and boosted trees (XGBoost and EvoTrees). A discriminator model (i.e. the super learner) is then trained on the output of each base model in order to effectively combine the results to generate a robust prediction \cite{ModelStacking}. To prevent the super learner from simply siding with the best \textit{average} model, the training dataset is carefully partitioned into a set of $N$ cross validation folds. For each fold, every base model is trained on the $N-1$ fold complements and produces a set of out-of-bag predictions for the chosen fold. These predictions are the stitched together and used to train the super learner. Once the super learner is trained, the original base models are retrained on the entire dataset with the resulting stack of base learners plus discriminator forming the final predictive model.
+
+\begin{figure}[!hbt]
   \begin{subfigure}{0.5\textwidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{robot-team/supervised-2/CO/rfr_CO_scatter.png}
+    \includegraphics[width=0.95\linewidth]{robot-team/supervised-2/CDOM/scatterplt__stack.pdf}
   \end{subfigure}
   \begin{subfigure}{0.5\textwidth}
     \centering
-    \includegraphics[width=0.95\linewidth]{robot-team/supervised-2/CO/rfr_CO_qq.png}
+    \includegraphics[width=0.95\linewidth]{robot-team/supervised-2/CDOM/qq__stack.pdf}
   \end{subfigure}
-  \caption{(\textbf{a}) Scatterplot for the trained random forest Crudo Oil model. (\textbf{b}) Quantile-Quantile plot for the same fit.}
-  \label{CO_fitresult}
+  \caption{(\textbf{a}) Scatterplot for the trained CDOM super-learner model. (\textbf{b}) Quantile-Quantile plot for the same fit.}
+  \label{fig:CDOM_fitresult}
 \end{figure}
 
+Figure \ref{fig:CDOM_fitresult} illustrates the quality of the resulting super-learner fit. The combined dataset is largely tri-modal with three large peaks. Consequently, the model performs best near these values with the worst performance occurring at low concentrations with sparse samples.
 
+A number of the models involved in our super-learner employ a decision-tree based learner. For these base learners we can evaluate the relative importance of each input feature to the predictions of the model. These feature importances are ranked in Figure \ref{fig:CDOM-fi}.
+\begin{figure}[!hbt]
+    \includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/CDOM/importance_ranking__vanilla.pdf}
+    \caption{Ranked feature importance for CDOM.}
+    \label{fig:CDOM-fi}
+\end{figure}
+This feature ranking reveals that wavelengths in key portions of the visible spectrum have the largest impact on model predictions. Similarly, the Solar Altitude and Drone pitch/heading are ranked highly due to the important impact of the solar illumination and viewing geometry on the captured spectra. Using these models, we can rapidly generate wide area maps that estimate concentrations at all HSI pixel location. Sample maps for both CDOM and Crude Oil are shown in Figure \ref{fig:lary-maps}.
 
-\begin{figure}[h]
-    \includegraphics[width=0.85\columnwidth]{robot-team/supervised-2/CO/rfr_CO_featureImportance.png}
-    \caption{Ranked feature importance for Crude Oil. Importance is determined via mean absolute SHAP value. \label{CO_shapely}}
+\begin{figure}[!hbt]
+  \includegraphics[width=0.9\columnwidth]{robot-team/assets/CrudeOil-CDOM-Maps.png}
+  \caption{Maps of Crude Oil and CDOM generated using the trained super-learner models.}
+  \label{fig:lary-maps}
 \end{figure}
 
+Figure \ref{fig:lary-maps} generates precisely how this Robotic Team can be used to generate actionable environmental insights. Both of these chemicals-of-concern are observed to collect in a region of the pond that is largely isolated with little flow. However, because we were able to acquire samples from this region we are also able to identify accumulation occurring near the shores.
 
 
+\subsubsection{Next Steps}
 
-
+The next steps for this supervised approach are to incorporate conformal prediction into the super-learner model pipeline. By partitioning a third hold out dataset, we can simultaneously estimate the concentrations using our trained super learner \textit{and} obtain reasonable uncertainty bounds for these predictions. With the ability to generate uncertainty estimates together with our model predictions, we can develop \textit{smart} data collection strategies to enable the robotic boat to collect additional samples optimized to decrease model uncertainty and not waste time re-treading portions of the pond where the model is already highly confident.
 
 \section{Methods for Unsupervised Classification of Hyperspectral Scenes in Novel Environments}
 
+A second modality for the robotic team is to utilize unsupervised machine learning strategies to identify key constituents for which we \textit{do not} have reference sensors. Many common approaches like endmember mixing models treat measured reflectance spectra as a linear combination of representative source spectra whose coefficients indicate a relative abundance within a pixel. By utilizing the Self Organizing Map and Generative Topographic Map codes I've developed, we can identify key endmembers present in the scene for which the autonomous boat is not equipped to directly measure. Further, by examining the learned weights of each class and their distribution throughout the scene, we can attempt to assign individual classes to known chemical signatures.
+
 \subsubsection{Unsupervised Classification}
 \begin{figure}[h]
-  \includegraphics[width=0.85\columnwidth]{robot-team/unsupervised/clustering.png}
+  \includegraphics[width=\columnwidth]{robot-team/unsupervised/clustering.png}
   \caption{Unsupervised clustering of hyper-spectral image data using the K-means algorithm.\label{clustering}}
 \end{figure}
 
