@@ -1,6 +1,6 @@
 \chapter{An Autonomous Robotic Team for the Rapid Characterization of Novel Environments}
 
-In this chapter, we present preliminary results from our autonomous robotic team. First we detail the development of a real time processing and georectification pipeline for the hyperspectral images collected by our drone. This is vital to enable real time application of the robotic team in realistic field settings. Next we discuss results of apply machine learning to directly model concentrations of of chemicals-of-concern form the captured reflectance spectra. Finally, we provide discuss the application of unsupervised methods including the SOM and GTM developed in chapter 3 to enable a physics-based unsupervised learning framework for the identification of novel constituents. Associated code are made freely accessible at \url{https://github.com/john-waczak/RobotTeam.jl}
+In this chapter, we present preliminary results from our autonomous robotic team. First we detail the development of a real time processing and georectification pipeline for the hyperspectral images collected by our drone. This is vital to enable real time application of the robotic team in realistic field settings. Next we discuss results of applying machine learning to directly model concentrations of of chemicals-of-concern form the captured reflectance spectra. Finally, we provide discuss the application of unsupervised methods including the SOM and GTM developed in chapter 3 to enable a physics-based unsupervised learning framework for the identification of novel constituents. Associated code are made freely accessible at \url{https://github.com/john-waczak/RobotTeam.jl}
 
 \section{Rapid Processing and Georectification of Hyperspectral Data Cubes}
 
@@ -17,7 +17,7 @@ The first can be readily accomplished by means of light-weight, high volume soli
   \caption{Components of the Autonomous Drone HSI platform.}
   \label{fig:drone-components}
 \end{figure}
-This spectrometer captures the \textit{downwelling} irradiance spectrum which is necessary to enable conversion from radiance units to the desired reflectance spectra. To this end we present a procedure based on the methods described in \cite{muller-georeferencing, GeorectivicationBaumker, GeorectificationMostafa} for the rapid processing and georeferencing of imagery captured by a pushbroom HSI mounted on an autonomous drone. The processing steps are as follows:
+This spectrometer captures the \textit{downwelling} irradiance spectrum which is necessary to enable conversion from radiance units to the desired reflectance spectra. To this end we present a procedure based on the methods described in \cite{muller-georeferencing, GeorectificationBaumker, GeorectificationMostafa} for the rapid processing and georeferencing of imagery captured by a pushbroom HSI mounted on an autonomous drone. The processing steps are as follows:
 \begin{enumerate}
 \item Raw imagery are continuously captured by the hyperspectral imager (Radiance) and stored in binary ENVI format.
 \item The processing computer reads ENVI files into tensors as they become available.
@@ -252,6 +252,7 @@ A second modality for the robotic team is to utilize unsupervised machine learni
   \includegraphics[width=\columnwidth]{robot-team/unsupervised/clustering.png}
   \caption{Unsupervised clustering of hyper-spectral image data using the K-means algorithm.\label{clustering}}
 \end{figure}
+
 
 
 

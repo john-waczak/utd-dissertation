@@ -1,24 +1,18 @@
 \chapter{Machine Learning Methods}
 
+In this chapter, we outline the relevant techniques from machine learning that we will employ throughout the rest of this dissertation. Additionally, we present original software implementations developed in the Julia language for Gaussian Process Regression, Self Organizing Maps, and Generative Topographic Mapping.
 
 
 
-In this chapter, we discuss the relevant techniques from machine learning that we will employ throughout the rest of this dissertation.  
+%% NOTE: Good way to start is with the question: What is a model? We can discuss the differences between mechanistic models (i.e. physics equations), their free parameters (constants of nature) and other types of models such as the non-parametric, nonlinear models used in machine learning. Further, we can discuss how machine learning models often display have the desirable trait of being a \textbf{universal approximator}. This will naturally lead to a discussion of function expansions (Taylor, Fourier, other polynomial expansions, etc...) and how they scale poorly (exponential) with increasing dimension. Machine learning models essentially allow us to do the same thing: perform a function expansion given data but in a way that can scale well to arbitrary dimension (features) of data. This allows us to build predictive models without necessarily needing to prescribe *all* of the physics. From another perspective, this framework allows us to incorporate our physics knowledge from well-behaved or linearized domains in order to *fit the residual* behavior with a sophisticated data-driven approach.
 
+%% discuss role in science in particular (i.e. calibration, modeling, etc...)
 
+%% discuss pushback against use in science and need for methods which simultaneously provide uncertainty bounds. Also describe types of ML e.g. supervised, unsupervised, generative, etc...
 
+%% this is a good place for the Chihuahua vs Muffin meme... and use this to motivate incorportating physical knowledge into the machine learning process as a key feature for scientific applications... we have more constraints!
 
-
-
-NOTE: Good way to start is with the question: What is a model? We can discuss the differences between mechanistic models (i.e. physics equations), their free parameters (constants of nature) and other types of models such as the non-parametric, nonlinear models used in machine learning. Further, we can discuss how machine learning models often display have the desirable trait of being a \textbf{universal approximator}. This will naturally lead to a discussion of function expansions (Taylor, Fourier, other polynomial expansions, etc...) and how they scale poorly (exponential) with increasing dimension. Machine learning models essentially allow us to do the same thing: perform a function expansion given data but in a way that can scale well to arbitrary dimension (features) of data. This allows us to build predictive models without necessarily needing to prescribe *all* of the physics. From another perspective, this framework allows us to incorporate our physics knowledge from well-behaved or linearized domains in order to *fit the residual* behavior with a sophisticated data-driven approach.
-
-discuss role in science in particular (i.e. calibration, modeling, etc...)
-
-discuss pushback against use in science and need for methods which simultaneously provide uncertainty bounds. Also describe types of ML e.g. supervised, unsupervised, generative, etc...
-
-this is a good place for the Chihuahua vs Muffin meme... and use this to motivate incorportating physical knowledge into the machine learning process as a key feature for scientific applications... we have more constraints!
-
-also discuss statistical v.s. deep learning
+%% also discuss statistical v.s. deep learning
 
 
 %------------------------------------------------------------------------------------------%
@@ -217,7 +211,7 @@ Better yet, this system is linear in $\lambda$ even though the original differen
 %% Based on my notes from \href{https://github.com/john-waczak/MLJGaussianProcesses.jl/blob/main/notebooks/gpr/gaussian_process_regression_overview.ipynb}{this repo}
 %% The following is based on the book \textbf{Gaussian Processes for Machine Learning} by Carl Edward Rasmussen and Christopher K. I. Williams \cite{gaussian-process-book}. You can find the free online book \href{https://gaussianprocess.org/gpml/}{here}.
 
-Gaussian Process Regression (GPR) is a powerful technique for non-linear, non-parametric supervised machine learning. In this section we present a pedagogical overview of the method (the kind the author wishes he had access when getting started) as we will use the technique for both the Robot Team and to model absorption cross sections and quantum yields for photolysis reactions in Chapter 6. To begin, let's first consider a motivating example: \textbf{Linear Regression}. We will use this guiding example to derive GRP from a \textit{weight space view}. After this derivation, we will suggest a simpler, but more abstract derivation using a \textit{function space view}. First let's set up some data we can use for training:
+Gaussian Process Regression (GPR) is a powerful technique for non-linear, non-parametric supervised machine learning. In this section we present a pedagogical overview of the method (the kind the author wishes he had access when getting started) as we will use the technique for both the Robot Team and to model absorption cross sections and quantum yields for photolysis reactions in Chapter 6. To begin, let's first consider a motivating example: \textbf{Linear Regression}. We will use this guiding example to derive GPR from a \textit{weight space view}. After this derivation, we will suggest a simpler, but more abstract derivation using a \textit{function space view}. 
 
 \subsubsection{The Weight Space View}
 
@@ -231,7 +225,7 @@ We consider a dataset $\mathcal{D}$ with $n$ observations
 \item $y_i$ is the $i^{th}$ target
 \end{itemize}
 
-Linear regression is easily understood in terms of \textit{linear algebra}. We therefore collect our dataset $\mathcal{D}$ into a $D \times n$ dimensional \href{https://en.wikipedia.org/wiki/Design_matrix}{\textbf{Design Matrix}}. Note that we have used a transposed definition (features are rows, records are columns) as Julia is a column-major language (like Matlab and Fortran).
+Linear regression is easily understood in terms of \textit{linear algebra}. We therefore collect our dataset $\mathcal{D}$ into a $D \times n$ dimensional \href{https://en.wikipedia.org/wiki/Design_matrix}{\textbf{Design Matrix}}. 
 
 \begin{equation}
   X := \begin{pmatrix}
@@ -252,6 +246,7 @@ so that the full training set becomes
 \begin{equation}
   \mathcal{D} := (X, \mathbf{y})
 \end{equation}
+Note that we have used a transposed definition (features are rows, records are columns) as Julia is a column-major language (like Matlab and Fortran).
 
 Standard linear regression is a model of the form
 \begin{equation}
@@ -264,29 +259,24 @@ where $\mathbf{w}$ is the $D$-dimensional vector of weights. By minimizing the m
   \mathbf{w} = (XX^T)^{-1}X\mathbf{y}
 \end{equation}
 
-
-Note, this can also be easily obtained geometrically by finding the vector with the shortest distance to the hyperplane defined by the column space of $X$. This corresponds to solving the \href{https://en.wikipedia.org/wiki/Ordinary_least_squares#Normal_equations}{normal equations}.
-
+This can also be easily obtained geometrically by finding the vector with the shortest distance to the hyperplane defined by the column space of $X$. This corresponds to solving the \href{https://en.wikipedia.org/wiki/Ordinary_least_squares#Normal_equations}{normal equations}
 \begin{equation}
-  XX^T \mathbf{w} = X\mathbf{y}
+  XX^T \mathbf{w} = X\mathbf{y}.
 \end{equation}
 
 The following demonstrates this procedure on a simple dataset
-
 \begin{figure}[h]
   \begin{centering}
     \includegraphics[width=0.9\columnwidth]{ml-figures/gpr/linear-regression.pdf}
   \end{centering}
   \caption{A standard linear regression fit on some noisy data.}
 \end{figure}
-
 We can also fit a y-intercept (aka \textit{bias}) by augmenting the design matrix $X$ to contain an extra row with all $1$'s, i.e.
-
 \begin{equation}
   X[D+1, :] = (1, ..., 1)
 \end{equation}
 
-Standard linear regression assumes that are data $\mathcal{D}$ are perfect but we can clearly see that the above data are noisy. To account for this, we need to make our model \textit{Bayesian} by augmenting it to consider the measurement error. We define
+Standard linear regression assumes that our data, $\mathcal{D}$, are perfect, but we can clearly see that the above data are noisy. To account for this, we need to make our model \textit{Bayesian} by augmenting it to consider the measurement error. We define
 \begin{align}
     f(\mathbf{x}) &= \mathbf{x}^T\mathbf{w} \\
     \mathbf{y} &= f(\mathbf{x}) + \mathbf{\epsilon} \\
@@ -369,7 +359,7 @@ so that
 \end{equation}
 
 
-Let's now take a break from our Bayesian regression discussion and return to the standard linear regression model for a moment. The key drawback of linear models like this is, of course, that they're \textit{linear}!. Considering that many (most) \textit{interesting} relationships are non-linear, how can we extend our simple linear model to enable us to perform complicated non-linear fits?
+Let's now take a break from our Bayesian regression discussion and return to the standard linear regression model for a moment. The key drawback of linear models like this is, of course, that they're \textit{linear}! Considering that many (most) \textit{interesting} relationships are non-linear, how can we extend our simple linear model to enable us to perform complicated non-linear fits?
 
 In the parlance of machine learning, the simple solution is to do \href{https://en.wikipedia.org/wiki/Feature_engineering}{feature engineering}. If our inital feature vector is
 \begin{equation}
@@ -509,7 +499,7 @@ By this point, we are very familiar with the Gaussian distribution, a.k.a. the N
 }\\
 
 
-To see where this comes from, recall that in our previous derivation, we already made the assumption that all our our data points $\mathcal{D}$ are i.i.d. Gaussian distributed. A gaussian process is the natural extension of this and makes the assumption that the continuous set from which are data are sampled are **so Guassian** that any finite sample will be jointly Gaussian distributed. The term *process* is used to distinguish between finite collections of random variables (distributions) and their continuous counterparts described here.
+To see where this comes from, recall that in our previous derivation, we already made the assumption that all our our data points $\mathcal{D}$ are i.i.d. Gaussian distributed. A gaussian process is the natural extension of this and makes the assumption that the continuous set from which are data are sampled are so Guassian that any finite sample will be jointly Gaussian distributed. The term process is used to distinguish between finite collections of random variables (distributions) and their continuous counterparts described here.
 
 Because each finite subset of this continuous collection is jointly gaussian, we can completely specify a Gaussian Process with two functions: the mean function $m(\mathcal{x})$ and the covariance function $k(\mathbf{x},\mathbf{x}')$. To denote this, we typically write
 \begin{equation}
@@ -659,7 +649,7 @@ If this looks confusing, consider Bayes rule for 3 events $R, H, S$. We have:
   &= \frac{P(H \vert R, S)P(R\vert S)P(S)}{P(H\vert S)P(S)} \\
   &= \frac{P(H \vert R, S)P(R\vert S)}{P(H\vert S)}
 \end{align}
-To get the result, just think of $\theta$ and $\mathcal{H}_i$ as a single \textit{event} and translate the above to distribution functions. See \href{https://math.stackexchange.com/questions/1281454/bayes-rule-with-3-variables}{stack exchange link}.
+To get the result, just think of $\theta$ and $\mathcal{H}_i$ as a single \textit{event} and translate the above to distribution functions. % See \href{https://math.stackexchange.com/questions/1281454/bayes-rule-with-3-variables}{stack exchange link}.
 
 The prior $p(\mathbf{w}\vert \theta, \mathcal{H}_i)$ encodes any knowledge we have about the parameters prior to seeing the data. The denominator is the \textit{marginal likelihood} and is given by
 \begin{equation}
@@ -682,7 +672,7 @@ with normlization constant
  p(\mathbf{y}\vert X) = \sum_i p(\mathbf{y} \vert X, \mathcal{H}_i)p(\mathcal{H}_i).
 \end{equation}
 
-Depending on the model details, these integrals may be intractable without approximations or Monte Carlo methods. Since we rarely have sufficient knowledge to form a hyperparameter prior, one often attempts to maximize the marginal likelihood $p(\mathbf{y} \vert X, \theta, \mathcal{H}_i)$ with respect to the hyperparameters $\theta$ instead. This is known as Type II Maximium Likelihood Estimation. \textcolor{red}{(Refer to prior section on this in the Theoretical Techniques chapter).} In the case of Gaussian Process Regression, we are once again saved by the fact that every piece has a convenient functional from resulting in analytically tractible integrals for the marginal likelihood function. We find
+Depending on the model details, these integrals may be intractable without approximations or Monte Carlo methods. Since we rarely have sufficient knowledge to form a hyperparameter prior, one often attempts to maximize the marginal likelihood $p(\mathbf{y} \vert X, \theta, \mathcal{H}_i)$ with respect to the hyperparameters $\theta$ instead. This is known as Type II Maximium Likelihood Estimation. In the case of Gaussian Process Regression, we are once again saved by the fact that every piece has a convenient functional from resulting in analytically tractible integrals for the marginal likelihood function. We find
 \begin{equation}
     \ln p(\mathbf{y}\vert X, \theta) = -\frac{1}{2}\mathbf{y}^T(K_f + \sigma_n^2 I)^{-1}\mathbf{y} - \frac{1}{2}\ln\lvert K_f + \sigma_n^2 I \rvert -\frac{n}{2}\ln(2\pi)
 \end{equation}
@@ -695,7 +685,7 @@ where we have employed the natural logarithm remove the pesky exponentials and a
   \label{fig:gpr-fit-comparison}
 \end{figure}
 
-
+To enable easy application of Gaussian Process Regression in Julia's machine learning framework \texttt{MLJ.jl}, we have created an open-source implementation which is made freely available at \url{https://github.com/john-waczak/MLJGaussianProcesses.jl/tree/main}
 
 \subsection{Decision Trees}
 
@@ -1081,7 +1071,7 @@ If we now take $\hat{q}$ to be the $\frac{\lceil(n+1)(1-\alpha) \rceil}{n}$-th q
 An easy-to-use implementation of these methods is provided by the open-source Julia package \texttt{ConformalPrediction.jl} which is designed to integrate into the larger \texttt{MLJ.jl} machine learning framework. We will utilize these techniques throughout the remainder of this dissertation in order to establish uncertainty estimates for \textit{all} of our regression models.
 
 
-\textcolor{red}{UPDATE REQUIRED: we should add a couple more paragraphs referencing the key papers that develop this technique as well as a few example use cases it has been applied to}.
+%% \textcolor{red}{UPDATE REQUIRED: we should add a couple more paragraphs referencing the key papers that develop this technique as well as a few example use cases it has been applied to}.
 
 %------------------------------------------------------------------------------------------%
 

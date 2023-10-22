@@ -1,10 +1,8 @@
 \chapter{A Chemical Data Assimilation Framework for Indoor Air Quality Assessment}
 
-As described in the introduction, the COVID-19 pandemic has catalyzed global concern for indoor air quality. In order to provide actionable insights, a comprehensive analysis of the relevant chemistry is needed to establish how chemical constituents interact in indoor spaces. Much of outdoor air chemistry is driven by light; short wavelength photons can break bonds through photolysis and changing light conditions due to the rotation of the Earth introduce diurnal variations in both temperature and the abundance of light to initialize relevant reactions. Very little UV light makes it through building windows and into the indoor space. Additionally there is a large variability in indoor light sources including LED, fluorescent, incandescent and others which each have very different spectral properties. Therefore to establish a baseline for the relevant chemical processes indoors pertaining to air quality, we have developed an advanced sensing suite called the HEART chamber. By combining high quality measurements for a variety of source gases and aerosols together with detailed characterization of indoor photolysis we are able to produce rich data sets constraining the breadth of possible reactions in indoor spaces.
+As described in the introduction, the COVID-19 pandemic has catalyzed global concern for indoor air quality. In order to provide actionable insights, a comprehensive analysis of the relevant chemistry is needed to establish how chemical constituents interact in indoor spaces. Much of outdoor air chemistry is driven by light; short wavelength photons can break bonds through photolysis and changing light conditions due to the rotation of the Earth introduce diurnal variations which drive relevant atmospheric reactions. Very little UV light makes it through building windows and into the indoor spaces. Additionally there is a large variability in indoor light sources including LED, fluorescent, incandescent and others which each have very different spectral properties. Therefore to establish a baseline for the relevant chemical processes indoors pertaining to air quality, we have developed an advanced sensing suite called the HEART chamber as described in chapter 2. By combining high quality measurements for a variety of source gases and aerosols together with detailed characterization of indoor photolysis we are able to produce rich data sets constraining the breadth of possible reactions in indoor spaces. Using this high quality data, we can then use techniques of data assimilation to constrain complicated chemical kinetics mechanism in order to infer the abundance of species that are too reactive to directly measure.
 
-Another consequence of increased interest in indoor air quality (IAQ), many emerging technologies are now in development which seek to improve IAQ by denaturing airborne pathogens and removing chemicals of concern. In collaboration with a Dallas-based company called ActivePure, we are developing a highly detailed chemical kinetics model which when combined with the high quality data from our HEART chamber using data assimilation techniques, will enable us to identify the key reactive species involved in their advanced photocatalytic oxidation technology.
-
-In this chapter we first introduce the relevant physics for reaction kinetics and photolysis. Then we present preliminary results on a detailed evaluation of photolysis rates as well as initial measurements from our HEART chamber as well as chemical kinetics evaluations.
+In this chapter we first introduce the relevant physics for reaction kinetics and photolysis which we will use in the construction and evaluation of our reaction mechanism models. Then we present preliminary results on a detailed evaluation of photolysis rates as well as initial measurements from our HEART chamber chemical kinetics evaluations using our data assimilation frameowrk.
 
 \section{Physics of Chemical Reactions: Chemical Reaction Kinetics}
 
@@ -259,7 +257,7 @@ which in terms of energy yields
 In summary, we have established that for bimolecular reactions, the (simple) theory of molecular collisions allows us to model the reaction velocity by
 \begin{align}
   v &= k(T)[A][B] \\
-  k(T) &\approx \pi d_{AB}^2 \sqrt{\frac{8k_BT}{\pi \mu}}\left(1 + \frac{E_a}{k_BT}\right)\exp(-E_a/k_BT)
+  k(T) &\approx \pi d_{AB}^2 \sqrt{\frac{8k_BT}{\pi \mu}}\left(1 + \frac{E_a}{k_BT}\right)\exp(-E_a/k_BT) \label{eq:collision-rrate}
 \end{align}
 
 To derive a more accurate form for the rate coefficient $k$, we can result to PES, simulation, and statistical sampling techniques \cite[for example]{pes-h-h2, pes-for-k}. For our purposes, it is enough to have justified the kinds of functional dependence on temperature we can expect to encounter when when collating available data on rate coefficients in the present literature.
@@ -277,224 +275,239 @@ The next relevant reaction type we will utilize are so called \textit{trimolecul
 \begin{equation}
   \mathrm{A} + \mathrm{B} + \mathrm{M} \longrightarrow \text{Products}
 \end{equation}
+where $M$ is a placeholder for any \textit{third} molecule.
 
+The final type of reaction we will consider is photolysis for which we may write
+\begin{equation}
+  \mathrm{A} + h\nu \longrightarrow \text{Products}.
+\end{equation}
 
+Bimolecular and trimolecular reactions have rate constants that can, in general, be written as
+\begin{equation}
+  k(T,P) = f(T,P)\exp(-E_a/k_BT)
+\end{equation}
+where $E_a$ is the activation energy, and the function $f(T,P)$ encodes extra temperature and pressure dependence for each particular reaction, as in the example provided by collision theory in equation \ref{eq:collision-rrate}.
 
-Give a summary of kinetics for each of the 3 reaction types. Then finish by writing the form of the combined differential equations for the entire system (and it's Jacobian)
+The reaction rate for photolysis reactions is (unsurprisingly) called the \textit{photolysis rate} and is a function of three key parameters: The incident spectral irradiance, $I$ measured in $\text{Photonts}\cdot \text{s}^{-1}\cdot \text{cm}^{-2}\cdot \text{nm}^{-1}$ and measures the effective photon flux through a cross section of area per wavelength. The second key parameter is the absorption cross section $\sigma$ measured in $\text{cm}^2$. And the third is the quantum yield, $\Phi$ which is unitless \cite{photolysis-rate-determination}. Together these three quantities combine to give a photolysis rate of
+\begin{equation}
+  k(T) = \int_0^\infty I(\lambda)\sigma(T,\lambda)\Phi(T,\lambda) d \lambda
+\end{equation}
+By way of analogy, we can think of the spectral irradiance as darts being thrown at a target. The absorption cross section, $\sigma$, is therefore the effective size of the dartboard, and the quantum yield $\Phi$ is the chance that a dart thrown at the target actually sticks into the board. We should note that the photolysis rate is often denoted by $j$, however we have chosen to use $k$ to simplify writing the kinetic model for the \textit{entire} reactive system.
 
+Suppose we have a collection of $M$ reactants in a mechanism consisting of $N$-many reactions of each of the above-mentioned types. The time dependent concentrations of each species, $u_i(t)$ can therefore be written as
 
+\begin{equation}
+  \begin{cases}
+    \dfrac{d{u}_i}{dt}(t) = -\sum_j r_jS_{ij} \\
+    r_j = k_j\prod\limits_{\ell}^{S_{\ell j}>0} u_{\ell}^{S_{ij}}
+  \end{cases}
+\end{equation}
+where $S_{ij}$ is the so-called \textit{Stoichiometry matrix} whose entries are the signed stoichiometric coefficients such that $S_{ij}$ is positive if species $i$ appears as a reactant in reaction $j$, and negative if it appears as a product.
+
+In order to simulate such a mechanism, we will need to provide functional forms for each reaction rate coefficient function, $k_j$. In the next section, we describe our methodology for doing this using absorption cross section and quantum yield data scraped from publicly available scientific databases together with real-time irradiance spectra captured using a high resolution UV-NIR spectrometer.
 
 \section{Characterization of Photolysis}
 
-
-
-Give an overview for photolysis (perhaps borrow from Dr. Lary's Textbook)
-
-For experimental reasons, the wavelengths ($\lambda$) most commonly used for initiating photochemical processes vary between the ultraviolet ($200-250$ nm) and the near infrared ($750-800$ nm). Light at these wavelengths has an energy which corresponds roughly to $600-50 $ kJ $\text{mol}^{-1}$, which is very close to the energies of many chemical bonds.
-
+%% For experimental reasons, the wavelengths ($\lambda$) most commonly used for initiating photochemical processes vary between the ultraviolet ($200-250$ nm) and the near infrared ($750-800$ nm). Light at these wavelengths has an energy which corresponds roughly to $600-50 $ kJ $\text{mol}^{-1}$, which is very close to the energies of many chemical bonds.
+To estimate the photolysis rates for photochemical reactions we must first collect data for the absorption cross section and quantum yields of all relevant chemical species. The MPI-Mainz UV/VIS Spectral Atlas of Gaseous Molecules of Atmospheric Interest contains experimental data meticulously gathered from thousands of research publications for a plethora of chemical species \cite{mpi-uvvis-database}. We scraped this database for all absorption cross section and quantum yield data provided at a variety of temperatures which we then use to generate training data in order to fit a Gaussian Process Regression model to estimate $\sigma$ and $\Phi$ as a function of temperature. For the remainder of this section, we will describe the machine learning methodology for the particular case of ozone, $\mathrm{O_3}$, and its associated photocatalytic dissociation $\mathrm{O}_3 \longrightarrow \mathrm{O(1D)} + \mathrm{O_2}$.
 
 
 
 \subsection{Absorption Cross Sections}
 
-\begin{figure}[h]
+The collected absorption cross section data ozone are illustrated in a log-plot in Figure \ref{fig:cs-o3-data}.
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-data.png}
   \caption{The collected absorption cross section data for Ozone, $\mathrm{O_3}$, across a variety of temperatures.}
   \label{fig:cs-o3-data}
 \end{figure}
-
-\begin{figure}[h]
+As we can see, the bulk of the available data are for temperatures near the range $292-295$ Kelvin with a few sparse records at higher and lower temperatures. Because the Gaussian Process Regression model requires the Cholseky decomposition of a kernel matrix of size $N\times N$ ($N$ being the number of data records), we first perform a representative sub-sampling to generate a suitable train/test partition. The distribution of these records is illustrated in Figure \ref{fig:cs-o3-repr}.
+\begin{figure}[!hbt]
   \centering
-  \includegraphics[width=0.95\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-data-distribution.png}
-  \caption{The distribution of cross section data available for $\mathrm{O_3}$.}
-  \label{fig:cs-o3-dist}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-representative-subsample.png}
+  \includegraphics[width=0.9\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-representative-subsample.png}
   \caption{The distribution of subsampled $\mathrm{O}_3$ cross section data}
   \label{fig:cs-o3-repr}
 \end{figure}
 
-\begin{figure}[h]
+Using this dataset, we train a Gaussian Process Regression model to estimate $\log(\sigma)$. We fit the logarithm in order to make sure that the model learns the key absorption peaks since the values of $\sigma$ are observed to vary by multiple orders of magnitude. We chose to use a squared exponential kernel with hyperparameters for the variances as well as lengths scales for both $\lambda$ and $T$. Additionally, the mean value for the GPR is set to a default value of $-30$ to prevent spurious values from being estimated in wavelength regions of few records. A scatterplot evaluating the resulting fit is given in Figure \ref{fig:cs-o3-scatter}
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-gpr-scatter.png}
   \caption{A scatter plot of the resulting GPR fit evaluated on the training set (green) and a holdout testing dataset (red).}
   \label{fig:cs-o3-scatter}
 \end{figure}
-
+From this, we can clearly see that the model has done a good job fitting the collected data. Next, we use the model to predict $\sigma(T,\lambda)$ for a variety of temperatures as illustrated in Figure \ref{fig:cs-o3-pred}
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-prediction.png}
   \caption{Predicted $\mathrm{O_3}$ cross section as a function of temperature.}
   \label{fig:cs-o3-pred}
 \end{figure}
-
-\begin{figure}[h]
+These curves illustrate the temperature dependence of our GPR fit. For temperatures above $298$ K for which we had few records near $400$ nm, the model has biased towards the mean value of $-30$ (i.e. an effective cross section of $0$ cm\textsuperscript{2}. Because the data is sparse in this temperature range we should not implicitly trust the inferred values at high temperatures. To further illustrate this effect, we can plot the estimated cross section for two selected temperatures with uncertainty estimates obtained from the variance of the posterior distribution. An example of this is shown in Figure \ref{fig:cs-o3-fit-unc} below.
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/cross-section/o3-prediction-uncertainty.png}
   \caption{Predicted $\mathrm{O_3}$ cross section for two temperatures with the associated uncertainty visualized. At $T=293$ K, we have many data points and therefore the associated fit uncertainty is small. For $T=295$ K, there are many fewer data points available above $800$ nm leading to a larger fit uncertainty.}
   \label{fig:cs-o3-fit-unc}
 \end{figure}
-
+The fit for $293$ Kelvin is well represented in the training data and therefore the associated uncertainty is low. For a temperature of $295$ K, there are few available measurements above $800$ nm, and consequently, the uncertainty estimated by our GPR is increased in this region (as we should hope).
 
 \subsection{Quantum Yields}
 
-\begin{figure}[h]
+To fit the quantum yield data, the procedure is nearly identical to that of the absorption cross section, however there is often far less data available for the quantum yield. As we shall demonstrate for the case of $\mathrm{O_3} + h\nu \longrightarrow \mathrm{O(1D)} + \mathrm{O_2}$, for regions where we do not have enough data to establish a suitable fit, we default to either a value of $1$ or $0$ depending on the region of wavelength space. Figure \ref{fig:qy-o3-data} illustrates the available quantum yield data for this reaction.
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.95\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-data.png}
   \caption{Data for the quantum yield of $\mathrm{O_3}$. Sources of data are far more sparse than for the absorption cross section.}
   \label{fig:qy-o3-data}
 \end{figure}
-
-\begin{figure}[h]
+In the panel on the left, we see that the quantum yield appears to have little temperature dependence. On the right we color the data points according to the reference they were scraped from. The distribution of the the data is illustrated in Figure \ref{fig:qy-o3-dist}.
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.95\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-distribution.png}
   \caption{Distribution for the $\mathrm{O_3}$ quantum yield data.}
   \label{fig:qy-o3-dist}
 \end{figure}
+Here we see that the available data come from two temperatures and most of the wavelength dependence is estimated near steep drop in $\Phi$ between $300$ and $330$ nm.
 
-\begin{figure}[h]
+We the resulting GPR fit is evaluated in Figure \ref{fig:qy-o3-fit}.
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.95\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-fit.png}
   \caption{Resulting GPR fit for $\mathrm{O_3}$ quantum yield data. Left: A scatter plot. Right: a quantile-quantile plot.}
   \label{fig:qy-o3-fit}
 \end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-prediction.png}
-  \caption{Predicted quantum yield as a function of temperature for $\mathrm{O_3}$. Despite the goodness of fit, setting the mean to nearly zero to prevent edge effects causes the GPR to approach in wavelength regions with little data.}
+It is obvious that we have far less data to fit, and as a consequence, we see in Figure \ref{qy-o3-pred} that the model estimates a quantum yield of zero between $250$ and $270$ nanometers where there is a massive data gap. As we can not justify this drop on physical grounds, we construct a hybrid fit by interpolating between the estimates in these regions. For wavelengths below the first available datapoint, we default to a value of $1$. Similarly, for wavelengths beyond our last available record, we default to a value of $0$.
+\begin{figure}[!hbt]
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-prediction.png}
+    \caption{Predicted quantum yield for $\mathrm{O_3}$}
+  \end{subfigure}
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-final.png}
+    \caption{Final quantum yield estimates}
+  \end{subfigure}
   \label{fig:qy-o3-pred}
 \end{figure}
 
 
-\begin{figure}[h]
+\subsection{Irradiance Spectra and Photolysis Rate Determination}
+
+The last piece needed to estimate photolysis rates is the spectral irradiance. Using a calibrated Ocean Optics HR4000 UV-VIS spectrometer, we are able to measure the absolute irradiance spectrum every 15 seconds in units of $\mu\text{W}\cdot\text{cm}^{-2}\cdot\text{nm}^{-1}$. To obtain the desired units in terms of Photons, we utilize the plank relation $E(\lambda)=hc/\lambda$ to convert to $\text{Photons}\cdot{s}^{-1}\cdot\text{cm}^{-2}\cdot\text{nm}^{-1}$. A sample spectrum captured within an office building is shown in Figure \ref{fig:mean-irradiance}.
+\begin{figure}[!hbt]
   \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-final.png}
-  \caption{Final quantum yield predictions where we have forced the value to be $1$ below a reasonable threshold wavelength.}
-  \label{fig:qy-o3-final}
-\end{figure}
-
-
-\subsection{Irradiance Spectra}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/mean_irradiance.png}
+  \includegraphics[width=0.7\columnwidth]{heart-chamber/photolysis/mean_irradiance.png}
   \caption{A plot of the spectral irradiance captured within a typical office building and averaged over 8 hours.}
   \label{fig:mean-irradiance}
 \end{figure}
 
-
-Here we can discuss the collection of irradiance spectra using our UV-VIS Ocean Optics spectrometer. Importantly, we can discuss the correct unit conversion so as to obtain \textit{photon fluxes} rather than just $\mu$Ws energy units.
-
 \subsection{Photolysis Rate Determination}
 
-Here we can discuss how we perform the numerical integration together with the captured intensity spectra
-
-\begin{figure}
+Finally, using numerical quadrature to integrate the measured irradiance spectrum together with the estimated absorption cross section and quantum yield, we are able to obtain the photolysis rate for each desired reaction. A comparison of all three quantities is provided in figure \ref{fig:photo-rate-example} from which we estimate a photolysis rate of ~$10^{-4}$ s.
+\begin{figure}[!hbt]
   \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/photolysis_plot.pdf}
+  \includegraphics[width=0.7\columnwidth]{heart-chamber/photolysis/photolysis_plot.pdf}
   \caption{A comparison of the absorption cross section, quantum yield, and captured irradiance spectrum used to determine the photolysis rate for an $\mathrm{O_3}$ photolysis channel.}
-  \label{fig:phot-rate-example}
-\end{figure}
-
-\subsection{Next Steps}
-
-Discuss use of Conformal Prediction as a way to enable fits using different regressors (ideally XGBoost or some other boosted/bagged tree method) without sacrificing the necessary uncertainty estimates. Discuss the potential propagation of uncertainty
-
-
-\section{HEART Chamber Data}
-
-Initial data collected for evaluation of different PCO configurations.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/H2O.pdf}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/formaldehyde.pdf}
+  \label{fig:photo-rate-example}
 \end{figure}
 
 
-The $\mathrm{H_2O_2}$ is a good demonstrate of a high uncertainty instrument close to the detection limits.
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/H2O2.pdf}
-\end{figure}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/humidity.pdf}
-\end{figure}
+%% \section{HEART Chamber Data}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/temperature.pdf}
-\end{figure}
+%% Initial data collected for evaluation of different PCO configurations.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/negative_ions.pdf}
-\end{figure}
+%% \begin{figure}[h]
+%%   \centering
+%%   \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/H2O.pdf}
+%% \end{figure}
+
+%% \begin{figure}[h]
+%%   \centering
+%%   \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/formaldehyde.pdf}
+%% \end{figure}
+
+
+%% The $\mathrm{H_2O_2}$ is a good demonstrate of a high uncertainty instrument close to the detection limits.
+%% \begin{figure}[h]
+%%   \centering
+%%   \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/H2O2.pdf}
+%% \end{figure}
+
+%% \begin{figure}[h]
+%%   \centering
+%%   \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/humidity.pdf}
+%% \end{figure}
+
+%% \begin{figure}[h]
+%%   \centering
+%%   \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/temperature.pdf}
+%% \end{figure}
+
+%% \begin{figure}[h]
+%%   \centering
+%%   \includegraphics[width=0.85\columnwidth]{heart-chamber/instrument-measurements/negative_ions.pdf}
+%% \end{figure}
 
 
 \section{Chemical Data Assimilation}
 
-Discuss the mechanisms used. Also discuss the generation of pseudo observations with uncertainties determined by considering both the temporal variogram and the representativeness for the pseudo-observation period. We should probably also come up with some number of observations performed...
+In this section we present preliminary results from our chemical data assimilation model. The underlying chemical mechanism is an extension of \textit{AutoChem}, a NASA release software from David Lary \cite{Lary1999a, Lary2003a} augmented with reactions from the \textit{Master Chemical Mechanism} \cite{mcm-v3}. Together this yields a reactive system of over $5000$ chemical species and $16,000$ chemical reactions. The preliminary results discussed in this section have been carried out for a subset of the full mechanism consisting of ~1000 critical reactions including relevant ion chemistry. For computational efficiency, we have developed the code using the Julia programming language to take advantage of the cutting-edge differential equations suite, \texttt{DifferentialEquations.jl} which provides optimized solvers for the large, stiff systems encountered in our chemical mechanism \cite{differentialequations.jl}.
 
+To develop our data processing pipeline and the associated assimilation code for use with the HEART chamber described in chapter 2, we have collected an initial data set using a subset of our sensors to sample the ambient air within the room. These include a variety of gas sensors for $\mathrm{CO_2}$, $\mathrm{NO_x}$, $\mathrm{O_3}$, $\mathrm{H_2O_2}$, $\mathrm{H_2O}$, and others in addition to ambient temperature and air pressure measurements. Data were collected over an ~8 hour period providing over 1 million individual records.
 
-
-
-\begin{figure}[h]
+The first step of the assimilation pipeline is to apply the 4d-var algorithm outlined in chapter 3 in order to estimate reasonable initial conditions for all species integrated in the mechanism. These values are initialized using typical atmospheric values provided by the Master Chemical Mechanism together with the initial samples from our instruments. Figure \ref{fig:4d-var}
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{heart-chamber/assimilation/4dvar/losses.pdf}
+  \caption{Training losses for 4d-var applied to our initial data collection.}
+  \label{fig:4d-var}
 \end{figure}
-Here we can discuss the 2 stage procedure where we first use ADAM and then we finish with BFGS to prevent getting stuck in a local minimum.
+A two stage training procedure was utilized starting with the ADAM optimizer which is known to converge rapidly. A second, final round of optimization is then performed using the BFGS optimizer to make sure we are not stuck in a local minimum.
 
-
-
-EKF results
-
-\begin{figure}[h]
+Next, the Ensemble Kalman Filter is used to integrate the starting concentrations estimated by the 4d-var step forward in time. At each instance where we have a measurement, the EKF algorithm adjusts the current concentrations to minimize the difference between simulation and data with consideration for the uncertainties of each. This allows for the simulation to remain valid over long integration periods \textit{and} makes it possible to infer the time-dependent concentrations of chemical species which we do not measure directly. Figure \ref{fig:h2o2} illustrates the time series of $\mathrm{H_2O2}$  as a volumetric mixing ratio in parts-per-trillion (ppt).
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{heart-chamber/assimilation/EKF/H2O2.pdf}
+  \caption{Assimilation results for $\mathrm{H_2O_2}$.}
+  \label{fig:h2o2}
 \end{figure}
+The gas analyzer producing the $\mathrm{H_2O_2}$ concentrations are close to the detection limits as evidenced by the large error bars. However, due to the propagation of information between chemical species by the EKF algorithm, the estimated analysis uncertainty is actually reduced as visualized by the colored ribbon around each estimate.
 
-\begin{figure}[h]
+Figure \ref{fig:hcho} illustrates similar time series obtained for the concentration of formaldehyde ($\mathrm{HCHO}$).
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{heart-chamber/assimilation/EKF/HCHO.pdf}
+  \caption{Assimilation results for formaldehyde.}
+  \label{fig:hcho}
 \end{figure}
+For this species, the analysis is able to follow the measurements however the assimilation has resulted in increased uncertainty estimates.
 
-\begin{figure}[h]
+
+Finally, in Figure \ref{fig:oh} we show the time series of concentrations for the highly reactive hydroxyl radical, $\mathrm{OH}$.
+\begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{heart-chamber/assimilation/EKF/OH.pdf}
+  \caption{Assimilation results for the hydroxyl radical $\mathrm{OH}$}
+  \label{fig:oh}
 \end{figure}
+The hydroxyl radical is a highly reactive oxygen species which is difficult to measure directly due to its short lifetime (it tends to react with ~50 molecular diameters). Using this assimilation framework we are able to infer the abundance of $OH$ in the ambient room to be at the scale of a few parts-per-quadrillion.
 
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{heart-chamber/assimilation/ions/ion_totals.png}
-\end{figure}
-
-
-Add in numbers/plots for $\mathrm{NO_3^-}$ ions from latest implementation of the mechanism.
-
+The code for this project is made freely available at \url{https://github.com/john-waczak/AutoChem.jl}. A list of the reactions used in this preliminary investigation and their associated reaction rate coefficients are listed in Appendix A.
 
 \section{Next Steps}
 
-
-- Extend mechanism to include heterogeneous (mixed phase) reaction types
-- Extend mechanism to include fixed rate surface deposition
-- Extend mechanism to include direct generation of $\mathrm{O_2^-}$ at some rate (learned via 4d-var) for the PCO on portions
-- Incorporate the cd-EKF and continue to refine integration techniques
-- Perform fixed temperature/pressure long time integration tests per the Boldi thesis.
-- Update reaction rates further with recent JPL Kinetic evaluations.
+The next steps for this project include the following:
+\begin{enumerate}
+\item Extending the mechanism to include heterogeneous (mixed phase) reaction types.
+\item Extending mechanism to include fixed rate surface deposition.
+\item Development of a cd-EKF code for better uncertainty estimation.
+\item Perform fixed temperature/pressure long time integration tests per the Boldi thesis to evaluate agreement with predictions from equilibrium thermodynamics.
+\item Update reaction rates with recent JPL Kinetic evaluations.
+\end{enumerate}
 
 %% \section{An Evaluation of Photocatalytic Ionization}
 
