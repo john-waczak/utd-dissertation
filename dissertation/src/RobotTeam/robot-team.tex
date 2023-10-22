@@ -111,86 +111,38 @@ where $L_{ijk}$ denotes the original radiance pixel and $E_k$ denotes the downwe
   \label{fig:annoted-hsi}
 \end{figure}  
 
-Figure \ref{fig:annotated-hsi} illustrates the reflectance spectra for a variety of constituents in a sample hyperspectral data cube.
+Figure \ref{fig:annotated-hsi} illustrates the reflectance spectra for a variety of constituents in a sample hyperspectral data cube. In panel (a) we show a typical downwelling irradiance spectrum. Panels (c)-(f) show a selection of reflectance spectra for open water, a rhodamine dye plume, algae near the shore, and dead grass. Panel (b) is a visual representation of the hyperspectral data cube with reflectance at each wavelength bin along the z axis and a pseudo color image showing the imaging scene on the top.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Timing Results}
 
 
-\begin{figure}[h]
-    \includegraphics[width=0.85\columnwidth]{robot-team/georectification/regrid-timing.pdf}
-    \caption{This is a figure. Schemes follow the same formatting. If there are multiple panels, they should be listed as: (\textbf{a}) Description of what is contained in the first panel. (\textbf{b}) Description of what is contained in the second panel. Figures should be placed in the main text near to the first time they are cited. A caption on a single line should be centered.}
-    \label{fig-regridding-timing}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{ |c|c| }
+    \hline 
+    \textbf{Number of scan lines}	& \textbf{Execution time (s)}\\
+    \hline 
+    371		&   2.060	\\
+    725     &   4.227	\\
+    1000    &   5.901  \\
+    \hline 
+  \end{tabular}
+  \caption{Reflectance conversion time as a function of number of scanlines}
+  \label{tab:reflectance-times}
+\end{table}
+
+\begin{figure}[!hbt]
+  \includegraphics[width=0.85\columnwidth]{robot-team/georectification/regrid-timing.pdf}
+  \caption{}
+  \label{fig-regridding-timing}
 \end{figure}
-
-\begin{figure}[h]
-  \includegraphics[width=0.95\columnwidth]{robot-team/georectification/reflectance-timing.pdf}
-  \caption{Description}
-  \label{fig-reflectance-timing}
-\end{figure}
-
-NOTE: we need to update these timings by first copying the HSI to the local drive (off of the external hard drive). This will probably have some effect on the read/write speeds for the test.
-
-%% \begin{table}[h]
-%% \caption{Resampling times as a function of pixel resolution.\label{tab1}}
-%% \newcolumntype{C}{>{\centering\arraybackslash}X}
-%% \begin{tabularx}{\textwidth}{CC}
-%% \toprule
-%% \textbf{Resolution (m)}	& \textbf{Execution time (s)}\\
-%% \midrule
-%% 0.5		&   1.434	\\
-%% 0.4     &   1.545	\\
-%% 0.3     &   1.673   \\
-%% 0.2     &   1.802   \\
-%% 0.1     &   4.026   \\
-%% 0.05    &   10.537  \\
-%% \bottomrule
-%% \end{tabularx}
-%% \end{table}
-
-
-%% \begin{table}[h]
-%%   \caption{Loading and Reflectance Conversion Times.\label{tab1}}
-%%   \newcolumntype{C}{>{\centering\arraybackslash}X}
-%%   \begin{tabularx}{\textwidth}{CC}
-%%     \toprule
-%%     \textbf{Number of scan lines}	& \textbf{Execution time (s)}\\
-%%     \midrule
-%%     371		&   2.060	\\
-%%     725     &   4.227	\\
-%%     1000    &   5.901   \\
-%%     \bottomrule
-%%   \end{tabularx}
-%% \end{table}
-
-
-
-
-\textbf{NOTE} Stuff to do in this section:
-\begin{itemize}
-    \item  Create table with processing timings for each step on a typical HSI
-    \item Create second table comparing time for full processing including resampling to a variety of scales (e.g. 5 cm, 10 cm, 25 cm) We will want a version of the processing function that does not include the uncertainties and the spectral indices
-    \item create pipeline visualization showing size of each of the data products and their step in the pipeline (ending with a dataproduct like the NDVI)
-    \item Create a figure showing the georeferenced image on top of the satellite background 
-    \item Create another figure of the entire map with a spectral index applied to one of the dye-release datasets (to demonstrate use for real-time application like oil-spill)
-    \item create a figure of a sample HSI datacube in 3-d like from the previous paper with the rgb image on the top. 
-\end{itemize}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Discussion}
-
-- Incorporation of drone into autonomous robotic team
-- Long range wireless network (ubiquiti) for data downlink
-- Incorporation of edge-ML for direct determination of chemical concentration
-- Utility for navigation, waste removal, etc...
-
-Discuss drawbacks (striping in images) 
-
-Authors should discuss the results and how they can be interpreted from the perspective of previous studies and of the working hypotheses. The findings and their implications should be discussed in the broadest context possible. Future research directions may also be highlighted.
-
 
 
 
