@@ -2,7 +2,7 @@
 
 As described in the introduction, the COVID-19 pandemic has catalyzed global concern for indoor air quality. In order to provide actionable insights, a comprehensive analysis of the relevant chemistry is needed to establish how chemical constituents interact in indoor spaces. Much of outdoor air chemistry is driven by light; short wavelength photons can break bonds through photolysis and changing light conditions due to the rotation of the Earth introduce diurnal variations which drive relevant atmospheric reactions. Very little UV light makes it through building windows and into the indoor spaces. Additionally there is a large variability in indoor light sources including LED, fluorescent, incandescent and others which each have very different spectral properties. Therefore to establish a baseline for the relevant chemical processes indoors pertaining to air quality, we have developed an advanced sensing suite called the HEART chamber as described in chapter 2. By combining high quality measurements for a variety of source gases and aerosols together with detailed characterization of indoor photolysis we are able to produce rich data sets constraining the breadth of possible reactions in indoor spaces. Using this high quality data, we can then use techniques of data assimilation to constrain complicated chemical kinetics mechanism in order to infer the abundance of species that are too reactive to directly measure.
 
-In this chapter we first introduce the relevant physics for reaction kinetics and photolysis which we will use in the construction and evaluation of our reaction mechanism models. Then we present preliminary results on a detailed evaluation of photolysis rates as well as initial measurements from our HEART chamber chemical kinetics evaluations using our data assimilation frameowrk.
+In this chapter we first introduce the relevant physics for reaction kinetics and photolysis which we will use in the construction and evaluation of our reaction mechanism models. Then we present preliminary results on a detailed evaluation of photolysis rates as well as initial measurements from our HEART chamber chemical kinetics evaluations using our data assimilation framework.
 
 \section{Physics of Chemical Reactions: Chemical Reaction Kinetics}
 
@@ -371,14 +371,14 @@ In the panel on the left, we see that the quantum yield appears to have little t
 \end{figure}
 Here we see that the available data come from two temperatures and most of the wavelength dependence is estimated near steep drop in $\Phi$ between $300$ and $330$ nm.
 
-We the resulting GPR fit is evaluated in Figure \ref{fig:qy-o3-fit}.
+The resulting GPR fit is evaluated in Figure \ref{fig:qy-o3-fit}.
 \begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.95\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-fit.png}
   \caption{Resulting GPR fit for $\mathrm{O_3}$ quantum yield data. Left: A scatter plot. Right: a quantile-quantile plot.}
   \label{fig:qy-o3-fit}
 \end{figure}
-It is obvious that we have far less data to fit, and as a consequence, we see in Figure \ref{qy-o3-pred} that the model estimates a quantum yield of zero between $250$ and $270$ nanometers where there is a massive data gap. As we can not justify this drop on physical grounds, we construct a hybrid fit by interpolating between the estimates in these regions. For wavelengths below the first available datapoint, we default to a value of $1$. Similarly, for wavelengths beyond our last available record, we default to a value of $0$.
+It is obvious that we have far less data to fit, and as a consequence, we see in Figure \ref{fig:qy-o3-pred} that the model estimates a quantum yield of zero between $250$ and $270$ nanometers where there is a massive data gap. As we can not justify this drop on physical grounds, we construct a hybrid fit by interpolating between the estimates in these regions. For wavelengths below the first available datapoint, we default to a value of $1$. Similarly, for wavelengths beyond our last available record, we default to a value of $0$.
 \begin{figure}[!hbt]
   \begin{subfigure}{.5\textwidth}
     \centering
@@ -390,6 +390,7 @@ It is obvious that we have far less data to fit, and as a consequence, we see in
     \includegraphics[width=0.85\columnwidth]{heart-chamber/photolysis/o3/quantum-yield/o3-qy-final.png}
     \caption{Final quantum yield estimates}
   \end{subfigure}
+  \caption{Estimated quantum yields as a function of temperature and the resulting final fit.}
   \label{fig:qy-o3-pred}
 \end{figure}
 
