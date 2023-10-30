@@ -12,12 +12,23 @@ bibliography: references.bib
 
 
 
-# Overview of Proposed Work
+## Overview of Proposed Work
 
-Let's add the three tables here with completion percentages
+:::: {.columns}
 
+::: {.column width="33.3%"}
+![](./assets/robot-team-table.png)
+:::
 
+::: {.column width="33.3%"}
+![](./assets/air-quality-network-table.png)
+:::
 
+::: {.column width="33.3%"}
+![](./assets/chemical-data-assimilation-table.png)
+:::
+
+::::
 
 # Motivation
 
@@ -126,7 +137,8 @@ Images from [@ude-paper]
 
 
 
-# Robot Team {background-image="./assets/robot-team-deployment.png"}
+# Robot Team {background-image="./assets/robot-team-deployment.png"**
+*Is this area safe?*
 
 ## Physical Sensing
 
@@ -181,6 +193,10 @@ Images from [@ude-paper]
 
 ## Characterization of Indoor Photolysis
 
+![](./assets/photolysis-infographic.png)
+
+
+##
 
 - Slide on how J are computed, i.e. $J = \int I(\lambda)\sigma(\lambda, T)\Phi(\lambda, T) d\lambda$
 - Scraping data from MPI-Mainz UV-VIS database
