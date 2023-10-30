@@ -1,0 +1,197 @@
+---
+title: "Physcial Sensing and Physics-based Machine Learning for Actionable Environmental Insights"
+author: "John Waczak"
+date: today
+format:
+    revealjs:
+        slide-number: true
+        theme: default
+        margin: 0.05
+bibliography: references.bib
+---
+
+
+
+# Overview of Proposed Work
+
+Let's add the three tables here with completion percentages
+
+
+
+
+# Motivation
+
+## Global Change, Air Quality, and the Need for Physical Sensing
+
+::: {.fragment .fade-in}
+![](./assets/motivation/hurricanes.png){.absolute top="150" left="-30" width="400" }
+![](./assets/motivation/typhoon-article.png){.absolute top="150" left="600" width="400" }
+:::
+
+::: {.fragment .fade-in}
+![](./assets/motivation/maui-article-1.png){.absolute top="250" left="0" width="400" }
+![](./assets/motivation/canada-article-2.png){.absolute top="250" left="630" width="400" }
+:::
+
+::: {.fragment .fade-in}
+![](./assets/motivation/canada-article-1.png){.absolute top="350" left="30" width="400" }
+![](./assets/motivation/ecmwf-report.png){.absolute top="350" left="660" width="400" }
+:::
+
+::: {.fragment .fade-in}
+![](./assets/motivation/palestine-article-1.png){.absolute top="450" left="60" width="400" }
+![](./assets/motivation/palestine-article-2.png){.absolute top="450" left="690" width="400" }
+:::
+
+
+::: {.fragment .fade-in}
+![](./assets/motivation/covid-article-2.png){.absolute top="550" left="90" width="400" }
+![](./assets/motivation/covid-article-1.png){.absolute top="550" left="720" width="400" }
+:::
+
+
+
+## {background-image="./assets/mints-ai.png"}
+
+## {background-image="./assets/mints-ai-highlighted.png"}
+
+
+
+
+
+## The Role of Machine Learning {.smaller}
+
+::::{.columns}
+
+::: {.column width="50%"}
+
+::: {.fragment .fade-in}
+![](./assets/motivation/dog-or-muffin.jpeg){.absolute top="150" left="0" width="500" }
+:::
+
+::: {.fragment .fade-in}
+![](./assets/motivation/chatgpt-1.png){.absolute top="450" left="0" width="500" }
+:::
+
+:::
+
+::: {.column width="50%"}
+ML models have proven to be wildly successful for a variety of tasks such as
+
+- Image classification/recognition
+- Speech recognition
+- Language translation
+- Spam detection / "Smart" Advertising
+
+Due to the diverse and abstract nature of many of these problems, many ML models act like *black boxes*. This is not ideal for scientific applications where the goal is to *both* make predictions *and* gain insight into the underlying physical reality.
+
+:::
+::::
+
+## {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- The measurements we have are often only *indirectly* related to the quantities we want to estimate
+- Our current physical models may be incomplete (i.e. missing physics)
+- Physical models may have a limited domain of applicability (i.e. limited feature ranges)
+- Many ML models behave as [universal approximators](https://www.sciencedirect.com/science/article/pii/0893608089900208)
+- ML models uses data to overcome the [curse of dimensionality](https://stats.stackexchange.com/questions/186184/does-dimensionality-curse-effect-some-models-more-than-others#:~:text=Neural%20networks%20are%20weird%20in,to%20cover%20an%20input%20space.) with data
+- Many ML models can be further constrained to obey physical symmetries & constraints
+:::
+
+::: {.column width="50%"}
+
+
+::: {.fragment .fade-in}
+<!-- ![](./assets/motivation/ude-framework.png){.absolute top="0" left="0" width="600" } -->
+![](./assets/motivation/ude-framework.png)
+:::
+
+::: {.fragment .fade-in}
+<!-- ![](./assets/motivation/ude-extrapolation.png){.absolute top="300" left="0" width="600" } -->
+
+![](./assets/motivation/ude-extrapolation.png)
+:::
+
+:::
+
+::::
+
+
+::: aside
+Images from [@ude-paper]
+:::
+
+
+
+# Robot Team {background-image="./assets/robot-team-deployment.png"}
+
+## Physical Sensing
+
+![](./assets/alta-x.gif){.absolute top="-20" left="700" width="400" }
+![](./assets/resonon-hsi.png){.absolute top="275" left="750" width="400" }
+![](./assets/irradiance-spectrometer.png){.absolute top="450" left="800" width="250" }
+
+
+
+## Real Time Processing/Georectification
+
+
+##
+
+![](./assets/HyperSpectralInfoGraphic.png)
+
+
+
+## Supervised Machine Learning for Real Time Estimation of Chemicals-of-Concenr
+
+## Unsupervised Classification
+
+## Next Steps (Time Line)
+
+
+# MINTS Air Quality Network  {background-image="./assets/sharedair-site.gif"}
+
+## Physical Sensing: Sensors / Network 
+
+## Physical Sensing: Containerized Data Pipeline for Real Time Visualization
+
+## Uncertainty Quantification for Low-Cost Sensors
+
+## Physics-Based Time-Series Modelling
+- HAVOK + UDE
+- HNN + Auto Encoder
+
+## Next Steps
+
+
+# Chemical Data Assimilation for Indoor Air Quality
+
+## Physical Sensing
+
+- Automated instrument data acquisition and networking
+- Processing and Storage Pipeline (NodeRed + InfluxDB + Grafana)
+- Preliminary Data Collection
+
+##
+
+![](./assets/chemical-data-assimilation/LabOverview-noap.png)
+
+## Characterization of Indoor Photolysis
+
+
+- Slide on how J are computed, i.e. $J = \int I(\lambda)\sigma(\lambda, T)\Phi(\lambda, T) d\lambda$
+- Scraping data from MPI-Mainz UV-VIS database
+- Slide on GPR fit of $\sigma$ for ozone as an example
+- Slide on GPR fit for $\Phi$
+- Slide on capture of irradiance spectra and conversion to proper units
+- Final slide showing all three
+
+## Chemical Data Assimilation
+
+- 
+
+
+
