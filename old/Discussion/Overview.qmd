@@ -1,5 +1,0 @@
-# Discussion
-
-{{< include Limitations.qmd >}}
-
-{{< include FutureWork.qmd >}}

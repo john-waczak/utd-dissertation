@@ -1,3 +1,0 @@
-## Sensing Chemical Concentration in Aqueous Environments 
-
-Here we can give an overview of the sensors utilized on the boat for the robot team studies... We should include any information about the uncertainties. We can also comment on their use in fresh v.s. salt water environments.

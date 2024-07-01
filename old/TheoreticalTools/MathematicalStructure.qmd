@@ -1,4 +1,0 @@
-## A Survey of Relevant Mathematical Structures
-
-
-generic overview of role of mathematical structures in physics and machine learning

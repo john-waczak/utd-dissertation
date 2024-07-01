@@ -1,9 +1,0 @@
-## High Performance Computing 
-
-Provide an overview of relevant concepts in high performance computing i.e.
-
-- slurm 
-- multi-threading 
-- parallelization (distribured computing)
-- Memory management (i.e. preallocating data containers and writing functions that mutate, not allocate)
-

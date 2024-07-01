@@ -1,4 +1,0 @@
-## Photocatalytic Ionization
-
-
-This is where we put our ActivePure-specific results

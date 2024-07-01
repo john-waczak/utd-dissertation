@@ -1,3 +1,0 @@
-## Solar Geometry 
-
-An explanation of relevant solar angles as well as their determination (i.e. the code I ported to Julia from Matlab script Dr. Lary supplied). We should also comment on the importance of 

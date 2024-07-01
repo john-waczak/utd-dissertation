@@ -1,3 +1,0 @@
-## Uncertainty Propagation
-
-Linear v.s. Nonlinear Techniques, measurements.jl

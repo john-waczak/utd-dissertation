@@ -1,3 +1,0 @@
-## Neural Networks {#sec-neural-networks}
-
-From a perspective of basic function composition... as in Rackauckas's blog

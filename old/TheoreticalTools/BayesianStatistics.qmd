@@ -1,3 +1,0 @@
-## Elements of Bayesian Statistics
-
-Derive Baye's rule and other important concepts

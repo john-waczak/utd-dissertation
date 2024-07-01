@@ -1,5 +1,0 @@
-## Data Sampling
-
-cross-validation techniques
-
-Dr. Lary's method (from Gaussian Process Code) for representative sampling to reduce data size

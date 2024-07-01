@@ -1,3 +1,0 @@
-## Dual Numbers
-
-Describe dual numbers because they are cool (and by extension, forward mode AD)

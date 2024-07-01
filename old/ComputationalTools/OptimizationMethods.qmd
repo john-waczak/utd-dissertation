@@ -1,7 +1,0 @@
-## Optimization Methods
-
-Describe standard gradient descent and it's utility for machine learning. Expand to briefly describe the extensions used in our work: 
-
-- ADAM 
-- BFGS
-- LBFGS

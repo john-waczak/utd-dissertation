@@ -1,5 +1,0 @@
-# Time Series Methods
-
-{{< include TimeSeries.qmd >}}
-
-{{< include SensorNetwork.qmd >}}

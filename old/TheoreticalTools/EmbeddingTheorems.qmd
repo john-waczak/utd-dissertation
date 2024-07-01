@@ -1,3 +1,0 @@
-## Embedding Theorems
-
-Discuss Taken's embedding theorem and other relevant information for the time-series work.

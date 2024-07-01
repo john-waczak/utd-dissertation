@@ -1,0 +1,131 @@
+\documentclass[doublespacing]{utdthesis}
+
+
+
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\graphicspath{{./figures}}
+\usepackage{url}
+
+\usepackage{xcolor}
+
+\usepackage[authoryear]{natbib}
+\bibliographystyle{chicago}
+\setlength{\bibsep}{12pt plus 1pt minus 1pt}
+\let\cite=\citep
+\usepackage{rotating}
+\usepackage{ifpdf}
+\ifpdf
+\usepackage{hyperref}
+\fi
+
+\providecommand{\hyperref}[2][]{#2}
+
+\newenvironment{exampleclasscode}
+               {\parindent=1cm\vskip0pt plus2pt minus0pt\begin{verse}}
+               {\end{verse}\vskip0pt plus2pt minus0pt}
+
+
+
+
+%% my personal macros for convenience
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\N}{\mathcal{N}}
+%%% End of personal macro definitions.
+
+
+
+%%% The following definitions MUST come before the document begins.
+%
+\author{John Waczak}
+% \title{Physical Sensing and Physics-based Machine Learning \\ for Actionable Environmental Insights}
+\title{Physical Sensing and Physics-based Machine Learning for Actionable Environmental Insights}
+\thesistype{Dissertation}  % or "Thesis"
+\degreefull{Doctor of Philosophy}
+\degreeabbr{PhD}
+\subject{Physics}
+\graduationmonth{December}
+\graduationyear{2024}
+\prevdegrees{BS} % comma-separated list of PREVIOUS degrees
+
+% List committee members in order.  Mark chairpersons with a "*":
+\committeemember*{David J. Lary}
+\committeemember{Christopher Simmons}
+\committeemember{David Lumley}
+\committeemember{Lindsay King}
+\committeemember{Joseph Izen}
+
+
+%%% Beginning of actual thesis document.
+
+\begin{document}
+
+\frontmatter
+
+\signaturepage
+
+\copyrightpage{2024}
+
+\begin{dedication} % optional
+  \textbf{\textcolor{red}{UPDATE REQUIRED}}
+\end{dedication}
+
+\maketitle
+
+\begin{acks}{September 2024}
+  \textbf{\textcolor{red}{UPDATE REQUIRED}}
+\end{acks}
+
+\begin{abstract}
+
+The rapid pace of global change poses a significant and ever present threat to human well-being. To facilitate the development of remediation technologies and to enable effective mitigation strategies, we must make data-driven decisions. However, the limitations posed by the lack of highly available, highly resolved data coupled together with the computational diﬀiculties posed by direct simulation of physics at scale severely constrains our ability to make the low uncertainty predictions needed to meaningfully address these challenges in real time. This dissertation presents novel machine learning strategies for combining physics knowledge with data driven methods in three key case studies. In the first, we demonstrate the ability for a coordinated robotic team to estimate the concentration of chemicals-of-concern \textit{in real time} by using machine learning to map reflectance spectra captured by an autonomous aerial drone directly to chemical concentrations with associated uncertainty estimates. In the second study, we present a novel technique for using temporal variograms to estimate the intrinsic uncertainty of low cost air quality sensors directly from their time series. Additionally, we implement two physics informed machine learning methods to model these collected time series enabling the identification of acute pollution events by modeling them as the result of external forcing. Finally, in the third study, we present the most comprehensive analysis of indoor air quality to date, which includes multi-component observations, a detailed chemical reaction mechanism (including ion chemistry), an extensive evaluation of indoor photolysis, and full chemical data assimilation (both 4D Var and a full Kalman filter) with detailed multi-component error analysis.
+
+\end{abstract}
+
+\tableofcontents
+\listoffigures % required if you have any figures
+\listoftables % required if you have any tables
+
+\mainmatter
+
+
+\include{./chapters/introduction.tex}
+\include{./chapters/physical-sensing.tex}
+\include{./chapters/machine-learning-methods.tex}
+\include{./chapters/robot-team.tex}
+\include{./chapters/air-network.tex}
+\include{./chapters/chemical-data-assimilation.tex}
+\include{./chapters/future-work.tex}
+\include{./chapters/conclusions.tex}
+
+
+\appendix % required only if you have appendixes
+
+%% \include{./Appendices/reproducible-research.tex}
+%% \include{./Appendices/optimization-methods.tex}
+%% \include{./Appendices/high-performance-computing.tex}
+%% \include{./Appendices/chemical-mechanism.tex}
+
+
+% Begin the bibliography:
+\begin{thesisbib}  % <--- THIS LINE IS REQUIRED!
+  \bibliography{./references.bib}
+\end{thesisbib}  % <-- THIS LINE IS REQUIRED!
+
+
+
+\begin{biosketch}
+  \textbf{\textcolor{red}{UPDATE REQUIRED!}}
+\end{biosketch}
+
+
+\begin{vita}  % <-- THIS LINE IS REQUIRED!
+  \textbf{\textcolor{red}{UPDATE REQUIRED!}}
+\end{vita}  % <-- THIS LINE IS REQUIRED!
+
+
+\end{document}
+
