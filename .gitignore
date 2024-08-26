@@ -11,3 +11,6 @@ main.pdf
 *.aux
 /chapters/*.aux
 /appendices/*.aux
+
+*.key
+
