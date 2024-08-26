@@ -7,3 +7,7 @@ WiP--Physical-Sensing-Coupled-with-Physics-Based-Machine-Learning.tex
 _book
 
 main.pdf
+
+*.aux
+/chapters/*.aux
+/appendices/*.aux
