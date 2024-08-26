@@ -1,1 +1,72 @@
-\chapter{Introduction}
+\chapter{Introduction}\label{ch:intro}
+
+\section{Motivation}
+
+\subsection{Water Quality}
+\subsection{Air Quality}
+\subsection{Air Quality Indoors}
+
+\section{Physical Sensing}
+
+\section{The Role of Machine Learning in the Era of Big Data}
+
+Big data in the physical sciences
+
+Comment on the annual data volumes produced by
+\begin{itemize}
+  \item LANDSAT
+  \item Sentinel
+  \item CERN
+  \item James Webb
+  \item SDO AIA
+  \item Medical Imaging (MRI, CT scans, etc...)
+\end{itemize}
+
+What is machine learning
+
+Use of machine learning in the physical sciences
+
+\begin{itemize}
+  \item Remote sensing (inter-instrument calibration, classification, object identification, change monitoring via the NDVI and similar indices, etc.)
+  \item Protein Folding
+  \item Drug discovery
+  \item Surrogate modeling (i.e. for PDE solvers - now very popular at NVIDIA)
+\end{itemize}
+
+
+
+
+\section{Physics-based Machine Learning}
+
+The general problem of ML is hard with when no structure is assumed on data (include example of pit bull or potato)
+
+For situations involving data from physical sensors describing real systesm, physics tells us there are underlying rules which govern the dynamics of real systems
+
+When applying ML we should therefore place a high value on physics-based models, i.e. machine learning models tailord for the specific physical system, rather than generic abstract algorithms. This is important in all stages of the ML pipeline from feature selection (Robot team supervised), dimensionality reduction (i.e. the latent space of the GTM and GSM), model selection, model evaluation, etc. In summary:
+
+\begin{itemize}
+  \item Prefer interpretable models (e.g. deicsion trees) to black boxes
+  \item Prefer probabilistic models (e.g. GTM vs SOM) to deterministic models (all data has uncertainty and no model is perfect)
+  \item Prefer models which incorporate prior knoweldge of the physical system such as dynamical laws, symmetries, natural constraints, etc. This is specifically known as \textbf{physics-informed} machine learning or \textbf{scientific machine learning}  (SciML).
+\end{itemize}
+
+
+
+\section{Actionable Insights and Societal Value}
+
+Combining physical sensing with machine learning methods allows us to \textit{put science in action} in order to drive positve societal outcomes.
+
+
+\section{Dissertation Goals}
+
+\section{Dissertation Overview}
+
+\section{Summary of Works Produced}
+
+\section{First Author Papers}
+\section{Other Papers}
+\section{Code Repositories}
+\section{Data Generated}
+Here we should mention the AQ network as well as the collected HSI imager all on OSN.
+
+

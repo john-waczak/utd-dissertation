@@ -81,7 +81,8 @@
 
 \begin{abstract}
 
-The rapid pace of global change poses a significant and ever present threat to human well-being. To facilitate the development of remediation technologies and to enable effective mitigation strategies, we must make data-driven decisions. However, the limitations posed by the lack of highly available, highly resolved data coupled together with the computational diﬀiculties posed by direct simulation of physics at scale severely constrains our ability to make the low uncertainty predictions needed to meaningfully address these challenges in real time. This dissertation presents novel machine learning strategies for combining physics knowledge with data driven methods in three key case studies. In the first, we demonstrate the ability for a coordinated robotic team to estimate the concentration of chemicals-of-concern \textit{in real time} by using machine learning to map reflectance spectra captured by an autonomous aerial drone directly to chemical concentrations with associated uncertainty estimates. In the second study, we present a novel technique for using temporal variograms to estimate the intrinsic uncertainty of low cost air quality sensors directly from their time series. Additionally, we implement two physics informed machine learning methods to model these collected time series enabling the identification of acute pollution events by modeling them as the result of external forcing. Finally, in the third study, we present the most comprehensive analysis of indoor air quality to date, which includes multi-component observations, a detailed chemical reaction mechanism (including ion chemistry), an extensive evaluation of indoor photolysis, and full chemical data assimilation (both 4D Var and a full Kalman filter) with detailed multi-component error analysis.
+\textcolor{red}{UPDATE REQUIRED}
+%% The rapid pace of global change poses a significant and ever present threat to human well-being. To facilitate the development of remediation technologies and to enable effective mitigation strategies, we must make data-driven decisions. However, the limitations posed by the lack of highly available, highly resolved data coupled together with the computational diﬀiculties posed by direct simulation of physics at scale severely constrains our ability to make the low uncertainty predictions needed to meaningfully address these challenges in real time. This dissertation presents novel machine learning strategies for combining physics knowledge with data driven methods in three key case studies. In the first, we demonstrate the ability for a coordinated robotic team to estimate the concentration of chemicals-of-concern \textit{in real time} by using machine learning to map reflectance spectra captured by an autonomous aerial drone directly to chemical concentrations with associated uncertainty estimates. In the second study, we present a novel technique for using temporal variograms to estimate the intrinsic uncertainty of low cost air quality sensors directly from their time series. Additionally, we implement two physics informed machine learning methods to model these collected time series enabling the identification of acute pollution events by modeling them as the result of external forcing. Finally, in the third study, we present the most comprehensive analysis of indoor air quality to date, which includes multi-component observations, a detailed chemical reaction mechanism (including ion chemistry), an extensive evaluation of indoor photolysis, and full chemical data assimilation (both 4D Var and a full Kalman filter) with detailed multi-component error analysis.
 
 \end{abstract}
 
@@ -94,16 +95,19 @@ The rapid pace of global change poses a significant and ever present threat to h
 
 \include{./chapters/introduction.tex}
 \include{./chapters/physical-sensing.tex}
-\include{./chapters/machine-learning-methods.tex}
-\include{./chapters/robot-team.tex}
+\include{./chapters/robot-team-supervised.tex}
+\include{./chapters/robot-team-gtm.tex}
+\include{./chapters/robot-team-gsm.tex}
 \include{./chapters/air-network.tex}
+\include{./chapters/havok.tex}
 \include{./chapters/chemical-data-assimilation.tex}
 \include{./chapters/future-work.tex}
 \include{./chapters/conclusions.tex}
 
 
 \appendix % required only if you have appendixes
-
+\include{./appendices/spectral-indices.tex}
+\include{./appendices/chemical-mechanism.tex}
 %% \include{./Appendices/reproducible-research.tex}
 %% \include{./Appendices/optimization-methods.tex}
 %% \include{./Appendices/high-performance-computing.tex}
