@@ -258,7 +258,8 @@ pages={435-455}
   number={2},
   pages={111--126},
   year={1994},
-  publisher={Wiley Online Library}
+  publisher={Wiley Online Library},
+  doi={10.1002/env.3170050203}
 }
 
 @article{pmf-algs,
@@ -269,7 +270,8 @@ pages={435-455}
   number={1},
   pages={23--35},
   year={1997},
-  publisher={Elsevier}
+  publisher={Elsevier},
+  doi={10.1016/S0169-7439(96)00044-5}
 }
 
 
@@ -281,9 +283,9 @@ pages={435-455}
   number={9},
   pages={2891--2918},
   year={2009},
-  publisher={Copernicus GmbH}
+  publisher={Copernicus GmbH},
+  doi={10.5194/acp-9-2891-2009},
 }
-
 
 
 @article{nmf-orig,
@@ -294,23 +296,30 @@ pages={435-455}
   number={6755},
   pages={788--791},
   year={1999},
-  publisher={Nature Publishing Group UK London}
+  publisher={Nature Publishing Group UK London},
+  doi={10.1038/44565}
 }
 
-@article{nmf-algorithms,
-  title={Algorithms for non-negative matrix factorization},
-  author={Lee, Daniel and Seung, H Sebastian},
-  journal={Advances in neural information processing systems},
-  volume={13},
-  year={2000}
+@inproceedings{nmf-algorithms,
+ author = {Lee, Daniel and Seung, H. Sebastian},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {T. Leen and T. Dietterich and V. Tresp},
+ pages = {},
+ publisher = {MIT Press},
+ title = {Algorithms for Non-negative Matrix Factorization},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2000/file/f9d1152547c0bde01830b7e8bd60024c-Paper.pdf},
+ volume = {13},
+ year = {2000}
 }
+
 
 @inproceedings{nmf-l21,
   title={Robust nonnegative matrix factorization using l21-norm},
   author={Kong, Deguang and Ding, Chris and Huang, Heng},
   booktitle={Proceedings of the 20th ACM international conference on Information and knowledge management},
   pages={673--682},
-  year={2011}
+  year={2011},
+  doi={10.1145/2063576.2063676}
 }
 
 
@@ -323,7 +332,8 @@ pages={435-455}
   number={24},
   pages={15702--15721},
   year={2007},
-  publisher={Optica Publishing Group}
+  publisher={Optica Publishing Group},
+  doi={10.1364/OE.15.015702}
 }
 
 
@@ -348,7 +358,8 @@ pages={435-455}
   number={10},
   pages={1988},
   year={2019},
-  publisher={MDPI}
+  publisher={MDPI},
+  doi={10.3390/w11101988}
 }
 
 @article{hsi-turibidity,
@@ -373,6 +384,7 @@ pages={435-455}
   pages={4414--4436},
   year={2022},
   publisher={IEEE}
+  doi={10.1109/JSTARS.2022.3175257}
 }
 
 @article{vca-orig,
@@ -383,7 +395,8 @@ pages={435-455}
   number={4},
   pages={898--910},
   year={2005},
-  publisher={IEEE}
+  publisher={IEEE},
+  doi={10.1109/TGRS.2005.844293}
 }
 
 @inproceedings{ppi-orig,
@@ -393,6 +406,7 @@ pages={435-455}
   year={1995}
 }
 
+
 @inproceedings{N-FINDR-orig,
   title={N-FINDR: An algorithm for fast autonomous spectral end-member determination in hyperspectral data},
   author={Winter, Michael E},
@@ -400,7 +414,8 @@ pages={435-455}
   volume={3753},
   pages={266--275},
   year={1999},
-  organization={SPIE}
+  organization={SPIE},
+  doi={10.1117/12.366289}
 }
 
 @article{spectral-unmixing-orig,
@@ -413,16 +428,6 @@ pages={435-455}
   pages={44-57},
   keywords={Hyperspectral sensors;Layout;Reflectivity;Remote sensing;Spectroscopy;Hyperspectral imaging;Spatial resolution;Data mining;Atmospheric modeling;Analytical models},
   doi={10.1109/79.974727}, 
-  notes={
-      - Mixed pixels
-        - low spatial resolution means multiple materials co-occupy a single pixel
-        - disparete sources combine into a homogenous mixture
-      - Linear Mixing Model
-        - Assumption: surface dominated by small number of materials  (endmembers) with consistant spectral properties
-        - Two requirements for abundances: nonnegativity and sum-to-one
-        - Argument for LMM: at the resolution of georectified images, we can think of pixels as being linear 
-          combinations of constituents. Any nonlinear mixtures will have mixing scales with fundamental lengths less thatn the pixel scale.
-  }
 }
 
 @inproceedings{fcls-unmixing,
@@ -444,10 +449,7 @@ pages={435-455}
   pages={174--185},
   year={2004},
   organization={SPIE},
-  notes={
-      - use SOM to get endmembers 
-      - use "Hopfield" Recurrent Neural Network to get abundances
-  }
+  doi={10.1117/12.580058}
 }
 
 @article{jiang2020classification,
@@ -459,9 +461,7 @@ pages={435-455}
   pages={1575},
   year={2020},
   publisher={MDPI},
-  notes={
-      - used spatial-spectral endmember extraction method w/ spectral angle mapper to classify HSIs
-  }
+  doi={10.3390/rs12101575}
 }
 
 @article{palsson2020convolutional,
@@ -473,11 +473,7 @@ pages={435-455}
   pages={535--549},
   year={2020},
   publisher={IEEE},
-  notes={
-      - used autoencoder with convolutional layers
-      - softmax enforces sum-to-one constraint
-      - can use exp or similar activation to get positive weights
-  }
+  doi={10.1109/TGRS.2020.2992743}
 }
 
 @inproceedings{non-negative-autoencoders,
@@ -490,9 +486,6 @@ pages={435-455}
   pages={205-208},
   keywords={Training;Hyperspectral imaging;Algorithm design and analysis;Feature extraction;Image reconstruction;Hyperspectral unmixing;endmember extraction;automatic sampler;nonnegative sparse autoencoder},
   doi={10.1109/IGARSS.2017.8126930},
-  notes={
-    - Autoencoder with weights that sum to one and enforced non-negativity via modified update function
-  }
 }
 
 
@@ -505,9 +498,7 @@ pages={435-455}
   pages={4309--4321},
   year={2019},
   publisher={IEEE},
-  notes={
-      - combine stacked Autoencoders and VAEs for spectral unmixing of HSI data
-  }
+  doi={10.1109/TGRS.2018.2890633}
 }
 
 @article{borsoi2019deep,
@@ -517,10 +508,8 @@ pages={435-455}
   volume={6},
   pages={374--384},
   year={2019},
-  publisher={IEEE}, 
-  notes={
-      - Use autoencoder for HSI unmixing
-  }
+  publisher={IEEE},
+  doi={10.1109/TCI.2019.2948726}
 }
 
 @article{berman2004ice,
@@ -532,10 +521,7 @@ pages={435-455}
   pages={2085--2095},
   year={2004},
   publisher={IEEE},
-  notes={
-      - use statistical approach for finding endmembers with least squares fitting
-      - suggest normalization is helpful and is equivalent to assuming endmember brightness is equal within each pixel
-  }
+  doi={10.1109/TGRS.2004.835299},
 }
 
 @article{plaza2012endmember,
@@ -546,10 +532,7 @@ pages={435-455}
   pages={163--175},
   year={2012},
   publisher={Springer},
-  notes={
-      - compare endmember extraction algorithms w/o pure pixel assumption
-      - Mainly geometric/statistical methods that assume endmembers form vertices of n-simplex
-  }
+  doi={10.1007/s10851-011-0276-0}
 }
 
 
@@ -562,10 +545,7 @@ pages={435-455}
   pages={1844--1868},
   year={2014},
   publisher={IEEE},
-  notes={
-      - broad overview of many unmixing methods
-      - includes SOM as example unmixing technique
-  }
+  doi={10.1109/JSTARS.2014.2320576}
 }
 
 @article{unmixing-nmf-review-2,
@@ -575,7 +555,8 @@ pages={435-455}
   year={2022},
   volume={15},
   pages={4414-4436},
-  url={https://api.semanticscholar.org/CorpusID:248845748}
+  url={https://api.semanticscholar.org/CorpusID:248845748},
+  doi={10.1109/JSTARS.2022.3175257}
 }
 
 
@@ -587,7 +568,8 @@ pages={435-455}
   number={11},
   pages={11204--11224},
   year={2014},
-  publisher={MDPI}
+  publisher={MDPI},
+  doi={10.3390/rs61111204},
 }
 
 @article{alvarez2020can,
@@ -597,7 +579,8 @@ pages={435-455}
   volume={243},
   pages={111780},
   year={2020},
-  publisher={Elsevier}
+  publisher={Elsevier},
+  doi={10.1016/j.rse.2020.111780}
 }
 
 @article{gu2023intrinsic,
@@ -605,7 +588,8 @@ pages={435-455}
   author={Gu, Yanfeng and Huang, Yanyuan and Liu, Tianzhu},
   journal={IEEE Transactions on Geoscience and Remote Sensing},
   year={2023},
-  publisher={IEEE}
+  publisher={IEEE},
+  doi={10.1109/TGRS.2023.3307346}
 }
 
 
@@ -620,10 +604,7 @@ pages={435-455}
   pages={4136--4159},
   year={2020},
   publisher={Taylor \& Francis},
-  notes={
-    - Near-earth HSI address spectral, spatial, and temporal limitations of traditional satellite & airborne platforms 
-    - UAV-based HSI enable fine-scale mapping applications needed to differentiate vegetation in threatened swamp communities
-  }
+  doi={10.1080/01431161.2020.1714771},
 }
 
 @article{arroyo2019implementation,
@@ -635,9 +616,7 @@ pages={435-455}
   pages={12},
   year={2019},
   publisher={MDPI},
-  notes={
-      - UAV based HSI can be geocorrected accurately to the centimeter scale w/o ground control points using GPS/IMU
-  }
+  doi={10.3390/drones3010012}
 }
 
 @article{lu2021retrieval,
@@ -648,12 +627,8 @@ pages={435-455}
   number={19},
   pages={3928},
   year={2021},
-  publisher={MDPI}, 
-  notes={
-      - Evaluated ML methods for mapping UAV-based HSI to water quality parameters including chlorophyll-a and suspended solids.
-      - Supervised ML techniques for HSI and water quality
-      - Tree-based models were superior
-  }
+  publisher={MDPI},
+  doi={10.3390/rs13193928}
 }
 
 @article{zhang2022selection,
@@ -665,9 +640,7 @@ pages={435-455}
   pages={16226},
   year={2022},
   publisher={MDPI},
-  notes={
-      - use polynomial combinations of reflectance bins to estimate six water quality indicators
-  }
+  doi={10.3390/su142316226}
 }
 
 @article{vogt2016near,
@@ -679,9 +652,7 @@ pages={435-455}
   pages={18--31},
   year={2016},
   publisher={Taylor \& Francis},
-  notes={
-      - used a multispectral imager on a UAV to measure turbidity
-  }
+  doi={10.1017/S1466046615000459}
 }
 
 @article{horstrand2019uav,
@@ -692,6 +663,7 @@ pages={435-455}
   pages={66919--66938},
   year={2019},
   publisher={IEEE},
+  doi={10.1109/ACCESS.2019.2913957}
   notes={
       - describe a drone equipped with a HSI sensor which can be used for precision agriculture
       - On-board compute enables the computation of spectral/vegetation indices 
@@ -711,6 +683,7 @@ pages={435-455}
   pages={695--704},
   year={2003},
   publisher={American Society for Photogrammetry and Remote Sensing},
+  doi={10.14358/PERS.69.6.695}
   notes={
       - remote sensing can be used to monitor optically-active water quality parameters e.g. turbidity, chlorophyll, and temperature
       - remote sensing platforms are also excellent for change-detection at small spatial scales
@@ -735,6 +708,7 @@ pages={435-455}
   pages={3209--3241},
   year={2007},
   publisher={Molecular Diversity Preservation International},
+  doi={10.3390/s7123209}
   notes={
       - remote sensing can be used for environmental resource mapping, e.g. urban studies, hydrological modelling, land-cover mapping, 
         floodplain mapping, vegetation cover, etc. 
@@ -752,6 +726,7 @@ pages={435-455}
   pages={183--207},
   year={2009},
   publisher={Sage Publications Sage UK: London, England},
+  doi={10.1177/0309133309339563},
   notes={
       - remote sensing applications for natural hazards/disasters: earthquakes, faulting, volcanic activity, flooding, wildfires, and 
         associated damage.
@@ -768,6 +743,7 @@ pages={435-455}
   pages={10012--10025},
   year={2019},
   publisher={Wiley Online Library},
+  doi={10.1029/2019WR024883},
   notes={
       - created large dataset of 600,000 water quality records matching suspended sediment, dissolved organic carbon, chlorophyll-a, and secchi disk depth to remote sensing imagery from Landsat 5, 7, 8 covering 1984 to 2019 
   }
@@ -783,6 +759,7 @@ pages={435-455}
   pages={2687},
   year={2018},
   publisher={MDPI},
+  doi={10.3390/app8122687}
   notes={
       - comprehensive dataset combining in-situ measurements from 500 field compaigns over 30 years with paired remote sensing imagery for CDOM, particulate organic carbon, etc. 
   }
@@ -797,6 +774,7 @@ pages={435-455}
   pages={91},
   year={2017},
   publisher={MDPI},
+  doi={10.3390/s18010091},
   notes={
       - oil shows minor optical properties in UV-IR region of EM spectrum. Variability in reflectance/absorbance dpends on oil type, 
         oil evaporation, weather conditions, and solar illumination
@@ -812,6 +790,7 @@ pages={435-455}
   pages={28--41},
   year={2015},
   publisher={Elsevier},
+  doi={10.1016/j.rse.2014.10.032},
   notes={
       - estimate chlorphyll-a and Secchi Disk Transparency using Landsat imagery + ancillary data with linear mixed models (LMM)
   }
@@ -825,6 +804,7 @@ pages={435-455}
   pages={103187},
   year={2020},
   publisher={Elsevier},
+  doi={10.1016/j.earscirev.2020.103187},
   notes={
       - optically and active and inactive parameters can be inferred from spectra
   }
@@ -841,7 +821,8 @@ pages={435-455}
   number={6},
   pages={1378--1387},
   year={2003},
-  publisher={IEEE}
+  publisher={IEEE},
+  doi={10.1109/TGRS.2003.812907},
 }
 
 @article{moses2012estimation,
@@ -852,7 +833,8 @@ pages={435-455}
   number={4},
   pages={993--1004},
   year={2012},
-  publisher={Elsevier}
+  publisher={Elsevier},
+  doi={10.1016/j.watres.2011.11.068},
 }
 
 
@@ -864,7 +846,8 @@ pages={435-455}
   number={9},
   pages={1881},
   year={2018},
-  publisher={MDPI}
+  publisher={MDPI},
+  doi={10.3390/ijerph15091881},
 }
 
 @article{zhang2019hyperspectral,
@@ -874,7 +857,8 @@ pages={435-455}
   volume={485},
   pages={154--169},
   year={2019},
-  publisher={Elsevier}, 
+  publisher={Elsevier},
+  doi={10.1016/j.ins.2019.02.008},
   notes={
       -  unsupervised HSI classification using manifold matrix factorization
       -  Good intro with citation for other approaches, e.g. fuzzy C-means, k-NN density clustering, memetic fuzzy clustering
@@ -898,6 +882,7 @@ pages={435-455}
   pages={2724--2728},
   year={2010},
   publisher={Editorial Office, Spectroscopy and Spectral Analysis},
+  doi={10.3964/j.issn.1000-0593(2010)10-2724-05},
   notes={
       - supervised classification of HSI using a combination of ICA and SVM
   }
@@ -932,6 +917,7 @@ pages={435-455}
   pages={14118--14129},
   year={2018},
   publisher={IEEE},
+  doi={10.1109/ACCESS.2018.2812999},
   notes={
       - Applications: Food Quality & Safety, Medical Diagnosis, Precision Agriculture, Water Resource & Flood 
         Management, Forensic Document Examination, 
@@ -948,6 +934,7 @@ pages={435-455}
   pages={51--59},
   year={2002},
   publisher={Elsevier},
+  doi={10.1016/S0034-4257(01)00238-3},
   notes={
       - Classifify water quality by categories of Secchi Depth, Turbidity, and Chlorophyll-a. 
   }
@@ -962,6 +949,7 @@ pages={435-455}
   pages={1110},
   year={2017},
   publisher={MDPI},
+  doi={10.3390/rs9111110},
   notes={
       - UAVs are emerging as a popular, cost-effective remote sensing solution
       - Coupled with minaturized HSI, such a platform provides significant advantages
@@ -973,6 +961,7 @@ pages={435-455}
   author={Thenkabail, Prasad S and Lyon, John G and Huete, Alfredo},
   year={2018},
   publisher={CRC press},
+  isbn={9781032475851},
   notes={
       - lots of details about spectral indices
   }
@@ -1009,7 +998,8 @@ pages={435-455}
   volume={9861},
   pages={312--322},
   year={2016},
-  organization={SPIE}, 
+  organization={SPIE},
+  doi={10.1117/12.2224393},
   notes={
       - identification of mineral grains by sparse principal component analysis
       - endmembers identified as highest sparse principle component
@@ -1026,6 +1016,7 @@ pages={435-455}
   number={6},
   pages={1105--1116},
   year={2015},
+  doi={10.1109/JSTSP.2015.2413371},
   publisher={IEEE}
 }
 
@@ -1036,7 +1027,8 @@ pages={435-455}
   volume={9815},
   pages={14--21},
   year={2015},
-  organization={SPIE}
+  organization={SPIE},
+  doi={10.1117/12.2205840},
 }
 
 @article{tyo2003principal,
@@ -1047,7 +1039,8 @@ pages={435-455}
   number={3},
   pages={708--718},
   year={2003},
-  publisher={IEEE}
+  publisher={IEEE},
+  doi={10.1109/TGRS.2003.808879},
 }
 
 
@@ -1085,7 +1078,7 @@ pages={435-455}
 }
 
 
-# Reflectance Conversion
+% Reflectance Conversion
 
 @article{ruddick2019review,
   title={A review of protocols for fiducial reference measurements of downwelling irradiance for the validation of satellite remote sensing data over water},
@@ -1095,22 +1088,26 @@ pages={435-455}
   number={15},
   pages={1742},
   year={2019},
-  publisher={MDPI}
+  publisher={MDPI},
+  doi={10.3390/rs11151742},
 }
 
-# Julia papers 
+% Julia papers
+
 @article{bezanson2012julia,
   title={Julia: A fast dynamic language for technical computing},
   author={Bezanson, Jeff and Karpinski, Stefan and Shah, Viral B and Edelman, Alan},
   journal={arXiv preprint arXiv:1209.5145},
-  year={2012}
+  year={2012},
+  doi={10.48550/arXiv.1209.5145},
 }
 
 @article{blaom2020mlj,
   title={MLJ: A Julia package for composable machine learning},
   author={Blaom, Anthony D and Kiraly, Franz and Lienart, Thibaut and Simillides, Yiannis and Arenas, Diego and Vollmer, Sebastian J},
   journal={arXiv preprint arXiv:2007.12285},
-  year={2020}
+  year={2020},
+  doi={10.48550/arXiv.2007.12285},
 }
 
 @misc{gtm-code,
@@ -1124,7 +1121,7 @@ pages={435-455}
 }
 
 
-# Optimal Route Planning 
+% Optimal Route Planning 
 
 
 @incollection{balas2007prize,
@@ -1133,7 +1130,8 @@ pages={435-455}
   booktitle={The traveling salesman problem and its variations},
   pages={663--695},
   year={2007},
-  publisher={Springer}
+  publisher={Springer},
+  isbn={9781402006647},
 }
 
 @article{mcmahon2016autonomous,
@@ -1144,7 +1142,8 @@ pages={435-455}
   number={1},
   pages={112--119},
   year={2016},
-  publisher={IEEE}
+  publisher={IEEE},
+  doi={10.1109/LRA.2016.2553175}
 }
 
 @article{suryan2020learning,
@@ -1155,7 +1154,8 @@ pages={435-455}
   number={5},
   pages={1562--1576},
   year={2020},
-  publisher={IEEE}
+  publisher={IEEE},
+  doi={10.1109/TRO.2020.2994003},
 }
 
 
@@ -1167,7 +1167,7 @@ pages={435-455}
   author={Kokaly, Raymond F and Clark, Roger N and Swayze, Gregg A and Livo, K Eric and Hoefen, Todd M and Pearson, Neil C and Wise, Richard A and Benzel, William and Lowers, Heather A and Driscoll, Rhonda L and others},
   year={2017},
   institution={US Geological Survey},
-  DOI = {10.3133/ds1035}
+  doi = {10.3133/ds1035}
 }
 
 
@@ -1200,7 +1200,8 @@ pages={435-455}
   volume={11151},
   pages={78--84},
   year={2019},
-  organization={SPIE}
+  organization={SPIE},
+  doi={10.1117/12.2537146}
 }
 
 
@@ -1224,5 +1225,6 @@ pages={435-455}
   number={7},
   pages={1425--1432},
   year={1996},
-  publisher={Taylor \& Francis}
+  publisher={Taylor \& Francis},
+  doi={10.1080/01431169608948714}
 }
