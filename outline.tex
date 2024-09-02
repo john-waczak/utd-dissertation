@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[margin=0.75in]{geometry}
+
+\usepackage{outlines}
+\usepackage{amsmath}
+\usepackage{xcolor}
+
+\usepackage[authoryear]{natbib}
+\bibliographystyle{chicago}
+
+\begin{document}
+
+\section{Introduction}
+\begin{outline}[enumerate]
+  \1 Opening Paragraph
+      \2 The rapid pace of global change increasingly endangers human health and
+      well-being
+      and threatens environmental health and stability
+      \2 To face this threat, we need to make \textit{data-driven decisions}.
+      This requires both comprehensive data and the means to evaluate/interpret
+      them.
+      \2 Continued advancements in low-cost, mobile sensing have dramatically
+      increased our ability to characterize the environment by providing in-situ
+      data at spatial and temporal resolutions relevant to human-scale
+      interactions \textcolor{red}{get scales from Dr. Lary's previous papers}.
+      \2 Additionally, a plethora of satellite missions have been recently
+      launched (or will soon be) which promise to provide petabytes of
+      multi-spectral imagery across the globe
+      \2 However, the data provided by these systems are often limited to specific
+      physical quantities (e.g. reflectances) which are only indirectly related
+      to water quality and air quality parameters which we actually care about
+      \2 To make sense of these data, one can apply physical models which relate
+      measurements to parameters of interest
+      \2 Even if we suppose that we have perfectly characterized the relevant
+      physics, simulating the dynamics of physical systems at scale
+      demands significant computational resources limiting real-time
+      applicability.
+      \2 For example, ECMWF meteorological forecasts are provided a (add spatial
+      and temporal resolution) despite the fact the many studies across the
+      scientific literature suggest relevant spatial scales between 0-1 km and
+      temporal scales at the order of 10 seconds for air quality.
+      \2 Machine learning offers a promising solution to this problem: take
+      advantage of increasingly large datasets to extract actionable insights
+      \2 However, most machine learning problems are developed to work on
+      general (abstract) tasks such as image classification
+      \2 It is wasteful to force the ML models to re-learn physics from scratch.
+      Rather, we seek to incorporate our prior physics knowledge to let the ML
+      methods extract the \textit{missing pieces} from the comprehensive data we
+      collect, i.e. to fill in the gaps.
+
+  \1 Dissertation Goals
+  \1 Motivation
+      \2 Water Quality
+      \2 Air Quality
+      \2 Indoor Air Quality
+  \1 Physical Sensing
+  \1 The role of Machine Learning in the Era of Big Data
+  \1 Physics-based Machine Learning
+  \1 Actionable Insights and Societal Value
+  \1 Dissertation Overview
+  \1 Summary of Works Produced
+      \2 First Author Papers
+      \2 Collaborative Work
+      \2 Code Repositories
+      \2 Datasets Generated
+\end{outline}
+
+
+\section{Physical Sensing for Environmental Quality Assessment}
+
+\section{Robot Team 1: Supervised}
+
+\section{Robot Team 2: GTM}
+
+\section{Robot Team 3: GSM}
+
+\section{Sensor Network}
+
+\section{HAVOK}
+
+\section{AutoChem}
+
+\section{Future Work}
+
+\section{Conclusions}
+
+
+\end{document}
+
+
+
+\bibliography{./references.bib}
+

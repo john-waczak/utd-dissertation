@@ -1,6 +1,31 @@
 \chapter{Nonlinear Endmember Extraction and Spectral Unmixing with Generative Simplex Mapping}\label{ch:robot-team-gsm}
 
 
+\textcolor{red}{
+  In this paper, we introduce a new model for non-linear endmember extraction
+  and spectral unmixing of hyperspectral imagery called Generative Simplex
+  Mapping (GSM). The model represents endmember mixing using a latent space
+  with points sampled within a $(n-1)$-simplex corresponding to the abundance
+  of $n$ unique sources. Points in this latent space are non-linearly mapped
+  to reflectance spectra via a flexible function combining linear and
+  non-linear mixing. Due to the probabilistic formulation of the GSM, spectral
+  variability is also estimated by a precision parameter describing the
+  distribution of observed spectra. Model parameters are determined using a
+  generalized expectation-maximization algorithm. In the event of purely
+  linear mixing, non-linear contributions are naturally driven to zero. The
+  GSM outperforms three varieties of non-negative matrix factorization for
+  both endmember extraction accuracy and abundance estimation on a synthetic
+  data set of linearly mixed spectra from the USGS spectral library. In a
+  second experiment, the GSM is applied to real hyperspectral imagery captured
+  over a pond in North Texas. The model is able to accurately identify
+  spectral signatures corresponding to near-shore algae, water, and rhodmaine
+  tracer dye introduced into the pond to simulate water contamination by a
+  localized source. Abundance maps generated using the GSM accurately track
+  evolution of the dye plume as it mixes into the surrounding water.
+}
+
+
+
 \section{Motivation}
 
 \section{Spectral Mixing Models}
