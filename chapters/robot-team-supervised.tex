@@ -83,7 +83,7 @@ As shown in Table~\ref{tab:sensors}, the physical measurements and ion sensors
 are largely based on different electrode configurations, while the chemical and
 biochemical measurements are all optically significant in UV and visible light,
 enabling their determination by fluorometry
-\cite{de2007ion,trees2002fluorometric,tillman2017evaluation}}. The pigments
+\cite{de2007ion,trees2002fluorometric,tillman2017evaluation}. The pigments
 phycoerythrin and phycocyanin are used to determine the blue--green algae
 content, which together with chlorophyll-a enables us to assess the distribution
 of photosynthetic life in the pond~\cite{Brient2008APP, boyer2009phytoplankton}.
@@ -94,36 +94,31 @@ concentrations are also measured with fluorometers and are relevant for
 identifying sources of industrial contamination, natural seepage, and sewage
 \cite{brown2003review,cao2009evaluation}.
 
-% add table describing sensors here: 
-
-% \begin{table}[H] 
-% \caption{In situ reference sensors utilized in this study.\label{tab:sensors}}
-% \newcolumntype{C}{>{\centering\arraybackslash}X}
-% \begin{tabularx}{\textwidth}{CCCCC}
-% \toprule
-% \textbf{Sensor}	& \textbf{Units} & \textbf{Resolution} & \textbf{Sensor Type} & \textbf{Target Category}\\
-% \midrule
-% Temperature		                    & $^{\circ}$C        & 0.01  & Thermistor                           & Physical \\
-% Conductivity                        & $\upmu$S/cm          & 0.01  & Four-Electrode Graphite Sensor       & Physical  \\
-% pH                                  & logarithmic (0--14) & 0.01  & Flowing-Junction Reference Electrode & Physical \\
-% Turbidity                           & FNU                & 0.01  & Ion-Selective Electrode              & Physical \\
-% $\mathrm{Ca^{2+}}$                  & mg/L               & 0.1   & Ion-Selective Electrode              & Ions \\
-% $\mathrm{Cl^-}$                     & mg/L              & 0.1   & Ion-Selective Electrode              & Ions \\
-% $\mathrm{Na^+}$                     & mg/L          & 0.1   & Ion-Selective Electrode              & Ions \\
-% Blue--Green Algae (phycoerythrin)    & ppb                & 0.01  & Fluorometer                          & Biochemical \\
-% Blue--Green Algae (phycocyanin)      & ppb                & 0.01  & Fluorometer                          & Biochemical \\
-% CDOM                                & ppb                & 0.01  & Fluorometer                          & Biochemical \\
-% Chlorophyll-a                       & ppb                & 0.01  & Fluorometer                          & Biochemical \\
-% Optical Brighteners                 & ppb                & 0.01  & Fluorometer                          & Chemical \\
-% Crude Oil                           & ppb                & 0.01  & Fluorometer                          & Chemical\\
-% \bottomrule
-% \end{tabularx}
-% % \noindent{\footnotesize{\textsuperscript{1} Tables may have a footer.}}
-% \end{table}
+\begin{sidewaystable}[p!]
+  \caption{In situ reference sensors utilized in this study.}
+  \label{tab:sensors}
+  \begin{center}
+    \begin{tabular}{ccccc} \hline
+      \textbf{Sensor}	& \textbf{Units} & \textbf{Resolution} & \textbf{Sensor Type} & \textbf{Target Category}\\ \hline
+      Temperature & $^{\circ}$C & 0.01 & Thermistor & Physical \\
+      Conductivity & $\mu$S/cm & 0.01 & Four-Electrode Graphite Sensor & Physical  \\
+      pH & logarithmic (0--14) & 0.01 & Flowing-Junction Reference Electrode & Physical \\
+      Turbidity & FNU & 0.01 & Ion-Selective Electrode & Physical \\
+      $\mathrm{Ca^{2+}}$ & mg/L & 0.1 & Ion-Selective Electrode & Ions \\
+      $\mathrm{Cl^-}$ & mg/L & 0.1 & Ion-Selective Electrode & Ions \\
+      $\mathrm{Na^+}$ & mg/L & 0.1 & Ion-Selective Electrode & Ions \\
+      Blue--Green Algae (phycoerythrin) & ppb & 0.01 & Fluorometer & Biochemical \\
+      Blue--Green Algae (phycocyanin) & ppb & 0.01  & Fluorometer & Biochemical \\
+      CDOM & ppb & 0.01 & Fluorometer & Biochemical \\
+      Chlorophyll a & ppb & 0.01 & Fluorometer & Biochemical \\
+      Optical Brighteners & ppb & 0.01 & Fluorometer & Chemical \\\
+      Crude Oil & ppb & 0.01 & Fluorometer & Chemical
+    \end{tabular}
+  \end{center}
+\end{sidewaystable}
 
 
-
-The inclusion of optically inactive variables such as conductivity, pH, and ion concentrations was motivated by a desire to be comprehensive. Multiple studies have classified inland water bodies according to their ionic compositions \cite{piper1944graphic, dordoni2023preliminary}. Other research indicates that the structure of dissolved organic matter is affected by changes in pH and cation concentration~\cite{pace2012ph}. Therefore, changes in physical parameters and ionic content can be expected to be related to the observed distribution of optically active variables in the water. It is therefore reasonable to expect that these parameters may be estimated from hyperspectral images at a given site. 
+The inclusion of optically inactive variables such as conductivity, pH, and ion concentrations was motivated by a desire to be comprehensive. Multiple studies have classified inland water bodies according to their ionic compositions \cite{piper1944graphic, dordoni2023preliminary}. Other research indicates that the structure of dissolved organic matter is affected by changes in pH and cation concentration~\cite{pace2012ph}. Therefore, changes in physical parameters and ionic content can be expected to be related to the observed distribution of optically active variables in the water. It is therefore reasonable to expect that these parameters may be estimated from hyperspectral images at a given site.
 
 
 \subsection{UAV: Hyperspectral Data Cubes}
@@ -151,10 +146,10 @@ The hyperspectral imager utilized in our robot team is in a so-called pushbroom 
 \begin{equation}
     R(\lambda) = \pi L(\lambda)/E_d(\lambda)
 \end{equation}
-where $L$ is the spectral radiance, $E_d$ is the downwelling irradiance, and a factor of $\pi$ steradians results from assuming the water surface is Lambertian (diffuse) \cite{reflectance-conversion}. 
+where $L$ is the spectral radiance, $E_d$ is the downwelling irradiance, and a factor of $\pi$ steradians results from assuming the water surface is Lambertian (diffuse) \cite{ruddick2019review}. 
 
 Having converted the hyperspectral data cube to units of reflectance, we must also georeference each pixel into a geographic coordinate system so that each image pixel can be assigned a latitude and longitude corresponding to the location on the ground from which it was sampled. During our three surveys, the UAV was flown at an altitude of approximately %Please ensure meaning has been retained. 
-50 m above the water. At this scale, the surface is essentially flat, so the hyperspectral data cube can be reliably georectified without the need for an on-board digital elevation map (DEM). We adopt the approach outlined in \cite{GeorectificationMuller, GeorectificationBaumker, GeorectificationMostafa} whereby each scan line is georeferenced using the known field of view (30.8$^\circ$) together with the position and orientation of the UAV as provided by the on-board GPS/INS. After a sequence of coordinate transformations, the pixel coordinates are obtained in the relevant UTM zone (in meters). The resulting image is then re-sampled to a final output resolution. For these collections, a resolution of 10 cm was utilized; however, this can be adjusted to optimize the processing time and final resolution for real-time applications. Finally, the UTM pixel coordinates obtained are transformed to latitude and longitude for easy comparison with in situ data collected by the USV. The final result is a georectified hyperspectral reflectance data cube. In Figure~\ref{fig:hsi-infographic}, we visualize one such data cube, highlighting a selection of exemplar pixel spectra as well as the incident downward irradiance spectrum. A pseudo-color image is generated (plotted on the top of the data cube) to illustrate the scene.
+50 m above the water. At this scale, the surface is essentially flat, so the hyperspectral data cube can be reliably georectified without the need for an on-board digital elevation map (DEM). We adopt the approach outlined in \cite{muller2002program, baumker2001new, mostafa2000multi} whereby each scan line is georeferenced using the known field of view (30.8$^\circ$) together with the position and orientation of the UAV as provided by the on-board GPS/INS. After a sequence of coordinate transformations, the pixel coordinates are obtained in the relevant UTM zone (in meters). The resulting image is then re-sampled to a final output resolution. For these collections, a resolution of 10 cm was utilized; however, this can be adjusted to optimize the processing time and final resolution for real-time applications. Finally, the UTM pixel coordinates obtained are transformed to latitude and longitude for easy comparison with in situ data collected by the USV. The final result is a georectified hyperspectral reflectance data cube. In Figure~\ref{fig:hsi-infographic}, we visualize one such data cube, highlighting a selection of exemplar pixel spectra as well as the incident downward irradiance spectrum. A pseudo-color image is generated (plotted on the top of the data cube) to illustrate the scene.
 
 \begin{figure}[H]
 \centering
@@ -163,7 +158,7 @@ Having converted the hyperspectral data cube to units of reflectance, we must al
 \caption{A georectified reflectance data cube is visualized (center) with the $\log_{10}$ reflectance along the z-axis and a pseudo-color image on the top. In the top left, we visualize the downwelling irradiance spectrum (the incident light). The surrounding plots showcase exemplar pixel reflectance spectra for open water, dry grass, algae, and a rhodamine dye plume used to test the system.\label{fig:hsi-infographic}}
 \end{figure}  
 
-The above processing workflow was implemented using the Julia programming language: a just-in-time compiled language with native multi-threading support \cite{julia-1}. By running this pipeline on the onboard computer, we are able to process the collected hyperspectral data cubes in near real time. This feature is critical for time-sensitive applications wherein we need to quickly assess if an area is safe and cannot afford to wait to download and post-process collected imagery after a flight.
+The above processing workflow was implemented using the Julia programming language: a just-in-time compiled language with native multi-threading support \cite{bezanson2012julia}. By running this pipeline on the onboard computer, we are able to process the collected hyperspectral data cubes in near real time. This feature is critical for time-sensitive applications wherein we need to quickly assess if an area is safe and cannot afford to wait to download and post-process collected imagery after a flight.
 
 \subsection{Data Collection}
 
@@ -183,7 +178,7 @@ Each collection was performed near solar noon to maximize the amount of incident
 
 \subsection{Machine Learning Methods}
 
-For each of the 13 target variables listed in Table~\ref{tab:sensors}, the data were randomly partitioned into a 90:10 training/testing split. To model the data, we chose to use the random forest regressor (RFR) as implemented in the Machine Learning framework for Julia (MLJ) \cite{random-forest-regression, MLJ1}.  Random forests are an ensembling technique based on bagged predictions of individual decision tree regressors trained using the classification and regression trees (CART) algorithm. Each tree in an RFR is trained on a random subset of features and a random subset of training records \cite{decision-tree, random-forest}. Random forests are particularly attractive due to their fast training and inference times. Furthermore, studies continue to observe that tree-based models like random forest remain superior for tabular datasets \cite{grinsztajn2022tree, shwartz2022tabular}.
+For each of the 13 target variables listed in Table~\ref{tab:sensors}, the data were randomly partitioned into a 90:10 training/testing split. To model the data, we chose to use the random forest regressor (RFR) as implemented in the Machine Learning framework for Julia (MLJ) \cite{random-forest-regression, blaom2020mlj}.  Random forests are an ensembling technique based on bagged predictions of individual decision tree regressors trained using the classification and regression trees (CART) algorithm. Each tree in an RFR is trained on a random subset of features and a random subset of training records \cite{decision-trees, random-forest}. Random forests are particularly attractive due to their fast training and inference times. Furthermore, studies continue to observe that tree-based models like random forest remain superior for tabular datasets \cite{grinsztajn2022tree, shwartz2022tabular}.
 
 As reflectance values in adjacent wavelength bins tend to correlate with each other and, therefore, may not necessarily contribute additional information content to the final model, it is desirable to evaluate the relative importance of each feature to the trained model predictions. This is useful both for identifying the most relevant features and for performing feature selection to reduce the final model size. By default, tree-based methods such as RFR allow for impurity-based ranking as described in \cite{random-forest, rfr-importance-ranking}. However, these methods have been shown to be biased towards high cardinality and correlated features \cite{strobl2008conditional}. Therefore, we choose to use the model-agnostic permutation importance as described by \cite{parr2018beware}. To do this, we further partition the training dataset, resulting in an 80:10:10 split with 80\% of the points used for model training, 10\% of the points used for validation and determination of feature importance, and the final 10\% held out as an independent testing set. The importance of the $j^{\text{th}}$ feature is then computed as
 \begin{equation}
