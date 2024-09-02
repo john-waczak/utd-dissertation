@@ -206,233 +206,229 @@ These trained models can then easily be deployed on the onboard processing compu
 
 
 
-% \section{Results}
+\section{Results}
 
 
-% The final dataset of combined observations from each of the three separate collections contains more than 120,000 individual records. Based on the size of the UAV payload and the available battery capacity, the collection on 23 November 2020 was chosen to cover the broadest possible area, resulting in small horizontal gaps between flight tracks. The collections on 9 December 2020 and 10 December 2020 were designed to complement this collection by sampling a smaller spatial extent with uniform coverage.
+The final dataset of combined observations from each of the three separate collections contains more than 120,000 individual records. Based on the size of the UAV payload and the available battery capacity, the collection on 23 November 2020 was chosen to cover the broadest possible area, resulting in small horizontal gaps between flight tracks. The collections on 9 December 2020 and 10 December 2020 were designed to complement this collection by sampling a smaller spatial extent with uniform coverage.
 
-% The variability of incident lighting conditions for each collection is visualized in Figure~\ref{fig:downwelling-hist}, wherein the distribution of the total downwelling intensity measured by the downwelling irradiance spectrometer across all hyperspectral data cubes is visualized. Despite performing all UAV flights near solar noon, there were differences in the minimum solar zenith angles between collections due to the time of year. Additionally, there was some slight cloudiness during the 9 December and 10 December collections. 
+The variability of incident lighting conditions for each collection is visualized in Figure~\ref{fig:downwelling-hist}, wherein the distribution of the total downwelling intensity measured by the downwelling irradiance spectrometer across all hyperspectral data cubes is visualized. Despite performing all UAV flights near solar noon, there were differences in the minimum solar zenith angles between collections due to the time of year. Additionally, there was some slight cloudiness during the 9 December and 10 December collections. 
 
-% \begin{figure}[H]
-% \vspace{-0.1in}
-% \hspace{-9pt}\includegraphics[width=0.7\columnwidth]{robot-team-supervised/results/downwelling-hist.pdf}
-% \vspace{-0.15in}
-% \caption{Distribution of total downwelling intensity during each of the three HSI collection flights. The multi-modal nature of these distributions reflects the impact of the relative orientation of the drone to the sun as well as potential occlusion due to the presence of clouds.\label{fig:downwelling-hist}}
-% \end{figure}   
+\begin{figure}[H]
+\includegraphics[width=0.7\columnwidth]{robot-team-supervised/results/downwelling-hist.pdf}
+\caption{Distribution of total downwelling intensity during each of the three HSI collection flights. The multi-modal nature of these distributions reflects the impact of the relative orientation of the drone to the sun as well as potential occlusion due to the presence of clouds.\label{fig:downwelling-hist}}
+\end{figure}   
 
-% The results of the model training procedure are presented in Table~\ref{tab:fit-results}. The performance of the model is identified by the $R^2$, RMSE, and MAE out-of-fold estimates (mean $\pm$ standard deviation) of the final hyperparameter-optimized model in the training set, with the target variables ranked in descending order by the $R^2$ value and separated by sensor type (physical variables, ions, biochemical variables, and chemical variables). The final hyperparameter values for each model are listed in Table~\ref{tab:hyperparameters} in Appendix~\ref{Model Hyperparameters}. The small variation in values across folds confirms that the reported performance is independent of how the training set was sampled. Furthermore, we report the interval width that yields a 90\% confidence interval on the holdout validation set determined by the conformal prediction procedure. We then evaluate how the estimated uncertainty generalizes by computing the empirical coverage on the holdout testing set: that is, we compute the percentage of predictions in the test set that actually fall within the estimated 90\% confidence interval. 
+The results of the model training procedure are presented in Table~\ref{tab:fit-results}. The performance of the model is identified by the $R^2$, RMSE, and MAE out-of-fold estimates (mean $\pm$ standard deviation) of the final hyperparameter-optimized model in the training set, with the target variables ranked in descending order by the $R^2$ value and separated by sensor type (physical variables, ions, biochemical variables, and chemical variables). The final hyperparameter values for each model are listed in Table~\ref{tab:hyperparameters} in Appendix~\ref{Model Hyperparameters}. The small variation in values across folds confirms that the reported performance is independent of how the training set was sampled. Furthermore, we report the interval width that yields a 90\% confidence interval on the holdout validation set determined by the conformal prediction procedure. We then evaluate how the estimated uncertainty generalizes by computing the empirical coverage on the holdout testing set: that is, we compute the percentage of predictions in the test set that actually fall within the estimated 90\% confidence interval. 
 
-% From Table~\ref{tab:fit-results},  we see that the empirical coverage achieved by the inferred confidence interval evaluated in the independent test set is within 1\% of our desired coverage for each target modeled. This indicates that the uncertainties obtained by the conformal prediction procedure are reliable---at least within the bounds of the collected dataset. We also note that in all cases, the inferred model uncertainties are larger than the resolution of the in situ sensors. This lends further credence to the inferred uncertainty estimates, as we should not expect to be able to have lower uncertainty than the smallest resolvable difference in reference sensor measurements.
+From Table~\ref{tab:fit-results},  we see that the empirical coverage achieved by the inferred confidence interval evaluated in the independent test set is within 1\% of our desired coverage for each target modeled. This indicates that the uncertainties obtained by the conformal prediction procedure are reliable---at least within the bounds of the collected dataset. We also note that in all cases, the inferred model uncertainties are larger than the resolution of the in situ sensors. This lends further credence to the inferred uncertainty estimates, as we should not expect to be able to have lower uncertainty than the smallest resolvable difference in reference sensor measurements.
 
-% To further examine the differences in model performance between the target variables, we can consider the difference between the RMSE and MAE scores. The MAE is less sensitive to the impact of outliers than the RMSE, and as a consequence, any large difference between the two is indicative of impacts due to the distribution of target values. Indeed, this is the case for turbidity, for which almost all measurements were below 10 FNU, with only a small fraction of observations from a small area near the shore being above this value. %Please ensure meaning has been retained. 
-% The rest of the models all show mean per-fold RMSE values with sizes comparable to the mean per-fold MAEs. 
+To further examine the differences in model performance between the target variables, we can consider the difference between the RMSE and MAE scores. The MAE is less sensitive to the impact of outliers than the RMSE, and as a consequence, any large difference between the two is indicative of impacts due to the distribution of target values. Indeed, this is the case for turbidity, for which almost all measurements were below 10 FNU, with only a small fraction of observations from a small area near the shore being above this value. %Please ensure meaning has been retained. 
+The rest of the models all show mean per-fold RMSE values with sizes comparable to the mean per-fold MAEs. 
 
-% In the remainder of this section, we compare the models within each target category.
+In the remainder of this section, we compare the models within each target category.
 
-% % \pagebreak
+% \pagebreak
 
-% \begin{table}[H] 
-% \tablesize{\footnotesize}
-%   \caption{Summary of fitting statistics for each target measurement. Models were evaluated using 6-fold cross-validation on the training set. The estimated uncertainty is evaluated so that a prediction $\hat{y}\pm \Delta y$ achieves 90\% coverage on the calibration holdout set. The empirical coverage is the percentage of predictions in the testing set that fall within the inferred confidence interval. \label{tab:fit-results}}
-%   \newcolumntype{C}{>{\centering\arraybackslash}X}
-%   \begin{tabularx}{\fulllength}{CCCCCCC}
-%     \toprule
-%     \textbf{Target} & \textbf{Units} & \textbf{$\text{R}^2$} & \textbf{RMSE} & \textbf{MAE} & \textbf{Estimated Uncertainty} & \textbf{Empirical Coverage (\%)} \\
-%     \midrule
-%     Temperature & $^{\circ}$C & 1.0 ± 6.04 $\times$ 10$^{-6}$ & 0.0289 ± 0.000466 & 0.0162 ± 0.00016 &  ±0.039 & 90.3 \\
-%     Conductivity & $\upmu$S/cm & 1.0 ± 1.54 $\times$ 10$^{-5}$ & 0.574 ± 0.0128 & 0.322 ± 0.00579 &  ±0.76 & 90.6 \\
-%     pH & 0--14 & 0.994 ± 0.000288 & 0.0145 ± 0.000304 & 0.00739 ± 9.49 $\times$ 10$^{-5}$ &  ±0.017 & 89.5 \\
-%     Turbidity & FNU & 0.897 ± 0.00611 & 3.13 ± 0.084 & 0.736 ± 0.0156 &  ±1.1 & 89.8 \\
-%     \midrule
-%     $\mathrm{Ca}^{2+}$ & mg/L & 1.0 ± 1.06 $\times$ 10$^{-5}$ & 0.285 ± 0.00357 & 0.137 ± 0.00224 &  ±0.33 & 89.8 \\
-%     $\mathrm{Cl^-}$ & mg/L & 0.995 ± 0.000196 & 0.895 ± 0.0202 & 0.516 ± 0.00759 &  ±1.2 & 90.1 \\
-%     $\mathrm{Na^+}$ & mg/L &0.993 ± 0.000229 & 6.16 ± 0.102 & 2.83 ± 0.0303 &  ±7.3 & 90.0 \\
-%     \midrule
-%     Blue--Green Algae (Phycoerythrin) & ppb & 0.995 ± 0.000601 & 0.783 ± 0.0489 & 0.287 ± 0.00959 &  ±0.73 & 89.3 \\
-%     CDOM & ppb &  0.965 ± 0.00352 & 0.248 ± 0.0142 & 0.0921 ± 0.0024 &  ±0.15 & 89.9 \\
-%     Chlorophyll-a & ppb & 0.908 ± 0.00664 & 0.37 ± 0.00934 & 0.131 ± 0.00228 &  ±0.27 & 89.2 \\
-%     Blue--Green Algae (Phycocyanin) & ppb & 0.708 ± 0.00689 & 0.749 ± 0.0129 & 0.446 ± 0.00405 &  ±0.93 & 89.8 \\
-%     \midrule
-%     Crude Oil & ppb & 0.949 ± 0.00267 & 0.247 ± 0.00597 & 0.0935 ± 0.00114 &  ±0.17 & 89.8 \\
-%     Optical Brighteners & ppb & 0.943 ± 0.00122 & 0.0806 ± 0.0014 & 0.0481 ± 0.000416 &  ±0.095 & 89.8 \\
-%     \bottomrule
-%   \end{tabularx}
-% \end{table}
+\begin{sidewaystable}[p!]
+  \caption{Summary of fitting statistics for each target measurement. Models
+    were evaluated using 6-fold cross-validation on the training set. The
+    estimated uncertainty is evaluated so that a prediction $\hat{y}\pm \Delta
+    y$ achieves 90\% coverage on the calibration holdout set. The empirical
+    coverage is the percentage of predictions in the testing set that fall
+    within the inferred confidence interval.}
+  \label{tab:fit-results}
+  \begin{center}
+    \resizebox{\textwidth}{!}{\begin{tabular}{lcccccc} \hline
+      & & & & & & \\
+      %\textbf{Target} & \textbf{Units} & \textbf{$\text{R}^2$} & \textbf{RMSE} & \textbf{MAE} & \textbf{Estimated Uncertainty} & \textbf{Empirical Coverage (\%)} \\
+      \textbf{Target} & \textbf{Units} & \textbf{$\text{R}^2$} & \textbf{RMSE} & \textbf{MAE} & \textbf{Estimated} & \textbf{Empirical} \\
+      & & & & & \textbf{Uncertainty} & \textbf{Coverage (\%)}\\ \hline
+      Temperature & $^{\circ}$C & 1.0 ± 6.04 $\times$ 10$^{-6}$ & 0.0289 ± 0.000466 & 0.0162 ± 0.00016 &  ±0.039 & 90.3 \\
+      Conductivity & $\mu$S/cm & 1.0 ± 1.54 $\times$ 10$^{-5}$ & 0.574 ± 0.0128 & 0.322 ± 0.00579 &  ±0.76 & 90.6 \\
+      pH & 0--14 & 0.994 ± 0.000288 & 0.0145 ± 0.000304 & 0.00739 ± 9.49 $\times$ 10$^{-5}$ &  ±0.017 & 89.5 \\
+      Turbidity & FNU & 0.897 ± 0.00611 & 3.13 ± 0.084 & 0.736 ± 0.0156 &  ±1.1 & 89.8 \\
+      \hline
+      $\mathrm{Ca}^{2+}$ & mg/L & 1.0 ± 1.06 $\times$ 10$^{-5}$ & 0.285 ± 0.00357 & 0.137 ± 0.00224 &  ±0.33 & 89.8 \\
+      $\mathrm{Cl^-}$ & mg/L & 0.995 ± 0.000196 & 0.895 ± 0.0202 & 0.516 ± 0.00759 &  ±1.2 & 90.1 \\
+      $\mathrm{Na^+}$ & mg/L &0.993 ± 0.000229 & 6.16 ± 0.102 & 2.83 ± 0.0303 &  ±7.3 & 90.0 \\
+      \hline
+      Blue--Green Algae (Phycoerythrin) & ppb & 0.995 ± 0.000601 & 0.783 ± 0.0489 & 0.287 ± 0.00959 &  ±0.73 & 89.3 \\
+      CDOM & ppb &  0.965 ± 0.00352 & 0.248 ± 0.0142 & 0.0921 ± 0.0024 &  ±0.15 & 89.9 \\
+      Chlorophyll-a & ppb & 0.908 ± 0.00664 & 0.37 ± 0.00934 & 0.131 ± 0.00228 &  ±0.27 & 89.2 \\
+      Blue--Green Algae (Phycocyanin) & ppb & 0.708 ± 0.00689 & 0.749 ± 0.0129 & 0.446 ± 0.00405 &  ±0.93 & 89.8 \\
+      \hline
+      Crude Oil & ppb & 0.949 ± 0.00267 & 0.247 ± 0.00597 & 0.0935 ± 0.00114 &  ±0.17 & 89.8 \\
+      Optical Brighteners & ppb & 0.943 ± 0.00122 & 0.0806 ± 0.0014 & 0.0481 ± 0.000416 &  ±0.095 & 89.8 \\
+    \end{tabular}}
+  \end{center}
+\end{sidewaystable}
 
+\newpage
 
-% \subsection{Physical Variables}
+\subsection{Physical Variables}
 
-% Physical variables included temperature, conductivity, pH, and turbidity. In the combined dataset, the distributions for temperature and conductivity had two distinct, nonoverlapping regions corresponding to the measurements from 23 November and the measurements from 9 December and 10 December, respectively. The pH value of the pond was slightly alkaline, showing a multimodal spatial distribution with values ranging from 8.0 to 8.6. As mentioned above, the pond water was very clear for each observation period, with most turbidity values ranging between 1 and 3 FNU and very few above 10.
+Physical variables included temperature, conductivity, pH, and turbidity. In the combined dataset, the distributions for temperature and conductivity had two distinct, nonoverlapping regions corresponding to the measurements from 23 November and the measurements from 9 December and 10 December, respectively. The pH value of the pond was slightly alkaline, showing a multimodal spatial distribution with values ranging from 8.0 to 8.6. As mentioned above, the pond water was very clear for each observation period, with most turbidity values ranging between 1 and 3 FNU and very few above 10.
 
-% The results of the hyperparameter-optimized RFR fits are shown in Figure~\ref{fig:physical-fit}. Temperature and conductivity show the best performance in the independent training set, with $R^2$ values of 1.0 (to three decimal places). Similarly, the pH model achieves an excellent fit, with most predictions falling close to the 1:1 line. Quantile--quantile plots for these three models further confirm that the distributions of the true and predicted values match. The turbidity model also achieves a strong fit, with a $R^2$ value of 0.905. The scatter diagram and quantile--quantile plot for this target show that the model performance degrades with larger values, for which deviation in the predicted distribution is apparent past 25 FNU.
+The results of the hyperparameter-optimized RFR fits are shown in Figure~\ref{fig:physical-fit}. Temperature and conductivity show the best performance in the independent training set, with $R^2$ values of 1.0 (to three decimal places). Similarly, the pH model achieves an excellent fit, with most predictions falling close to the 1:1 line. Quantile--quantile plots for these three models further confirm that the distributions of the true and predicted values match. The turbidity model also achieves a strong fit, with a $R^2$ value of 0.905. The scatter diagram and quantile--quantile plot for this target show that the model performance degrades with larger values, for which deviation in the predicted distribution is apparent past 25 FNU.
 
-% \begin{figure}[H]
-% \vspace{-0.15in}
-% \includegraphics[width=0.9\columnwidth]{robot-team-supervised/results/fits/physical-fitres.pdf}
-% \vspace{-0.1in}
-% \caption{Scatter diagrams (\textbf{left}) and quantile--quantile plots (\textbf{right}) for the hyperparameter-optimized RFR models for the physical variables measured by the USV.\label{fig:physical-fit}}
-% \end{figure}  
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{robot-team-supervised/results/fits/physical-fitres.png}
+  \caption{Scatter diagrams (\textbf{left}) and quantile--quantile plots (\textbf{right}) for the hyperparameter-optimized RFR models for the physical variables measured by the USV.\label{fig:physical-fit}}
+\end{figure}
 
-% The permutation importance of the top 25 features for each of the models of the physical variables is shown in Figure~\ref{fig:physical-fi}. All four models show strong dependence on the solar illumination geometry (solar azimuth, elevation, and solar zenith) as well as the viewing geometry (pitch, altitude, heading, etc.). All four models also include the total downwelling intensity and the total pixel intensity as highly important features. The temperature, conductivity, and pH models all include red-to-infrared reflectance bins and a combination of spectral indices within their most important features. Finally, the turbidity model relies mainly on blue wavelengths from 462 to 496 nm and did not include any spectral indices amongst the 25 most important features.
+The permutation importance of the top 25 features for each of the models of the physical variables is shown in Figure~\ref{fig:physical-fi}. All four models show strong dependence on the solar illumination geometry (solar azimuth, elevation, and solar zenith) as well as the viewing geometry (pitch, altitude, heading, etc.). All four models also include the total downwelling intensity and the total pixel intensity as highly important features. The temperature, conductivity, and pH models all include red-to-infrared reflectance bins and a combination of spectral indices within their most important features. Finally, the turbidity model relies mainly on blue wavelengths from 462 to 496 nm and did not include any spectral indices amongst the 25 most important features.
 
-% By applying the trained models to the full hyperspectral data cubes, we can produce maps of the distributions of the target variables as in Figure~\ref{fig:map-physical}. Here, we have chosen to show the map produced from the imagery collected during the 23 November collection period, as it showcases the largest spatial extent. The temperature map shows lower values near the shore, which is to be expected as the air temperature was below the water temperature. The temperature, conductivity, and pH maps all show a distinction between the main body of water and the alcove to the east, which receives little flow from the main body. The turbidity map confirms that the water is largely clear but has elevated levels near the shore.
-
-
-% \begin{figure}[H]
-
-% \vspace{-0.15in}
-% \hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/fits/physical-ranking.pdf}
-% \vspace{-0.1in}
-% \caption{Ranked permutation importance for each feature in the physical variable models. Permutation importance measured the decrease in the model's $R^2$ value after replacing each feature in the prediction set with a random permutation of its values.\label{fig:physical-fi}}
-% \end{figure}  
+By applying the trained models to the full hyperspectral data cubes, we can produce maps of the distributions of the target variables as in Figure~\ref{fig:map-physical}. Here, we have chosen to show the map produced from the imagery collected during the 23 November collection period, as it showcases the largest spatial extent. The temperature map shows lower values near the shore, which is to be expected as the air temperature was below the water temperature. The temperature, conductivity, and pH maps all show a distinction between the main body of water and the alcove to the east, which receives little flow from the main body. The turbidity map confirms that the water is largely clear but has elevated levels near the shore.
 
 
-% \begin{figure}[H]
-
-% \vspace{-0.15in}
-% \hspace{-6pt}\includegraphics[width=0.9\columnwidth]{robot-team-supervised/results/maps/physical.pdf}
-% \vspace{-0.05in}
-% \caption{Maps generated by applying each of the physical variable models to the hyperspectral data cubes collected on 23 November. Overlaid over the predictions are color-filled squares showing the associated in situ reference data for the same collection period. The size of the squares has been exaggerated for visualization. We note that there is good agreement between the model predictions and the reference data. \label{fig:map-physical}}
-% \end{figure}  
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{robot-team-supervised/results/fits/physical-ranking.pdf}
+  \caption{Ranked permutation importance for each feature in the physical variable models. Permutation importance measured the decrease in the model's $R^2$ value after replacing each feature in the prediction set with a random permutation of its values.\label{fig:physical-fi}}
+\end{figure}
 
 
-
-% \subsection{Ions}
-
-% The measured ions include $\mathrm{Ca}^{2+}$, $\mathrm{Cl}^{-}$, and $\mathrm{Na}^{+}$. All three measurements showed multimodal spatial distributions throughout the pond on each of the three collections. The scatter diagrams and quantile--quantile graphs for the resulting fits are shown in Figure~\ref{fig:ions-fit}. All three models achieved excellent fits, with $R^2$ values of 1.0, 0.996, and 0.993 on the independent testing set, respectively. Furthermore, there is no clear decrease in model performance for low or high concentrations; rather, for $\textrm{Cl}^{-}$ and $\textrm{Na}^{+}$, the models have the most difficulty in the middle of the target distributions. 
-
-% The permutation importance rankings for the top 25 features of each of the ion models is shown in Figure~\ref{fig:ions-fi}. Here, we see that all three models depend on the solar illumination and viewing geometries as well as the total downwelling intensity and the total pixel intensity measured by the hyperspectral imager. All three models utilize a combination of spectral indices that combine green, red, and infrared reflectance bins. The $\textrm{Ca}^{+}$ and $\textrm{Cl}^{-}$ models depend on specific red wavelengths of 740 to 769 nm. $\textrm{Cl}^{-}$ and $\textrm{Na}^{+}$ also depend on green and yellow reflectance bins of 541 to 589 nanometers.
-
-% The maps produced by applying the fitted models to the hyperspectral data cubes for 23 November are shown in Figure~\ref{fig:map-ions}. Both positive ions $\mathrm{Ca}^{2+}$ and $\mathrm{Na}^{+}$ show high concentrations in the northwest portion of the pond, with lower values being measured in the alcove on the eastern side. Positive ion concentrations also appear to decrease near the shore. The negative ion $\mathrm{Cl}^{-}$ shows the opposite distribution, with larger values in the alcove to the east and the lowest values on the western side of the pond. The $\mathrm{Cl}^{-}$ ion concentration also appears to increase near the shore.
-
-% \begin{figure}[H]
-
-% \vspace{-0.15in}
-% \hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/fits/ions-fitres.pdf}
-% \vspace{-0.1in}
-% \caption{Scatter diagrams (\textbf{left}) and quantile--quantile plots (\textbf{right}) for the hyperparameter-optimized RFR models for the ion measurements made by the USV.\label{fig:ions-fit}}
-% \end{figure}  
-
-% \vspace{-9pt}
-% \begin{figure}[H]
-% \centering
-% \vspace{-0.1in}
-% \includegraphics[width=18 cm]{robot-team-supervised/results/fits/ions-ranking.pdf}
-% \vspace{-0.1in}
-% \caption{Ranked permutation importance for the top 25 features of the ion models. The permutation importance measures the decrease in the model's $R^2$ value when each feature is replaced by a random permutation of its values.\label{fig:ions-fi}}
-% \end{figure}  
-
-% \begin{figure}[H]
-
-% \vspace{-0.15in}
-% \hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/maps/ions.pdf}
-% \vspace{-0.1in}
-% \caption{Maps generated by applying the trained ion models to the data cubes collected on 23 November. Overlaid on the maps are the in situ reference measurements for the same collection period. The size of the squares has been exaggerated for the visualization. We note that there is good agreement between the generated map and the reference data. \label{fig:map-ions}}
-% \end{figure}  
+\begin{figure}[H]
+  \includegraphics[width=0.9\textwidth]{robot-team-supervised/results/maps/physical.png}
+  \caption{Maps generated by applying each of the physical variable models to the hyperspectral data cubes collected on 23 November. Overlaid over the predictions are color-filled squares showing the associated in situ reference data for the same collection period. The size of the squares has been exaggerated for visualization. We note that there is good agreement between the model predictions and the reference data. \label{fig:map-physical}}
+\end{figure}
 
 
 
-% \subsection{Biochemical Variables}
+\subsection{Ions}
 
-% The measured biochemical variables include the pigments phycoerythrin, phycocyanin, and chlorophyll-a, as well as CDOM. Phycoerythrin and phycocyanin are both present in blue--green algae, and chlorophyll-a is found in all photosynthetic organisms except bacteria. In the combined dataset, the three pigments showed multimodal distributions separated by the collection day and with little spatial variation within each individual collection. CDOM showed a variable spatial distribution throughout the pond between the main water body and the eastern alcove on 23 November.
+The measured ions include $\mathrm{Ca}^{2+}$, $\mathrm{Cl}^{-}$, and $\mathrm{Na}^{+}$. All three measurements showed multimodal spatial distributions throughout the pond on each of the three collections. The scatter diagrams and quantile--quantile graphs for the resulting fits are shown in Figure~\ref{fig:ions-fit}. All three models achieved excellent fits, with $R^2$ values of 1.0, 0.996, and 0.993 on the independent testing set, respectively. Furthermore, there is no clear decrease in model performance for low or high concentrations; rather, for $\textrm{Cl}^{-}$ and $\textrm{Na}^{+}$, the models have the most difficulty in the middle of the target distributions. 
 
-% The results of the RFR fits for the biochemical variables are shown in Figure~\ref{fig:biochem-fit}. Phycoerythrin showed the best model performance, with an $R^2$ value of 0.995 in the training set. Both CDOM and chlorophyll-a achieved good performance, with $R^2$ values of 0.967 and 0.917 in the training set. Quantile--quantile plots indicate that the CDOM model degrades for values below 16 ppb, where data are sparse. The chlorophyll-a model shows the opposite trend, with poorer performance for concentrations above 5 ppb, for which there are very few records. The phycocyanin model had the lowest performance of the biochemical sensors, with an $R^2$ value of 0.727 and with model predictions rapidly decreasing in quality for concentrations greater than 3 ppb. 
+The permutation importance rankings for the top 25 features of each of the ion models is shown in Figure~\ref{fig:ions-fi}. Here, we see that all three models depend on the solar illumination and viewing geometries as well as the total downwelling intensity and the total pixel intensity measured by the hyperspectral imager. All three models utilize a combination of spectral indices that combine green, red, and infrared reflectance bins. The $\textrm{Ca}^{+}$ and $\textrm{Cl}^{-}$ models depend on specific red wavelengths of 740 to 769 nm. $\textrm{Cl}^{-}$ and $\textrm{Na}^{+}$ also depend on green and yellow reflectance bins of 541 to 589 nanometers.
 
-% The permutation importance ranking of the top 25 features of each biochemical model is shown in Figure~\ref{fig:biochem-fi}. Again, all four models include the solar illumination and viewing geometries amongst their most important features as well as the total downwelling intensity and total pixel intensity at the imager. Additionally, all four models include some vegetation indices amongst the top features, which utilize combinations of blue, green, yellow, red, and infrared reflectance bands. The phycoerythrin model shows a preference for green reflectance bins from 544 to 556 nm, while the phycocyanin model prefers blue and red reflectance bins. The CDOM model uses mainly red reflectance values, whereas the chlorophyll-a model includes red, green, and blue reflectance bins.
+The maps produced by applying the fitted models to the hyperspectral data cubes for 23 November are shown in Figure~\ref{fig:map-ions}. Both positive ions $\mathrm{Ca}^{2+}$ and $\mathrm{Na}^{+}$ show high concentrations in the northwest portion of the pond, with lower values being measured in the alcove on the eastern side. Positive ion concentrations also appear to decrease near the shore. The negative ion $\mathrm{Cl}^{-}$ shows the opposite distribution, with larger values in the alcove to the east and the lowest values on the western side of the pond. The $\mathrm{Cl}^{-}$ ion concentration also appears to increase near the shore.
 
-% The maps generated for the 23 November collection by applying trained biochemical models are shown in Figure~\ref{fig:map-biochem}. The three pigments show low concentrations in the body of water but elevated levels near the shore. The CDOM distribution shows spatial variability, with higher values in the eastern alcove---similar to the separation seen in the maps for temperature, conductivity, $\textrm{Ca}^{2+}$, $\textrm{Cl}^{-}$, and $\textrm{Na}^{+}$.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\columnwidth]{robot-team-supervised/results/fits/ions-fitres.png}
+  \caption{Scatter diagrams (\textbf{left}) and quantile--quantile plots
+    (\textbf{right}) for the hyperparameter-optimized RFR models for the ion
+    measurements made by the USV.\label{fig:ions-fit}}
+\end{figure}
 
-% \begin{figure}[H]
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{robot-team-supervised/results/fits/ions-ranking.pdf}
+  \caption{Ranked permutation importance for the top 25 features of the ion
+    models. The permutation importance measures the decrease in the model's
+    $R^2$ value when each feature is replaced by a random permutation of its
+    values.\label{fig:ions-fi}}
+\end{figure}  
 
-% \vspace{-0.15in}
-% \hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/fits/biochemical-fitres.pdf}
-% \vspace{-0.1in}
-% \caption{Scatter plots (\textbf{left}) and quantile--quantile plots (\textbf{right}) for the final hyperparameter-optimized models for the biochemical targets blue--green algae (phycoerythrin), CDOM, chlorophyll-a, and blue--green algae (phycocyanin). \label{fig:biochem-fit}}
-% \end{figure}  
-
-% \begin{figure}[H]
-
-% \vspace{-0.15in}
-% \hspace{-6pt}\includegraphics[width=0.9\columnwidth]{robot-team-supervised/results/fits/biochemical-ranking.pdf}
-% \vspace{-0.1in}
-% \caption{Ranked permutation importance for each feature in the trained biochemical models. The permutation importance measures the decrease in the model's $R^2$ value after replacing each feature with a random permutation of its values.\label{fig:biochem-fi}}
-% \end{figure}  
+\begin{figure}[H]
+  \includegraphics[width=\columnwidth]{robot-team-supervised/results/maps/ions.png}
+  \caption{Maps generated by applying the trained ion models to the data cubes collected on 23 November. Overlaid on the maps are the in situ reference measurements for the same collection period. The size of the squares has been exaggerated for the visualization. We note that there is good agreement between the generated map and the reference data. \label{fig:map-ions}}
+\end{figure}  
 
 
-% \vspace{-9pt}
-% \begin{figure}[H]
 
-% \vspace{-0.15in}
-% \hspace{-6pt}\includegraphics[width=0.92\columnwidth]{robot-team-supervised/results/maps/biochemical.pdf}
-% \vspace{-0.1in}
-% \caption{Maps generated 
-%  by applying the trained biochemical models to the data cubes collected on 23 November. Overlaid are the in situ reference data for the same collection period. The size of the squares has been exaggerated for the visualization. We note there is good agreement between the predicted map and the reference data. \label{fig:map-biochem}}
-% \end{figure}  
+\subsection{Biochemical Variables}
+
+The measured biochemical variables include the pigments phycoerythrin, phycocyanin, and chlorophyll-a, as well as CDOM. Phycoerythrin and phycocyanin are both present in blue--green algae, and chlorophyll-a is found in all photosynthetic organisms except bacteria. In the combined dataset, the three pigments showed multimodal distributions separated by the collection day and with little spatial variation within each individual collection. CDOM showed a variable spatial distribution throughout the pond between the main water body and the eastern alcove on 23 November.
+
+The results of the RFR fits for the biochemical variables are shown in Figure~\ref{fig:biochem-fit}. Phycoerythrin showed the best model performance, with an $R^2$ value of 0.995 in the training set. Both CDOM and chlorophyll-a achieved good performance, with $R^2$ values of 0.967 and 0.917 in the training set. Quantile--quantile plots indicate that the CDOM model degrades for values below 16 ppb, where data are sparse. The chlorophyll-a model shows the opposite trend, with poorer performance for concentrations above 5 ppb, for which there are very few records. The phycocyanin model had the lowest performance of the biochemical sensors, with an $R^2$ value of 0.727 and with model predictions rapidly decreasing in quality for concentrations greater than 3 ppb. 
+
+The permutation importance ranking of the top 25 features of each biochemical model is shown in Figure~\ref{fig:biochem-fi}. Again, all four models include the solar illumination and viewing geometries amongst their most important features as well as the total downwelling intensity and total pixel intensity at the imager. Additionally, all four models include some vegetation indices amongst the top features, which utilize combinations of blue, green, yellow, red, and infrared reflectance bands. The phycoerythrin model shows a preference for green reflectance bins from 544 to 556 nm, while the phycocyanin model prefers blue and red reflectance bins. The CDOM model uses mainly red reflectance values, whereas the chlorophyll-a model includes red, green, and blue reflectance bins.
+
+The maps generated for the 23 November collection by applying trained biochemical models are shown in Figure~\ref{fig:map-biochem}. The three pigments show low concentrations in the body of water but elevated levels near the shore. The CDOM distribution shows spatial variability, with higher values in the eastern alcove---similar to the separation seen in the maps for temperature, conductivity, $\textrm{Ca}^{2+}$, $\textrm{Cl}^{-}$, and $\textrm{Na}^{+}$.
+
+\begin{figure}[H]
+
+\vspace{-0.15in}
+\hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/fits/biochemical-fitres.png}
+\vspace{-0.1in}
+\caption{Scatter plots (\textbf{left}) and quantile--quantile plots (\textbf{right}) for the final hyperparameter-optimized models for the biochemical targets blue--green algae (phycoerythrin), CDOM, chlorophyll-a, and blue--green algae (phycocyanin). \label{fig:biochem-fit}}
+\end{figure}  
+
+\begin{figure}[H]
+
+\vspace{-0.15in}
+\hspace{-6pt}\includegraphics[width=0.9\columnwidth]{robot-team-supervised/results/fits/biochemical-ranking.pdf}
+\vspace{-0.1in}
+\caption{Ranked permutation importance for each feature in the trained biochemical models. The permutation importance measures the decrease in the model's $R^2$ value after replacing each feature with a random permutation of its values.\label{fig:biochem-fi}}
+\end{figure}  
+
+
+\vspace{-9pt}
+\begin{figure}[H]
+
+\vspace{-0.15in}
+\hspace{-6pt}\includegraphics[width=0.92\columnwidth]{robot-team-supervised/results/maps/biochemical.png}
+\vspace{-0.1in}
+\caption{Maps generated 
+ by applying the trained biochemical models to the data cubes collected on 23 November. Overlaid are the in situ reference data for the same collection period. The size of the squares has been exaggerated for the visualization. We note there is good agreement between the predicted map and the reference data. \label{fig:map-biochem}}
+\end{figure}  
 
 
  
 
-% \subsection{Chemical Variables}
+\subsection{Chemical Variables}
 
-% The final two models to consider are for the measured chemical concentrations of crude oil (CO) and optical brighteners (OB). The crude oil measurement includes natural unprocessed petroleum, whereas optical brighteners consist of whitening agents that are often added to products such as soaps, detergents, and cleaning agents. Both the crude oil and optical brightener measurements show multi-modal spatial distributions across each collection period. Scatter diagrams and quantile--quantile plots for the fitted models are shown in Figure~\ref{fig:chemicals-fit}. Both models achieve good performance, with $R^2$ values of 0.957 and 0.941 for CO and OB on the holdout test set. The performance of the CO model degrades for concentrations below 24 ppb, for which there are few records. Similarly, the OB model shows worse performance for concentrations below roughly 3.5 ppb.
+The final two models to consider are for the measured chemical concentrations of crude oil (CO) and optical brighteners (OB). The crude oil measurement includes natural unprocessed petroleum, whereas optical brighteners consist of whitening agents that are often added to products such as soaps, detergents, and cleaning agents. Both the crude oil and optical brightener measurements show multi-modal spatial distributions across each collection period. Scatter diagrams and quantile--quantile plots for the fitted models are shown in Figure~\ref{fig:chemicals-fit}. Both models achieve good performance, with $R^2$ values of 0.957 and 0.941 for CO and OB on the holdout test set. The performance of the CO model degrades for concentrations below 24 ppb, for which there are few records. Similarly, the OB model shows worse performance for concentrations below roughly 3.5 ppb.
 
-% The ranked permutation importances of the top 25 features for each model are shown in Figure~\ref{fig:chemicals-fi}. Both models rank the solar illumination and viewing geometries together with the total downwelling intensity and total pixel intensities amongst the top features. Both models include a combination of spectral indices using blue, green, yellow, red, and infrared reflectance bins. Additionally, the CO model includes green--yellow reflectances from 539 to 589 nm as well as red reflectances from 749 to 769 nm. The OB model includes yellow reflectance at 584.6 nm and red reflectance bins.
+The ranked permutation importances of the top 25 features for each model are shown in Figure~\ref{fig:chemicals-fi}. Both models rank the solar illumination and viewing geometries together with the total downwelling intensity and total pixel intensities amongst the top features. Both models include a combination of spectral indices using blue, green, yellow, red, and infrared reflectance bins. Additionally, the CO model includes green--yellow reflectances from 539 to 589 nm as well as red reflectances from 749 to 769 nm. The OB model includes yellow reflectance at 584.6 nm and red reflectance bins.
 
-% The maps generated by applying the CO and OB models to the 23 November data cubes are shown in Figure~\ref{fig:map-chem}. Both models show a distinct spatial distribution, with elevated values in the eastern alcove of the pond---similar to the CDOM distribution in Figure~\ref{fig:map-biochem}.
-
-
-
-
-% % Example of a figure that spans the whole page width. The same concept works for tables, too.
-% %\begin{figure}[H]
-% %\centering
-% %\includegraphics[width=18.0cm]{robot-team-supervised/results/map-combined.pdf}
-% %\caption{Maps generated by applying the ML model to hyperspectral data cubes. (\textbf{a}) The CDOM model applied to the 11-23 collection. (\textbf{b}) The CDOM model applied the the 12-09 collection. (\textbf{c}) the Crude Oil model applied to the 11-23 collection. (\textbf{d}) The Crude Oil model applied to the 12-09 collection. In each panel, boat data are overlaid as color-filled squares. We note that there is good agreement between estimated values at boat locations and the in situ reference measurements. \label{fig:maps}}
-% %\end{figure}  
-% \begin{figure}[H]
-
-% \vspace{-0.21in}
-% \hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/fits/chemical-fitres.pdf}
-% \vspace{-0.11in}
-% \caption{Scatter diagrams (\textbf{left}) and quantile--quantile plots (\textbf{right}) for the hyperparameter-optimized RFR models for the chemical variables measured by the USV.\label{fig:chemicals-fit}}
-% \end{figure}  
-
-% \vspace{-9pt}
-% \begin{figure}[H]
-% \vspace{-0.15in}
-% \hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/fits/chemical-ranking.pdf}
-% \vspace{-0.15in}
-% \caption{Ranked permutation importance for the top 25 features of the chemical models. The permutation importance measures the decrease in the model's $R^2$ value after replacing each feature in the prediction set with a random permutation of its values.\label{fig:chemicals-fi}}
-% \end{figure}  
-
-% \begin{figure}[H]
-
-% \vspace{-0.2in}
-% \hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/maps/chemical.pdf}
-% \vspace{-0.1in}
-% \caption{Maps generated by applying the trained chemical variable models to the hyperspectral data cubes collected on 23 November. Overlaid are color-filled squares showing the in situ reference data for the same collection period. The size of the squares is exaggerated for the visualization. We note that there is good agreement between the model predictions and reference data.\label{fig:map-chem}}
-% \end{figure} 
+The maps generated by applying the CO and OB models to the 23 November data cubes are shown in Figure~\ref{fig:map-chem}. Both models show a distinct spatial distribution, with elevated values in the eastern alcove of the pond---similar to the CDOM distribution in Figure~\ref{fig:map-biochem}.
 
 
 
-% \section{Discussion}
+
+% Example of a figure that spans the whole page width. The same concept works for tables, too.
+%\begin{figure}[H]
+%\centering
+%\includegraphics[width=18.0cm]{robot-team-supervised/results/map-combined.pdf}
+%\caption{Maps generated by applying the ML model to hyperspectral data cubes. (\textbf{a}) The CDOM model applied to the 11-23 collection. (\textbf{b}) The CDOM model applied the the 12-09 collection. (\textbf{c}) the Crude Oil model applied to the 11-23 collection. (\textbf{d}) The Crude Oil model applied to the 12-09 collection. In each panel, boat data are overlaid as color-filled squares. We note that there is good agreement between estimated values at boat locations and the in situ reference measurements. \label{fig:maps}}
+%\end{figure}  
+\begin{figure}[H]
+
+\vspace{-0.21in}
+\hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/fits/chemical-fitres.png}
+\vspace{-0.11in}
+\caption{Scatter diagrams (\textbf{left}) and quantile--quantile plots (\textbf{right}) for the hyperparameter-optimized RFR models for the chemical variables measured by the USV.\label{fig:chemicals-fit}}
+\end{figure}  
+
+\vspace{-9pt}
+\begin{figure}[H]
+\vspace{-0.15in}
+\hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/fits/chemical-ranking.pdf}
+\vspace{-0.15in}
+\caption{Ranked permutation importance for the top 25 features of the chemical models. The permutation importance measures the decrease in the model's $R^2$ value after replacing each feature in the prediction set with a random permutation of its values.\label{fig:chemicals-fi}}
+\end{figure}  
+
+\begin{figure}[H]
+
+\vspace{-0.2in}
+\hspace{-6pt}\includegraphics[width=\columnwidth]{robot-team-supervised/results/maps/chemical.png}
+\vspace{-0.1in}
+\caption{Maps generated by applying the trained chemical variable models to the hyperspectral data cubes collected on 23 November. Overlaid are color-filled squares showing the in situ reference data for the same collection period. The size of the squares is exaggerated for the visualization. We note that there is good agreement between the model predictions and reference data.\label{fig:map-chem}}
+\end{figure} 
 
 
 
-% In recent years, much effort has been spent on the curation of comprehensive datasets combining water quality records with decades of satellite imagery to enable the development of new methods for retrieving water quality parameters. For example, Aurin et al. curated over 30 years of oceanographic field campaign data with associated coincident satellite imagery \cite{aurin2018remote}. Similarly, Ross et al. combined more than 600,000 records of dissolved organic carbon, chlorophyll-a and other water quality variables with historical Landsat reflectance data for the period 1984--2019 \cite{ross2019aquasat}. The sensing paradigm we have demonstrated here was able to rapidly collect comparable volumes of data within the span of just three observation periods. Therefore, despite the fact that individual UAV tracks cover far less spatial extent than remote sensing imagery, the ability to collect coordinated in situ measurements together with detailed hyperspectral images offers a significant improvement over these traditional approaches. With a coordinated robot team, one does not need to rely on infrequent satellite overpasses when planning data collection. Furthermore, the time offset between reference measurements and remote sensing is significantly reduced from days to minutes.
+\section{Discussion}
 
-% This study is not the first to employ UAVs equipped with multispectral or hyperspectral imagers for the purpose of assessing water composition and quality. Indeed there are many such examples focused on inferring optically active and inactive water quality parameters using band ratios and machine learning methods \cite{vogt2016near,lu2021retrieval, zhang2022selection}. The key advancement demonstrated by our robot team is the ability to combine UAV-borne hyperspectral imagers together with comprehensive, in situ sensing for a significant improvement in data volume. Purposefully coordinating USV sampling with the flight tracks of the UAV greatly accelerates data collection by removing the need to acquire individual samples for the calibration of water quality models. Additionally, the USV facilitates rapid validation of model predictions. When a trained model applied to collected hyperspectral imagery suggests elevated levels of a particular water quality parameter, the USV can quickly be provisioned to confirm these estimates with its reference instruments. 
 
-% In \cite{robotTeam1}, we introduced this paradigm. In this study, we have built on this approach in three new ways. First, we have demonstrated the ability to effectively combine observations from disparate collections by augmenting the machine learning models with sufficient features describing the illumination and viewing geometries. As Figure~\ref{fig:downwelling-hist} indicates, we observed variation in the total downwelling intensity between the images collected on the same day and between each separate collection period. These within-collection variations are due to a combination of the stability of the UAV (on which the upward facing downwelling irradiance spectrometer is mounted) together with the occasional interference of clouds. Moreover, the assumption that the water's surface can be treated as Lambertian is clearly violated when the water is not perfectly still. Despite the potential impact of these limitations on the quality of the resulting reflectance data cubes, the smoothness of the maps generated by our models suggests that we have provided sufficient context by including the relevant solar illumination and viewing angles as additional features in the final dataset.  This fact is reinforced by the position of these variables as the most important features for \textit{each} of the estimated water quality variables. As long as we are primarily interested in these values and not the reflectances themselves, we are able to successfully account for these lighting effects when combining data from multiple collections.
 
-% The second contribution of this study is to explore the breadth of possible water quality and composition parameters that can be accurately mapped by hyperspectral imagery collected by the UAV. The results presented here confirm the ability of the robot team to predict optically active parameters including blue--green algae, chlorophyll-a, CDOM, crude oil, optical brighteners, turbidity, and temperature. Additionally, we are also able to infer the distributions of optically inactive variables including conductivity, pH, and ion concentrations. Other studies using multispectral and hyperspectral remote sensing imagery have also estimated optically inactive water quality parameters, with the ability to do so stemming from the relationship of these variables to optically active properties of the water \cite{vakili2020determination,guo2021machine,niu2021deep}. We note that in our investigation, the models trained for many of these variables outperformed their optically active counterparts. As the abundance of these variables is likely tied to the specific composition and content of the pond, it is unlikely that models trained for these optically inactive variables will generalize to other bodies of water. 
+In recent years, much effort has been spent on the curation of comprehensive datasets combining water quality records with decades of satellite imagery to enable the development of new methods for retrieving water quality parameters. For example, Aurin et al. curated over 30 years of oceanographic field campaign data with associated coincident satellite imagery \cite{aurin2018remote}. Similarly, Ross et al. combined more than 600,000 records of dissolved organic carbon, chlorophyll-a and other water quality variables with historical Landsat reflectance data for the period 1984--2019 \cite{ross2019aquasat}. The sensing paradigm we have demonstrated here was able to rapidly collect comparable volumes of data within the span of just three observation periods. Therefore, despite the fact that individual UAV tracks cover far less spatial extent than remote sensing imagery, the ability to collect coordinated in situ measurements together with detailed hyperspectral images offers a significant improvement over these traditional approaches. With a coordinated robot team, one does not need to rely on infrequent satellite overpasses when planning data collection. Furthermore, the time offset between reference measurements and remote sensing is significantly reduced from days to minutes.
 
-% The third contribution of this work is the extension of our machine learning approach to enable uncertainty quantification through conformal prediction. For water quality risk assessment, the trustworthiness of model predictions is of equal or greater importance to the values themselves. However, robust uncertainty quantification has historically been challenging for many machine learning models, which behave like black boxes.
-% Conformal prediction is an attractive approach to enable model-agnostic uncertainty estimation and has recently seen adoption to remote sensing classification tasks such as land-type classification and object identification \cite{valle2023quantifying, zhu2024inductive}. In this setting, the goal is to produce predictive sets guaranteed to contain the correct class labels at a predetermined confidence level. Nevertheless, conformal prediction works equally well for regression tasks. By leveraging the large data volume collected by the robot team, we are able to simultaneously train predictive models and evaluate confidence intervals for their predictions. As the final column of Table~\ref{tab:fit-results} confirms, the empirical coverage on the holdout testing set provided by the inferred confidence intervals achieves the desired coverage to within 1\%. We chose to use a 90\% confidence interval for this study, but this can easily be adapted to suite the needs of a specific application if greater confidence is required. 
+This study is not the first to employ UAVs equipped with multispectral or hyperspectral imagers for the purpose of assessing water composition and quality. Indeed there are many such examples focused on inferring optically active and inactive water quality parameters using band ratios and machine learning methods \cite{vogt2016near,lu2021retrieval, zhang2022selection}. The key advancement demonstrated by our robot team is the ability to combine UAV-borne hyperspectral imagers together with comprehensive, in situ sensing for a significant improvement in data volume. Purposefully coordinating USV sampling with the flight tracks of the UAV greatly accelerates data collection by removing the need to acquire individual samples for the calibration of water quality models. Additionally, the USV facilitates rapid validation of model predictions. When a trained model applied to collected hyperspectral imagery suggests elevated levels of a particular water quality parameter, the USV can quickly be provisioned to confirm these estimates with its reference instruments. 
 
-% Despite the wealth of information provided by the increased resolution of hyperspectral images, their considerable size impedes their complete utilization in real-time applications. Often, much of the available spectral information is discarded in favor of indices like the NDVI, which can be quickly computed as images are captured \cite{horstrand2019uav}. Utilizing machine learning allows us to take advantage of the full spectrum captured by each pixel while simultaneously reducing the size of the final data product to single-band ``images'' of selected water quality variables. We note that training a reduced-feature model without further hyperparameter optimization takes roughly one minute per target variable of interest using the processing computer included on the UAV. This means that, in principle, training data can be collected by the USV, imagery can be acquired and processed by the UAV, coincident records can be selected, and the resulting dataset can be used to train machine learning models all while investigators are still in the field. Analyzing the maps produced by applying each trained model enables areas of interest to be readily pinpointed, as demonstrated by the identification of slightly elevated levels of %Please ensure meaning has been retained.
-% crude oil, optical brighteners, and CDOM in the eastern alcove of the pond on 23 November.
+In \cite{robotTeam1}, we introduced this paradigm. In this study, we have built on this approach in three new ways. First, we have demonstrated the ability to effectively combine observations from disparate collections by augmenting the machine learning models with sufficient features describing the illumination and viewing geometries. As Figure~\ref{fig:downwelling-hist} indicates, we observed variation in the total downwelling intensity between the images collected on the same day and between each separate collection period. These within-collection variations are due to a combination of the stability of the UAV (on which the upward facing downwelling irradiance spectrometer is mounted) together with the occasional interference of clouds. Moreover, the assumption that the water's surface can be treated as Lambertian is clearly violated when the water is not perfectly still. Despite the potential impact of these limitations on the quality of the resulting reflectance data cubes, the smoothness of the maps generated by our models suggests that we have provided sufficient context by including the relevant solar illumination and viewing angles as additional features in the final dataset.  This fact is reinforced by the position of these variables as the most important features for \textit{each} of the estimated water quality variables. As long as we are primarily interested in these values and not the reflectances themselves, we are able to successfully account for these lighting effects when combining data from multiple collections.
 
-% Finally, we note that the high spectral resolution of the UAV imagery together with the ability to collect precisely co-located reference measurements provides fertile ground for the development of new spectral indices targeted towards water quality variables. In this paper, we have shown that permutation importance ranking for trained machine learning models enables a straightforward interpretation of the relative values of each reflectance bin to the final model predictions. In future work, we plan to utilize this information to identify combinations of spectral bands that can be applied to remote sensing imagery captured by satellites equipped with hyperspectral imagers. The recently launched Environmental Mapping and Analysis Program (EnMAP) is one such example and includes over 91 spectral bands in the VNIR that overlap with those of our hyperspectral imager \cite{Storch2023TheEI}. 
+The second contribution of this study is to explore the breadth of possible water quality and composition parameters that can be accurately mapped by hyperspectral imagery collected by the UAV. The results presented here confirm the ability of the robot team to predict optically active parameters including blue--green algae, chlorophyll-a, CDOM, crude oil, optical brighteners, turbidity, and temperature. Additionally, we are also able to infer the distributions of optically inactive variables including conductivity, pH, and ion concentrations. Other studies using multispectral and hyperspectral remote sensing imagery have also estimated optically inactive water quality parameters, with the ability to do so stemming from the relationship of these variables to optically active properties of the water \cite{vakili2020determination,guo2021machine,niu2021deep}. We note that in our investigation, the models trained for many of these variables outperformed their optically active counterparts. As the abundance of these variables is likely tied to the specific composition and content of the pond, it is unlikely that models trained for these optically inactive variables will generalize to other bodies of water. 
+
+The third contribution of this work is the extension of our machine learning approach to enable uncertainty quantification through conformal prediction. For water quality risk assessment, the trustworthiness of model predictions is of equal or greater importance to the values themselves. However, robust uncertainty quantification has historically been challenging for many machine learning models, which behave like black boxes.
+Conformal prediction is an attractive approach to enable model-agnostic uncertainty estimation and has recently seen adoption to remote sensing classification tasks such as land-type classification and object identification \cite{valle2023quantifying, zhu2024inductive}. In this setting, the goal is to produce predictive sets guaranteed to contain the correct class labels at a predetermined confidence level. Nevertheless, conformal prediction works equally well for regression tasks. By leveraging the large data volume collected by the robot team, we are able to simultaneously train predictive models and evaluate confidence intervals for their predictions. As the final column of Table~\ref{tab:fit-results} confirms, the empirical coverage on the holdout testing set provided by the inferred confidence intervals achieves the desired coverage to within 1\%. We chose to use a 90\% confidence interval for this study, but this can easily be adapted to suite the needs of a specific application if greater confidence is required. 
+
+Despite the wealth of information provided by the increased resolution of hyperspectral images, their considerable size impedes their complete utilization in real-time applications. Often, much of the available spectral information is discarded in favor of indices like the NDVI, which can be quickly computed as images are captured \cite{horstrand2019uav}. Utilizing machine learning allows us to take advantage of the full spectrum captured by each pixel while simultaneously reducing the size of the final data product to single-band ``images'' of selected water quality variables. We note that training a reduced-feature model without further hyperparameter optimization takes roughly one minute per target variable of interest using the processing computer included on the UAV. This means that, in principle, training data can be collected by the USV, imagery can be acquired and processed by the UAV, coincident records can be selected, and the resulting dataset can be used to train machine learning models all while investigators are still in the field. Analyzing the maps produced by applying each trained model enables areas of interest to be readily pinpointed, as demonstrated by the identification of slightly elevated levels of %Please ensure meaning has been retained.
+crude oil, optical brighteners, and CDOM in the eastern alcove of the pond on 23 November.
+
+Finally, we note that the high spectral resolution of the UAV imagery together with the ability to collect precisely co-located reference measurements provides fertile ground for the development of new spectral indices targeted towards water quality variables. In this paper, we have shown that permutation importance ranking for trained machine learning models enables a straightforward interpretation of the relative values of each reflectance bin to the final model predictions. In future work, we plan to utilize this information to identify combinations of spectral bands that can be applied to remote sensing imagery captured by satellites equipped with hyperspectral imagers. The recently launched Environmental Mapping and Analysis Program (EnMAP) is one such example and includes over 91 spectral bands in the VNIR that overlap with those of our hyperspectral imager \cite{Storch2023TheEI}. 
 
 
