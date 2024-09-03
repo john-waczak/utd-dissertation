@@ -53,7 +53,26 @@ In this study, we explore the application of  GTM to UAV-acquired HSI for the ch
 \section{Study Overview}
 
 
-In this study, we explore the use of  GTM as a tool for dimensionality reduction and unsupervised endmember extraction of hyperspectral imagery. To this end, a dataset of HSI was collected at a pond in Montague, North Texas, on 23 November 2020 using a UAV-mounted hyperspectral imager configured as described in \cite{robot-team-1, robot-team-2}. The pond spans an area <0.1 $\text{km}^2$ and has a maximum depth of $3$ m. Across multiple flights, many data cubes like the example shown in panel a of Figure~\ref{fig:sample-spectra} were collected. Additionally, rhodamine dye was released and subsequently imaged to simulate a localized contaminant source. Using the HSI shown in Figure~\ref{fig:sample-spectra}, a set of exemplar spectra were visually identified corresponding to nearshore filamentous blue--green algae, water, rhodamine dye, and the ground (a combination of soil and dry grass). The location of these samples is shown in panel b and their corresponding reflectance spectra are visualized in panel c.  In the remainder of this section, we first provide a detailed overview of the GTM algorithm. Next, we describe the UAV platform used for HSI collection and the various steps employed to process captured HSI. Finally, we describe the two case studies presented in this paper for the utilization of  GTM as an HSI visualization tool and as an endmember extraction technique.
+In this study, we explore the use of  GTM as a tool for dimensionality reduction
+and unsupervised endmember extraction of hyperspectral imagery. To this end, a
+dataset of HSI was collected at a pond in Montague, North Texas, on 23 November
+2020 using a UAV-mounted hyperspectral imager configured as described in
+\cite{robot-team-1, robot-team-2}. The pond spans an area $<0.1$ $\text{km}^2$
+and has a maximum depth of $3$ m. Across multiple flights, many data cubes like
+the example shown in panel a of Figure~\ref{fig:sample-spectra} were collected.
+Additionally, rhodamine dye was released and subsequently imaged to simulate a
+localized contaminant source. Using the HSI shown in
+Figure~\ref{fig:sample-spectra}, a set of exemplar spectra were visually
+identified corresponding to nearshore filamentous blue--green algae, water,
+rhodamine dye, and the ground (a combination of soil and dry grass). The
+location of these samples is shown in panel b and their corresponding
+reflectance spectra are visualized in panel c.  In the remainder of this
+section, we first provide a detailed overview of the GTM algorithm. Next, we
+describe the UAV platform used for HSI collection and the various steps employed
+to process captured HSI. Finally, we describe the two case studies presented in
+this paper for the utilization of  GTM as an HSI visualization tool and as an
+endmember extraction technique.
+
 
 
 \begin{figure}[H]
@@ -404,6 +423,9 @@ superpixels \cite{palsson2020convolutional,unmixing-nmf-review}. Extensions
 to  GTM have been proposed to enable batch training for large datasets, as well
 as manifold-aligned noise models which replace the fixed precision parameter
 $\beta$ with a full covariance matrix \cite{gtm-developments}.
+
+\textcolor{red}{Add an additional note about updating the GTM to utilize
+  adaptive mixing coefficients $\pi_k$ as suggested in \cite{gtm-orig, gtm-developments}.}
 
 Finally, we note that the representation obtained by  GTM can be used for
 nonlinear feature extraction to improve supervised models. Traditionally, PCA is
