@@ -1,6 +1,27 @@
 \chapter{Conclusions}\label{ch:conclusions}
 
 \textcolor{red}{\textbf{Robot Team Supervised:}}
-In this study, we address two key limitations of current remote sensing approaches to characterize water quality: namely, the limited spatial, spectral, and temporal resolution provided by existing satellite platforms and the lack of comprehensive in situ measurements needed to validate remote sensing data products. By equipping an autonomous USV with a suite of reference sensors, we rapidly collect significantly more data than existing approaches that rely on the collection of individual samples for lab analysis or are constrained to continuous sensing at fixed sites. Utilizing an autonomous UAV equipped with a hyperspectral imager in tandem with the USV allows us to quickly generate aligned datasets that are used to train machine learning models mapping measured reflectance spectra to the desired water quality variables. By virtue of this increased data volume, we are able to simultaneously estimate the uncertainty of our models by using conformal prediction. Finally, the hyperspectral data cube processing workflow employed onboard the UAV makes it possible to deploy these trained models to swiftly generate maps of the target variables across bodies of water. The rapid turnaround time from data collection to model deployment is critical for real-time water quality evaluation and risk assessment. 
+In this study, we address two key limitations of current remote sensing
+approaches to characterize water quality: namely, the limited spatial, spectral,
+and temporal resolution provided by existing satellite platforms and the lack of
+comprehensive in situ measurements needed to validate remote sensing data
+products. By equipping an autonomous USV with a suite of reference sensors, we
+rapidly collect significantly more data than existing approaches that rely on
+the collection of individual samples for lab analysis or are constrained to
+continuous sensing at fixed sites. Utilizing an autonomous UAV equipped with a
+hyperspectral imager in tandem with the USV allows us to quickly generate
+aligned datasets that are used to train machine learning models mapping measured
+reflectance spectra to the desired water quality variables. By virtue of this
+increased data volume, we are able to simultaneously estimate the uncertainty of
+our models by using conformal prediction. Finally, the hyperspectral data cube
+processing workflow employed onboard the UAV makes it possible to deploy these
+trained models to swiftly generate maps of the target variables across bodies of
+water. The rapid turnaround time from data collection to model deployment is
+critical for real-time water quality evaluation and risk assessment.
 
+
+
+
+\textcolor{red}{\textbf{Robot Team GTM}}
+In this study, we present  GTM as a useful unsupervised method for the visualization of UAV-based hyperspectral imagery and associated extraction of spectral endmembers. Using data collected at a North Texas pond, we demonstrate how the latent space of the GTM can be used to visualize the distribution of observed reflectance spectra revealing the small-scale spatial variability of water composition. Spectral signatures extracted from GTM nodes are used to successfully map the abundance of algae near the shore and to track the evolution of a rhodamine tracer dye plume. These examples illustrate the power of combining unsupervised learning with UAV-based hyperspectral imaging for the characterization of water composition. Future work will further develop the GTM as a tool to guide in situ data collection and enable contaminant localization for real-time applications.
 
