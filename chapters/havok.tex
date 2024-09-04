@@ -115,7 +115,6 @@ models.
 
 \section{Hankel Alternative View of Koopman}
 
-
 \subsection{Koopman Operator Theory}
 
 \subsection{Time-Delay Embeddings and Taken's Theorem}
@@ -124,6 +123,72 @@ models.
 
 
 \subsection{Simple Example: Lorenz System}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{havok/0-havok-lorenz/2__lorenz-orig.png}
+  \caption{(\textbf{a}) Time series for the $x$, $y$, and $z$ components of the
+    Lorenz system. (\textbf{b}) 3-dimensional visualization of the attractor
+    formed from $x$, $y$, and $z$ components. We note that there are two clear
+    lobes corresponding to the two attractors of the system.}
+  \label{fig:lorenz-time-series-orig}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\columnwidth]{havok/0-havok-lorenz/1b_A-B-sHAVOK.pdf}
+  \caption{Fitted operators $\mathbf{A}$ and $\mathbf{B}$ for the Lorenz system
+    learned by the HAVOK model corresponding to the linear dynamics and
+    intermittent forcing.}
+  \label{fig:lorenz-A-B-heatmap}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{havok/0-havok-lorenz/3__havok-embedding.pdf}
+  \caption{(\textbf{a}) Time series for first 3 components $v\_i$ of the HAVOK
+    model. Original time series for each component are shown in blue. Time
+    series predicted by the HAVOK model are overlaid in red. (\textbf(b)) The
+    attractor formed by the first 3 embedding coordinates. By Taken's theorem,
+    this attractor is diffeomorphic to the original attractor.}
+  \label{fig:lorenz-havok-embedding}
+\end{figure}
+
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\columnwidth]{havok/0-havok-lorenz/6__forcing-statistics.pdf}
+  \caption{Proabability density function for forcing time series learned by the
+    HAVOK model. The PDF is compared to a Gaussian fit for the same data. The
+    wide tails of the PDF reflect that the forcing is intermittent.}
+  \label{fig:lorenz-forcing-stats}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{havok/0-havok-lorenz/7__attractor-w-forcing.pdf}
+  \caption{(\textbf{a}) The original time series $x(t)$ plotted with the squared
+  forcing time series $v_r(t)$. Red colors indicate forcing above a chosen
+  threshold which accurately identify lobe-switching events. (\textbf{b}) The
+  Lorenz attractor colored using the same scheme.}
+  \label{fig:lorenz-attractor-forcing}
+\end{figure}
+
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{havok/0-havok-lorenz/9__timeseries-reconstruction.pdf}
+  \caption{The reconstructed time series for $x(t)$ using the learned HAVOK model.}
+  \label{fig:lorenz-reconstruction}
+\end{figure}
+
+
 
 
 \section{Study Overview}
