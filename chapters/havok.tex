@@ -1,9 +1,6 @@
 \chapter{Modeling Local Particulate Matter Dynamics with Time Delay Embeddings}\label{ch:havok}
 % \chapter{Time-delay Embedding Models for Particulate Matter - Outlier Detection and Forecasting}\label{ch:havok}
 
-\textcolor{magenta}{Should we keep the variogram stuff?}
-
-
 The low-cost sensor network detailed in Chapter~\ref{ch:air-network} collects a
 continuous stream of air quality data for a plethora of locations with high
 temporal resolution ranging between $0.1$ to $1.0$ Hz. The real-time
@@ -31,18 +28,156 @@ readily deployed directly onto sensor hardware.
 \section{Motivation}
 
 
+- Pronounced seasonal variability observed for PM 2.5 in China in both urban and
+rural areas around Beijing \cite{pm-patterns-china}
+- Significant diurnal variation. In urban areas the distribution is bimodal with
+a first peak around 7:00 - 8:00 am and an evening peak between 7:00 and 11:00 pm
+corresponding to anthroprogenic activities, i.e. rush hour traffic and decrease
+in boundary layer height throughout the afternoon \cite{pm-patterns-china}
+- Rural diurnal pattern is unimodal with significant peak between 5 and 11 pm.
+
+- Investigations of PM 2.5 trends in Augsburg, Germany revealed a similar
+unimodal trend with peak values in the late afternoon \cite{pm-patterns-germany}
+
+- A 2003 study in New York city anlazyed PM 2.5 measurements from 20 stations
+across the city. They observed strong seasonal, weekday, and diurnal cycles with
+peak concentrations between 7-9 am and minimum concentrations between 4 and 6
+am. \cite{pm-patterns-nyc}
+- The observed pattern suggests anthropogenic factures are primarily responsible
+for observed diurnal cycle while meteorological conditions also have some influence.
+
+- Iskandaryan et al. reviewed machine learning approaches for air quality
+prediction \cite{skandaryan-2020}.
+- They found that 66\% of studies considered an hourly rate
+- NN and regression methods were most popular
+
+- Prabuddha et al. combine remote sensing observations for aerosol optical depth
+with meteorological data to predict ground level PM 2.5 using machine learning
+together with ground based-sensors \cite{prabuddha-pm-satellite}
+- Average US values exceeded 9 $\mu g/m^3$ standard 20\% of the time with the
+eastern US and California exceeding the limit over 50\% of the time during the
+sampling period from Jan 2020 to Jun 2023.
+
+
+
+
+
+Particulate matter (PM) dynamics exhibit complex behavior influenced by a
+variety of factors, including meteorological conditions, human activities, and
+atmospheric processes.
+
+PM concentrations typically follow well-established
+diurnal patterns, with peaks often occurring during morning and evening rush
+hours due to increased vehicular emissions, and lower concentrations observed
+during the midday when atmospheric dispersion is more effective (Zhang et al.,
+2012).
+
+Seasonal variations are also common, with higher PM levels in winter due to
+factors like heating emissions and temperature inversions that trap pollutants
+close to the ground (Cheng et al., 2013).
+
+Numerous models have been developed to analyze and forecast PM levels.
+
+These range from statistical models, such as autoregressive integrated moving
+average (ARIMA) models (Box et al., 1994), to more sophisticated machine
+learning approaches like neural networks, which can capture nonlinear
+relationships in the data (Zhang et al., 2020).
+
+Physics-based models, including chemical transport models (CTMs), provide
+detailed representations of atmospheric processes but require substantial
+computational resources and detailed input data (Seinfeld \& Pandis, 2016).
+
+More recently, hybrid approaches combining machine learning with physical models
+have shown promise in improving forecast accuracy by leveraging the strengths of
+both methodologies (Bi et al., 2021).
+
+
+Physical models for particulate matter (PM) modeling and forecasting are
+primarily based on the detailed representation of atmospheric processes that
+govern the emission, transport, chemical transformation, and removal of PM from
+the atmosphere. One of the most widely used types of physical models is the
+Chemical Transport Model (CTM). These models simulate the movement of air masses
+and the complex chemical reactions that occur in the atmosphere, providing a
+comprehensive framework to predict PM concentrations at various spatial and
+temporal scales. Examples of CTMs include models such as the Community
+Multiscale Air Quality (CMAQ) model and the Weather Research and Forecasting
+coupled with Chemistry (WRF-Chem) model (Byun \& Schere, 2006; Grell et al.,
+2005).
+
+
+CTMs rely on inputs such as emission inventories, meteorological data, and
+boundary conditions to simulate the dispersion and transformation of PM. These
+models are highly sophisticated and can incorporate secondary aerosol formation,
+deposition processes (both dry and wet), and interactions with other pollutants
+such as ozone and nitrogen oxides. However, despite their detailed nature, CTMs
+can be computationally expensive and highly sensitive to uncertainties in input
+data and model parameterizations (Kumar et al., 2015).
+
+
+Another class of physical models used for PM forecasting is the Eulerian
+grid-based models, which divide the atmosphere into a 3D grid. These models
+simulate the transport and diffusion of PM across grid cells using numerical
+methods to solve the advection-diffusion equations. Eulerian models like CMAQ
+are known for their ability to simulate large-scale pollution events, but they
+can be limited in resolving fine-scale local events, especially in urban
+environments (Binkowski \& Roselle, 2003).
+
+
+In addition to CTMs and Eulerian models, Lagrangian particle dispersion models
+(LPDMs) are also employed for PM forecasting. LPDMs track the trajectories of
+individual air parcels or particles, providing a detailed simulation of how
+pollutants travel through the atmosphere. Models like the Hybrid Single-Particle
+Lagrangian Integrated Trajectory (HYSPLIT) model are often used for forecasting
+PM concentrations by simulating the long-range transport of pollutants and
+identifying the sources of PM observed at specific locations (Stein et al.,
+2015). These models are particularly useful for source apportionment and
+tracking pollution plumes over long distances.
+
+Despite their strengths, purely physical models have limitations in forecasting
+the nonlinear and stochastic nature of PM concentrations, especially for
+short-term predictions. To overcome these challenges, hybrid models that combine
+physical models with data-driven approaches (such as machine learning) have
+gained popularity in recent years (Bi et al., 2021). These hybrid models aim to
+leverage the process-based understanding of physical models with the pattern
+recognition capabilities of statistical or machine learning models, improving
+forecast accuracy and computational efficiency.
+
+
+
+
+- Known dynamics of particulate matter, e.g. the diurnal cycle
+
+- Physical models for particulate matter dynamics, e.g. simulation and modeling
+approaches
+
+
+- Methods for PM forecasting
+
+
+- Cite the prabuddha paper for remote sensing inference
+
+- Eulerian models: simulate a volumes of air (in some kind of lattice)
+
+- Combine relevant atmospheric chemistry and meteorological processes --> CMAQ
+
+- Lagrangian models: simulate individual particle trajectories
+
+- Combine Eulerian and Lagrangian models into hybrid system to model both
+transport (advection) and diffusion of plumes --> HYSPLIT
+
+- Time series methods?
+
+- ARIMA, NN approachs, etc...
+
+- Dynamic Mode Decomposition and Koopman operator theory for time series analysis
+
+- The HAVOK method... NOTE that it is promising, but to the best of our current
+knowledge, there has not been any application of HAVOK to \textit{real}, noisy data.
+
+
 % Particulate matter (PM) dynamics exhibit complex behavior influenced by a variety of factors, including meteorological conditions, human activities, and atmospheric processes. PM concentrations typically follow well-established diurnal patterns, with peaks often occurring during morning and evening rush hours due to increased vehicular emissions, and lower concentrations observed during the midday when atmospheric dispersion is more effective (Zhang et al., 2012). Seasonal variations are also common, with higher PM levels in winter due to factors like heating emissions and temperature inversions that trap pollutants close to the ground (Cheng et al., 2013). Numerous models have been developed to analyze and forecast PM levels. These range from statistical models, such as autoregressive integrated moving average (ARIMA) models (Box et al., 1994), to more sophisticated machine learning approaches like neural networks, which can capture nonlinear relationships in the data (Zhang et al., 2020). Physics-based models, including chemical transport models (CTMs), provide detailed representations of atmospheric processes but require substantial computational resources and detailed input data (Seinfeld & Pandis, 2016). More recently, hybrid approaches combining machine learning with physical models have shown promise in improving forecast accuracy by leveraging the strengths of both methodologies (Bi et al., 2021). 
 
 % ---
-
-% **References:**
-
-% 1. Zhang, Y., et al. (2012). "Diurnal variation in PM2.5 concentration and its causes." *Atmospheric Environment*, 45(8), 2017-2024.
-% 2. Cheng, Y., et al. (2013). "Wintertime PM2.5 variations in China." *Environmental Pollution*, 182, 44-51.
-% 3. Box, G.E.P., et al. (1994). *Time Series Analysis: Forecasting and Control*. Prentice Hall.
-% 4. Zhang, Z., et al. (2020). "Air quality prediction using machine learning methods." *Journal of Environmental Management*, 242, 465-473.
-% 5. Seinfeld, J.H., and Pandis, S.N. (2016). *Atmospheric Chemistry and Physics: From Air Pollution to Climate Change*. John Wiley & Sons.
-% 6. Bi, J., et al. (2021). "A hybrid approach for PM2.5 forecasting: Combining physics-based models with deep learning." *Environmental Modelling & Software*, 139, 105014.
 
 
 
@@ -115,13 +250,19 @@ models.
 
 \section{Hankel Alternative View of Koopman}
 
-\subsection{Koopman Operator Theory}
+
+- Koopman operator theory for dynamical systems \cite{brunton-koopman-theory}
+- Original HAVOK paper \cite{brunton-havok-orig}.
+- HAVOK paper w/ ML for forcing \cite{havok-ml}
+- sHAVOK and connections to frenet-serret frame \cite{havok-diffgeo}
+
+
+\subsection{Global Motivation: Koopman Operator Theory}
 
 \subsection{Time-Delay Embeddings and Taken's Theorem}
-
 \subsection{Hankel Alternative View of Koopman}
-
-
+\subsection{Local Motivation: Frenet-Serret Frame}
+\subsection{Structured HAVOK}
 \subsection{Simple Example: Lorenz System}
 
 
