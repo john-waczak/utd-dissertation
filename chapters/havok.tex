@@ -16,254 +16,278 @@ In this chapter, we propose a physics-based model rooted in Koopman operator
 theory to address these questions by accurately capturing local PM dynamics.
 Specifically, we extend the \textit{Hankel Alternative View of Koopman} (HAVOK)
 framework introduced by Brunton et al. to apply to time series measurements of
-PM data. In this data-driven approach PM dynamics are described via a simple
+PM data. In this data-driven approach, PM dynamics are described via a simple
 linear system with aperiodic external forcing. The forcing function extracted
 from the model provides a clear method to identify abrupt pollution events from
-historical data. The model can be used to provide accurate short-term forecasts.
-Importantly, HAVOK models require few parameters, can be fit efficiently using
-established numerical linear algebra routines, and are small enough to be
-readily deployed directly onto sensor hardware.
+historical data. The model also provides the means for  accurate short-term
+forecasts. Importantly, HAVOK models require few parameters, can be fit
+efficiently using established numerical linear algebra routines, and are small
+enough to be readily deployed directly onto sensor hardware.
 
 
 \section{Motivation}
 
 
-- Pronounced seasonal variability observed for PM 2.5 in China in both urban and
-rural areas around Beijing \cite{pm-patterns-china}
-- Significant diurnal variation. In urban areas the distribution is bimodal with
-a first peak around 7:00 - 8:00 am and an evening peak between 7:00 and 11:00 pm
-corresponding to anthroprogenic activities, i.e. rush hour traffic and decrease
-in boundary layer height throughout the afternoon \cite{pm-patterns-china}
-- Rural diurnal pattern is unimodal with significant peak between 5 and 11 pm.
-
-- Investigations of PM 2.5 trends in Augsburg, Germany revealed a similar
-unimodal trend with peak values in the late afternoon \cite{pm-patterns-germany}
-
-- A 2003 study in New York city anlazyed PM 2.5 measurements from 20 stations
-across the city. They observed strong seasonal, weekday, and diurnal cycles with
-peak concentrations between 7-9 am and minimum concentrations between 4 and 6
-am. \cite{pm-patterns-nyc}
-- The observed pattern suggests anthropogenic factures are primarily responsible
-for observed diurnal cycle while meteorological conditions also have some influence.
-
-- Iskandaryan et al. reviewed machine learning approaches for air quality
-prediction \cite{skandaryan-2020}.
-- They found that 66\% of studies considered an hourly rate
-- NN and regression methods were most popular
-
-- Prabuddha et al. combine remote sensing observations for aerosol optical depth
-with meteorological data to predict ground level PM 2.5 using machine learning
-together with ground based-sensors \cite{prabuddha-pm-satellite}
-- Average US values exceeded 9 $\mu g/m^3$ standard 20\% of the time with the
-eastern US and California exceeding the limit over 50\% of the time during the
-sampling period from Jan 2020 to Jun 2023.
-
-
-
-
-
-Particulate matter (PM) dynamics exhibit complex behavior influenced by a
-variety of factors, including meteorological conditions, human activities, and
-atmospheric processes.
-
-PM concentrations typically follow well-established
-diurnal patterns, with peaks often occurring during morning and evening rush
-hours due to increased vehicular emissions, and lower concentrations observed
-during the midday when atmospheric dispersion is more effective (Zhang et al.,
-2012).
-
-Seasonal variations are also common, with higher PM levels in winter due to
-factors like heating emissions and temperature inversions that trap pollutants
-close to the ground (Cheng et al., 2013).
-
-Numerous models have been developed to analyze and forecast PM levels.
-
-These range from statistical models, such as autoregressive integrated moving
-average (ARIMA) models (Box et al., 1994), to more sophisticated machine
-learning approaches like neural networks, which can capture nonlinear
-relationships in the data (Zhang et al., 2020).
-
-Physics-based models, including chemical transport models (CTMs), provide
-detailed representations of atmospheric processes but require substantial
-computational resources and detailed input data (Seinfeld \& Pandis, 2016).
-
-More recently, hybrid approaches combining machine learning with physical models
-have shown promise in improving forecast accuracy by leveraging the strengths of
-both methodologies (Bi et al., 2021).
-
-
-Physical models for particulate matter (PM) modeling and forecasting are
-primarily based on the detailed representation of atmospheric processes that
-govern the emission, transport, chemical transformation, and removal of PM from
-the atmosphere. One of the most widely used types of physical models is the
-Chemical Transport Model (CTM). These models simulate the movement of air masses
-and the complex chemical reactions that occur in the atmosphere, providing a
-comprehensive framework to predict PM concentrations at various spatial and
-temporal scales. Examples of CTMs include models such as the Community
-Multiscale Air Quality (CMAQ) model and the Weather Research and Forecasting
-coupled with Chemistry (WRF-Chem) model (Byun \& Schere, 2006; Grell et al.,
-2005).
-
-
-CTMs rely on inputs such as emission inventories, meteorological data, and
-boundary conditions to simulate the dispersion and transformation of PM. These
-models are highly sophisticated and can incorporate secondary aerosol formation,
-deposition processes (both dry and wet), and interactions with other pollutants
-such as ozone and nitrogen oxides. However, despite their detailed nature, CTMs
-can be computationally expensive and highly sensitive to uncertainties in input
-data and model parameterizations (Kumar et al., 2015).
-
-
-Another class of physical models used for PM forecasting is the Eulerian
-grid-based models, which divide the atmosphere into a 3D grid. These models
-simulate the transport and diffusion of PM across grid cells using numerical
-methods to solve the advection-diffusion equations. Eulerian models like CMAQ
-are known for their ability to simulate large-scale pollution events, but they
-can be limited in resolving fine-scale local events, especially in urban
-environments (Binkowski \& Roselle, 2003).
-
-
-In addition to CTMs and Eulerian models, Lagrangian particle dispersion models
-(LPDMs) are also employed for PM forecasting. LPDMs track the trajectories of
-individual air parcels or particles, providing a detailed simulation of how
-pollutants travel through the atmosphere. Models like the Hybrid Single-Particle
-Lagrangian Integrated Trajectory (HYSPLIT) model are often used for forecasting
-PM concentrations by simulating the long-range transport of pollutants and
-identifying the sources of PM observed at specific locations (Stein et al.,
-2015). These models are particularly useful for source apportionment and
-tracking pollution plumes over long distances.
-
-Despite their strengths, purely physical models have limitations in forecasting
-the nonlinear and stochastic nature of PM concentrations, especially for
-short-term predictions. To overcome these challenges, hybrid models that combine
-physical models with data-driven approaches (such as machine learning) have
-gained popularity in recent years (Bi et al., 2021). These hybrid models aim to
-leverage the process-based understanding of physical models with the pattern
-recognition capabilities of statistical or machine learning models, improving
-forecast accuracy and computational efficiency.
-
-
-
-
-- Known dynamics of particulate matter, e.g. the diurnal cycle
-
-- Physical models for particulate matter dynamics, e.g. simulation and modeling
-approaches
-
-
-- Methods for PM forecasting
-
-
-- Cite the prabuddha paper for remote sensing inference
-
-- Eulerian models: simulate a volumes of air (in some kind of lattice)
-
-- Combine relevant atmospheric chemistry and meteorological processes --> CMAQ
-
-- Lagrangian models: simulate individual particle trajectories
-
-- Combine Eulerian and Lagrangian models into hybrid system to model both
-transport (advection) and diffusion of plumes --> HYSPLIT
-
-- Time series methods?
-
-- ARIMA, NN approachs, etc...
-
-- Dynamic Mode Decomposition and Koopman operator theory for time series analysis
-
-- The HAVOK method... NOTE that it is promising, but to the best of our current
-knowledge, there has not been any application of HAVOK to \textit{real}, noisy data.
-
-
-% Particulate matter (PM) dynamics exhibit complex behavior influenced by a variety of factors, including meteorological conditions, human activities, and atmospheric processes. PM concentrations typically follow well-established diurnal patterns, with peaks often occurring during morning and evening rush hours due to increased vehicular emissions, and lower concentrations observed during the midday when atmospheric dispersion is more effective (Zhang et al., 2012). Seasonal variations are also common, with higher PM levels in winter due to factors like heating emissions and temperature inversions that trap pollutants close to the ground (Cheng et al., 2013). Numerous models have been developed to analyze and forecast PM levels. These range from statistical models, such as autoregressive integrated moving average (ARIMA) models (Box et al., 1994), to more sophisticated machine learning approaches like neural networks, which can capture nonlinear relationships in the data (Zhang et al., 2020). Physics-based models, including chemical transport models (CTMs), provide detailed representations of atmospheric processes but require substantial computational resources and detailed input data (Seinfeld & Pandis, 2016). More recently, hybrid approaches combining machine learning with physical models have shown promise in improving forecast accuracy by leveraging the strengths of both methodologies (Bi et al., 2021). 
-
-% ---
-
-
-
-- Dynamics of particulate matter
-
-
-- Time series models for PM (how good are forecasts)
-
-
-- Value of a physics-based models, e.g. chemical transport
-
-- Limitations of these models are due to poorly resolved meteorological
-obsevations, for example, high resolution ECMWF analysis are at 0.1 x 0.1 km
-grids with the lowest vertical model layer hundreds of meters above the ground.
-
-- Many of these are being developed but have yet to see application to
-realistic, noisy datasets
-
-
-
-
-It should be noted that
-despite the rapid pace of development in the fields of data-driven and
-scientific machine learning, many recently developed techniques like the
-Universal Differential Equations (UDEs), Hamiltonian Neural Networks, and others
-have yet to see wide spread application on noisy, real-world datasets. Our
-secondary goal for this chapter is therefore to demonstrate how, with some
-slight modifications, these techniques can be applied to real-world problems.
-
-
-In order to provide actionable insights we must be able to effectively model the
-dynamics of our collected time series. In a perfect world, we would measure all
-relevant physical quantities such that the time evolution of local air quality
-at each sensor could be obtained by simulating the relevant micro-physics.
-However, low cost sensor networks are not equipped with all the necessary
-reference grade instruments needed to perform such simulations; accurate winds
-speed and direction sensors alone can cost hundreds to thousands of dollars and
-remote sensing data products are often unreliable at the ground level (i.e. in
-the human head space). We therefore are motivated to develop techniques to model
-our collected time series using only the data provided at a single node. There
-are many approaches to this task in the statistics and machine learning
-literature including statistical models like ARIMA and deep learning methods
-like Recurrent Neural Networks \cite{intro-to-time-series-models,
-  time-series-rnns}. While these methods can often lead to robust short term
-predictions, they do not incorporate prior physics knowledge and therefore are
-not primed to take advantage of underlying dynamical laws. Recently two
-interesting physics-informed, data driven techniques have been developed for
-just this type of scenario. The first we shall examine is the so-called
-\textit{Hankel Alternative View Of Koopman} (HAVOK) framework which extends the
-principle of dynamic mode decomposition to nonlinear systems
-\cite{brunton-havok}. The second is an technique dubbed the \textit{Hamiltonian
-  Neural Network} which extends the notion of a Neural Ordinary Differential
-Equation to allow a neural network to learn coordinate transformations or the
-original time series data which satisfy \textit{Hamiltons equations}
-\cite{greydanus-hnn}.
-
-
-
-
-Note the additional constraint that our model should be both physically
-interpretable and small enough to be easily trained and deployed at scale. While
-complicated DNN based approaches such as deep recurrent networks may provide an
-ability to forecast, the size and training times involved for these approaches
-are prohibitively high if we wish to train and deploy these models directly to
-sensors in the network in an automated fashion. Also note the other HAVOK paper
-which attempts to use HAVOK for predictions which showed that the HAVOK model
-provides a superior one step prediction compared to other state of the art
-models.
-
-
-\section{Hankel Alternative View of Koopman}
-
-
-- Koopman operator theory for dynamical systems \cite{brunton-koopman-theory}
-- Original HAVOK paper \cite{brunton-havok-orig}.
-- HAVOK paper w/ ML for forcing \cite{havok-ml}
-- sHAVOK and connections to frenet-serret frame \cite{havok-diffgeo}
-
-
-\subsection{Global Motivation: Koopman Operator Theory}
-
-\subsection{Time-Delay Embeddings and Taken's Theorem}
-\subsection{Hankel Alternative View of Koopman}
-\subsection{Local Motivation: Frenet-Serret Frame}
-\subsection{Structured HAVOK}
-\subsection{Simple Example: Lorenz System}
+Due to a combination of both natural and anthropogenic dynamics, particulate
+matter generally follows well observed patterns which include seasonal, weekly,
+and diurnal cycles. For example, researchers in Beijing, China analyzed PM 2.5
+measurements in both urban and rural settings finding significant diurnal
+trends \cite{pm-patterns-china}. In urban areas, daily PM 2.5 distributions
+tended to be bimodal with a first peak between 7:00 - 8:00 am corresponding to
+morning traffic and a second evening peak between 7:00 and 11:00 pm due to the
+gradual decrease in boundary layer hight combined with evening rush-hour
+activity. In rural environments, the distribution tended to be unimodal, with
+significant peaks between 5:00 and 11:00 pm. Similar patterns have been observed
+in other parts of world as well. For example, PM observations in Augsburg,
+Germany revealed a similar unimodal distribution with peaks in the mid to late
+afternoon \cite{pm-patterns-germany}. In the heavily trafficked New York City,
+PM 2.5 measurements across 20 sensing stations again revealed a strong bimodal
+distribution with both morning and evening peaks strongly correlated with daily
+traffic trends. Furthermore, the daily PM distribution changed during weekends
+reflecting decreased workplace traffic \cite{pm-patterns-nyc}. Together, these
+findings suggest that PM trends are, in principle, predictable at daily and
+weekly levels.
+
+With the growing interest in air quality and its impact on global change and
+human well-being, numerous models have been developed to describe PM dynamics.
+These models broadly fall into three categories:
+\begin{itemize}
+  \item \textit{physical models} which characterize relevant phsical and
+    chemical processes that generate and transport PM
+  \item \textit{statistical} and \textit{machine learning} models such as recurrent neural networks and autoregressive
+    integrated moving average (ARIMA) which use historical observations to build
+    short-term forecasts for generic time series data
+  \item \textit{hybrid models} which augment physical models with machine
+    learning to blend the two.
+\end{itemize}
+
+Detailed physical models for PM modeling and forecasting are based on
+comprehensive descriptions of all relevant atmospheric processes including
+emission, transport, and chemical reactions. Among these, one of the most widely
+adopted methods is the Chemical Transport Model (CTM). These models directly simulate
+the movement of air masses together with the complex chemical reactions that occur in the
+atmosphere. The US Environmental Protection Agency's Community Multiscale Air
+Quality (CMAQ) model is one such example which combines a meteorological
+modeling system together with emissions inventories and chemical transport
+\cite{cmaq-overview}. Clearly, the accuracy of these models depends
+significantly on the resolution of the incorporated meteorological analysis
+(typically grids have resolutions on the order of $\sim$1 km) \textit{and}
+the accuracy of emission inventories which must be constantly updated to reflect
+evolving human activities. Furthermore, these approaches can become highly
+computationally expensive and are sensitive to uncertainties in input data
+and model parameters.
+
+A similar approach worth mentioning is transport models which focus specifically
+on capturing the movement of PM and other pollutants through the atmosphere.
+\textit{Eulerian} models use a fixed grid to solve the advection-diffusion
+equation by computing dynamics of PM concentrations as particulates spread
+between neighboring grid cells. Alternatively, \textit{Lagrangian} models
+simulate the motion of ensembles of individual particles by integrating wind
+velocity data from meteorological analyses. Generally Eulerian models are
+preferred when modeling large-scale, continuous dynamics while the Lagrangian
+approach is good at capturing localized point-source pollution events. The
+\textit{Hybrid Single-Particle Lagrangian Integrated Trajectory} (HYSPLIT) model
+developed by US National Oceanic and Atmospheric Administration (NOAA) blends
+the two approaches to simultaneously capture air parcel trajectories and
+vertical/horizontal pollutant dispersion
+\cite{hysplit-overview}.
+
+Despite their utility, the complexity of running these large scale physical
+models has resulted in limited application to the analysis of local,
+ground-level PM measurements. The increasing availability of low-cost PM data
+coupled with the recent explosion in popularity of machine learning has led
+many researchers to investigate alternative data-driven methods for PM
+analysis. One popular approach is to leverage ground-level, \textit{in situ}
+observations together with coincident satellite imagery to combine remotely sensed
+parameters like \textit{aerosol optical depth} (AOD) together with
+meteorological data to develop large-scale maps for PM concentrations
+\cite{prabuddha-pm-satellite}. While this approach can yield maps
+of the large-scale PM distribution, it faces similar limitations to the retrieval of
+water quality parameters previously outlined in
+Chapter~\ref{ch:robot-team-supervised}: large quantities of satellite data
+coincident with ground level sensors are needed, and the spatio-temporal
+resolution of the resulting maps is limited by the scale and revisit times of the
+satellites.
+
+A distinct approach is to consider historical PM measurements as abstract time
+series to which general statistical and machine learning methods such as
+ARIMA models and recurrent neural networks (RNN) and can be applied
+\cite{intro-to-time-series-models, time-series-rnns}.
+Iskandaryan et al. reviewed over 316 papers on machine learning approaches for
+air quality time series and identified neural networks, regression
+models, and decision trees as the most popularly employed techniques.
+Additionally, they note that 66\% of the studies reviewed utilized data sampled
+at an hourly rate \cite{iskandaryan-2020}.
+
+While physical models like CMAQ and HYSPLIT are limited by the accuracy of
+emission inventories and the resolution of meteorological data, machine learning
+approaches suffer from two further complications: model size and model
+interpretability. The enormous size of modern deep neural networks with
+many thousands to even billions of parameters leads to lengthy training times and limits
+our capability to deploy models on resource constrained systems like the
+embedded computers used in low-cost PM sensors. Furthermore, the small-scale
+spatial variability of PM patterns means that individual models must be trained for
+\textit{each} PM sensor. The black-box nature of most machine
+learning algorithms makes it challenging to asses the ability for a trained
+model to generalize beyond the scope of the supplied training data.  On the other
+hand, regression based statistical models like ARIMA are not flexible enough to
+adapt to intermittent, discrete pollution events (e.g. a car briefly parked
+under a sensor) which result rare, but significant spikes in PM concentration.
+
+For these reasons we seek to develop a hybrid approach which provides a
+physically motivated model leveraging historical PM observations to
+accurately describe PM dynamics. Specifically, the widely observed diurnal patterns
+of PM data referenced above suggest that \textit{most of the time}, PM
+follows a simple, predictable pattern of a slow diurnal cycle. However, high
+frequency observations facilitated by the IPS7100 sensor included in the
+low-cost sensor network described in Chapter~\ref{ch:air-network} suggest that
+intermittent bursts corresponding to rare pollution episodes may be equally
+important for an accurate description of PM. Given that EPA regulations for PM
+are limited to a temporal scale of 24-hour daily averages \cite{epa-standards},
+short spikes in PM concentration can easily be \textit{washed out} during the
+averaging process underestimating potential PM exposures. If they occur during
+times of increased human traffic, these acute pollution events may lead to a
+significant increase in accumulated PM exposures. As a particularly poignant
+example, significant increases in child PM exposures have been identified with
+diesel-powered school busses during drop off and pick up times
+\cite{school-pm-exposure}.
+
+In the remainder of this chapter, explore the \textit{Hankel Alternative View of
+Koopman} (HAVOK) framework developed by Brunton et al. for modeling dynamical systems
+\cite{brunton-havok-orig}. The HAVOK model is based on Koopman Operator theory
+and identifies relevant state variables using time-delay embeddings whose
+dynamics are \textit{mostly} linear with
+intermittent external forcing. In their original work, Brunton et al.
+demonstrated this approach can effectively model chaotic dynamical
+systems. However, like many other recently developed data-driven models, it has yet to
+see wide application to realistic, noisy datasets. For our purposes, the model
+is particularly attractive as the separation of the dynamical model into linear
+and external forcing contributions aligns well with the observed diurnal trends
+of PM data with occasional spikes corresponding to rare high-pollution events.
+First we provide a detailed overview of Koopman operator theory which motivates
+the HAVOK model. We then additionally outline recent work connecting HAVOK to
+the local differential geometry of parametric curves via the Frenet-Serret
+frame. After demonstrating the method on a toy problem (the Lorenz attractor),
+we describe our contributions which enable application of the HAVOK model to
+noisy PM time series and extend the model to enable short term forecasts.
+
+
+\section{Koopman Operator Theory}
+
+To develop a time series model to describe PM, let us first consider a generic
+\textit{dynamical system} described by a differential equation of the form
+\begin{equation}
+  \frac{d}{dt} \mathbf{x}(t) = \mathbf{f}(\mathbf{x}(t))
+\end{equation}
+where the vector $\mathbf{x}$ denotes all of the variables describing the state of
+a system and the vector-valued function $\mathbf{f}$ governs the (potentially nonlinear)
+dynamics which describe the time evolution of the system's state. As a concrete
+example, we may consider a single particle governed by Newton's laws of motion.
+In this notation, the state vector $\mathbf{x}=[x_1, x_2, x_3, v_1, v_2, v_3]^T$ contains
+three position and three velocity components while $\mathbf{f}=[v_1,v_2,v_3, f_1/m,
+f_2/m, f_3/m]^T$ connects the derivative of position to each velocity and each
+velocity to the components of the net force applied to the particle along each
+axis reduced by a factor of the particle's mass.
+
+To model the dynamics of a system, one must first identify the relevant state
+variables together with their associated dynamical law. Then, in principle, the
+solution can be obtained via integration. If the initial state is
+$\mathbf{x}_0$, then at a time $\tau$, we have
+\begin{equation}
+  \mathbf{x}(\tau) = \mathbf{x}_0 + \int_0^{\tau} \mathbf{f}(\mathbf{x}(\tau)) d\tau = \mathbf{F}^{\tau}(\mathbf{x}_0)
+\end{equation}
+where we have identified $\mathbf{F}^\tau$ as the \textit{flow map} of time
+$\tau$. For discrete systems, as is commonly encountered for systems sampled at
+discrete intervals, we may instead write
+\begin{equation}
+  \mathbf{x}_{k+1} = \mathbf{F}(\mathbf{x}_k)
+\end{equation}
+where $\mathbf{x}_k$ is the state at time $t=t_k$.
+
+For even simple dynamical systems, nonlinear $\mathbf{f}$ often prevent analytic
+solutions for $\mathbf{x}(t)$. As a consequence, much of mathematical physics is
+concerned with finding equivalent formulations for the dynamical system which
+admit simpler equations whose solutions can be easily obtained. For example, for
+systems with conserved Hamiltonians, canonical transformations can produce new
+coordinates which are all cyclic, thereby yielding trivial solutions for the
+time evolution of the system \cite{goldstein}. Despite the beauty of these
+results, deriving valid transformations of this sort often requires as much (if
+not more) effort as solving the original nonlinear system itself.
+
+A different perspective can be obtained by instead considering quantum
+mechanics where a system is described by an abstract quantum
+mechanical state vector $\lvert \psi \rangle$. The state is not directly
+measured, rather the results of physical measurements (i.e. observables) are
+encoded as the
+eigenvalues of Hermitian operators. Interestingly there exist two equivalent
+descriptions for the time evolution of a quantum system. In the Schr\"{o}dinger
+picture, one evolves the state vector $\lvert  \psi(t) \rangle$ via the
+Schr\"{o}dinger equation with operators corresponding to observables fixed
+in time. In the Heisenberg picture, states are instead frozen while the operators
+corresponding to observables are time-evolved \cite[pgs 80-84]{sakurai}.
+Motivated by this equivalence, Koopman sought to develop an operator theoretic
+approach to dynamical systems describing the evolution of observables of a
+dynamical system \cite{koopman-orig}.
+
+For dynamical systems, we define an observable as a map $y:\mathcal{M}\to\R$
+which sends states $\mathbf{x}$ in a state-space manifold $\mathcal{M}$ to
+numbers in $\R$. For instance, the function $y(\mathbf{x})=x_1$, which selects
+the first component of $\mathbf{x}$ is a valid observable. For the example of a
+single particle obeying Newton's laws, the kinetic energy
+\begin{equation}
+  T(\mathbf{x}) = \frac{1}{2}m \left(v_1^2+v_2^2+v_3^2\right),
+\end{equation}
+is also a valid observable. The Koopman operator, $\mathcal{K}$, is then defined
+as an operator acting on the (infinite-dimensional) space of observables so that
+\begin{equation}
+  \mathcal{K}y(\mathbf{x}_k) = y \circ \mathbf{F}(\mathbf{x}_k) = y(\mathbf{x}_{k+1}).
+\end{equation}
+That is, $\mathcal{K}$ applied to an observable yields the value of that
+observable for the time-evolved state. If we denote $y(\mathbf{x}_k)=y_k$, then
+the Koopman operators defines a linear dynamical system on the space of
+observables:
+\begin{equation}
+  y_{k+1} = \mathcal{K}y_k.
+\end{equation}
+
+This remarkable result suggests that if we can identify the Koopman operator
+for the observables of a nonlinear dynamical system, then the time evolution of
+\textit{all} observables can be easily described by a linear system. At first
+glance, this is excellent because for our purposes the \textit{things we actually
+care about} for air quality are observables, e.g. the PM concentrations at
+various size fractions. We do not easily have access to the full sate vector
+describing the comprehensive state of the air localized around a monitoring
+device. However, by shifting our focus from the finite, nonlinear dynamics
+of the system state to the observables, we have obtained a linear dynamical
+system in an infinite dimensional Hilbert space. Surely, solving for
+$\mathcal{K}$ should as (if not more) difficult as solving the original system.
+
+Consider a subspace of the space of observables spanned by the functions $\left\{
+  y_1, ... y_k  \right\}$. Then if the Koopman is closed on this space so that
+$\mathcal{K}(\sum_i^k a_i y_i) = \sum_j^k b_jy_j$ then we may extract a finite
+matrix representation of $\mathcal{K}$ for observables in this subspace. 
+
+
+\section{Hankel Alternative View Of Koopman}
+
+
+
+\section{The Frenet-Serret Frame and sHAVOK}
+
+
+% - Koopman operator theory for dynamical systems \cite{brunton-koopman-theory}
+% - Original HAVOK paper \cite{brunton-havok-orig}.
+% - HAVOK paper w/ ML for forcing \cite{havok-ml}
+% - sHAVOK and connections to frenet-serret frame \cite{havok-diffgeo}
+
+
+% \subsection{Global Motivation: Koopman Operator Theory}
+
+% \subsection{Time-Delay Embeddings and Taken's Theorem}
+% \subsection{Hankel Alternative View of Koopman}
+% \subsection{Local Motivation: Frenet-Serret Frame}
+% \subsection{Structured HAVOK}
+% \subsection{Simple Example: Lorenz System}
 
 
 \begin{figure}[h]
