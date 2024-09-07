@@ -164,12 +164,13 @@ see wide application to realistic, noisy datasets. For our purposes, the model
 is particularly attractive as the separation of the dynamical model into linear
 and external forcing contributions aligns well with the observed diurnal trends
 of PM data with occasional spikes corresponding to rare high-pollution events.
-First we provide a detailed overview of Koopman operator theory which motivates
+First we provide a brief overview of Koopman operator theory which motivates
 the HAVOK model. We then additionally outline recent work connecting HAVOK to
 the local differential geometry of parametric curves via the Frenet-Serret
 frame. After demonstrating the method on a toy problem (the Lorenz attractor),
-we describe our contributions which enable application of the HAVOK model to
-noisy PM time series and extend the model to enable short term forecasts.
+we describe our contributions which demonstrate the applicability of the HAVOK
+model to PM time series and extend the model to enable short term
+forecasts.
 
 
 \section{Koopman Operator Theory}
@@ -250,45 +251,96 @@ observables:
   y_{k+1} = \mathcal{K}y_k.
 \end{equation}
 
-This remarkable result suggests that if we can identify the Koopman operator
+This equation suggests that if we can identify the Koopman operator
 for the observables of a nonlinear dynamical system, then the time evolution of
 \textit{all} observables can be easily described by a linear system. At first
 glance, this is excellent because for our purposes the \textit{things we actually
 care about} for air quality are observables, e.g. the PM concentrations at
-various size fractions. We do not easily have access to the full sate vector
+various size fractions. We do not readily have access to the full sate vector
 describing the comprehensive state of the air localized around a monitoring
 device. However, by shifting our focus from the finite, nonlinear dynamics
-of the system state to the observables, we have obtained a linear dynamical
+of the system state to observables, we have obtained a linear dynamical
 system in an infinite dimensional Hilbert space. Surely, solving for
-$\mathcal{K}$ should as (if not more) difficult as solving the original system.
+$\mathcal{K}$ should be as difficult as solving the original system, if not
+more so.
 
-Consider a subspace of the space of observables spanned by the functions $\left\{
-  y_1, ... y_k  \right\}$. Then if the Koopman is closed on this space so that
-$\mathcal{K}(\sum_i^k a_i y_i) = \sum_j^k b_jy_j$ then we may extract a finite
-matrix representation of $\mathcal{K}$ for observables in this subspace. 
+For continuous systems, we note that $\mathcal{K}$ generalizes to a family of
+Koopman operators with
+\begin{equation}
+  \mathcal{K}^\tau y(\mathbf{x}) = y(\mathbf{F}^\tau(\mathbf{x}))
+\end{equation}
+whose infinitesimal generator, $\mathcal{L}$ is the familiar \textit{Lie
+  derivative} from differential geometry:
+\begin{equation}
+  \mathcal{L}g = \lim_{\tau \to 0}\frac{\mathcal{K}^\tau y - y}{\tau} = \lim_{\tau \to 0} \frac{y\circ \mathbf{F}^\tau - y}{\tau}
+\end{equation}
+which computes the rate of change of the observable $y$ as it is transported
+along the vector field defined by $\mathbf{F}^\tau$.
 
+
+Realistically, Koopman theory provides a justification for utilizing techniques
+from linear systems to analyze the time series obtained for relevant
+observables. Suppose we have identified a linear subspace of the full space of
+observables spanned by the functions $\left\{ y_1, ... y_k  \right\}$. If the
+action of the Koopman operator is closed on this space so that
+$\mathcal{K}(\sum_i^k a_i y_i) = \sum_j^k b_jy_j$, then we may extract a finite
+matrix representation $\mathbf{K} \in \R^{k \times k}$ of $\mathcal{K}$ which
+time-evolves all observables in the subspace. Therefore, the goal in practice is
+to identify a set of observables which provide enough information to enable
+estimation of $\mathbf{K}$. Constant observables, such as the total energy for
+the particle example, would be poor choices. Much of the focus in the literature is
+devoted to generating rich sets of observables which can be used extract
+$\mathbf{K}$. Dynamic mode decomposition (DMD) is one such data-driven technique
+based on Koopman operator theory where the singular value decomposition (SVD) of
+a data matrix is used to approximate the Koopman operator. Comprehensive reviews
+of the Koopman Operator for dynamical systems can be found in
+\cite{brunton-koopman-theory, mezic-koopman-overview}.
 
 \section{Hankel Alternative View Of Koopman}
 
+Suppose now that only have access to a single time series of measurements.
+Motivated by possibility of identifying a suitable linear system to describe the
+dynamics of our data, a good place to start is with the question: \textit{How
+  much information about the physical state of a system can be extracted from
+  the time series of a single observable?}. The answer, surprisingly, is more
+than you might expect. A deep result in the theory of dynamical systems called
+Taken's Embedding Theorem states that for an $m$-dimensional dynamical system
+described by a function $\mathbf{f}(\mathbf{x})$ with a smooth observable
+$y:\mathcal{M}\to\R$, the time-delay map $\mathbf{y}:\mathcal{M}\to\R^{2m+1}$
+given by
+\begin{equation}
+  \mathbf{y}(\mathbf{x}) = [y(\mathbf{x}),\; y(\mathbf{F}^{\tau}(\mathbf{x})),\; y(\mathbf{F}^{2\tau}(\mathbf{x})),\; ...,\; y(\mathbf{F}^{2m\tau}(\mathbf{x}))]^T
+\end{equation}
+is a embedding of $\mathcal{M}$ into $\R^{2m+1}$ for a time lag $\tau$, that is,
+the image of $\mathbf{y}$ in $\R^{2m + 1}$ is diffeomorphic to $\mathcal{M}$
+\cite{takens-embedding-theorem}. This can be seen as a special case of the
+Whitney embedding theorem applied specifically to time series data using lagged
+values. In plain language, this means that the geometry of a dynamical system
+can be reconstructed up to diffeomorphism using a sufficient number of lagged
+values from a \textit{single observable}. Therefore, to find an approximation
+for the Koopman operator given a single time series, a time-delay embedding of
+sufficient length will provide a comprehensive set of observables which we can
+use to extract $\mathbf{K}$.
 
-
-\section{The Frenet-Serret Frame and sHAVOK}
-
-
-% - Koopman operator theory for dynamical systems \cite{brunton-koopman-theory}
-% - Original HAVOK paper \cite{brunton-havok-orig}.
-% - HAVOK paper w/ ML for forcing \cite{havok-ml}
-% - sHAVOK and connections to frenet-serret frame \cite{havok-diffgeo}
-
-
-% \subsection{Global Motivation: Koopman Operator Theory}
-
-% \subsection{Time-Delay Embeddings and Taken's Theorem}
-% \subsection{Hankel Alternative View of Koopman}
-% \subsection{Local Motivation: Frenet-Serret Frame}
-% \subsection{Structured HAVOK}
-% \subsection{Simple Example: Lorenz System}
-
+Motivated by these observations \cite{brunton-havok-orig} utilized Hankel
+matrices formed from time-delay embeddings together with the singular value
+decomposition to construct time series models which decompose nonlinear chaotic
+systems into a combination of linear dynamics with intermittent external
+forcing. The method is referred to as the Hankel Alternative View of Koopman
+(HAVOK) model. Following their example, we shall use the famous Lorenz system to
+demonstrate the method. This chaotic dynamical system is defined by the
+following differential equations:
+\begin{align}
+  \dot{x} &= \sigma(y-x) \\
+  \dot{y} &= x(\rho-z) - y \\
+  \dot{z} &= xy - \beta z
+\end{align}
+for constants $\sigma$, $\rho$, and $\beta$. Time series generated using $\sigma
+=10$, $\rho=20$, and $\beta=8/3$ are illustrated in
+Figure~\ref{fig:lorenz-time-series-orig} together with the classic
+\textit{butterfly} attractors formed by the time series plotted in three
+dimension. The goal of HAVOK is to reconstruct this dynamical system using only
+the time series for $x(t)$.
 
 \begin{figure}[h]
   \centering
@@ -300,6 +352,60 @@ matrix representation of $\mathcal{K}$ for observables in this subspace.
   \label{fig:lorenz-time-series-orig}
 \end{figure}
 
+
+Given $x(t)$, a $p\times q$ Hankel matrix $\mathbf{H}$ can be formed by concatenating time-shifted
+delay embeddings so that:
+\begin{equation}
+  \mathbf{H} = \begin{bmatrix}
+    x_1 & x_2 & \cdots & x_p \\
+    x_2 & x_3 & \cdots & x_{p+1} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    x_q & x_{q+1} & \cdots & x_n
+  \end{bmatrix} = \begin{bmatrix}
+    x_1 & \mathcal{K}(x_1) \cdots & \mathcal{K}^{p-1}(x_1) \\
+    \mathcal{K}(x_1) & \mathcal{K}^2(x_1) \cdots & \mathcal{K}^{p}(x_1) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \mathcal{K}^{q-1}(x_1) & \mathcal{K}^q(x_1) \cdots & \mathcal{K}^{n-1}(x_1) \\
+  \end{bmatrix}.
+\end{equation}
+In this form, the relationship of time delay embeddings in $\mathbf{H}$ to the Koopman
+operator is clear.
+
+Next we use the SVD to decompose H so that $\mathbf{H} =
+\mathbf{U}\mathbf{\Sigma} \mathbf{V}^T$. The columns of $V$ can be interpreted
+as \textit{eigen time series} ranked (according to the singular values $\sigma_i
+= \mathbf{\Sigma}_{ii}$) by their ability to model the columns of $\mathbf{H}$.
+Keeping only the first $r$-many columns of $\mathbf{U}$ and $\mathbf{V}$
+therefore provides a low-rank approximation of $\mathbf{H}$ (i.e. more compact)
+which will be approximately invariant to the Koopman operator. Instead of
+constructing a purely linear model for $\mathbf{V}$, Brunton et al. instead
+suggest to fit a linear model for the first $r-1$ components of each
+$\mathbf{v}$ and reserve the $r$-th to serve as a source of external forcing.
+That is, $\mathbf{A}$ and $\mathbf{B}$ are identified so that
+\begin{equation}
+  \frac{d}{dt} \mathbf{v}(t) = \mathbf{A}\mathbf{v}(t) + \mathbf{B}f(t)
+\end{equation}
+where $f(t) = v_r(t)$. Noting that $\dot{\mathbf{v}}$ can be approximated by
+$(\mathbf{v}_{i+1}-\mathbf{v}_i)/\Delta t$, then $\mathbf{A}$ and $\mathbf{B}$
+are extracted from the first $r-1$ rows and $r$ columns of $\mathbf{\Xi} =
+\left(\mathbf{V}_2^T(\mathbf{V_1}^T)^{-1} - \mathbf{I} \right)/ \Delta t$ where
+$\mathbf{V}_1$ contains the first n-1 columns of $\mathbf{V}$ while
+$\mathbf{V}_2$ includes columns 2 to $n$.
+
+Using an embedding of length $201$ and an $r$ value of $15$ the $\mathbf{A}$ and
+$\mathbf{B}$ matrices extracted for the Lorenz system are illustrated in
+Figure~\ref{fig:lorenz-A-B-heatmap}. Interestingly, the $\mathbf{A}$
+matrix shows a banded diagonal structure.
+
+
+Time series for the first three components of $\mathbf{v}$ together with their
+simulated values under the HAVOK model are are shown in
+Figure~\ref{fig:lorenz-havok-embedding}. We note that the embedded attractor
+reconstructed from the first three components $v_1$, $v_2$, $v_3$ shown in panel
+(b) matches the geometry of the original embedding from Figure~\ref{fig:lorenz-time-series-orig}.
+
+\clearpage
+\newpage
 
 \begin{figure}[h]
   \centering
@@ -323,6 +429,14 @@ matrix representation of $\mathcal{K}$ for observables in this subspace.
 \end{figure}
 
 
+\newpage
+
+Examining the statistics of the extracted forcing term $f(t)=v_r(t)$ reveals
+that the effect is indeed consistent with intermittent forcing.
+Figure~\ref{fig:lorenz-forcing-stats} illustrates by comparing the estimated
+probability density function (PDF) for $v_r(t)$ to a normal distribution
+computed using the standard deviation of $v_r$ values. The sharp peak and wide
+tails of the PDF reflect the rarity of forcing events.
 
 \begin{figure}[h]
   \centering
@@ -333,35 +447,134 @@ matrix representation of $\mathcal{K}$ for observables in this subspace.
   \label{fig:lorenz-forcing-stats}
 \end{figure}
 
+Identifying forcing values for which $\lvert  v_r \rvert^2$ is above a chosen
+threshold clearly identifies lobe-switching in the Lorenz system as illustrated
+in Figure~\ref{fig:lorenz-attractor-forcing}.
+
+Using the truncated $\mathbf{U}$ and $\mathbf{\Sigma}$ matrices, the original
+time series for $x(t)$ can be reconstructed via the inner product
+$\langle \mathbf{\Sigma}\mathbf{u}_{r-1}, \mathbf{v} \rangle$ where $\mathbf{u}_{r-1}$ is the $(r-1)$-th row of $\mathbf{U}$. The reconstructed time
+series obtained by integrating the HAVOK model is shown in Figure~\ref{fig:lorenz-reconstruction}.
+
+\clearpage
+\newpage
 
 \begin{figure}[h]
+  \vspace{-1cm}
   \centering
   \includegraphics[width=\columnwidth]{havok/0-havok-lorenz/7__attractor-w-forcing.pdf}
   \caption{(\textbf{a}) The original time series $x(t)$ plotted with the squared
   forcing time series $v_r(t)$. Red colors indicate forcing above a chosen
-  threshold which accurately identify lobe-switching events. (\textbf{b}) The
+  threshold which accurately identifies lobe-switching events. (\textbf{b}) The
   Lorenz attractor colored using the same scheme.}
   \label{fig:lorenz-attractor-forcing}
+  \vspace{-0.5cm}
 \end{figure}
-
-
 
 \begin{figure}[h]
+  \vspace{-0.5cm}
   \centering
-  \includegraphics[width=0.9\columnwidth]{havok/0-havok-lorenz/9__timeseries-reconstruction.pdf}
-  \caption{The reconstructed time series for $x(t)$ using the learned HAVOK model.}
+  \includegraphics[width=0.8\columnwidth]{havok/0-havok-lorenz/9__timeseries-reconstruction.pdf}
+  \caption{The reconstructed time series for $x(t)$ using the fitted HAVOK model.}
   \label{fig:lorenz-reconstruction}
+  \vspace{-1cm}
 \end{figure}
 
 
+\newpage
 
+The accuracy of the HAVOK reconstruction for $x(t)$ is encouraging, however we
+must note that integrating the HAVOK model forward in time requires that we
+provide the values for the external forcing $v_r(t)$. Therefore, forecasts
+longer than a single step require that we must separately be able to predict
+future values of $v_r(t)$. We note, though, that due to the ranking performed by
+the SVD, forcing components extracted from $\mathbf{V}$ tend to be zero centered
+with no long term trends (i.e. stationary). Therefore we can expect that
+predicting future values of $v_r(t)$ will be a far simpler task than forecasting
+the original time series alone.
 
-\section{Study Overview}
+Additionally, the clear identification of intermittent forcing which proceeds
+the lobe switching behavior in the Lorenz systems suggests the extracted forcing
+function may provide a useful tool to separate rare pollution episodes from the
+typical PM diurnal cycle.
 
-- Describe dataset, e.g. the specific central node, focus on PM 2.5, and the
-collection period (find continuous data during no-rain period during the summer
-of 2023 to evaluate HAVOK model independent of problems introduced by
-hygroscopic growth)
+\section{The Frenet-Serret Frame and sHAVOK}
+
+The asymmetric, off-diagonal structure of the $\mathbf{A}$ matrix extracted by
+HAVOK for a variety of models lead \cite{havok-diffgeo} to explore the
+relationship of the HAVOK model to the local differential geometry of
+parameterized curves in $\R^n$. Here we shall briefly consider the description
+of such curves using the Frenet-Serret frame which Hirsh et al. used
+to motivate a \textit{structured} version of the HAVOK model.
+
+For simplicity, let us consider a smooth curve $\gamma:\R \to \R^3$ describing
+a trajectory in three dimensions. At any point along the curve, the
+tangent vector $\gamma'(s)$ is identified as
+$[\gamma_x'(s), \gamma_y'(s), \gamma_z'(s)]^T$. When
+parameterized by arc-length so that the curve moves at unit speed, the tangent
+vector is denoted by $\hat{t}(s)=\gamma'(s)$. Similarly, the \textit{curvature},
+$\kappa(s)$ of $\gamma$ is defined by  $\alpha''(s) = \kappa(s)\hat{n}(s)$ where
+$\hat{n}$ is the unit normal vector to $\gamma$ at $s$. Finally, taking the
+cross product between the two yields the unit binormal vector $\hat{b}(s) =
+\hat{n}(s) \times \hat{t}(s)$.
+
+Since $\hat{b}\cdot\hat{b}=1$, it follows by differentiation that $\hat{b}'
+\perp \hat{b}$. Additionally, the product rule yields, $\hat{b}' = \hat{n}' \times
+\hat{t}$ so that $\hat{b}' \perp \hat{t}$. Since $\hat{b}'$ is perpendicular to
+both $\hat{b}$ and $\hat{t}$, it follows that
+\begin{equation}
+  \hat{b}'(s) = - \tau(s)\hat{n}(s)
+\end{equation}
+where we have defined the torsion $\tau(s)$. The vectors $\left\{\hat{t},
+    \hat{n}, \hat{b} \right \}$ form an orthonormal basis at each point of the
+curve $\gamma$. Finally, we note that $\hat{n}  = \hat{t} \times \hat{b}$ so
+that
+\begin{align}
+  \hat{n}'(s) &= \hat{t}'(s)\times \hat{b}(s) + \hat{t}(s) \times \hat{b}'(s) \\
+              &= \kappa(s)\hat{n}(s)\times\hat{b}(s) + \hat{t}(s) \times (-\tau(s)\hat{n}(s)) \\
+  &= - \kappa(s)\hat{t}(s) + \tau(s)\hat{b}(s)
+\end{align}
+which in matrix form becomes
+\begin{equation}
+  \begin{bmatrix} \hat{t}' \\ \hat{n}' \\ \hat{b}' \end{bmatrix} = \begin{bmatrix}
+    0 & \kappa(s) & 0 \\
+    - \kappa(s) & 0 & \tau(s) \\
+    0 & -\tau(s) & 0
+    \end{bmatrix} \begin{bmatrix} \hat{t} \\ \hat{n} \\ \hat{b} \end{bmatrix}
+\end{equation}
+
+For $n$ dimensional curves, the approach can be extended by using the
+Gram-Schmidt procedure to produce an orthonormal basis from the $n$-derivatives
+of $\gamma(s)$. The generalization leads to an expression of the form
+\begin{equation}
+    \begin{bmatrix} \hat{e}_1' \\ \hat{e}_2' \\ \vdots \\ \hat{e}_n' \end{bmatrix} = \begin{bmatrix}
+    0 & \kappa_1(s) &  & 0 \\
+    -\kappa_1(s) & \ddots & \ddots & \\
+     & \ddots & 0 & \kappa_{n-1}(s) \\
+     0 &  & -\kappa_{n-1}(s) & 0 \\
+    \end{bmatrix} \begin{bmatrix} \hat{e}_1 \\ \hat{e}_2 \\ \vdots \\ \hat{e}_n \end{bmatrix}
+\end{equation}
+where $\hat{e}_i$ are the unit vectors resulting from the Gram-Schmidt process
+and $\kappa_i(s)$ are called \textit{generalized curvatures}.
+
+This structure clearly resembles the form of $\mathbf{A}$ identified in
+Figure~\ref{fig:lorenz-A-B-heatmap}. Based on this, Hirsh et al. realized that
+maintaining the orthogonality of the components $\mathbf{v}(t)$ when fitting the
+HAVOK model reinforces this local structure. This led them to develop a
+\textit{structured}-HAVOK (sHAVOK) method which fits $\mathbf{A}$ and
+$\mathbf{B}$ by first computing two separate Hankel matrices $\mathbf{H}_1$ and
+$\mathbf{H}_2$ containing the first $n-1$ columns of $\mathbf{H}$ and
+columns 2 through $n$, respectively. Then, the SVD is taken for each separate
+Hankel matrix yielding $\mathbf{V}_1$ and $\mathbf{V}_2$ which result from time
+shifted data, but unlike the original formulation, are guaranteed to maintain
+the orthogonality of both $\mathbf{V}_1$ and $\mathbf{V}_2$. Finally,
+$\mathbf{A}$ and $\mathbf{B}$ are obtained by computing $\mathbf{\Xi} =
+(\mathbf{V}_2^T\mathbf{V}_1 - \mathbf{I})/\Delta t$ and selecting $\mathbf{A}$
+and $\mathbf{B}$ from the first $r-1$ rows and $r$ columns. We employ this
+updated approach for the analysis of PM 2.5 time series data.
+
+\section{Study Overview and Extensions to HAVOK}
+
 
 
 \begin{figure}[h]
@@ -533,3 +746,42 @@ hygroscopic growth)
   \label{fig:pm-time-series-w-forcing}
 \end{figure}
 
+\section{Discussion}
+
+The sHAVOK algorithm is a promising physics-based method which achieves an
+attractive compromise between physical motivation and data-driven analysis.
+The basic structure of a linear model with intermittent
+forcing aligns with known PM trends, namely, the widely observed diurnal cycle
+with rare spikes corresponding to brief pollution episodes. The simple structure
+of the model also enables efficient fitting for $\mathbf{A}$ and $\mathbf{B}$
+using optimized linear algebra routines for the SVD.
+
+- two contributions: use of additional forcing terms and simple procedure for
+forecasting the forcing functions, in turn, enabling forecasting of PM
+
+- \cite{havok-ml} also attempted to forecast the forcing function however by
+using a simpler integration method assuming piecewise constant forcing, we are
+able to generate highly accurate models to predict future forcing values given
+the current embedding vector $\mathbf{v}$, the current time delay embedding, and
+the \textit{next}, time series values.
+
+- rather than relying on complicated ML models like boosted trees, random
+forests, or neural networks to predict the forcing, we are able to achieve
+similar results using a simple regression model which.
+
+- combing forecasting of forecasting for forcing terms together with the HAVOK
+model enables short-term forecasts for PM 2.5 which are accurate up to 5
+minutes. Given that the sampling period used in the study was 10 seconds, a 5
+minute prediction corresponds to a 30-step forecast, which far exceeds what
+\cite{havok-ml} attempted.
+
+- Thresholding the first forcing function allowed us to accurately identify PM
+2.5 spikes suggesting that that is approach may be highly useful for analyzing
+historical data. Given the rapidly growing data volume of the sensor network,
+the ability to identify aberrant pollution spikes provides useful context when
+analyzing bulk PM data.
+
+- Additionally, the forcing function values can be computed whether or not the
+HAVOK model is used for forecasting. Since oscillations in the forcing function
+tend to precede spikes, HAVOK models trained for each node may be utilized to
+provide early warnings for PM spikes for an automated alerting system.
