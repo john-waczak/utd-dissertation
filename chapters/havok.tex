@@ -947,32 +947,26 @@ with rare spikes corresponding to brief pollution episodes. The simple structure
 of the model also enables efficient fitting for $\mathbf{A}$ and $\mathbf{B}$
 using optimized linear algebra routines for the SVD.
 
-- two contributions: use of additional forcing terms and simple procedure for
-forecasting the forcing functions, in turn, enabling forecasting of PM
+In this study, we have demonstrated that HAVOK is an effective method for
+modeling PM 2.5 time series data. Augmenting the structure to allow multiple
+forcing terms yields models which are accurate to the scale of $\sim
+0.2$ $\mu g/m^3$. The long term stability of HAVOK models when integrated for multiple
+days suggests that single fit may be valid for a week or more. Furthermore, the
+integration scheme presented here enables simple forecasting capabilities which
+are stable up to 30 future time steps corresponding to a 5 minute forecasting
+horizon.
 
-- \cite{havok-ml} also attempted to forecast the forcing function however by
-using a simpler integration method assuming piecewise constant forcing, we are
-able to generate highly accurate models to predict future forcing values given
-the current embedding vector $\mathbf{v}$, the current time delay embedding, and
-the \textit{next}, time series values.
+In contrast to complicated models such as deep RNNs and random forests, the
+HAVOK model is small enough to be easily deployed on resource constrained
+systems like the single board computers used to collect PM 2.5 senor data.
+Thresholded $\lvert  f(t) \rvert^2$ values accurately identify intermittent
+pollution spikes so that trained HAVOK models may be applied to historic
+time series to automate the identification of rare pollution events. Once the
+$\mathbf{\Sigma}$ and $\mathbf{U}$ matrices are obtained, $\mathbf{f}(t)$
+can be computed online enabling automated alerts for pollution events.
 
-- rather than relying on complicated ML models like boosted trees, random
-forests, or neural networks to predict the forcing, we are able to achieve
-similar results using a simple regression model which.
-
-- combing forecasting of forecasting for forcing terms together with the HAVOK
-model enables short-term forecasts for PM 2.5 which are accurate up to 5
-minutes. Given that the sampling period used in the study was 10 seconds, a 5
-minute prediction corresponds to a 30-step forecast, which far exceeds what
-\cite{havok-ml} attempted.
-
-- Thresholding the first forcing function allowed us to accurately identify PM
-2.5 spikes suggesting that that is approach may be highly useful for analyzing
-historical data. Given the rapidly growing data volume of the sensor network,
-the ability to identify aberrant pollution spikes provides useful context when
-analyzing bulk PM data.
-
-- Additionally, the forcing function values can be computed whether or not the
-HAVOK model is used for forecasting. Since oscillations in the forcing function
-tend to precede spikes, HAVOK models trained for each node may be utilized to
-provide early warnings for PM spikes for an automated alerting system.
+Once humidity corrections accounting for hygroscopic growth are applied to all
+historic across the entire sensor network, HAVOK models developed using $\sim$$1$
+year or more my enable HAVOK models at longer time resolutions. For example, a
+30 step forecasting horizon for PM data sampled at $15$-minute intervals would
+yield a $7.5$ hour localized forecast.
