@@ -571,11 +571,29 @@ the orthogonality of both $\mathbf{V}_1$ and $\mathbf{V}_2$. Finally,
 $\mathbf{A}$ and $\mathbf{B}$ are obtained by computing $\mathbf{\Xi} =
 (\mathbf{V}_2^T\mathbf{V}_1 - \mathbf{I})/\Delta t$ and selecting $\mathbf{A}$
 and $\mathbf{B}$ from the first $r-1$ rows and $r$ columns. We employ this
-updated approach for the analysis of PM 2.5 time series data.
+updated approach for the analysis of PM 2.5 time series data in the rest of this
+chapter.
 
 \section{Study Overview and Extensions to HAVOK}
 
-
+To examine the ability of structured HAVOK for PM modeling and
+forecasting, we identified a set of PM 2.5 measurements collected the IPS7100 sensor
+at a site in Plano, Texas during August of 2023. This time period was specifically
+chosen as it was in the middle of a dry stretch of zero precipitation in the
+North Texas region. Because humidity can induce hygroscopic growth of
+particulates leading to overestimation of particle concentrations, most federal
+equivalent methods utilize heating elements to pre-process PM samples
+before evaluating their abundance. However, the inclusion of heating elements
+dramatically increases sensor complexity leading to increased cost, increased
+power requirements, and lower sampling rates. Therefore to fairly assess the
+HAVOK model, we shall consider here 10 days of continuous, precipitation-free
+measurements for PM 2.5 averaged to a 10-second time resolution to reduce
+sampling noise. The full time series is visualized in
+Figure~\ref{fig:pm-timeseries-orig}. We note that this particular example shows
+the typical diurnal cycle with peaks  generally falling in the afternoon
+to early evening hours. Additionally, this sample dataset includes a number of
+sharp spikes which will allow us to asses the utility of the forcing function
+learned by the HAVOK model.
 
 \begin{figure}[h]
   \centering
@@ -588,6 +606,72 @@ updated approach for the analysis of PM 2.5 time series data.
   \label{fig:pm-timeseries-orig}
 \end{figure}
 
+Previous application of the HAVOK model utilized a single forcing function
+identified via the $r$-th column of $\mathbf{V}$. This is reinforced by the
+structure suggested from the Frenet-Serret for which all matrix entries beyond
+the $r$-th column \textit{should} be zero. However, the fitting procedure of the
+HAVOK and sHAVOK models does not enforce this requirement. Indeed for the
+examples presented in \cite{brunton-havok-orig} and \cite{havok-diffgeo}, the
+vectors $\mathbf{B}$ had more than one non-zero entry. Therefore, we extend the
+model so such that
+\begin{equation}
+  \dot{\mathbf{v}}(t) = \mathbf{A}\mathbf{v}(t) + \mathbf{B}\mathbf{f}(t)
+\end{equation}
+where $\mathbf{f}$ is now a vector of forcing terms corresponding to $n$ columns
+of $\mathbf{V}$ past column $r$. This promotes $\mathbf{B}$ to a matrix but
+leads to no further modifications to the fitting procedure.
+
+To extend the HAVOK model to enable forecasting, we make one additional
+modification involving how the model is integrated. In the codes developed for
+\cite{brunton-havok-orig, havok-diffgeo}, the authors used a standard
+integration method for control systems which assumes that the forcing
+function $f(t)$ is piecewise linear between each time-step. This is a reasonable
+assumption as the values of the forcing function are obtained at the same
+temporal resolution as the original time series sampling rate. To utilize more
+complicated integration schemes, one must interpolate the forcing function
+values to enable their evaluation at points between sample times. However, in
+both papers the authors note that the forcing function values precede large
+changes in the original time series. We therefore adopt a simpler integration
+approach which assumes only that forcing function values are
+\textit{piecewise-constant} between sample points. This means that the HAVOK
+model can be integrated from $t$ to $t+\Delta t$ by solving
+\begin{equation}
+  \begin{cases}
+    \dot{\mathbf{v}} = \mathbf{A}\mathbf{v}(t) + \mathbf{B}\mathbf{f}(t) \\
+    \dot{\mathbf{f}}(t) = 0
+  \end{cases}
+\end{equation}
+Since $\mathbf{A}$ and $\mathbf{B}$ are constant matrices, the solution can be
+written exactly using matrix exponentials so that
+\begin{equation}
+  \begin{bmatrix} \mathbf{v}(t+\Delta t) \\ \mathbf{f}(t+\Delta t) \end{bmatrix} = \exp \left(  \begin{bmatrix}
+    \mathbf{A}\Delta t & \mathbf{B} \Delta t \\
+    0 & 0
+  \end{bmatrix} \right) \begin{bmatrix} \mathbf{v}(t) \\ \mathbf{f}(t) \end{bmatrix}
+\end{equation}
+
+The overall accuracy of the HAVOK model is strongly determined by the chosen
+cutoff value used to truncate $\mathbf{V}$ after taking the SVD of
+$\mathbf{H}_1$ and $\mathbf{H}_2$. Furthermore, because forcing terms correspond
+to singular vectors which explain little of the total variance in $\mathbf{H}_1$
+and $\mathbf{H}_2$, it is reasonable to expect that this approximation will be
+valid. Indeed for the Lorenz system example shown
+Figure~\ref{fig:lorenz-reconstruction}, we used this integration scheme to
+evaluate the HAVOK model.
+
+A natural consequence of this choice is that single-step predictions of the
+HAVOK model no longer require future knowledge of the forcing function. That is,
+$\mathbf{v}(t+\Delta t)$ only depends on the current state $\mathbf{v}(t)$ and
+the current forcing values $\mathbf{f}(t)$. Furthermore, multi-step
+predictions for the forcing terms can now leverage both the current delay-embedding of
+time series values \textit{and} the value at the next time step. We use this to
+motivate a simple regression model for forecasting $\mathbf{f}$ thereby enabling
+forecasting for PM 2.5 beyond single-step forecasts.
+
+A principle component decomposition of a Hankel matrix for the PM 2.5 data 
+using an embedding of length 100 is shown in Figure~\ref{fig:pm-timeseries-pca}.
+Included in the plot is a horizontal line indicating an explained variance of
+$1\%$.
 
 \begin{figure}[h]
   \centering
@@ -599,9 +683,27 @@ updated approach for the analysis of PM 2.5 time series data.
   \label{fig:pm-timeseries-pca}
 \end{figure}
 
+While the choice of an embedding length of $100$ is arbitrary, these values
+suggest that a state vector of at length $3$ should be explored for our HAVOK
+models. Based on these indications, we performed a comprehensive parameter sweep,
+training multiple HAVOK models for embedding lengths ranging from $N=30$ to
+$N=360$, for state vectors of length $r=3$ to $r=25$ and for forcing functions
+of length $n=1$ to $n=5$ subject to the constraints that $r>n$ and $r+n \leq N$
+for each model.
 
-\section{Results}
+To evaluate the model performance, the data was split into two distinct time
+series corresponding to the first 7 days and the final 3 days of the time
+series, respectively. This train-test split is visualized in
+Figure~\ref{fig:pm-train-test-split}. We note that unlike the random splits used
+for the supervised regression in Chapter~\ref{ch:robot-team-supervised}, it is
+critical to separate the data into  disjoint time series to prevent data leakage
+from future values into the training set during model fitting.
 
+To evaluate each model, the RMSE and MAE are computed between the original PM
+2.5 data and the reconstructed values obtained by integrating the HAVOK model
+starting at the first value of the test set. Using these results, we then train
+a final HAVOK model with the identified hyperparameter values and explore the
+resulting time series.
 
 \begin{figure}[h]
   \centering
@@ -613,7 +715,17 @@ updated approach for the analysis of PM 2.5 time series data.
   \label{fig:pm-train-test-split}
 \end{figure}
 
+\section{Results}
 
+A comparison of the trained HAVOK models for the hyperparameter sweep over
+embedding length, sate vector length, and number of forcing terms is presented
+in Table~\ref{tab:havok-fit-results}. The table includes the top 10 performing
+models ranked by their RMSE on the testing set as well as the top three models
+with only a single forcing function which fell further down the list. The best
+model utilized a delay embedding of length $30$ corresponding to a 5 hour
+window, with a state vector of length $6$ and $5$ total forcing functions. Based
+on these results, incorporating additional forcing terms clearly leads to an
+improved model.
 
 \begin{table}[h]
   \caption{Results of HAVOK model hyperparameter search. Models were trained
@@ -638,11 +750,47 @@ updated approach for the analysis of PM 2.5 time series data.
     $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
     $105$ & $3$ & $1$ & $1.48989$ & $1.09792$  \\
     $120$ & $3$ & $1$ &  $1.58473$ & $1.1494$ \\
-    $180$ & $5$ & $1$ & $1.77659$ & $1.29506$ 
+    $180$ & $5$ & $1$ & $1.77659$ & $1.29506$
   \end{tabular}
 \end{table}
 
 
+Using these parameters, a final HAVOK model was trained. The structure of the
+$\mathbf{A}$ and $\mathbf{B}$ matrices corresponding to the linear and forcing
+components of the model are visualized in the first panel of
+Figure~\ref{fig:pm-havok-operators}. The $\mathbf{A}$ matrix includes the
+expected diagonal structure while the forcing terms in $\mathbf{B}$ decrease
+with each column. The eigenvalues of $\mathbf{A}$ are also included in
+Figure~\ref{fig:pm-havok-operators} where it can be clearly seen that no
+eigenvalue has any postive, real component. This reflects that the HAVOK model
+is stable, at least during periods with little forcing.
+
+\begin{figure}[h]
+  \vspace{-2cm}
+  \centering
+  \includegraphics[width=0.9\columnwidth]{havok/2-havok-eval/2__model-terms.pdf}
+  \caption{(\textbf{a}) Operators learned by the HAVOK model with $r=6$ and
+    $n=5$. We note that the $\mathbf{A}$ matrix displays the expected banded
+    diagonal  structure. Additionally, the values of the forcing matrix
+    $\mathbf{B}$ decrease with each column. (\textbf{b}) Eigenvalues of the
+    learned HAVOK operator $\mathbf{A}$ visualized in the complex plane. We note
+    that no eigenvalues had any postive real component reflecting the model's
+    stability for integration over long time periods.}
+  \label{fig:pm-havok-operators}
+\end{figure}
+
+The reconstructed time series generated by integrating the training HAVOK model
+for both the training and testing sets is shown in
+Figure~\ref{fig:pm-havok-predictions}. Here the external forcing terms,
+$\mathbf{f}(t)$ are provided during the integration in order to demonstrate the
+stability of the HAVOK model. We note that the final RMSE of $0.217$ $\mu g/m^3$
+is at the level of sensor uncertainty for 10-second data.
+
+The inset figure within Figure~\ref{fig:pm-havok-predictions} shows a subset of
+the time series for a 4-hour window further showcasing the excellent agreement
+between the original data and the trained model. The model is also able to
+accurately capture the intermittent PM spikes which occur throughout the
+duration of the time series.
 
 \begin{figure}[h]
   \centering
@@ -653,30 +801,15 @@ updated approach for the analysis of PM 2.5 time series data.
 \end{figure}
 
 
+\subsection{Forcing Statistics and Outlier Detection}
 
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.65\columnwidth]{havok/2-havok-eval/2__A-B-Havok.pdf}
-  \caption{Operators learned by the HAVOK model with $r=6$ and $n=5$. We note
-    that the $\mathbf{A}$ matrix displays the expected banded diagonal
-    structure. Additionally, the values of the forcing matrix $\mathbf{B}$
-    decrease with each column}
-  \label{fig:pm-havok-operators}
-\end{figure}
-
-
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.35\columnwidth]{havok/2-havok-eval/3__A-eigvals.pdf}
-  \caption{Eigenvalues of the learned HAVOK operator $\mathbf{A}$ visualized in
-    the complex plane. We note that no eigenvalues had any postive real
-    component reflecting the model's stability for integration over long time periods. }
-  \label{fig:pm-havok-eigvals}
-\end{figure}
-
-
+As previously mentioned, one goal for the HAVOK model is to utilize the
+extracted forcing functions to identify intermittent pollution spikes.
+Figure~\ref{fig:pm-forcing-stats} plots the estimated probability density
+function for the first forcing term, $f_1(t)$ compared to a Gaussian fit using
+the standard deviation of $f_1(t)$ across the time series. On the log-scale, the
+wide tails of the distribution confirm that the extracted forcing activates
+intermittently as intended.
 
 \begin{figure}[h]
   \centering
@@ -688,18 +821,14 @@ updated approach for the analysis of PM 2.5 time series data.
   \label{fig:pm-forcing-stats}
 \end{figure}
 
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\columnwidth]{havok/2-havok-eval/forcing-time-series.pdf}
-  \caption{(\textbf{a}) Time series of first forcing function activation for the
-    duration of the training set. (\textbf{b}) The same time series zoomed in to
-    the first hours. The mean value for the forcing function was $7.94\times
-    10^5$ reflecting the fact that the learned forcing functions tend to be
-    centered about zero with no long-term trend.}
-  \label{fig:pm-forcing-time-series}
-\end{figure}
-
+Following the Lorenz system example from \cite{brunton-havok-orig}, we utilize
+thresholded values of $f_1(t)$ to identify intermittent spikes in the original
+PM 2.5 time series. The result is visualized in
+Figure~\ref{fig:pm-time-series-w-forcing} which includes both the original PM
+2.5 data together with the time series for $\lvert  f_1(t) \rvert^2$. A cutoff
+threshold of $0.0006$ accurately extracts three pollution spikes which were
+observed on the 4th, 9th, and 11th of August, respectively. Lower threshold
+values an be used to further identify smaller spikes which occur throughout each day.
 
 \begin{figure}[h]
   \centering
@@ -712,11 +841,64 @@ updated approach for the analysis of PM 2.5 time series data.
 \end{figure}
 
 
+\subsection{Forecasting with HAVOK}
+
+Forecasting with the HAVOK model shifts the problem to modeling
+future values of the forcing function. At face value, this may not provide any
+obvious benefit, however the time series corresponding to forcing functions
+tend to be stationary since the SVD organizes singular vectors by decreasing
+explained variance. In Figure~\ref{fig:pm-forcing-time-series} this is clearly
+the case for the first forcing function $f_1(t)$ which has a mean value of
+$7.94\times10^{-5}$ (essentially 0) for the duration of the PM 2.5 dataset. By
+moving the forecasting problem to the forcing function, we therefore greatly reduce
+the problem's difficulty.
+
+\begin{figure}[h]
+  \vspace{-1cm}
+  \centering
+  \includegraphics[width=\columnwidth]{havok/2-havok-eval/forcing-time-series.png}
+  \caption{(\textbf{a}) Time series of first forcing function activation for the
+    duration of the training set. (\textbf{b}) The same time series zoomed in to
+    the first 1000 points. The mean value for the forcing function was $7.94\times
+    10^{-5}$ reflecting the fact that the learned forcing functions tend to be
+    centered about zero with no long-term trend.}
+  \label{fig:pm-forcing-time-series}
+\end{figure}
+
+
+To our knowledge, the only other study extending HAVOK for time series
+prediction is that of \cite{havok-ml}. In it, the authors use the original
+HAVOK formulation from \cite{brunton-havok-orig} under the assumption that
+$f(t)$ is linear between time series samples and explored a variety of machine
+learning models to predict future $f(t)$ which they then used to construct
+forecasts for Lorenz, Mackey-Glass, and Sunspot time series. They found that
+tree-based models including Random Forests for the forcing function utilized
+with trained HAVOK models yielded better forecasts than methods such
+as recurrent neural networks applied directly to the original time series themselves.
+
+For our purposes, we are interested in simple models which could in principle be
+deployed on edge computing devices like the single-board computers incorporated
+in each sensor node as described in Chapter~\ref{ch:air-network}. This rules out
+large models like random forests and deep recurrent neural networks  that would
+be challenging to train and deploy at scale for each individual sensor in a
+distributed network. Furthermore, our formulation of the HAVOK model involves
+\textit{multiple} forcing functions which each must be forecasted. Therefore, we
+construct a simple regression model for the entire $\mathbf(f(t+\Delta t))$.
+Denoting $\mathbf{z}(t)$ and the current time-delay embedding of PM 2.5 values
+and $z(t+\Delta t)$ as the next PM 2.5 value, we fit a model whereby
+
+\begin{equation}
+  \mathbf{f}(t+\Delta t) = \mathbf{K}_f\mathbf(f)(t) + \mathbf{K}_{\mathbf{z}}\mathbf{z}(t) + \mathbf{K}_{z}z(t+\Delta t)
+\end{equation}
+
+Using the same train-test split as before, the above model achieves an RMSE of
+$2.867\times 10^{15}$ on the testing set which is effectively at machine
+precision. 
 
 
 \begin{table}[h]
   \caption{Evaluation of HAVOK forecasting performance as a function of
-    prediction horizon from 10 seconds to 4 minutes.}
+    prediction horizon from 10 seconds to 4 minutes. \vspace{0.15cm}}
   \label{tab:havok-forecasting-results}
   \centering
   \begin{tabular}{ccccccc} \hline
@@ -735,7 +917,6 @@ updated approach for the analysis of PM 2.5 time series data.
 
 
 
-
 \begin{figure}[h]
   \centering
   \includegraphics[width=\columnwidth]{havok/3-forcing-fit/forecast-scatter.pdf}
@@ -743,7 +924,7 @@ updated approach for the analysis of PM 2.5 time series data.
     forecast. (\textbf(b)) 1 minute forecast. (\textbf{c}) 2 minute forecast.
     (\textbf{d}) 5 minute forecast. The integration time step was $\Delta t =
     10$ s so that a 5 minute forecast corresponds to a 30 step future prediction.}
-  \label{fig:pm-time-series-w-forcing}
+  \label{fig:forecasting-scatter}
 \end{figure}
 
 \section{Discussion}
