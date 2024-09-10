@@ -75,6 +75,10 @@ The goal of this dissertation is to advance physical sensing in service of socie
 \section{Water Quality}
 \section{Air Quality}
 
+- Multiple components which contribute to overall air quality
+- Gasses are a big one
+- Describe all of the parameters that go into the Air Quality Index
+- We focuse
 
 - Prabuddha et al. combine remote sensing observations for aerosol optical depth
 with meteorological data to predict ground level PM 2.5 using machine learning
@@ -82,6 +86,17 @@ together with ground based-sensors \cite{prabuddha-pm-satellite}
 - Average US values exceeded 9 $\mu g/m^3$ standard 20\% of the time with the
 eastern US and California exceeding the limit over 50\% of the time during the
 sampling period from Jan. 2020 to June 2023.
+
+\subsection{What is Particulate Matter}
+
+\subsection{Environmental Impact}
+
+\textcolor{red}{include a picture of fog/haze}
+
+\subsection{Human Impact}
+
+
+
 
 
 
@@ -132,8 +147,21 @@ When applying ML we should therefore place a high value on physics-based models,
 \end{itemize}
 
 
+\section{Phsical Sensing}
 
-\section{Actionable Insights and Societal Value}
+The successful application of machine learning methods demands comprehensive, carefully curated data sets. In order for our modeling efforts to be successful, it is critical that we capture the subtle nuances of the phenomena we wish to describe. In this chapter, we outline the various physical sensing approaches used throughout this dissertation, all of which are part of a broader effort in the MINTS-AI laboratory at the University of Texas at Dallas. MINTS-AI is an acronym for Multi-Scale Multi-Use Integrated Intelligent Interactive Sensing in Service of Society for Actionable Insights. An graphical overview of the MINTS-AI sensing paradigm is outlined in Figure \ref{fig:mints-ai}.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.8\textwidth]{introduction/MINTS-sentinels.jpg}
+  \caption{The MINTS-AI context engine is a sensing paradigm composed of flexible sensing sentinels spanning from remote sensing data products to autonomous robots and ground survey vehicles.}
+  \label{fig:mints-ai}
+\end{figure}
+
+Of the variety of sensing sentinels listed above, this dissertation is primarily concerned with three key applications. The first is a team of autonomous robotic vehicles which we refer to as the \textit{robotic team}. The second is a network of distributed streaming sentinels comprised of low-cost air quality sensors. The third describes a reference sensor chamber for air quality evaluation which we use to develop a \textit{simulation sentinel}.
+
+
+\section{Actionable Insights}
 
 Combining physical sensing with machine learning methods allows us to \textit{put science in action} in order to drive positve societal outcomes.
 
