@@ -39,15 +39,90 @@ In this study, we explore the application of  GTM to UAV-acquired HSI for the ch
 
 \section{Unsupervised Learning}
 
-\section{Principal Component Analysis}
+\subsection{Self Organizing Maps}
 
-\textcolor{red}{Is this section necessary?}
+Self organizing maps (SOMs) are an unsupervised machine learning technique developed by Kohonen \cite{kohonen-original} based on the simple biological principle that \textit{neurons near each other fire together}. This observation that the toplogical \textit{closeness} of similar computational units is a critical feature of intelligent systems leads to a natural reinterpretation of the familiar perceptron model into a new form amenable for a variety of clustering and dimensionality reduction tasks. In particular, the SOM enables a rapid unsupervised classification of multidimensional data into a (typically) one or two dimensional \textit{simplicial complex}, the discrete realization of a topological manifold, whose vertices correspond to representative points in the original data space $\mathcal{D}$. While a tad esoteric compared to other popular unsupervised methods like KMeans clustering or DBSCAN, the SOM distinguishes itself with the added benefit that it's training procedure guarantees nodes (i.e. classes) close to each other in the feature manifold share similar weights. This additional structure makes the SOM particularly attractive when an interpretation of the discovered clusters as well as the relationships between them is desired.
 
-\section{Self Organizing Maps}
+The original treatment of the SOM by Kohonen was made in terms of processing units, sensory signals, and relaying networks \cite{kohonen-original}, however, in the modern era of deep learning, a more easily digestible derivation can be obtained by re-interpreting the weights of a simple perceptron model to provide the foundation for a clustering approach. As described in previously, a perceptron is a function of the form
+\begin{equation}
+    \mathbf{y} = \sigma.\left(W\mathbf{x}\right)
+\end{equation}
+where $W\in\mathbb{R}^{n\times m}$ is a matrix of weights which transform the input $\mathbf{x}\in\mathbb{R}^m$ into $\mathbb{R}^n$ and $\sigma$ is a nonlinear \textit{activation function} applied element-wise to the outputs of the matrix multiplication (indicated by the $.$ syntax). If we instead think of the weight matrix as an ordered collection of vectors $\{\mathbf{w}_i\}_{i=1}^{n}$, then this formula can be further decomposed into
+\begin{equation}
+    (\mathbf{y})_i = \sigma(\mathbf{w}_i^T\mathbf{x}) = \sigma(\langle \mathbf{w}_i, \mathbf{x} \rangle)
+\end{equation}
+The function of the perceptron is now clear: given an input vector $\mathbf{x}$ and a collection of $n$-many weight vectors $\mathbf{w}_i$, compute the $n$-many inner products of $\mathbf{x}$ with each weight vector $\mathbf{w}_i$, apply the nonlinear activation function $\sigma$, and concatenate the results.
 
-\section{Expectation Maximization}
+If we now allow ourselves to imagine the weight vectors $\mathbf{w}_i$ as members of the same vector space as the input $\mathbf{x}$, a reasonable question to ask is: \textit{how similar is the input $\mathbf{x}$ to each $\mathbf{w}_i$}. Further, the application of the inner product $\langle \cdot,\cdot \rangle$ suggests we may answer this question in terms of the distance
+\begin{equation}
+    \langle \mathbf{w}_i-\mathbf{x},  \mathbf{w}_i-\mathbf{x}\rangle = d(\mathbf{w}_i, \mathbf{x})^2.
+\end{equation}
+In other words, given a set of weight vectors $\mathbf{w}_i$ which we may now think of as the cluster centers for our unsupervised model, we can measure the similarity between a given datum $\mathbf{x}_j$ and each cluster by computing the distance
+\begin{equation}
+    d_{ij} = d\left(\mathbf{w}_i, \mathbf{x}_j \right).
+\end{equation}
 
-\section{Generative Topographic Mapping}
+To make this mapping useful, we should prescribe a \textit{training procedure} which updates the vectors $\mathbf{w}_i$ based on all of the available data points. Further, our goal is to establish some kind of interpretable relationship between the various weights $\mathbf{w}_i$ so that they \textit{more than} disjoint classes. The SOM achieves this by providing a lower-dimensional grid (typically 2-dimensional) whose vertices are understood to be the location of each of the weight vectors. The procedure is as follows:
+
+First, initialize a grid of weight vectors $\mathbf{w}_i\in\R^m$ which we collect into a matrix $W\in\R^{m\times n}$. Assign coordinates to each weight vector by mapping each $\mathbf{w}_i$ to a vertex in the grid. The \textit{topology} of the grid is a hyperparameter which dictates the spatial relationship between neighboring nodes. Popular choices are: flat rectangular, rectangular on a cylinder (one periodic boundary condition), rectangular on a torus (two periodic boundary conditions), hexagonal (more equidistant neighbors per node than rectangular), and spherical.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\columnwidth]{robot-team-gtm/som/som-diagram.pdf}
+  \caption{A Self Organizing Map with nodes configured in a rectangular grid topology with weight vectors randomly initialized.}
+  \label{fig:som-diagram}
+\end{figure}
+One can initialize the weights in a variety of ways. Some common choices are
+\begin{itemize}
+\item Randomly initialize them as in figure \ref{fig:som-diagram}.
+\item Initialize them to the value of $n$-many randomly selected data samples $\mathbf{x}_i$.
+\item Initilize them to the first $n$-many principal components of the dataset.
+\end{itemize}
+
+Next, we proceed to update the weights according to the following steps for each $\mathbf{x}_k$ datum:
+\begin{enumerate}
+\item Compute the \textit{best match unit} (BMU) as
+  \begin{equation}
+    \mathbf{w}_{i}^{\text{best}} = \text{arg}\min\limits_{\mathbf{w}_j} \left( d(\mathbf{x}_k, \mathbf{w}_j)^2 \right)
+  \end{equation}
+  where $d(\cdot,\cdot)$ is some suitably chosen distance function. One often defaults to the Euclidean metric.
+\item Choose a radius $\sigma_t$ which we will use to identify the correct update for to apply to all nodes relative to $\mathbf{w}_i^{\text{best}}$.
+\item Update \textit{all} the weights according to the equation
+  \begin{equation}
+    w_{m}^{t+1} = w_m^{t} + \eta(t)f(x_m,y_n,\sigma_t)\left(\mathbf{x}_k  - \mathbf{w}_n^{t} \right)
+  \end{equation}
+  where $\eta(t)$ is the learning rate, and $f(x_m, y_m, \sigma_t)$ is the \textit{neighborhood} function which defines the relative amount each node $\mathbf{w}_m$ is updated according to its coordinate distance from the best match unit (i.e. the distance between the points $(x_m, y_m)$ and $(x_{\text{best}}, y_{\text{best}})$ in the two dimensional case). Typically one chooses a the learning rate to evolve according to the schedule
+  \begin{equation}
+    \eta(t) = \eta_0\exp(^-\lambda t)
+  \end{equation}
+  with the radius $\sigma_t$ evolving similarly according to
+  \begin{equation}
+    \sigma_t = \sigma_0\exp(-\beta t).
+  \end{equation}
+  Popular choices for the neighborhood function are the Gaussian function, Mexican-hat function, a cone function, and a cylinder function.
+\end{enumerate}
+
+
+As an illustrative example, consider the minimal dataset formed by the colors red, green, and blue which as vectors may be written as
+\begin{align}
+  \text{Red} &= \left(1,\; 0,\; 0 \right)\\
+  \text{Green} &= \left(0,\; 1,\; 0 \right) \\
+  \text{Blue} &= \left(0,\; 0,\; 1 \right).
+\end{align}
+Now let us suppose we want to train an SOM to generate a classification for colors using only these three as the supplied training data. Figure \ref{fig:som-demo} shows exactly this. Here we have trained an SOM of size $25 \times 25$ cells in a flat hexagonal topology. As the weight vectors are themselves vectors of length $3$, we can then visualize the trained SOM by coloring each corresponding node by the color learned in its weight vector. What we find is that the resulting map has clearly separated red, green, and blue into distinct regions in the grid, and more importantly, there is a smooth gradient between neighboring cells reflecting the fact that neighboring classes are more \textit{similar} than cells with a large separation distance. This is not the case for many other common clustering techniques like k-nearest neighbors or DBSCAN for which relationship between learned classes is challenging to interpret.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.75\columnwidth]{robot-team-gtm/som/SOM_demo.pdf}
+  \caption{A trained Self Organizing Map of $25\times 25$ cells in a hexagonal topology trained on a dataset consisting of the three colors red, green, and blue.}
+  \label{fig:som-demo}
+\end{figure}
+
+To enable this demonstration and its subsequent use throughout the rest of this dissertation, I have created a new open-source implementation of the SOM algorithm for the Julia programming language called \texttt{SelfOrganizingMaps.jl} which has been added to the general registry and can by freely downloaded for use by anyone. The repository for the code as well as the associated documentation can be found at \href{https://github.com/john-waczak/SelfOrganizingMaps.jl}{this site}.
+
+
+\subsection{Expectation Maximization}
+
+\subsection{Generative Topographic Mapping}
 
 
 \section{Study Overview}

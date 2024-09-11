@@ -1,6 +1,5 @@
 \chapter{Characterizing Water Quality with Autonomous Robotic Teams and Supervised Learning}\label{ch:robot-team-supervised}
 
-
 Inland waters pose a unique challenge for water quality monitoring by remote
 sensing techniques due to their complicated spectral features and
 small-scale variability. At the same time, collecting the reference data
@@ -29,41 +28,276 @@ rapid characterization of water composition.
 
 \textcolor{red}{
   Make sure to add sentence about the publications where this appears, e,g
-  \cite{robot-team-1, robot-team-2}
+  \cite{robot-team-2}
 }
 
 \section{Motivation}
 
 
-For decades, remote sensing imagery has been used for environmental monitoring, with applications ranging from resource mapping, land type classification, and urban growth assessment to wildfire monitoring, natural disaster tracking, and many more~\cite{melesse2007remote, joyce2009review}. Among these applications, the retrieval of water quality variables from remote sensing imagery remains challenging due to the difficulty of obtaining in situ reference data coincident with available satellite imagery. Traditional approaches to obtain these data have relied on serendipitous satellite passes over fixed sensing sites or sensor-equipped vessels. As a consequence, curating comprehensive datasets can require decades of observations~\cite{aurin2018remote, ross2019aquasat}. This poses a significant challenge for assessing natural and anthropogenic changes to water composition in real time, for example, during oil spills \cite{fingas2017review}.
+For decades, remote sensing imagery has been used for environmental monitoring,
+with applications ranging from resource mapping, land type classification, and
+urban growth assessment to wildfire monitoring, natural disaster tracking, and
+many more~\cite{melesse2007remote, joyce2009review}. Among these applications,
+the retrieval of water quality variables from remote sensing imagery remains
+challenging due to the difficulty of obtaining in situ reference data coincident
+with available satellite imagery. Traditional approaches to obtain these data
+have relied on serendipitous satellite passes over fixed sensing sites or
+sensor-equipped vessels. As a consequence, curating comprehensive datasets can
+require decades of observations~\cite{aurin2018remote, ross2019aquasat}. This
+poses a significant challenge for assessing natural and anthropogenic changes to
+water composition in real time, for example, during oil spills
+\cite{fingas2017review}.
 
-Where remote sensing imagery and in situ measurements have been combined, studies have demonstrated successful extraction of optically active water quality variables such as colored dissolved organic matter (CDOM), chlorophyll-a, and suspended sediment concentrations by using combinations of spectral bands \cite{remote-sensing-finland,bonansea2015using, absalon2023detection}. These approaches can be further augmented by machine learning methods, which consist of nonlinear and non-parametric models designed to learn representations of functions directly from data \cite{lary2010artificial}. For example, Petersen et al. utilized a deep neural network to successfully estimate blue--green algae, chlorophyll-a, CDOM, dissolved oxygen, specific conductance, and turbidity from a fused dataset of Landsat-8 and Sentinel-2 imagery \cite{peterson2020deep}. Other methods such as support vector machines and decision trees have also been successfully applied to retrieve water quality parameters from remote sensing imagery \cite{belgiu2016random,sagan2020monitoring}. However, the low spatial and spectral resolution of available multiband remote sensing satellites makes it difficult to analyze inland waters with small spatial features and complicated spectral signatures. 
 
-Advances in multispectral and hyperspectral imaging technology have led to considerable reductions in size, making it possible to incorporate these cameras into the payloads of autonomous aerial vehicles (UAVs) \cite{hruska2012radiometric}. Flying at low altitudes enables the collection of centimeter-scale imagery whilst limiting the need for complicated atmospheric corrections to account for scattering by atmospheric aerosols and gasses \cite{adao2017hyperspectral, banerjee2020uav}. Already, UAVs equipped with multispectral and hyperspectral imagers are being used in a variety of domains to great effect, including for biomass estimation, forest management, precision agriculture, and, recently, water quality monitoring \cite{adao2017hyperspectral, padua2017uas,arroyo2019implementation,kurihara2020unmanned, ehmann2019monitoring}. Despite the superior spectral and spatial resolution enabled by UAV platforms, these improvements alone do not address the limited spatial coverage of the in situ reference data used for the associated water composition retrieval. For instance, Lu et al. used a UAV-born hyperspectral imager to develop machine learning models for the inversion of chlorophyll-a and suspended solids using samples from 33 fixed locations \cite{lu2021retrieval}. Similarly, Zhang et al. utilized a UAV equipped with a hyperspectral imager to estimate water quality parameters by collecting imagery coincident with samples taken from 18 sampling sites \cite{zhang2022selection}. In both of these examples, the collection of in situ reference data remains the key challenge for the application of UAV systems to water quality quantification.
+Where remote sensing imagery and in situ measurements have been combined,
+studies have demonstrated successful extraction of optically active water
+quality variables such as colored dissolved organic matter (CDOM),
+chlorophyll-a, and suspended sediment concentrations by using combinations of
+spectral bands \cite{remote-sensing-finland,bonansea2015using,
+  absalon2023detection}. These approaches can be further augmented by machine
+learning methods, which consist of nonlinear and non-parametric models designed
+to learn representations of functions directly from data
+\cite{lary2010artificial}. For example, Petersen et al. utilized a deep neural
+network to successfully estimate blue--green algae, chlorophyll-a, CDOM,
+dissolved oxygen, specific conductance, and turbidity from a fused dataset of
+Landsat-8 and Sentinel-2 imagery \cite{peterson2020deep}. Other methods such as
+support vector machines and decision trees have also been successfully applied
+to retrieve water quality parameters from remote sensing imagery
+\cite{belgiu2016random,sagan2020monitoring}. However, the low spatial and
+spectral resolution of available multiband remote sensing satellites makes it
+difficult to analyze inland waters with small spatial features and complicated
+spectral signatures.
 
-To address this gap and enable comprehensive, real-time evaluation of water composition, we have developed a robotic team comprised of an autonomous uncrewed surface vessel (USV) equipped with a collection of reference grade instruments together with a UAV carrying a hyperspectral imager. By incorporating reference instruments on a maneuverable USV platform, we are able to rapidly collect large volumes of water quality data for a comprehensive suite of physical, biochemical, and chemical variables that are precisely collocated with spectra captured by the UAV. Critically, the USV enables the collection of reference data with significantly improved spatial resolution compared to other approaches. In our previous work, we introduced this paradigm and described how in situ measurements collected by the USV can be used to provide the ground-truth data for machine learning models that map the reflectance spectra captured by the hyperspectral imager to the desired water quality variables \cite{robot-team-1}.
 
-The main objective of this study is to expand on our previous work in three new ways: The first is to explore the breadth of water quality variables that can be inferred from collected hyperspectral imagery. With the goal of comprehensive measurement in mind, we demonstrate the ability to accurately predict physical variables such as temperature, conductivity, pH, and turbidity as well as biochemical constituents, including blue--green algae pigments, CDOM, and chlorophyll-a, in addition to concentrations of crude oil, optical brighteners, and a variety of ions. The second addition is to demonstrate that observations from separate collections can effectively be combined by carefully accounting for variability in the viewing and illumination geometries of the scene. Finally, we expand our machine learning approach to take advantage of the considerable volume of collected data in order to determine reliable confidence intervals for each predicted parameter using conformal prediction.
+Advances in multispectral and hyperspectral imaging technology have led to
+considerable reductions in size, making it possible to incorporate these cameras
+into the payloads of autonomous aerial vehicles (UAVs)
+\cite{hruska2012radiometric}. Flying at low altitudes enables the collection of
+centimeter-scale imagery whilst limiting the need for complicated atmospheric
+corrections to account for scattering by atmospheric aerosols and gasses
+\cite{adao2017hyperspectral, banerjee2020uav}. Already, UAVs equipped with
+multispectral and hyperspectral imagers are being used in a variety of domains
+to great effect, including for biomass estimation, forest management, precision
+agriculture, and, recently, water quality monitoring
+\cite{adao2017hyperspectral,
+  padua2017uas,arroyo2019implementation,kurihara2020unmanned,
+  ehmann2019monitoring}. Despite the superior spectral and spatial resolution
+enabled by UAV platforms, these improvements alone do not address the limited
+spatial coverage of the in situ reference data used for the associated water
+composition retrieval. For instance, Lu et al. used a UAV-born hyperspectral
+imager to develop machine learning models for the inversion of chlorophyll-a and
+suspended solids using samples from 33 fixed locations \cite{lu2021retrieval}.
+Similarly, Zhang et al. utilized a UAV equipped with a hyperspectral imager to
+estimate water quality parameters by collecting imagery coincident with samples
+taken from 18 sampling sites \cite{zhang2022selection}. In both of these
+examples, the collection of in situ reference data remains the key challenge for
+the application of UAV systems to water quality quantification.
 
 
+To address this gap and enable comprehensive, real-time evaluation of water
+composition, we have developed a robotic team comprised of an autonomous
+uncrewed surface vessel (USV) equipped with a collection of reference grade
+instruments together with a UAV carrying a hyperspectral imager. By
+incorporating reference instruments on a maneuverable USV platform, we are able
+to rapidly collect large volumes of water quality data for a comprehensive suite
+of physical, biochemical, and chemical variables that are precisely collocated
+with spectra captured by the UAV. Critically, the USV enables the collection of
+reference data with significantly improved spatial resolution compared to other
+approaches. In our previous work, we introduced this paradigm and described how
+in situ measurements collected by the USV can be used to provide the
+ground-truth data for machine learning models that map the reflectance spectra
+captured by the hyperspectral imager to the desired water quality variables
+\cite{robot-team-1}.
 
+
+The main objective of this study is to expand on our previous work in three new
+ways: The first is to explore the breadth of water quality variables that can be
+inferred from collected hyperspectral imagery. With the goal of comprehensive
+measurement in mind, we demonstrate the ability to accurately predict physical
+variables such as temperature, conductivity, pH, and turbidity as well as
+biochemical constituents, including blue--green algae pigments, CDOM, and
+chlorophyll-a, in addition to concentrations of crude oil, optical brighteners,
+and a variety of ions. The second addition is to demonstrate that observations
+from separate collections can effectively be combined by carefully accounting
+for variability in the viewing and illumination geometries of the scene.
+Finally, we expand our machine learning approach to take advantage of the
+considerable volume of collected data in order to determine reliable confidence
+intervals for each predicted parameter using conformal prediction.
 
 \section{Supervised Learning}
+
 \subsection{Decision Trees}
+
+
 \subsection{Ensemble Learning and Random Forests}
-\subsection{Cross Validation}
+
+
 \subsection{Conformal Prediction}
-Conformalizing Quantile Regression
-Conformalizing Scalar Uncertainty Estimates
+
+
+\textcolor{red}{Need to add some citations to this section}
+
+Having established a variety of machine learning methods which we will use
+throughout the rest of this dissertation, a natural next question is: How can we
+evaluate our confidence in the predictions of machine learning models? For some
+methods like Gaussian Process Regression, our models naturally output
+distributions which we can evaluate to provide predictions via the mean, and
+uncertainty estimates via the standard deviation or some similar statistic. For
+models like Neural Networks and Decision Tress which are not inherently
+probabilistic, there is no obvious way to extract uncertainty estimates purely
+from the model's predictions. One standard approach is to attempt to evaluate
+our confidence in a particular model by comparing the predictions of many copies
+of the same model trained on complementary cross validation folds of the
+original training set. By examining the prediction variance due to variation in
+the supplied training data, we can establish some expectation for uncertainty in
+our model's output.
+
+
+Clearly this approach is far from perfect. Therefore, in order to prevent
+ourselves from biasing towards using only those methods like Gaussian Process
+Regression which output distributions by default, we would like to develop a
+robust procedure for augmenting \textit{any} regression model with the
+capability to simultaneously estimate target values and\textit{confidence
+  intervals} by taking advantage of our (often) large datasets to establish
+sufficient statistics. Further, we do not wish to make any assumptions about the
+particular target distributions; without sufficient reason to expect a variable
+to be normally distributed why should we make this \textit{strong} assumption?
+This is the approach taken by \textit{Conformal Prediction} which we will
+develop in this section and utilize throughout the rest of this dissertation.
+
+As discussed in the previous section, the typical machine learning procedure
+involves partitioning our dataset into independent training and testing batches
+(or $k$-many cross-validation folds) so that we can evaluate a trained model's
+performance and ensure we have not run afoul of over/under-fitting. In conformal
+prediction, we introduce an additional split so that our original dataset $\D$
+can be decomposed into $\D = \D_{\text{train}}\cup \D_{\text{cal}} \cup
+\D_{\text{test}}$. We then start with \textit{any} heuristic notion of model
+uncertainty, and make the estimated confidence interval rigorous by adjusting
+the output to \textit{guarantee} the desired coverage is satisfied on the
+calibration set $\D_{\text{cal}}$.
+
+A high level outline of the procedure is as follows
+\begin{enumerate}
+\item Define a score function $s(x,y)\in\R$ using some heuristic notion of
+  uncertainty so that large $s$ means \textit{worse} agreement between
+  $\hat{f}(x)$ and the target $y$.
+\item Compute $\hat{q}$ as the $\dfrac{\lceil (n+1)(1-\alpha) \rceil}{n}$
+  quantile of the scores $s_i = s(x_i, y_i)$ generated from the calibration set
+  $\D_{\text{cal}}$.
+\item Use $\hat{q}$ to form valid prediction intervals.
+\end{enumerate}
+
+The question then becomes: How can we obtain accurate uncertainty estimates if
+the score function $s$ need not be accurate? So long as the scores $s_i$
+accurately rank estimates from best to worst model error, then all we need to do
+is \textit{calibrate} the scores to achieve a confidence interval with the
+desired coverage, i.e. so that the interval is always large enough to guarantee
+the coverage we require. It may be that our predicted interval is \textit{too
+  large} for a poor scoring function. As an example, let's demonstrate how we
+can form correct estimates for the specific problem of quantile regression.
+
+
+\subsection{Conformalizing Quantile Regression}
+
+In quantile regression the goal is to predict the $\gamma^{th}$ quantile of the
+targets $y$ given the input features $x$. Let us denote $t_\gamma(x)$ as the
+true value for the $\gamma^{th}$ quantile and $\hat{t}_\gamma(x)$ as our
+predicted value. In this framework, we could then expect the interval
+$[t_{0.05}, t_{0.95}]$ to constitute a $90\%$ coverage confidence interval.
+However, our fitted values $\hat{t}_\gamma$ will certainly be imperfect so that
+the actual interval obtained will not conform to the desired $90\%$. Suppose we
+have a holdout dataset $\D_{\text{cal}}$ as previously mentioned, and for
+notational consistency, let $\alpha$ be the coverage so that we may write our
+predicted interval as $[\hat{t}_{\alpha/2}, \hat{t}_{1-\alpha/2}]$. A reasonable
+score function (i.e. uncertainty heuristic) would be
+\begin{equation}
+  s(x,y) = \max\left\{\hat{t}_{\alpha/2}(x)-y, y-\hat{t}_{1-\alpha/2}(x) \right\}
+\end{equation}
+so that the score is the distance to the nearest of our predicted quantiles.
+From this score, we may then form
+\begin{equation}
+  \hat{q} = \text{Quantile}\left(\left\{ s(x_i,y_i) \vert (x_i,y_i)\in\D_{\text{cal}}\right\}, \frac{\lceil (n+1)(1-\alpha) \rceil}{n}\right),
+\end{equation}
+that is, $\hat{q}$ is the  $\frac{\lceil (n+1)(1-\alpha) \rceil}{n}$-th quantile
+of the scores from our calibration set. Using these corrections, we then output
+the \textit{conformalized} interval
+\begin{equation}
+  C(x) = \left[ \hat{t}_{\alpha/2}(x)-\hat{q}, \hat{t}_{1-\alpha/2}(x)+\hat{q} \right]
+\end{equation}
+which we have guaranteed achieves the desired coverage on the holdout set. If
+$\D_{\text{cal}}$ is sufficiently representative, then we will have achieved a
+rigorous interval for a coverage of $\alpha$. The effect is that $\hat{q}$
+adjusts our previously estimated interval so that a positive $\hat{q}$ widens
+the interval and a negative $\hat{q}$ shrinks it in order to obtain the
+appropriate coverage.
+
+How do we implement this in practice? Any model that we fit by minimizing the
+mean squared error (e.g. a Neural Network) can be agumented to instead fit the
+so-called \textit{pinball loss}
+\begin{equation}
+  L_\gamma(\hat{t}_{\gamma}, y) = \begin{cases}
+    (y-\hat{t}_{\gamma})\gamma; & \hat{t}_{\gamma} < y \\
+    (\hat{t}_{\gamma}-y)(1-\gamma); & \hat{t}_{\gamma} \geq y
+    \end{cases}
+\end{equation}
+For $\gamma=0.5$, this reduces to the standard $\ell_1$ loss $\ell_1(\hat{t},y)
+= \lvert \hat{t}-y\rvert/2$ which encourages models to learn the median (i.e.
+the $0.5$ quantile).
+
+\textcolor{red}{NOTE: Add plot of pinball loss for reference}
+
+\subsection{Conformalizing Scalar Uncertainty Estimates}
+
+Another common method for producing uncertainty estimates it to simultaneously
+predict the mean and standard deviation of the target distribution by assuming a
+Gaussian shape. More generally, we may seek to estimate a model uncertainty
+directly by first training a model, $\hat{f}(x)$, to predict the target $y$, and
+then train a second model $\hat{r}(x)$ to predict the residual error, that is
+\begin{equation}
+  \hat{r} = \lvert y - \hat{f}(x)\rvert.
+\end{equation}
+In either case, one could then form a confidence interval as
+\begin{equation}
+  \left[ \hat{f}(x) - \hat{r}(x), \hat{f}(x) + \hat{r}(x) \right].
+\end{equation}
+
+Other reasonable approaches to extract a heuristic uncertainty from a trained
+model might include
+\begin{itemize}
+\item Compute the output variance of an ensemble model $\hat{f}$
+\item Compute the prediction variance obtained when randomly dropping out nodes from a neural network.
+\item Estimate the variance of $\hat{f}$ resulting from small perturbations of the input $x$.
+\end{itemize}
+For all of these cases, we may call the uncertainty estimate $u(x)$ and form the
+score function
+\begin{equation}
+  s(x,y) = \frac{\lvert y - \hat{f}(x) \rvert}{u(x)}
+\end{equation}
+so that the score function $s$ measures how well our uncertainty estimate $u(x)$
+matches the actual error $\lvert y -\hat{f}(x)$. If the error is large our
+predicted uncertainty is small, then $s$ will be large. Consequently, the score
+function tells us the correction we must apply to our estimate $u(x)$ in order
+to predict the actual model error, that is,
+\begin{equation}
+  \lvert y - \hat{f}(x) \rvert = s(x,y)u(x).
+\end{equation}
+
+If we now take $\hat{q}$ to be the $\frac{\lceil(n+1)(1-\alpha) \rceil}{n}$-th
+quantile as before, we are guaranteed that
+\begin{equation}
+  p(s(x_{\text{cal}}, y_{\text{call}}) \leq \hat{q}) \geq 1 - \alpha
+\end{equation}
+
+An easy-to-use implementation of these methods is provided by the open-source
+Julia package \texttt{ConformalPrediction.jl} which is designed to integrate
+into the larger \texttt{MLJ.jl} machine learning framework. We will utilize
+these techniques throughout the remainder of this dissertation in order to
+establish uncertainty estimates for \textit{all} of our regression models.
+
+
+
+
 \subsection{Permutation Importance}
-
-
-
-\section{Rapid Processing of Hyperspectral Imagery}
-\subsection{Georectification}
-\subsection{Reflectance Conversion}
-\subsection{Implementation and Timing Results}
-
 
 
 \section{Study Overview}
@@ -515,6 +749,6 @@ Conformal prediction is an attractive approach to enable model-agnostic uncertai
 Despite the wealth of information provided by the increased resolution of hyperspectral images, their considerable size impedes their complete utilization in real-time applications. Often, much of the available spectral information is discarded in favor of indices like the NDVI, which can be quickly computed as images are captured \cite{horstrand2019uav}. Utilizing machine learning allows us to take advantage of the full spectrum captured by each pixel while simultaneously reducing the size of the final data product to single-band ``images'' of selected water quality variables. We note that training a reduced-feature model without further hyperparameter optimization takes roughly one minute per target variable of interest using the processing computer included on the UAV. This means that, in principle, training data can be collected by the USV, imagery can be acquired and processed by the UAV, coincident records can be selected, and the resulting dataset can be used to train machine learning models all while investigators are still in the field. Analyzing the maps produced by applying each trained model enables areas of interest to be readily pinpointed, as demonstrated by the identification of slightly elevated levels of %Please ensure meaning has been retained.
 crude oil, optical brighteners, and CDOM in the eastern alcove of the pond on 23 November.
 
-Finally, we note that the high spectral resolution of the UAV imagery together with the ability to collect precisely co-located reference measurements provides fertile ground for the development of new spectral indices targeted towards water quality variables. In this paper, we have shown that permutation importance ranking for trained machine learning models enables a straightforward interpretation of the relative values of each reflectance bin to the final model predictions. In future work, we plan to utilize this information to identify combinations of spectral bands that can be applied to remote sensing imagery captured by satellites equipped with hyperspectral imagers. The recently launched Environmental Mapping and Analysis Program (EnMAP) is one such example and includes over 91 spectral bands in the VNIR that overlap with those of our hyperspectral imager \cite{EnMAP-orig}. 
+Finally, we note that the high spectral resolution of the UAV imagery together with the ability to collect precisely co-located reference measurements provides fertile ground for the development of new spectral indices targeted towards water quality variables. In this chapter, we have shown that permutation importance ranking for trained machine learning models enables a straightforward interpretation of the relative values of each reflectance bin to the final model predictions. In future work, we plan to utilize this information to identify combinations of spectral bands that can be applied to remote sensing imagery captured by satellites equipped with hyperspectral imagers. The recently launched Environmental Mapping and Analysis Program (EnMAP) is one such example and includes over 91 spectral bands in the VNIR that overlap with those of our hyperspectral imager \cite{EnMAP-orig}. 
 
 
