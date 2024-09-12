@@ -30,16 +30,15 @@ over 100 monitors have been built and distributed across the Dallas Fort Worth
 metroplex and other Texas cities.
 
 In this chapter, we first describe physical measurement methods for PM. We then
-describe the monitors developed by the MINTS research to provide real-time PM
-measurements for a broad distribution of particle sizes. Finally, we describe
-a comprehensive data pipeline developed for this dissertation which processes
-real-time measurements measurement data and provides data visualization
-dashboards. This system is designed using a variety of containerized open source
-tools to guarantee reproducibility while ensuring the network can scale from
-hundreds to thousands of sensors as they are built and deployed. Later
-in Chapter~\ref{ch:havok} we analyze measurements collected
-by sensors in this network to develop a physics-based method for outlier
-detection and forecasting of PM time-series.
+describe the monitors developed by the MINTS research group which collect
+real-time PM measurements for a broad distribution of particle sizes. Finally,
+we describe a comprehensive data pipeline developed for this dissertation to
+processes measurement data and provide live visualization dashboards. The
+system is designed using a collection of containerized, open-source tools to
+guarantee reproducibility while ensuring the network can scale from hundreds to
+thousands of sensors as it continues to expand. Later in Chapter~\ref{ch:havok},
+we will analyze measurements collected by sensors in this network to develop a
+physics-based method for outlier detection and forecasting of PM time series.
 
 \section{Measurement of Particulate Matter}
 
@@ -49,11 +48,11 @@ three categories:
   \item \textbf{Federal Reference Methods} (FRM): These are methods which the US
     Environmental Protection Agency designate as the standard for PM measurement
     and may be used for assessing compliance with air quality regulations. The
-    FRM for PM is \textit{gravimetric analysis} which collects size-selected
-    particulate matter samples onto a polytetrafluoroethylene (PTFE) filter which are
+    FRM for PM is \textit{gravimetric analysis} whereby particulate matter
+    samples are collected onto a polytetrafluoroethylene (PTFE) filters which are
     then carefully weighed to determine PM concentration by combining the sample
-    mass with the sample flow rate \cite{pm-federal-reference-method}. Standard
-    sizes are for PM 2.5 and PM 10 which correspond to particles with an
+    mass with a predetermined flow rate \cite{pm-federal-reference-method}. Standard
+    measurements are for PM 2.5 and PM 10 which correspond to particles with an
     aerodynamic diameter of $\leq 2.5$ $\mu m$ and $\leq 10$ $\mu m$, respectively.
   \item \textbf{Federal Equivalent Methods} (FEM): These measurement techniques
     include \textit{Beta Attenuation Monitors}  (BAM), \textit{Tapered Element
@@ -62,10 +61,10 @@ three categories:
     by the US EPA for ambient PM monitoring.
   \item \textbf{Low-cost Sensors}: These sensors are much less expensive than
     FRM and FEM systems but are not approved by the EPA for assessment of
-    compliance with government regulations. Most low-cost sensors are simplified
-    OPC systems.
+    compliance with government regulations. Most low-cost sensors are based on
+    a simplified OPC design.
 \end{itemize}
-The PM sensors described in this chapter fall into the low-cost OPC category.
+The PM sensors used in the MINTS sensing network fall into the low-cost OPC category.
 
 \subsection{Optical Particle Counters}
 
@@ -101,22 +100,22 @@ An important consideration for OPCs is the impact of hygroscopic growth on
 particle counts. When the humidity is sufficiently high, water tends to adsorb
 onto particulates causing them to swell in size. Additionally, moistened
 particulates may also agglomerate, coming together to form a larger particle
-masses. This can significantly affect the accuracy of PM measurements by OPCs
-leading to distortions in the estimated size distribution causing overestimation
+masses. This can significantly affect the accuracy of PM measurements by OPCs,
+distorting in the estimated size distribution and causing overestimation
 of the true particulate mass. For this reason, FEM instruments using the OPC method
 often include humidity control and heating elements. This significantly improves
 the accuracy of sensor measurements but decreases the sampling rate to $1-10$
-minutes per reading and increasing power consumption and instrument cost.
+minutes per reading while increasing power consumption and instrument cost.
 With the growing interest in low-cost OPC-based sensors, a variety of
-corrections using local temperature and humidity data have also been suggested
-\cite{opc-corrections}.
+corrections using local temperature and humidity data have been developed
+to account for this effect \cite{opc-corrections}.
 
 The current iteration of air quality monitors designed by the MINTS research
 group utilize the Pierra Systems IPS7100 Intelligent Particle Sensor. This
-device is capable of measuring PM concentrations at 1 Hz across 7 size bins
-enabling concentration measurements for PM $0.1$, $0.3$, $0.5$, $1$, $2.5$, $5$,
+device is capable of measuring PM concentrations at 1 Hz across multiple size bins
+to provide concentration measurements for PM $0.1$, $0.3$, $0.5$, $1$, $2.5$, $5$,
 and $10$. Estimation of ultra-fine particulates is made possible due to the
-detectors $1$ MHz sampling rate. We note that the $0.1$ $\mu m$ size bin, is
+detector's $1$ MHz sampling rate. We note that the $0.1$ $\mu m$ size bin, is
 extrapolated from the measured size distribution. An example of an individual
 IPS7100 sensor is shown in Figure~\ref{fig:ips7100}.
 
@@ -145,21 +144,22 @@ IPS7100 sensor is shown in Figure~\ref{fig:ips7100}.
 \subsection{Sensor Nodes}
 
 The sensor network is comprised of a combination of two types of nodes:
-\textit{Central Nodes} and \textit{LoRa Nodes}. The central nodes are designed
+\textit{Central Nodes} and \textit{LoRa Nodes}. The Central Nodes are designed
 to be deployed in locations with where dedicated power is available. Each
-contains a variety of sensors including the IPS7100, VOCs,
-\ce{CO2}, \ce{NO_X}, ionizing radiation, incident light intensity,
-sound levels, as well as meteorological variables including temperature,
+contains a variety of sensors including the IPS7100 for PM as well sensors for
+VOCs, \ce{CO2}, \ce{NO_X}, ionizing radiation, incident light intensity,
+sound levels, and meteorological variables including temperature,
 pressure, relative humidity, and dew point. The powered Central Nodes are
-equipped with a cellular modem to facilitate data transfer from the field.
+equipped with a cellular modem to facilitate data transfer from their deployment
+site.
 
 
-Each Central Node supports a collection of ~10 LoRa nodes (named for the
+Each Central Node supports a collection of $\sim~$10 LoRa nodes (named for the
 long rage wireless transmission protocol) which can be separated by distances up
-to ~5 km or more if line of sight is established. These smaller sensors are self
+to $\sim$5 km or more if line of sight is established. These smaller sensors are self
 powered using a combination of battery and solar cells, and each measures a
 similar assortment of air quality parameters including particulate matter
-concentrations, gas concentrations, and meteorological parameters. Designs for
+concentrations, gas concentrations, and meteorological variables. Designs for
 the two node types are illustrated in Figure~\ref{fig:mints-nodes}.
 
 \begin{figure}[!hbt]
@@ -180,13 +180,12 @@ the two node types are illustrated in Figure~\ref{fig:mints-nodes}.
 
 Using the LoRaWAN protocol, Central and LoRa nodes form a low-power, wide-area
 network through which data packets containing live measurements from each
-LoRa node are transmitted to the nearest Central Node. The central nodes then
+LoRa node are transmitted to the nearest Central Node. The Central Nodes then
 pass measurement data to a to a data processing backend using an MQTT
-publish-subscribe model with their build-in cellular connection \cite{mqtt}.
-Beginning in 2020, the first generation of nodes were built and installed as
-shown in Figure~\ref{fig:sharedair-site}. In addition to sensor from MINTS, the
-map also shows EPA reference sensors as well as live sensors from the PurpleAir network.
-
+publish-subscribe model with their built-in cellular connection \cite{mqtt}.
+Beginning in 2020, the first generation of nodes were assembled and installed as
+shown in Figure~\ref{fig:sharedair-site}. In addition to sensors from MINTS, this
+map also includes EPA reference sensors and sensors from the PurpleAir network.
 \begin{figure}[!hbt]
   \centering
   \includegraphics[width=0.85\columnwidth]{air-network/sharedairdfw-homepage.png}
@@ -213,22 +212,22 @@ Containers are defined using \textit{Dockerfiles} and can be networked together
 with common data storage to achieve complex workflows. The pipeline developed
 for the MINTS air quality network combines three containerized open-source tools:
 \begin{itemize}
-\item \textbf{NodeRed}: This tool developed by IBM allows the creation of
-  data processing pipelines by defining directed acyclic graphs (DAGs)
-  composed of individual processing nodes. This tool is utilized to subscribe to
+\item \textbf{NodeRed}: Developed by IBM, this tool allows the creation of
+  custom data processing workflows by defining directed acyclic graphs (DAGs)
+  corresponding to individual processing tasks. This tool is utilized to subscribe to
   each sensor's MQTT topics and decode binary data packets into individual
   sensor measurements. Processed data are then injected by NodeRed into a
-  time-series database. A key advantage of NodeRed is that the vast set of
-  pre-implemented nodes which provde an easily maintainable, low-code data
-  processing environment.
-\item \textbf{InfluxDB}: This is a open source time-series database optimized
+  time series database. A key advantage of NodeRed is the vast set of
+  pre-implemented processing nodes which provide an easily maintainable, low-code
+  environment. Workflows are saved as JSON files which can be version controlled
+  for replicability.
+\item \textbf{InfluxDB}: An open source time series database optimized
   for large cardinality datasets. By storing processed data in InfluxDB, we are
   able to provide queryable access to live and historic measurements.
-\item \textbf{Grafana}: This tool is an visualization platform for
-  creating interactive dashboards. Grafana is connected to InfluxDB to provide
-  detailed, real-time displays for each sensor in the network. These dashboards
-  visualize data from \textit{all} incoming measurements from each node in
-  addition to the PM.
+\item \textbf{Grafana}: A visualization platform for creating live, interactive
+  dashboards. Grafana is connected to InfluxDB to provide detailed, real-time
+  displays for each sensor in the network. These dashboards visualize data from
+  \textit{all} incoming measurements from each node.
 \end{itemize}
 
 \begin{figure}[!h]
@@ -241,39 +240,57 @@ for the MINTS air quality network combines three containerized open-source tools
 \end{figure}
 
 Container orchestration is accomplished using YAML files like the examples shown
-in Figure~\ref{fig:compose}
+in Figure~\ref{fig:compose}. For local development, the \texttt{docker-compose}
+tool can be used \cite{docker-compose}. However, this requires root permissions
+which is unreasonable for remote servers. The \texttt{podman-compose} tool can
+be used in these scenarios to achieve the same effect \cite{podman-compose}.
+Conveniently, \texttt{podman} accepts the dame \texttt{Dockerfile} and
+\texttt{docker-compose.yml} files. The data processing pipeline is currently
+deployed on a remote virtual machine managed by the University of Texas at
+Dallas. Migration of the pipeline to the cloud via Amazon Web Services is
+currently in progress.
 
-
-
+Figure~\ref{fig:influxdb} shows an example view of the InfluxDB time series
+database web interface (\url{http://mdash.circ.utdallas.edu:8086}, last accessed
+2024-09-12). Each node in the network is assigned a unique device name which is
+used to identify the time series measurements for each sensor in the node.
 
 \begin{figure}[!h]
   \centering
-  \includegraphics[width=0.95\columnwidth]{air-network/influxdb.png}
+  \includegraphics[width=0.9\columnwidth]{air-network/influxdb.png}
   \caption{A view of the time series data accessible from the InfluxDB database.
-  Each sensor is assigned a unique device name. Time-series for individual
+  Each sensor is assigned a unique device name. Time series for individual
   sensor measurements can be identified by the sensor name and the specific
   measurement.}
   \label{fig:influxdb}
 \end{figure}
 
-
-
+Interactive dashboards for each node in the network are deployed using Grafana
+(\url{http://mdash.circ.utdallas.edu:3000}, last accessed 2024-09-12). An example
+dashboard for a central node is shown below in Figure~\ref{fig:grafana}. Every 5
+seconds, Grafana queries InfluxDB to update each graph with the latest values.
+These real-time data feeds provide invaluable insight into the local air
+quality. Including relevant meteorological parameters together with PM
+measurements provides critical context when interpreting PM data. Additionally,
+automated alerts triggered by live measurements can be set to provide early warnings
+for high pollution episodes or sensor degredation.
 
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.95\columnwidth]{air-network/grafana.png}
-  \caption{Example grafana dashboard}
+  \caption{Example grafana dashboard for a central node. Live graphs showing the
+  distribution of particle sizes together with mass concentrations for each PM
+  size fraction are visualized together with meteorological data for
+  temperature, pressure, and humidity.}
   \label{fig:grafana}
 \end{figure}
+All configuration files required to fully reproduce the data pipeline are
+version controlled using git and hosted remotely on github \cite{mints-docker}.
 
-
-
-
-
-\textbf{Open Storage Network}: With help from Dr. Chris Simmons, we have
-  developed a pipeline for long term data storage utilizing the Open Storage
-  Network to provide open access to historic sensor data stored in the popular
-  S3 format.
- 
+To provide additional redundancy and easy access to large batches of historical
+time series, all network data is synchronized daily to a remote file store on
+the \textit{Open Storage Network} (OSN). OSN is a petabyte scale, NSF funded,
+distributed data storage system which provides open access and long-term storage
+for scientific datasets \cite{osn}.
 
 
