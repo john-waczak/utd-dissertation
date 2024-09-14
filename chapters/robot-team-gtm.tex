@@ -120,9 +120,10 @@ Now let us suppose we want to train an SOM to generate a classification for colo
 To enable this demonstration and its subsequent use throughout the rest of this dissertation, I have created a new open-source implementation of the SOM algorithm for the Julia programming language called \texttt{SelfOrganizingMaps.jl} which has been added to the general registry and can by freely downloaded for use by anyone. The repository for the code as well as the associated documentation can be found at \href{https://github.com/john-waczak/SelfOrganizingMaps.jl}{this site}.
 
 
-\subsection{Expectation Maximization}
 
-\subsection{Generative Topographic Mapping}
+\section{Expectation Maximization}
+
+\section{Generative Topographic Mapping}
 
 
 \section{Study Overview}
@@ -259,7 +260,7 @@ To explore the ability of the GTM to segment HSI pixels and aid in source identi
 \end{equation}
 where $\lambda=550$ and $\lambda=860$ nm were chosen to represent the green and NIR bands as described in ref. \cite{ndwi}. We then apply the trained GTM to all water-only pixels to visualize the distribution learned by the GTM and examine spectra associated with a subset of nodes in the latent space in order to assess the small-scale spatial variability within the pond.
 
-Next, we consider a dataset of combined HSI pixels including both water and land. To simulate the dispersion of a potential contaminant source, a rhodamine tracer dye was released into the western portion of the pond and two additional UAV flights were used to collect HSI capturing the evolution of the resulting plume. From these HSI, a collection of >145,000 pixels were sampled for model training. To demonstrate the ability to extract relevant spectral endmembers from the trained GTM, we utilize the exemplar spectra corresponding to open water, ground, nearshore algae, and rhodamine dye visually identified in Figure~\ref{fig:sample-spectra}. The responsibility matrix obtained by the trained GTM provides a probability distribution over the latent space nodes for every data record. We identify relevant endmembers for each reference spectrum via the set of nodes with nonzero responsibility. We then utilize the mapping $\psi$ to obtain the spectral representation of these nodes. Since the GTM is unsupervised, these extracted endmembers do not correspond to individual records but rather spectral features learned by the GTM. 
+Next, we consider a dataset of combined HSI pixels including both water and land. To simulate the dispersion of a potential contaminant source, a rhodamine tracer dye was released into the western portion of the pond and two additional UAV flights were used to collect HSI capturing the evolution of the resulting plume. From these HSI, a collection of $>$145,000 pixels were sampled for model training. To demonstrate the ability to extract relevant spectral endmembers from the trained GTM, we utilize the exemplar spectra corresponding to open water, ground, nearshore algae, and rhodamine dye visually identified in Figure~\ref{fig:sample-spectra}. The responsibility matrix obtained by the trained GTM provides a probability distribution over the latent space nodes for every data record. We identify relevant endmembers for each reference spectrum via the set of nodes with nonzero responsibility. We then utilize the mapping $\psi$ to obtain the spectral representation of these nodes. Since the GTM is unsupervised, these extracted endmembers do not correspond to individual records but rather spectral features learned by the GTM. 
 
 Values for the hyperparameters $m$, $s$, and $\alpha$ are determined by training multiple GTM models and selecting values which minimize the Bayesian Information Criterion (BIC) given by 
 \begin{equation}

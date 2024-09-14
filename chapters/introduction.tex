@@ -1,6 +1,7 @@
-
-
 \chapter{Introduction}\label{ch:intro}
+
+
+\textcolor{red}{somewhere we should add a note about the intended audience. In paritcular I want to be throrough and include all relevant details and derivations that I wish I had when I started.}
 
 
 
@@ -58,10 +59,16 @@ The goal of this dissertation is to advance physical sensing in service of socie
 
 \section{Summary of Original Contributions}
 
+\subsection{Publications}
 - Robot team supervised 1
 - Robot team unsupervised GTM
 - Robot team unsupervised GSM
 - HAVOK models for PM outlier detection and short-term foractasting
+
+\subsection{Datasets}
+\subsection{Code}
+
+
 
 
 
@@ -71,10 +78,10 @@ The goal of this dissertation is to advance physical sensing in service of socie
 
 
 %\section{Motivation}
-
 \section{Water Quality}
-\section{Air Quality}
 
+
+\section{Air Quality}
 Research into air quality began in
 earnest in the mid-20th century driven by growing concerns over the impact of
 pollution, industrial emissions, and urban smog on public health. In the US, the
@@ -106,16 +113,29 @@ sampling period from Jan. 2020 to June 2023.
 
 
 
+\section{Physical Sensing}
+
+The successful application of machine learning methods demands comprehensive, carefully curated data sets. In order for our modeling efforts to be successful, it is critical that we capture the subtle nuances of the phenomena we wish to describe. In this chapter, we outline the various physical sensing approaches used throughout this dissertation, all of which are part of a broader effort in the MINTS-AI laboratory at the University of Texas at Dallas. MINTS-AI is an acronym for Multi-Scale Multi-Use Integrated Intelligent Interactive Sensing in Service of Society for Actionable Insights. An graphical overview of the MINTS-AI sensing paradigm is outlined in Figure \ref{fig:mints-ai}.
+
+\begin{figure}[!hbt]
+  \centering
+  \includegraphics[width=0.8\textwidth]{introduction/MINTS-sentinels.jpg}
+  \caption{The MINTS-AI context engine is a sensing paradigm composed of flexible sensing sentinels spanning from remote sensing data products to autonomous robots and ground survey vehicles.}
+  \label{fig:mints-ai}
+\end{figure}
+
+Of the variety of sensing sentinels listed above, this dissertation is primarily concerned with three key applications. The first is a team of autonomous robotic vehicles which we refer to as the \textit{robotic team}. The second is a network of distributed streaming sentinels comprised of low-cost air quality sensors. The third describes a reference sensor chamber for air quality evaluation which we use to develop a \textit{simulation sentinel}.
 
 
-% \subsection{Indoor Air Quality}
-%\section{Physical Sensing}
 
-\section{The Role of Machine Learning in the Era of Big Data}
-%\section{The Role of Machine Learning in the Physical Sciences}
+
+
+
+\section{Machine Learning}
+
+- The Role of Machine Learning in the Era of Big Data
 
 Big data in the physical sciences
-
 Comment on the annual data volumes produced by
 \begin{itemize}
   \item LANDSAT
@@ -138,9 +158,17 @@ Use of machine learning in the physical sciences
 \end{itemize}
 
 
+\subsection{Supervised and Unsupervised ML}
 
 
-\section{Physics-based Machine Learning}
+\subsection{Physics-based Machine Learning}
+
+Successful physical theories are predictive, explainable, and quantifiable (i.e.
+uncertainty can be characterized). Most machine learning tasks involve abstract
+data for which this can be challenging. A physics-based machine learning
+approach involves model selection, uncertainty quantification, physical
+reasonableness, etc..
+
 
 The general problem of ML is hard with when no structure is assumed on data (include example of pit bull or potato)
 
@@ -155,19 +183,6 @@ When applying ML we should therefore place a high value on physics-based models,
 \end{itemize}
 
 
-\section{Phsical Sensing}
-
-The successful application of machine learning methods demands comprehensive, carefully curated data sets. In order for our modeling efforts to be successful, it is critical that we capture the subtle nuances of the phenomena we wish to describe. In this chapter, we outline the various physical sensing approaches used throughout this dissertation, all of which are part of a broader effort in the MINTS-AI laboratory at the University of Texas at Dallas. MINTS-AI is an acronym for Multi-Scale Multi-Use Integrated Intelligent Interactive Sensing in Service of Society for Actionable Insights. An graphical overview of the MINTS-AI sensing paradigm is outlined in Figure \ref{fig:mints-ai}.
-
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=0.8\textwidth]{introduction/MINTS-sentinels.jpg}
-  \caption{The MINTS-AI context engine is a sensing paradigm composed of flexible sensing sentinels spanning from remote sensing data products to autonomous robots and ground survey vehicles.}
-  \label{fig:mints-ai}
-\end{figure}
-
-Of the variety of sensing sentinels listed above, this dissertation is primarily concerned with three key applications. The first is a team of autonomous robotic vehicles which we refer to as the \textit{robotic team}. The second is a network of distributed streaming sentinels comprised of low-cost air quality sensors. The third describes a reference sensor chamber for air quality evaluation which we use to develop a \textit{simulation sentinel}.
-
 
 \section{Actionable Insights}
 
@@ -175,15 +190,4 @@ Combining physical sensing with machine learning methods allows us to \textit{pu
 
 
 \section{Dissertation Overview}
-
-\section{Summary of Works Produced}
-
-\section{First Author Papers}
-\section{Other Papers}
-\section{Code Repositories}
-\section{Data Generated}
-Here we should mention the AQ network as well as the collected HSI imager all on OSN.
-
-
-\textcolor{red}{somewhere we should add a note about the intended audience. In paritcular I want to be throrough and include all relevant details and derivations that I wish I had when I started.}
 

@@ -480,16 +480,31 @@ The processing steps are as follows:
 \end{enumerate}
 A visual representation of the pipeline is shown in
 Figure~\ref{fig:hsi-pipeline} below.
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=0.85\columnwidth]{robot-team/georectification/pipeline-figure.pdf}
-  \caption{Visual representation of the HSI processing pipeline. HSI images from
-  the UAV (a) are georectified using position and orientation data from the
-  embedded GPS/IMU unit (b). Pixel radiance spectra are combined with
-  downwelling irradiance (c) to yield a reflectance spectrum for each pixel (d).
-  The result is a georectified reflectance data cube (e).}
-  \label{fig:hsi-pipeline}
+  \includegraphics[width=\columnwidth]{robot-team-supervised/materials-and-methods/pipeline-figure-2.pdf}
+  \caption{Hyperspectral image processing: Hyperspectral data cubes are
+    collected one scan-line at a time (left). By utilizing downwelling
+    irradiance spectra, we convert each pixel from spectral radiance to
+    reflectance. By using orientation and position data from the on-board GPS
+    and INS, we georeference each pixel to assign it a latitude and longitude on
+    the ground. The final data product is the georectified hyperspectral
+    reflectance data cube (right) visualized as a pseudo-color image with
+    reflectance  as a function of wavelength along the
+    z-axis.\label{fig:hsi-pipeline}}
 \end{figure}
+
+
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[width=0.85\columnwidth]{robot-team/georectification/pipeline-figure.pdf}
+%   \caption{Visual representation of the HSI processing pipeline. HSI images from
+%   the UAV (a) are georectified using position and orientation data from the
+%   embedded GPS/IMU unit (b). Pixel radiance spectra are combined with
+%   downwelling irradiance (c) to yield a reflectance spectrum for each pixel (d).
+%   The result is a georectified reflectance data cube (e).}
+%   \label{fig:hsi-pipeline}
+% \end{figure}
 
 
 \subsection{Georeferencing and Resampling}
