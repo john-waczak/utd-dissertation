@@ -52,7 +52,7 @@ such as turbidity directly from UAV-acquired imagery \cite{vogt2016near,
   zhang2022selection}. Supervised machine learning techniques such as tree-based
 models, support vector machines, and neural networks have also been used to
 estimate a wide range of parameters, such as colored dissolved organic matter,
-chlorophyll A, blue--green algae, and suspended sediment concentrations
+chlorophyll a, blue--green algae, and suspended sediment concentrations
 \cite{keller2018hyperspectral, lu2021retrieval}.
 
 The calibration and evaluation of these data-driven models require a significant
@@ -875,14 +875,14 @@ assessment is gaining significant traction due to its ability to efficiently
 capture detailed spectral data at high spatial resolutions. Most studies using
 UAVs have employed supervised techniques that map the captured spectra to
 specific water quality parameters of interest. For example, Lu et al. evaluated
-a variety of machine learning methods for the extraction of chlorophyll-a and
+a variety of machine learning methods for the extraction of chlorophyll a and
 suspended sediment concentrations from HSI using data from UAV flights over 33
 sampling locations \cite{lu2021retrieval}. However, this approach relies on the
 collection of paired in situ data, which can be challenging to obtain in
 sufficient quantities to facilitate model training. Additionally, supervised
 methods require prior knowledge of expected sources in order to select and
 calibrate suitable reference instruments. Using models purpose-built for
-specific water quality parameters like chlorophyll-a or turbidity discards
+specific water quality parameters like chlorophyll a or turbidity discards
 potential information contained in HSI, which can reveal unanticipated sources.
 Therefore, unsupervised methods which aid in the visualization of HSI and enable
 the identification of spectral endmembers within the imaging scene are needed to
@@ -921,7 +921,7 @@ In our previous work, we showed that coordinating UAV-based hyperspectral
 imaging with in situ data collection by an autonomous boat can dramatically
 improve the inversion of water quality parameters from HSI pixels
 \cite{robot-team-2}. However, the spatial distributions of parameters such as
-chlorophyll-a, blue--green algae, and temperature are often highly dissimilar
+chlorophyll a, blue--green algae, and temperature are often highly dissimilar
 posing a challenge for optimal route planning. Since  GTM estimates the full
 distribution of reflectance spectra and not a single water quality parameter,
 one could construct a prize collecting travelling salesman problem (PC-TSP)

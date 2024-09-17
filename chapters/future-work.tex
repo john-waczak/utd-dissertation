@@ -1,57 +1,157 @@
 \chapter{Future Work}\label{ch:future-work}
 
+In this chapter, we present directions for future research which can expand and
+extend the methods developed in this dissertation.
+
 \section{Robot Team}
 
-Minaturization of drones - next generation hyperspectral imagers (smaller) on smaller drones with additional payloads for visible and thermal imagers (not previously utilized)
+The robot team described in Chapters~\ref{ch:robot-team},
+\ref{ch:robot-team-supervised}, \ref{ch:robot-team-gtm}, and
+\ref{ch:robot-team-gsm} can be further developed in a number of interesting
+directions. Of practical importance is the miniaturization of the UAV platform.
+Many new hyperspectral imagers are now in development which weigh considerably less
+than the Resonon Pika XC2 used in the current iteration of the UAV. For example, the
+company Ximea has created a miniaturized hyperspectral imager called the \textit{xiSpec}
+which samples up to 150 bands across visible and NIR wavelengths at a weight of
+only 32 grams
+(\url{https://www.ximea.com/en/usb3-vision-camera/hyperspectral-usb3-cameras-mini},
+last accessed 2024-09-12). This imager is also in a pushbroom configuration but uses a
+\textit{wedge} filter installed directly onto the sensor to select wavelength
+bands. This means that the HSI processing pipeline developed in
+Chapter~\ref{ch:robot-team} could be applied to this system with little
+modification. Additionally, the dramatic weight reduction enabled by smaller HSI
+would make it possible to use cheaper and lighter UAV platforms while freeing up
+carrying capacity for increased battery capacity.
 
-Multi-sensor fusion and super resolution, e.g. use fine spatial resultion of visible imager together with spectral resolution of HSI and thermal to create a blended data product
+Another direction for potential improvement to the UAV would be the inclusion of
+a \textit{Light Detection and Ranging} (LiDAR) module. Many autonomous robotic
+systems employ LiDAR for intelligent object avoidance. However, a nadir-oriented
+LiDAR module could be used to accurately measure the UAV-to-ground distance
+during flight to improve georectification quality. Currently, the processing
+method assumes a flat ground (reasonable for flights above water), however,
+further accuracy could be obtained by directly measuring the distance from the
+hyperspectral imager to each pixel location on the ground. New LiDAR modules
+such as the Leddar Vu8 simultaneously measure distances for multiple
+segments across a wide field of view and are small enough to incorporate onto a
+drone \cite{marin2021study}. A similar sensor installed together with the
+hyperspectral imager would therefore enable automatic generation of digital
+elevation maps during UAV flight.
 
-Combine drone based imaging with remote sensing hyperspectral data, e.g. Enmap, PACE, etc...
-
-Drone swarms for faster data collection
-
-Additional data collection (can we test the generalizability across water bodies)
-
-Additional ions with application to battery stuff...
+Based on the success of the models developed in
+Chapter~\ref{ch:robot-team-supervised}, another obvious direction is to further
+explore the capabilities of the robot team for direct estimation of water
+composition parameters by out-fitting the USV with additional sensors for other
+chemicals and ions of interest. In particular, the success of the machine
+learning models for predicting ion concentrations should be further explored for
+more ions at additional testing sites. Since ion concentrations are themselves not
+an optically active component of the water, but rather, are related to the
+specific mineral content and anthropogenic sources present at each water body,
+models for ion concentrations will likely need to be trained for each separate
+sensing location.
 
 \section{GTM}
 
-GTM for guided data collection viat prize-collecting travelling salesman problem.
+Chapter~\ref{ch:robot-team-gtm} demonstrated the value of using unsupervised
+machine learning methods to visualize the distribution of HSI spectra. As
+previously mentioned, one clear application of this technique is to guide the
+collection of in situ data with the USV. In
+Chapter~\ref{ch:robot-team-supervised}, the USV sampled the water using a
+uniform grid across the entire pond. However, the distributions of chemical,
+ionic, and biochemical components of the water often varied independently of one
+another \textit{and} showed significant gradients at small spatial scales such
+that a naive USV route could easily miss key areas of elevated concentrations.
+By first training a GTM from HSI collected by an initial UAV flight, the USV
+could then be intelligently guided to sample locations so as to maximize the
+area explored in the GTM latent space rather than to maximize the spatial extent
+explored in the pond. This would \textit{both} reduce time wasted sampling in
+regions with uniform values \textit{and} guarantee that the USV would capture
+sufficient data associated with the observed spectral variability.
 
-GTM for dust source identification. We can encourage finer cluserting behavior by augmenting the GTM to use adaptive mixing coefficients $\pi_k$ as we did for the GSM.
-
-Batch version implementation of the GTM for \textit{big} datasets and online learning.
+Another potential application of the GTM is to the analysis of HSI from remote
+sensing platforms. For example, harmful algal blooms (HAB) initiated by the
+introduction of nutrients from fertilizers and other effluent runoff can be
+distinguished from the surrounding water due to their specific spectral
+characteristics \cite{algal-blooms-rs}. In addition to harming aquatic
+ecosystems by blocking sunlight from penetrating into the water, some species
+release toxic substances including neurotoxins and carcinogens
+\cite{hab-toxins}. A variety of supervised machine learning methods have been
+suggested to classify HAB from remote sensing imagery, but these approaches rely
+on sparse ground-truth data \cite{hab-ml}. The GTM applied to remotely sensed HSI
+naturally enables the segmentation of spectral signatures which could be used to
+identify and distinguish HAB types.
 
 \section{GSM}
 
-GSM for algal bloom identifiaction using remotely sensed hyperspectral imagery.
+The GSM was developed in Chapter~\ref{ch:robot-team-gsm} to model nonlinear
+endmember mixing in HSI. Interestingly, this problem is identical to the problem
+of \textit{source apportionment} in the air quality domain. Here one attempts to
+analyze pollution measurement data such as PM composition
+obtained via mass spectrometry to identify component profiles corresponding to unique
+sources like fossil fuels, biomass burning, dusts, and pollen.
+Traditionally, source apportionment analyses adopt linear receptor models which
+assume that source profiles measured at a sensing site (the receptor) are the
+same as those produced at their source \cite{source-apportionment-methods}. Such
+linear models can not account for nonlinear effects from chemical reactions and
+atmospheric transport along air parcel trajectories, but comprehensive chemical
+transport models are often too coarse to capture variability at spatial scales
+relevant to individual sensing sites. The original formulation of NMF (then
+called \textit{positive} matrix factorization) was introduced by Paatero and
+Tapper to model linear mixing for source apportionment \cite{pmf-orig,
+  pmf-algs}. The GSM is therefore naturally suited for source apportionment
+analyses where it can be used to obtain source signatures while accounting for
+linear \textit{and} nonlinear mixing effects.
 
-GSM for source apportionment of air quality measurements
+\section{PM Time Series Modeling}
 
-Batch version of the GSM for \textit{big} dtaasets.
+The HAVOK model developed in Chapter~\ref{ch:havok} presents a promising method
+for both PM time series forecasting \textit{and} the automatic detection of
+outlier events corresponding to brief PM episodes. Comprehensive corrections to
+historical PM measurements made across the MINTS air quality network are
+currently in development to account for variability due to hygroscopic growth
+during periods with high humidity or precipitation \cite{prabuddha-thesis}. Once
+these corrections are incorporated, time series data from multiple sensors
+across multiple years will be used to train new HAVOK models. The
+forcing functions learned for each sensor will then be used to examine historical data
+to identify the quantity of intermittent pollution events and quantify their
+impact on 24-hour averaged PM data. This is highly relevant as the EPA's PM
+regulations stipulate maximum allowable values for PM data at a 24-hour average.
+By comparing average values with and without these intermittent PM spikes, we
+will be able to discern whether or not increasing PM trends are due to a general
+increase in overall PM \textit{or} due to increased activities which contribute in
+acute chunks. The outcome of this analysis could directly impact strategies
+chosen to address growing air quality concerns.
 
+With access to longer durations of continuous PM time series, HAVOK
+models will also be trained at coarser time resolutions in order to extend the
+forecasting horizon. The model built in Chapter~\ref{ch:havok} was able to
+make successful forecasts for up to 5 minutes corresponding to 30 future time
+steps. With a comparable volume of data at a 15 minute resolution, a 30 step
+prediction would instead yield a 7.5 hour forecast. Enabling individual
+forecasts of this type at each sensor location will dramatically increase the
+utility of the distributed sensing network.
 
-\section{PM Modeling}
-
-Using HAVOK model to automatically identify pollution events and generate short term predictions near real time.
-
-Exploring other physics informed models for analyzing PM data, e.g. Lagrangian
-and Hamiltonian Neural Networks as another potential avenue -- Train on short
-time scales and identify deviations of level surfaces of the Hamiltonian as a
-means for identifying \textit{external forcing} like effects.
+To model PM 2.5 time series data, we found that extending HAVOK to
+allow for \textit{multiple} forcing functions resulted in improved performance.
+Future work will explore further extensions to the HAVOK model to combine data from
+\textit{multiple} time series, for example, the time series for each PM size
+fraction measured by the IPS7100 sensor. Provided that all time series are
+temporally aligned and sampled at the same rate, Hankel matrices formed from the time
+delay embeddings of each time series can be computed and then concatenated into
+a single embedding matrix. This \textit{combined} matrix can then be
+decomposed using the SVD before fitting a single HAVOK model. Such an approach
+could simultaneously capture the dynamics of PM across multiple size scales.
 
 \section{Air Parcel Back Trajectories}
 
-Compute back trajectories of PM data using meteorological analysis (and re-analyses).
-
-Applications to human health outcomes: Alzheimers
-
-
-\section{Chemical Data Assimilation}
-
-Air quality chamber.
-
-
-
-
+Equally important to identifying source signatures and forecasting future
+values is the ability to spatially localize PM sources. Wind velocity
+data sourced from meteorological agencies like the European Center for
+Medium-Range Weather Forecasts (ECMWF) and the US National Oceanic and
+Atmospheric Administration (NOAA) can be used to integrate air parcel trajectories
+backwards in time from a sensor site in order to locate likely PM sources. To
+accomplish, this we are currently developing a parallelized Lagrangian particle
+tracking code to complement the models developed in this dissertation. The code
+will be evaluated for accuracy against NOAA's Hysplit model, but importantly,
+will be designed to directly integrate with the MINTS air quality network from
+Chapter~\ref{ch:air-network} to compute back trajectories for live PM data
 
