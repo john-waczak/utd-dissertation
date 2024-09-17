@@ -1,0 +1,31 @@
+\chapter{Derivatives of the complete data log-likelihood for the GSM}\label{appendix:gsm-deriv}
+
+
+The penalized complete data log-likelihood function for the the GSM is given by
+\begin{equation}
+\begin{aligned}
+    Q &= \sum_n^N\sum_k^K R_{kn} \left(\ln\pi_k + \frac{D}{2}\ln\left(\frac{\beta}{2\pi}\right) - \frac{\beta}{2}\sum_d^D\left(\sum_m^M W_{dm}\Phi_{km} - X_{nd}\right)^2\right) \\
+    &\qquad + \frac{N_vD}{2}\ln\left(\frac{\lambda_e}{2\pi}\right) - \frac{\lambda}{2}\sum_d^D \sum_{m=1}^{N_v} W_{dm}^2  \\
+    &\qquad + (M-N_v)D\ln\left(\dfrac{\lambda_w}{2}\right) - \lambda_w\sum_d^D\sum_{m=N_v+1}^{M} W_{dm}
+\end{aligned}
+\end{equation}
+Differentiating with respect to $W_{st}$, we obtain
+\begin{align*}
+  \frac{\partial Q}{\partial W_{st}} &= \sum_n^N\sum_k^K R_{kn}(-\beta)\sum_d^D \left( \sum_m^M W_{dm}\Phi_{km} - X_{nd}\right)\frac{\partial}{\partial W_{st}}\left( \sum_\lambda W_{d\lambda}\Phi_{k\lambda} \right) - \Lambda_{st} \\
+                                     &= \sum_n^N\sum_k^K (-\beta)R_{kn}\sum_d\left( \sum_m W_{dm}\Phi_{km} - X_{nd} \right)\Phi_{k\lambda}\delta_{ds}\delta_{\lambda t} - \Lambda_{st} \\
+                                     &= \sum_n^N\sum_k^K (-\beta)R_{kn}\left( \sum_m W_{sm}\Phi_{km}\Phi_{kt} - X_{ns}\Phi_{kt}\right) - \Lambda_{st} \\
+  &= \sum_n^N\sum_k^K \beta X_{ns}R_{kn}\Phi{kt} - \sum_k^K\sum_m^M\beta W_{sm}\Phi_{km}G_{kk}\Phi_{kt} - \Lambda_{st}
+\end{align*}
+where $\Lambda$ is a matrix with elements
+\begin{equation}
+  \Lambda_{st} = \begin{cases}
+    \lambda_eW_{st}, & m\leq N_v \\
+    \lambda_w, & m > N_v
+  \end{cases}
+\end{equation}
+and $\mathbf{G}$ is a diagonal matrix with entries $G_{kk} = \sum_n R_{kn}$.
+Translating from index notation, we obtain the final expression
+\begin{equation}
+    \frac{\partial Q}{\partial \mathbf{W}} = -\beta \mathbf{W}\mathbf{\Phi}^T\mathbf{G}\mathbf{\Phi} - \mathbf{\Lambda} + \beta \mathbf{X}^T\mathbf{R}^T\mathbf{\Phi}
+\end{equation}
+

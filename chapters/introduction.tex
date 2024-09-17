@@ -115,7 +115,16 @@ sampling period from Jan. 2020 to June 2023.
 
 \section{Physical Sensing}
 
-The successful application of machine learning methods demands comprehensive, carefully curated data sets. In order for our modeling efforts to be successful, it is critical that we capture the subtle nuances of the phenomena we wish to describe. In this chapter, we outline the various physical sensing approaches used throughout this dissertation, all of which are part of a broader effort in the MINTS-AI laboratory at the University of Texas at Dallas. MINTS-AI is an acronym for Multi-Scale Multi-Use Integrated Intelligent Interactive Sensing in Service of Society for Actionable Insights. An graphical overview of the MINTS-AI sensing paradigm is outlined in Figure \ref{fig:mints-ai}.
+The successful application of machine learning methods demands comprehensive,
+carefully curated data sets. In order for our modeling efforts to be successful,
+it is critical that we capture the subtle nuances of the phenomena we wish to
+describe. In this chapter, we outline the various physical sensing approaches
+used throughout this dissertation, all of which are part of a broader effort in
+the MINTS-AI laboratory at the University of Texas at Dallas. MINTS-AI is an
+acronym for Multi-Scale Multi-Use Integrated Intelligent Interactive Sensing in
+Service of Society for Actionable Insights. An graphical overview of the
+MINTS-AI sensing paradigm is outlined in Figure \ref{fig:mints-ai}.
+
 
 \begin{figure}[!hbt]
   \centering
@@ -124,7 +133,40 @@ The successful application of machine learning methods demands comprehensive, ca
   \label{fig:mints-ai}
 \end{figure}
 
-Of the variety of sensing sentinels listed above, this dissertation is primarily concerned with three key applications. The first is a team of autonomous robotic vehicles which we refer to as the \textit{robotic team}. The second is a network of distributed streaming sentinels comprised of low-cost air quality sensors. The third describes a reference sensor chamber for air quality evaluation which we use to develop a \textit{simulation sentinel}.
+Of the variety of sensing sentinels listed above, this dissertation is primarily
+concerned with three key applications. The first is a team of autonomous robotic
+vehicles which we refer to as the \textit{robotic team}. The second is a network
+of distributed streaming sentinels comprised of low-cost air quality sensors.
+The third describes a reference sensor chamber for air quality evaluation which
+we use to develop a \textit{simulation sentinel}.
+
+
+% talk here about hyperspectral imaging, in-situ water quality sensing, and
+% optical particle counters for PM as the primary sources for physical data
+\begin{itemize}
+  \item Hyperspectral Imaging
+  \item Optical Particle Counting
+\end{itemize}
+
+% A key challenge is that the data we measure are related nonlinearly to the
+% quantities we actually care about...
+
+
+% note about hyperspectral imaging
+In recent years, many remote sensing platforms have been deployed with
+hyperspectral imaging payloads such as the Italian PRISMA mission launched in
+2019, the German EnMAP launched in 2022, and recently NASA's PACE satellite
+launched in 2024 \cite{PRISMA-orig, EnMAP-orig, PACE-orig}. Many future missions
+also plan to incorporate hyperspectral imaging capabilities such as the European
+Space Agency's CHIME which will include over $200$ bands spanning visible,
+near-infrared (NIR), and short-wave infrared (SWIR) wavelengths
+\cite{CHIME-orig}. The continued development of hyperspectral imaging technology
+has also led to a considerable reduction in size that enables its inclusion in
+the payloads of small unmanned aerial vehicles (UAVs)
+\cite{adao2017hyperspectral, arroyo2019implementation}. Despite the
+proliferation of hyperspectral imaging data sources, the considerable increase
+in data volume associated with hyperspectral images (HSI) poses significant
+challenges to real-time analysis at scale.
 
 
 
