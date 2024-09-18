@@ -1,5 +1,5 @@
-\chapter{Coordinated Team of Autonomous Robots for the Rapid Assessment of Water
-  Quality}\label{ch:robot-team}
+\chapter{A Coordinated Team of Autonomous Robots for the Rapid Assessment of
+  Water Quality}\label{ch:robot-team}
 
 As outlined in Chapter~\ref{ch:intro}, the accurate assessment of water
 quality is essential for monitoring ecosystem health and ensuring the safety of
@@ -20,7 +20,7 @@ relationship to the measurements made by hyperspectral imagers. We then
 describe a variety of physical parameters relevant for the assessment of water
 quality and their manifestations in radiometric data. Armed with this
 information, we then describe the development of a robotic team incorporating both
-drone-based hyperspectral imaging and autonomous in-situ data collection with an
+drone-based hyperspectral imaging and autonomous in situ data collection with an
 autonomous boat. Carefully orchestrating the collection of hyperspectral
 images (HSI) coincident with reference data for water quality parameters of
 interest allows us to collect data volumes in a few minutes comparable to
@@ -31,28 +31,7 @@ The sensing framework described in this chapter has been published in
 Chapters~\ref{ch:robot-team-supervised}, \ref{ch:robot-team-gtm}, and \ref{ch:robot-team-gsm}.
 
 
-
-% - Hysperspectral imaging is an increasingly popular tool
-% - Popular remote sensing platforms currently employ multi-spectral sensors with
-% limited spatial/spectral/temporal resolutions
-% - Many missions incorporating HSI have been recently launched or will soon be
-% launched
-% - Still for practical applications, one must utilize in-situ data to calibrate
-% what's measured by HSI to get relevant physical parameters; what we measure is
-% not exactly what we want
-% - This can require decades of data since you need cloud-free, serendipetous
-% satellite overpasses
-% - Satellite imagery must also be corrected for atmospheric effects including
-% absorption by gases, particulate scattering, and more
-% - The shrinking size of HSI technology makes it possible to incorporate them
-% into modern drones (quadcopters, etc.) which can be readily deployed directly to
-% sensing sites
-% - combining this with autonomous in-situ data collection using other sensing
-% sentinels can dramatically increase collected data volumes in a fraction of the time.
-
-
-
-\section{Hyperspectral Imaging and the Physics of Water Quality}\label{sec:imaging}
+\section{Light and Water}\label{sec:imaging}
 
 Perhaps the greatest achievement of 19th century physics was the unification of
 electricity and magnetism by James Clerk Maxwell in which the phenomenon of
@@ -103,7 +82,7 @@ into Equation~\ref{eq:travelling-wave} and taking the real part, we obtain
   \end{aligned}
 \end{equation}
 
-Instruments like the hyperspectral imagers we will soon describe do not measure
+Instruments like the hyperspectral imagers do not measure
 the time-dependent amplitudes of the electric and magnetic fields. Instead, they
 detect energy deposited through a surface carried by these fields. This energy
 flow is characterized by the Poynting vector, $\mathbf{S} =
@@ -322,7 +301,7 @@ typically, a decade or more. Our goal is to reduce this timescale to be near
 real time by utilizing an autonomous robotic team that can both collect the
 training data, and then in real time process and stream the remote sensing data
 products. The fully autonomous team includes an uncrewed surface vessel (USV)
-that carries a suite of sensors to measure in-situ water composition,
+that carries a suite of sensors to measure in situ water composition,
 and an autonomous UAV equipped with a hyperspectral imager, downwelling
 irradiance spectrometer, thermal imagers, and embedded compute for onboard machine
 learning capabilities. Figure \ref{fig:drone-team} shows photographs of the robot team
