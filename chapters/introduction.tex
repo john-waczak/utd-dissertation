@@ -158,59 +158,119 @@ PM pollution and facilitating timely mitigation efforts.
 
 \section{Dissertation Goals}
 
-The goal of this research is to bring together data-driven technologies to
-physically quantify how our environments impact our physiology, and translate
-that impact into health and performance insights. Towards this end, this work
-presents a set of prototypes that can be leveraged for future investigations.
-Applications of this research center around preemptive human protection, e.g.
-alerting systems based on continuous biometric sensing, responsive suits aimed
-to improve performance, or automated biometric assessments for training at
-scale. An understanding of the interactions that underlie human performance
-provides an opportunity to develop targeted interventions that improve
-performance and ultimately preserve human life.
-
-
-The previous discussion of water quality and air quality highlight the need for
-improved physical sensing methods tailored to address environmental challenges.
-
-- 
-
-- dissertation goals
-
-
-
-
-
 The goal of this dissertation is to advance physical sensing in service of
-society by developing physics-based machine learning methods for the analysis
-of environmental data.
+society by leveraging physically motivated machine learning methods to extract
+actionable insights from environmental data. Most modern machine learning models
+are designed to solve \textit{general} learning tasks, such as image
+classification and language prediction, for which the underly data may come
+from a variety of sources with no representation in the real world.
+In contrast to these abstract datasets, measurements from physical sensing systems
+are governed by physical laws. This requirement imposes a strong constraint on
+the space of possible model architectures; the predictions made
+for environmental systems must be interpretable in their physical context. We
+therefore adopt a physics-based approach, by which we mean a machine learning
+techniques which strike a balance between data-driven learning and domain-specific
+knowledge. This includes
+\begin{itemize}
+\item \textbf{Physically motivated model selection}: The chosen model should
+  align with the underlying physical principles of the system under study. For
+  example, a model predicting particulate matter should not allow for
+  negative concentrations. Similarly, model assumptions for the underlying data
+  distribution should apply to the measurement data.
+\item \textbf{Integration of Prior Physical Knowledge}: Features corresponding
+  to relevant physical quantities should be incorporated to improve model
+  predictions. For example, the illumination geometry over a water body can
+  significantly impact remote sensing imagery, and by extension, the
+  estimation of water quality parameters.
+\item \textbf{Interpretability}: Understanding \textit{how} a model makes
+  predictions is just as important as prediction accuracy. Preference should be
+  given to models with explainable structures. Additionally, the quantification of
+  model uncertainty is vital for making informed decisions.
+\end{itemize}
+Towards this end, this work presents a collection of case studies utilizing both
+supervised and unsupervised machine learning techniques for the assessment of
+water quality and air quality.
 
-Towards this end, this work presents a collection of case
-studies utilizing both supervised and unsupervised machine learning techniques
-to produce actionable insights in the context of water quality and air quality.
+In the first category, we are focused on answering the basic question:
+\textit{Is this water safe?}. Localized in situ measurements for specific water
+quality parameters do not provide sufficient spatial coverage to assess water
+quality across water bodies with variable topography, composition, and flow. Remote
+sensing imagery can cover far wider areas, but simple empirical models
+insufficient to robustly map complex spectra to contaminant concentrations. We
+therefore utilize machine learning to bridge this gap.
 
-For the water quality domain, our primary goal is to develop methods to translate
-spectroscopic measurements directly into the abundance of contaminants. 
-
-
-Applications of this research center on addressing basic questions using
-observational data such as \textit{Is this area safe?}, 
-
-
-Given a observational data, we are 
-
-The applications of this research apply widely across many scientific domains
-including remote sensing, time series analysis, water quality, and air quality.
+For air quality measurement, our goal is to develop predictive models which can
+resolve abrupt pollution spikes in PM time series while \textit{also} enabling
+short-term forecasts. Many complicated machine learning models have been
+developed for generic time series analysis. In this work, we focus on developing
+physically-motivated models based on known PM dynamics. As secondary goal, these
+models should be small enough to be deployable on low-cost sensing hardware.
 
 
-% - define physics-based machine learning (broadly defined)
-%    - we refer to physics-based machine learning as machine learning models
-%    developed specifically for data from physical sensors (e.g. not image
-%    classification or text generation).
-%    - Particularly important for physics-based machine learning applications is
-%    - model interpretability
-%    - uncertainty quantification
+\section{Research Contributions}
 
+The research presented in this manuscript involved the collection of multiple
+datasets \textit{and} the creation of software for data processing, modeling,
+and analysis. The studies presented in Chapters~\ref{ch:robot-team-supervised}
+and \ref{ch:robot-team-gtm} have been published in peer-reviewed journals. The
+study from Chapter~\ref{ch:robot-team-gsm} is currently in review, and a
+manuscript for the study presented in Chapter~\ref{ch:havok} is in preparation.
+A comprehensive list of these various contributions is provided below in
+Table~\ref{tab:contributions}
+
+
+\begin{table}[H]
+  \caption{Datasets, software, and publications developed for this dissertation.}
+  \label{tab:contributions}
+  \begin{center}
+    \resizebox{\textwidth}{!}{\begin{tabular}{lccc} \hline
+      \textbf{Title} & \textbf{Type} & \textbf{Chapter(s)} & \textbf{Status} \\ \hline
+      Autonomous Learning of New Environments with a Robotic Team & & & \\
+      Employing Hyper-Spectral Remote Sensing, Comprehensive In-Situ & Article & \ref{ch:robot-team} & published, \cite{robot-team-1}  \\
+      Sensing and Machine Learning & & & \\ \hline
+      Characterizing Water Composition With an Autonomous Robotic & & & \\
+      Team Employing Comprehensive in Situ Sensing, Hyperspectral & Article & \ref{ch:robot-team-supervised} & published, \cite{robot-team-2} \\
+      Imaging, Machine Learning, and Conformal Prediction & & & \\ \hline
+      Unsupervised Characterization of Water Composition With & & & \\
+      Uav-Based Hyperspectral Imaging and Generative Topographic & Article & \ref{ch:robot-team-gtm} & published, \cite{robot-team-gtm} \\
+      Mapping & & & \\ \hline
+      Generative Simplex Mapping: & & & \\
+      Non-linear Endmember Extraction & Article & \ref{ch:robot-team-gsm} & Submitted, In Review \\
+      and Spectral Unmixing for Hyperspectral Imagery & & & \\ \hline
+      Interpretable Time-delay Embedding Models & & & \\
+      for Low-Cost Particulate Matter Sensors: & Article & \ref{ch:havok} & In Preparation \\
+      Forecasting and Outlier Detection & & & \\ \hline
+      & & & \\
+      \texttt{RobotTeam.jl} & Code & \ref{ch:robot-team}, \ref{ch:robot-team-supervised}, \ref{ch:robot-team-gtm}, \ref{ch:robot-team-gsm} & \href{https://github.com/john-waczak/RobotTeam.jl}{Julia Package} \\
+      & & & \\ \hline
+      & & & \\
+      \texttt{SolarGeometry.jl} & Code & \ref{ch:robot-team-supervised} & \href{https://github.com/john-waczak/SolarGeometry.jl}{published, Julia Package} \\
+      & & & \\ \hline
+      & & & \\
+      \texttt{GenerativeTopographicMapping.jl} & Code & \ref{ch:robot-team-gtm}, \ref{ch:robot-team-gsm} & \href{https://github.com/john-waczak/GenerativeTopographicMapping.jl}{published, Julia Package} \\
+      & & & \\ \hline
+      & & & \\
+      \texttt{MLJNonnegativeMatrixFactorization.jl} & Code & \ref{ch:robot-team-gsm} & \href{https://github.com/john-waczak/MLJNonnegativeMatrixFactorization.jl}{published, Julia Package} \\
+      & & & \\ \hline
+      & & & \\
+      HAVOK time series models & Code & \ref{ch:havok} & \href{https://github.com/john-waczak/aq-havok.jl}{Code repository} \\
+      & & & \\ \hline
+
+      & & & \\
+      Live Air Quality Dashboards & (live) Data & \ref{ch:air-network} & \href{http://mdash.circ.utdallas.edu:3000}{Website} \\
+      & & & \\ \hline
+      & & & \\
+      Air Quality Database & Dataset & \ref{ch:air-network},\ref{ch:havok} & \href{http://mdash.circ.utdallas.edu:8086}{Website} \\
+      & & & \\ \hline
+      & & & \\
+      Robot team Hyperspectral Images & Dataset & \ref{ch:robot-team-supervised}, \ref{ch:robot-team-gtm}, \ref{ch:robot-team-gsm} & \href{https://ncsa.oxn.xsede.org/ees230012-bucket01}{OSN S3 Bucket} \\
+      & & & \\ \hline
+      & & & \\
+      MINTS Air Network Historical Data  & Dataset & \ref{ch:air-network} & \href{https://ncsa.oxn.xsede.org/ees230012-bucket01}{OSN S3 Bucket} \\
+      & & & \\ \hline
+    \end{tabular}}
+  \end{center}
+\end{table}
 
 
 
@@ -271,70 +331,6 @@ this framework to develop short-term forecasting capabilities.
 Finally, in Chapter~\ref{ch:future-work} we present directions for future work
 before summarizing the conclusions for each study in
 Chapter~\ref{ch:conclusions}.
-
-
-The work described in this manuscript involved the collection of multiple
-datasets \textit{and} the creation of software for data processing, modeling,
-and analysis. The studies presented in Chapters~\ref{ch:robot-team-supervised}
-and \ref{ch:robot-team-gtm} have been published in peer-reviewed journals. The
-study from Chapter~\ref{ch:robot-team-gsm} is currently in review, and a
-manuscript for the study presented in Chapter~\ref{ch:havok} is in preparation.
-A detailed list of these various research contributions is given below in
-Table~\ref{tab:contributions}
-
-
-\begin{table}[!h]
-  \caption{Datasets, software, and publications developed for this dissertation.}
-  \label{tab:contributions}
-  \begin{center}
-    \resizebox{\textwidth}{!}{\begin{tabular}{lccc} \hline
-      \textbf{Title} & \textbf{Type} & \textbf{Chapter(s)} & \textbf{Status} \\ \hline
-      Autonomous Learning of New Environments with a Robotic Team & & & \\
-      Employing Hyper-Spectral Remote Sensing, Comprehensive In-Situ & Article & \ref{ch:robot-team} & published, \cite{robot-team-1}  \\
-      Sensing and Machine Learning & & & \\ \hline
-      Characterizing Water Composition With an Autonomous Robotic & & & \\
-      Team Employing Comprehensive in Situ Sensing, Hyperspectral & Article & \ref{ch:robot-team-supervised} & published, \cite{robot-team-2} \\
-      Imaging, Machine Learning, and Conformal Prediction & & & \\ \hline
-      Unsupervised Characterization of Water Composition With & & & \\
-      Uav-Based Hyperspectral Imaging and Generative Topographic & Article & \ref{ch:robot-team-gtm} & published, \cite{robot-team-gtm} \\
-      Mapping & & & \\ \hline
-      Generative Simplex Mapping: & & & \\
-      Non-linear Endmember Extraction & Article & \ref{ch:robot-team-gsm} & Submitted, In Review \\
-      and Spectral Unmixing for Hyperspectral Imagery & & & \\ \hline
-      Interpretable Time-delay Embedding Models & & & \\
-      for Low-Cost Particulate Matter Sensors: & Article & \ref{ch:havok} & In Preparation \\
-      Forecasting and Outlier Detection & & & \\ \hline
-      & & & \\
-      \texttt{RobotTeam.jl} & Code & \ref{ch:robot-team}, \ref{ch:robot-team-supervised}, \ref{ch:robot-team-gtm}, \ref{ch:robot-team-gsm} & \href{https://github.com/john-waczak/RobotTeam.jl}{Julia Package} \\
-      & & & \\ \hline
-      & & & \\
-      \texttt{SolarGeometry.jl} & Code & \ref{ch:robot-team-supervised} & \href{https://github.com/john-waczak/SolarGeometry.jl}{published, Julia Package} \\
-      & & & \\ \hline
-      & & & \\
-      \texttt{GenerativeTopographicMapping.jl} & Code & \ref{ch:robot-team-gtm}, \ref{ch:robot-team-gsm} & \href{https://github.com/john-waczak/GenerativeTopographicMapping.jl}{published, Julia Package} \\
-      & & & \\ \hline
-      & & & \\
-      \texttt{MLJNonnegativeMatrixFactorization.jl} & Code & \ref{ch:robot-team-gsm} & \href{https://github.com/john-waczak/MLJNonnegativeMatrixFactorization.jl}{published, Julia Package} \\
-      & & & \\ \hline
-      & & & \\
-      HAVOK time series models & Code & \ref{ch:havok} & \href{https://github.com/john-waczak/aq-havok.jl}{Code repository} \\
-      & & & \\ \hline
-
-      & & & \\
-      Live Air Quality Dashboards & (live) Data & \ref{ch:air-network} & \href{http://mdash.circ.utdallas.edu:3000}{Website} \\
-      & & & \\ \hline
-      & & & \\
-      Air Quality Database & Dataset & \ref{ch:air-network},\ref{ch:havok} & \href{http://mdash.circ.utdallas.edu:8086}{Website} \\
-      & & & \\ \hline
-      & & & \\
-      Robot team Hyperspectral Images & Dataset & \ref{ch:robot-team-supervised}, \ref{ch:robot-team-gtm}, \ref{ch:robot-team-gsm} & \href{https://ncsa.oxn.xsede.org/ees230012-bucket01}{OSN S3 Bucket} \\
-      & & & \\ \hline
-      & & & \\
-      MINTS Air Network Historical Data  & Dataset & \ref{ch:air-network} & \href{https://ncsa.oxn.xsede.org/ees230012-bucket01}{OSN S3 Bucket} \\
-      & & & \\ \hline
-    \end{tabular}}
-  \end{center}
-\end{table}
 
 
 
