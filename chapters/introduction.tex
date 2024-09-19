@@ -29,35 +29,65 @@ physical models and environmental data.
 
 \section{Water Quality}
 
+Water quality consists of the physical, chemical, and biological characteristics
+of water, which characterize overall ecosystem health and its suitability for
+uses such as drinking and agriculture. Poor water quality can result from a
+range of anthropogenic and natural factors. Industrial pollution, particularly
+from chemical manufacturing, mining, and agriculture, introduces
+contaminants such as heavy metals, pesticides, and effluents into water
+bodies \cite{schwarzenbach-water-pollution}. Urban runoff
+picks up additional oils, plastics, and sediments, carrying them into
+water sources where they cause a variety of issues such as
+eutrophication and oxygen depletion \cite{smith-eutrophication}.
+In addition to human activities, natural factors like soil erosion, volcanic
+eruptions, and the leaching of naturally occurring metals from geological
+formations can degrade water quality \cite{water-quality-natural}. Climate
+change also plays a role, where increased water temperatures and altered
+precipitation patterns contribute to the growth of harmful algal blooms
+\cite{climate-change-water-quality}.
 
-- growing problems for water quality
-- Note: increased concerns with EV battery production runoff
+In situ and laboratory methods remain fundamental for water quality assessment,
+providing direct and precise measurements for a variety of parameters. In situ
+techniques involve the deployment of sensors and
+instruments directly into water bodies to measure parameters such as pH,
+dissolved oxygen, conductivity, and temperature. These sensors,
+typically placed in monitoring stations or attached to buoys, often provide continuous
+data streams essential for tracking short-term changes and local variability
+\cite{in-situ-water-quality}. Portable instruments, such as multiparameter probes, are
+also commonly used for spot measurements during field surveys, offering
+flexibility in data collection across diverse environments. On the other hand,
+laboratory analysis involves the collection of water samples which are then
+transported to the lab for detailed examination.
+Techniques such as mass spectrometry and liquid chromatography are used to
+analyze heavy metals, pesticides, and organic compounds at
+trace levels \cite{mass-spec-water, lc-ms}. Microbiological testing for harmful
+pathogens is also used for assessing water safety, particularly for drinking
+water \cite{microbio-methods}.
+
+The key shortcoming of in situ and laboratory methods for 
+
+Remote sensing methods offer a crucial advantage for addressing the limited
+spatial coverage of in situ and laboratory measurements
+Satellite and airborne sensors provide large-scale
+observations that can cover vast water bodies, overcoming the spatial
+constraints of point-based in situ monitoring stations. For instance, platforms
+like Sentinel-2 and Landsat capture multispectral and hyperspectral imagery,
+allowing for the estimation of key water quality indicators such as turbidity,
+chlorophyll a, and suspended sediments over entire lakes, rivers, and coastal
+areas \cite{}.
+
 
 - key idea: remote sensing takes too long to generate fine-grained datasets
+
 - most studies use limited in-situ sensing
+
 - limitations of full radiative transfer simulation
+
 - Summary of current limitations
 
 - Need: ability to rapidly map pollutant concentrations to track contaminant
 evolution and localize sources
 - Need: ability to identify pollutant signatures from complex datasets
-
-Poor water quality has a direct impact on water quantity in a number of ways.
-Polluted water that cannot be used for drinking, bathing, industry or
-agriculture effectively reduces the amount of useable water within a given area.
-
-Major water pollutants include microbes, nutrients, heavy metals, organic
-chemicals, oil and sediments; heat, which raises the temperature of the
-receiving water, can also be a pollutant. Pollutants are typically the cause of
-major water quality degradation around the world
-
-The most significant sources of water pollution are lack of inadequate treatment
-of human wastes and inadequately managed and treated industrial and agricultural
-wastes
-
-
-Every day, 2 million tons of sewage and other effluents drain into the world's
-waters
 
 
 \section{Air Quality}
@@ -109,7 +139,6 @@ to assess spatial variability.
 % 	\caption{Tabular literature review of particulate matter and health outcomes related to PM$_{10}$, PM$_{2.5}$, and ultrafine particulates (UFPs) exposure (based on the literature review of \cite{Lary:2015}).}
 % 	\label{Table.HealthEffectsParticulates}
 % \end{table}
-
 
 
 \section{Machine Learning}
