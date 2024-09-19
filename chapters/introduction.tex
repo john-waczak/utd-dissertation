@@ -64,41 +64,61 @@ trace levels \cite{mass-spec-water, lc-ms}. Microbiological testing for harmful
 pathogens is also used for assessing water safety, particularly for drinking
 water \cite{microbio-methods}.
 
-The key shortcoming of in situ and laboratory methods for 
+Despite their accuracy, in situ sampling and laboratory analysis suffer from
+limited spatial coverage; the obtained measurements are only valid at the sample
+site and are rarely representative of the spatial distributions of water quality
+parameters. To enable parameter estimation over large bodies of water, remote sensing
+techniques can be employed to relate observed radiometric properties to
+optically active  water quality indicators such as turbidity, chlorophyll a, and
+total suspended sediments \cite{remote-sensing-wq}. These optically active parameters
+scatter and absorb ambient light according to their unique physical and chemical
+properties. However, due to the limited wavelength bands of most remote sensing platforms
+combined with incomplete prior knowledge of all components present a water body,
+directly modeling the radiative transfer process to infer water quality
+parameters is futile. Instead, empirical models for wavelength bands and
+spectral indices are used to map remote sensing imagery to parameters of interest.
+For example, Brezonik et al. successfully fit regression models to estimate
+chlorophyll a and turbidity using band ratios from Landsat imagery \cite{brezonik-wq}.
 
-Remote sensing methods offer a crucial advantage for addressing the limited
-spatial coverage of in situ and laboratory measurements
-Satellite and airborne sensors provide large-scale
-observations that can cover vast water bodies, overcoming the spatial
-constraints of point-based in situ monitoring stations. For instance, platforms
-like Sentinel-2 and Landsat capture multispectral and hyperspectral imagery,
-allowing for the estimation of key water quality indicators such as turbidity,
-chlorophyll a, and suspended sediments over entire lakes, rivers, and coastal
-areas \cite{}.
+The accuracy of water quality estimation using remote sensing data is
+\textit{severely} constrained by the availability of coincident in situ
+observations needed to train and validate empirical models. Because this method
+relies on cloud-free satellite passes over fixed sensing sites, the data
+curation process can require \textit{years} of observations to generate a few
+thousand data points. For example, Aurin et al. combined measurements from
+over 500 oceanographic field campaigns with over 30 years of coincident
+satellite imagery to model CDOM absorption coefficients and CDOM
+spectral slope \cite{aurin2018remote}. Similarly, Ross et al assembled
+observations from 35 years of Landsat imagery with coincident measurements for
+suspended sediment, CDOM, chlorophyl a, and Secchi disk depth (a measure of
+water transparency) to facilitate model development for inland water quality.
+These lengthy time scales curb analysis to historical trends and limiting
+actionable insights during abrupt water quality crises such as oil spills
+\cite{fingas2017review}.
 
-
-- key idea: remote sensing takes too long to generate fine-grained datasets
-
-- most studies use limited in-situ sensing
-
-- limitations of full radiative transfer simulation
-
-- Summary of current limitations
-
-- Need: ability to rapidly map pollutant concentrations to track contaminant
-evolution and localize sources
-- Need: ability to identify pollutant signatures from complex datasets
 
 
 \section{Air Quality}
 
-- growing problems for air quality
+Air quality refers to the composition of the atmosphere and its impact on human
+health, ecosystems, and climate. The key components of air quality include
+particulate matter (PM), ground-level ozone (\ce{O3}), nitrogen dioxide (\ce{NO2}), sulfur
+dioxide (\ce{SO2}), carbon monoxide (\ce{CO}), and volatile organic compounds (VOCs).
+Particulate matter refers to solid particles and liquid droplets suspended in
+the air. PM is categorized according to its aerodynamic diameter as shown in
+Figure~\ref{fig:pm-size-scale}, with \textit{fine} particulate matter
+specifically referring to all particulates with a diameter below 2.5 microns (PM
+2.5). PM originates from both natural sources, such as wildfires, dust storms, and
+volcanic activity, as well as human activities, including vehicle emissions,
+industrial processes, and the burning of fossil fuels \cite{pm-sources-1,
+  air-chem-and-physics}. Ground-level ozone is a major component of smog
+which forms when pollutants like \ce{NO2} and VOCs react in the presence of
+sunlight and can cause respiratory problems and exacerbate conditions like
+asthma \cite{ozone-health}. Nitrogen dioxide and sulfur dioxide primarily result
+from the combustion of fossil fuels and are linked to respiratory inflammation
+and acid rain \cite{no2-health, aq-and-health}.
 
-- contributers to poor air quality
-
-- dissertation focus: Particulate Matter
-
-\begin{figure}[h!]
+\begin{figure}[!h]
   \centering
   \includegraphics[width=0.75\columnwidth]{introduction/pm-size.png}
   \caption{Size comparisons for PM particles. Image source: US EPA
@@ -107,112 +127,33 @@ evolution and localize sources
   \label{fig:pm-size-scale}
 \end{figure}
 
+PM is considered the most important air quality component due to its direct and
+widespread impact on public health. Inhaled PM accumulates in the lungs, causing
+both short-term and long-term health effects. Fine particulate matter,
+specifically PM 2.5, is small enough to pass through the lungs and into the
+bloodstream, increasing the risk of cardiovascular diseases, strokes, and cancer
+\cite{pm-diesease-1, pm-disease-2, pm-cancer}. Due to these combined effects, PM
+exposure is estimated to be responsible for millions of premature deaths each
+year \cite{pm-mortality-1, pm-mortality-2}.
 
-- traditional approaches for PM monitoring
+In response, many regulatory bodies have introduced new legislation explicitly aimed
+at reducing PM levels. The European Union recently revised its air quality
+standards to adopt a $10$ $\mu g/m^3$ annual limit for average PM 2.5.
+The United States Environmental Protection Agency (EPA) has also adopted tighter
+PM regulations, revising its annual PM 2.5 standard to $9$ $\mu g/m^3$ while
+maintaining the $35$ $\mu g/m^3$ 24-hour limit.
+These developments underscore the growing recognition of the threat posed by PM.
 
-- FRM and FEM sensors (spatially and temporally limited)
-- Satellite based PM estimation
-
-% - Prabuddha et al. combine remote sensing observations for aerosol optical depth
-% with meteorological data to predict ground level PM 2.5 using machine learning
-% together with ground based-sensors \cite{prabuddha-pm-satellite}
-% - Average US values exceeded 9 $\mu g/m^3$ standard 20\% of the time with the
-% eastern US and California exceeding the limit over 50\% of the time during the
-% sampling period from Jan. 2020 to June 2023.
-
-
-- key idea: FRM and FEM sensors are too expensive to obtain measurements at
-relevant spatial scales
-- key idea: 24 hour averages are too infrequent to capture known temporal
-patterns
-
-- Need: low cost sensors which can be densely distributed in urban environments
-to assess spatial variability.
-- Need: computational tools to extract insights from PM data by understanding
-\textit{local} trends.
-
-
-
-% \begin{table}[h!]
-%   \centering
-%   \includegraphics[width=\textwidth]{introduction/HealthEffectsParticulates.pdf}
-% 	\caption{Tabular literature review of particulate matter and health outcomes related to PM$_{10}$, PM$_{2.5}$, and ultrafine particulates (UFPs) exposure (based on the literature review of \cite{Lary:2015}).}
-% 	\label{Table.HealthEffectsParticulates}
-% \end{table}
-
-
-\section{Machine Learning}
-
-- what is machine learning
-- role of machine learning in physical sciences
-- define physics-based machine learning (broadly defined)
-   - we refer to physics-based machine learning as machine learning models
-   developed specifically for data from physical sensors (e.g. not image
-   classification or text generation).
-   - Particularly important for physics-based machine learning applications is
-   - model interpretability
-   - uncertainty quantification
-
-In recent years machine learning has exploded in popularity becoming entwined in
-almost every aspect of our lives from image recognition on social media sites,
-to the now ubiquitous large large language models like ChatGPT. Because the
-field is so wide, many of the most popular machine learning models must be
-generic enough so as to apply to \textit{any} well defined regression or
-classification task. For example, the problem of image classification is
-incredibly challenging if we do not impose any restrictions on the type of
-content represented in our data, as illustrated in Figure
-\ref{fig:dog-or-muffin}.
-
-\begin{figure}[!hbt]
-  \centering
-  \includegraphics[width=0.6\columnwidth]{introduction/dog-or-muffin.jpeg}
-  \caption{A classic machine learning meme comparing pictures of Chihuahuas with muffins illustrating the potential difficulties faced by generic image classification tasks.}
-  \label{fig:dog-or-muffin}
-\end{figure}
-As a consequence, we typically can not expect a machine learning model to
-generalize beyond the bounds of their training data.
-
-
-In the realm of scientific applications, this is often \textit{not} the case;
-the universe is well described by deep physical principles with underlying
-mathematical symmetries and structures. Therefore, rather than throwing away all
-of our prior scientific knowledge for each machine learning task, we can instead
-develop techniques which enable us to directly or indirectly impose physical
-requirements on our machine learning models. Similarly, we can utilize machine
-learning to gain insight into physical processes where a first principles
-relationship has not yet been established. Together these ideas are known as
-\textit{Physics-Based Machine Learning} or more generally \textit{Scientific
-  Machine Learning} (SciML for short) and provides us the exact set of tools
-needed to marry scientific models together with data to produce actionable
-insights \cite{rackauckas2020universal}.
-
-- physics-based machine learning involves
-  - physics informed / scientific machine learning
-  - physically motivated model selection
-  - robust uncertainty quantification either by using probabilistic models or by
-  using methods to infer prediction uncertainties.
-
-
-% Successful physical theories are predictive, explainable, and quantifiable (i.e.
-% uncertainty can be characterized). Most machine learning tasks involve abstract
-% data for which this can be challenging. A physics-based machine learning
-% approach involves model selection, uncertainty quantification, physical
-% reasonableness, etc..
-
-
-% The general problem of ML is hard with when no structure is assumed on data (include example of pit bull or potato)
-
-% For situations involving data from physical sensors describing real systesm, physics tells us there are underlying rules which govern the dynamics of real systems
-
-% When applying ML we should therefore place a high value on physics-based models, i.e. machine learning models tailord for the specific physical system, rather than generic abstract algorithms. This is important in all stages of the ML pipeline from feature selection (Robot team supervised), dimensionality reduction (i.e. the latent space of the GTM and GSM), model selection, model evaluation, etc. In summary:
-
-% \begin{itemize}
-%   \item Prefer interpretable models (e.g. deicsion trees) to black boxes
-%   \item Prefer probabilistic models (e.g. GTM vs SOM) to deterministic models (all data has uncertainty and no model is perfect)
-%   \item Prefer models which incorporate prior knoweldge of the physical system such as dynamical laws, symmetries, natural constraints, etc. This is specifically known as \textbf{physics-informed} machine learning or \textbf{scientific machine learning}  (SciML).
-% \end{itemize}
-
-
+Annual and 24-hour PM regulations are designed to manage long-term exposure but
+fail to capture acute spikes from short-term pollution events. These
+transient PM spikes can lead to immediate increases in blood pressure, placing
+vulnerable populations at heightened risk \cite{pm-bp}. Additionally, short-term
+PM exposure has been shown to impair cognitive performance \cite{pm-cognition}.
+In fact, the effects of PM on the body are strong enough that short-term PM 2.5
+exposure can be independently estimated from a small assortment of biometric
+sensors \cite{shawhin-biometrics, shisir-biometrics}. Therefore, high-resolution
+PM data are essential for accurately quantifying the immediate impacts of local
+PM pollution and facilitating timely mitigation efforts.
 
 \section{Dissertation Goals}
 
@@ -226,7 +167,6 @@ For the water quality domain, our primary goal is to develop methods to translat
 spectroscopic measurements directly into the abundance of contaminants. 
 
 
-
 Applications of this research center on addressing basic questions using
 observational data such as \textit{Is this area safe?}, 
 
@@ -235,6 +175,17 @@ Given a observational data, we are
 
 The applications of this research apply widely across many scientific domains
 including remote sensing, time series analysis, water quality, and air quality.
+
+
+% - define physics-based machine learning (broadly defined)
+%    - we refer to physics-based machine learning as machine learning models
+%    developed specifically for data from physical sensors (e.g. not image
+%    classification or text generation).
+%    - Particularly important for physics-based machine learning applications is
+%    - model interpretability
+%    - uncertainty quantification
+
+
 
 
 \section{Dissertation Overview}
@@ -361,102 +312,6 @@ Table~\ref{tab:contributions}
 
 
 
-
-
-
-% What we want:
-
-% 1. Introductory paragraph(s) describing the goal of the dissertation
-
-% Current methods for water and air quality analysis are limited in two key ways:
-% 1. Insufficient quantity of data at relevant spatial, spectral, and temporal
-% resolutions
-% 2. Simulating full physical dynamics is often computationally infeasible to
-% provide actionable insights fast enough to enable human action/intervention.
-
-
-
-
-% %\section{Motivation}
-% \section{Water Quality}
-
-
-% \section{Air Quality}
-
-% \subsection{What is Particulate Matter}
-
-% \subsection{Environmental Impact}
-
-% \textcolor{red}{include a picture of fog/haze}
-
-% \subsection{Human Impact}
-
-
-
-
-% \section{Physical Sensing}
-
-% The successful application of machine learning methods demands comprehensive,
-% carefully curated data sets. In order for our modeling efforts to be successful,
-% it is critical that we capture the subtle nuances of the phenomena we wish to
-% describe. In this chapter, we outline the various physical sensing approaches
-% used throughout this dissertation, all of which are part of a broader effort in
-% the MINTS-AI laboratory at the University of Texas at Dallas. MINTS-AI is an
-% acronym for Multi-Scale Multi-Use Integrated Intelligent Interactive Sensing in
-% Service of Society for Actionable Insights. An graphical overview of the
-% MINTS-AI sensing paradigm is outlined in Figure \ref{fig:mints-ai}.
-
-
-% \begin{figure}[!hbt]
-%   \centering
-%   \includegraphics[width=0.8\textwidth]{introduction/MINTS-sentinels.jpg}
-%   \caption{The MINTS-AI context engine is a sensing paradigm composed of flexible sensing sentinels spanning from remote sensing data products to autonomous robots and ground survey vehicles.}
-%   \label{fig:mints-ai}
-% \end{figure}
-
-% Of the variety of sensing sentinels listed above, this dissertation is primarily
-% concerned with three key applications. The first is a team of autonomous robotic
-% vehicles which we refer to as the \textit{robotic team}. The second is a network
-% of distributed streaming sentinels comprised of low-cost air quality sensors.
-% The third describes a reference sensor chamber for air quality evaluation which
-% we use to develop a \textit{simulation sentinel}.
-
-
-% % talk here about hyperspectral imaging, in-situ water quality sensing, and
-% % optical particle counters for PM as the primary sources for physical data
-% \begin{itemize}
-%   \item Hyperspectral Imaging
-%   \item Optical Particle Counting
-% \end{itemize}
-
-% % A key challenge is that the data we measure are related nonlinearly to the
-% % quantities we actually care about...
-
-
-% % note about hyperspectral imaging
-% In recent years, many remote sensing platforms have been deployed with
-% hyperspectral imaging payloads such as the Italian PRISMA mission launched in
-% 2019, the German EnMAP launched in 2022, and recently NASA's PACE satellite
-% launched in 2024 \cite{PRISMA-orig, EnMAP-orig, PACE-orig}. Many future missions
-% also plan to incorporate hyperspectral imaging capabilities such as the European
-% Space Agency's CHIME which will include over $200$ bands spanning visible,
-% near-infrared (NIR), and short-wave infrared (SWIR) wavelengths
-% \cite{CHIME-orig}. The continued development of hyperspectral imaging technology
-% has also led to a considerable reduction in size that enables its inclusion in
-% the payloads of small unmanned aerial vehicles (UAVs)
-% \cite{adao2017hyperspectral, arroyo2019implementation}. Despite the
-% proliferation of hyperspectral imaging data sources, the considerable increase
-% in data volume associated with hyperspectral images (HSI) poses significant
-% challenges to real-time analysis at scale.
-
-
-
-
-
-
-% \section{Machine Learning}
-
-% - The Role of Machine Learning in the Era of Big Data
 
 % Big data in the physical sciences
 % Comment on the annual data volumes produced by
