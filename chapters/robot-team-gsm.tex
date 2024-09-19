@@ -423,7 +423,7 @@ Learning in Julia (MLJ) common interface \cite{bezanson2012julia, blaom2020mlj}.
 
 \section{Study Overview}
 
-\subsection{Linear Mixing: Comparison to NMF}
+\subsection{Linear Mixing: Comparison to NMF}\label{sec:experiments}
 
 To illustrate the effectiveness of the GSM, we first demonstrate its ability to
 model simple linear mixing by driving non-linear weights to zero during the
@@ -481,7 +481,7 @@ and the data set reconstructed via the extracted endmembers and their associated
 abundances was computed. This provides a model-agnostic criterion to guarantee
 that each model sufficiently converged during training.
 
-\subsection{Non-linear Mixing: Water Contaminant Identification}
+\subsection{Non-linear Mixing: Water Contaminant Identification}\label{sec:real-experiments}
 
 To assess the ability of the GSM to unmix realistic scenes likely to involve
 non-linear mixing effects, we consider a data set of real HSI collected in
@@ -610,7 +610,7 @@ advantage of the GSM.
 
 \subsection{Non-linear Mixing: Rhodamine Dye Plume}
 
-For the data set of real HSI spectra described in Section~\ref{sec:experiments},
+For the data set of real HSI spectra described in Section~\ref{sec:real-experiments},
 80 GSM models were trained to explore the GSM hyperparameter space. The
 performance of the model was compared using the BIC, AIC and RMSE reconstruction
 with the results of the top $10$ performing models shown in
