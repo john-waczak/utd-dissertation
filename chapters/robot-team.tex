@@ -440,7 +440,7 @@ computers can be seen in panels (a) and (b) of Figure~\ref{fig:uav-closeup}.
 The georectification procedure implements for HSI from the UAV is based on the
 methods described in \cite{muller2002program, baumker2001new, mostafa2000multi}
 for pushbroom-mode hyperspectral imagers while the reflectance conversion
-assumes Lambertian scattering as described previously in Section~\ref{sec:imaging}.
+assumes Lambertian scattering as previously described in Section~\ref{sec:imaging}.
 The processing steps are as follows:
 
 \begin{enumerate}
@@ -453,7 +453,7 @@ The processing steps are as follows:
 \item The georeferenced HSI is then resampled to a regular grid spatial grid.
 \item The downwelling irradiance spectrum associated with the HSI is read.
 \item The downwelling spectrum is interpolated to match the wavelength bins of the HSI
-\item The HSI is converted o reflectance.
+\item The HSI is converted to reflectance.
 \item Spectral indices (NDVI, etc...) are computed.
 \item The final data cube is saved to an HDF5 file.
 \end{enumerate}
@@ -489,7 +489,7 @@ Figure~\ref{fig:hsi-pipeline} below.
 \subsection{Georeferencing and Resampling}
 
 The hyperspectral imager used on the UAV is different from a typical camera;
-instead of capturing an image by sampling light across array of sensors, the
+instead of capturing an image by sampling light across an array of sensors, the
 hyperspectral imager uses a pushbroom configuration. In this setup, a single
 scan-line of pixels is captured by the sensor for each wavelength and an image
 is formed as the drone flies along its route. This poses an interesting
