@@ -11,7 +11,7 @@ their impact on the scattering and absorption of incident light. Hyperspectral
 imaging, which enables the measurement of radiometric quantities
 across hundreds of individual wavelength bins, offers a powerful tool for
 assessing these parameters. By detecting the subtle variations in
-reflectance across the ultraviolet (UV), visible, and Infrared (IR) wavelengths,
+reflectance across ultraviolet (UV), visible, and Infrared (IR) wavelengths,
 hyperspectral imaging enables the differentiation of various water constituents
 in complex environments.
 
@@ -19,7 +19,7 @@ In this chapter, we first introduce relevant concepts from radiometry and their
 relationship to the measurements made by hyperspectral imagers. We then
 describe a variety of physical parameters relevant for the assessment of water
 quality and their manifestations in radiometric data. Armed with this
-information, we then describe the development of a robotic team incorporating both
+information, we then present a robotic team incorporating both
 drone-based hyperspectral imaging and autonomous in situ data collection with an
 autonomous boat. Carefully orchestrating the collection of hyperspectral
 images (HSI) coincident with reference data for water quality parameters of
@@ -84,16 +84,16 @@ into Equation~\ref{eq:travelling-wave} and taking the real part, we obtain
 
 Instruments like the hyperspectral imagers do not measure
 the time-dependent amplitudes of the electric and magnetic fields. Instead, they
-detect energy deposited through a surface carried by these fields. This energy
+detect energy deposited into a surface carried by these fields. This energy
 flow is characterized by the Poynting vector, $\mathbf{S} =
 \frac{1}{\mu}\mathbf{E}\times\mathbf{B}$ which has units of $W/m^2$, in other
 words, the energy flux through a surface. Additionally, the sample rates of realistic
 instruments are much longer than oscillations in $\mathbf{E}$ and $\mathbf{B}$ so
 that the time-averaged Poynting vector $\langle
-\mathbf{S} \rangle$ is really measured. Given that $\langle  \cos^2(\theta) \rangle =
+\mathbf{S} \rangle$ is what is really measured. Given that $\langle  \cos^2(\theta) \rangle =
 1/2$, this results in
 \begin{equation}
-  \langle \mathbf{S} \rangle = \frac{1}{2}\sqrt{\frac{\epsilon}{\mu}}E_0^2\exp\left(-\frac{4\pi k x}{\lambda}\right) \hat{x}
+  \langle \mathbf{S} \rangle = \frac{1}{2}\sqrt{\frac{\epsilon}{\mu}}E_0^2\exp\left(-\frac{4\pi k x}{\lambda}\right) \hat{x}.
 \end{equation}
 
 Here we see an important consequence of considering a complex index of reaction:
@@ -163,7 +163,8 @@ irradiances, the \textit{reflectance} is defined by their ratio:
 \end{equation}
 This quantity is valuable as it extracts the useful signal from an image by
 \textit{dividing out} the spectrum from the lighting source, in this case,
-incident solar radiation.
+incident solar radiation. Hyperspectral imagers typically measure spectral
+radiance but can be calibrated to obtain the reflectance.
 
 \subsection{Optical Properties of Water Bodies}\label{sec:optical-properties-water}
 
@@ -199,8 +200,8 @@ absorption for visible wavelengths which enables aquatic life to access solar
 energy.
 
 Water bodies contain a variety of constituents leading to a continuous size
-distribution from chemicals at the atomic scale ($\sim$$0.1$ nm) to virus
-($\sim$$100$ nm), to aquatic animals ($\sim$$1$ m). These components are traditionally
+distribution from chemicals at the atomic scale ($\sim$$0.1$ nm) up to aquatic
+animals ($\sim$$1$ m). These components are traditionally
 classified into dissolved or particulate matter of organic or inorganic origin.
 Most water bodies contain a variety of dissolved salts. For ocean waters these
 account for roughly 3.5\% by weight while fresh water bodies tend to contain
