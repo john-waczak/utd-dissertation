@@ -68,6 +68,7 @@ electromagnetic waves:
 \begin{equation}
   \kappa^2 = \omega^2\mu\epsilon
 \end{equation}
+with a wave velocity $v=1/\sqrt{\mu\epsilon}$.
 
 Allowing for $\sqrt{\mu\epsilon}$ to be complex, we can decompose $\kappa$ into
 \begin{equation}
@@ -82,9 +83,9 @@ into Equation~\ref{eq:travelling-wave} and taking the real part, we obtain
   \end{aligned}
 \end{equation}
 
-Instruments like the hyperspectral imagers do not measure
+Instruments like hyperspectral imagers do not measure
 the time-dependent amplitudes of the electric and magnetic fields. Instead, they
-detect energy deposited into a surface carried by these fields. This energy
+detect energy carried by these fields into a surface. This energy
 flow is characterized by the Poynting vector, $\mathbf{S} =
 \frac{1}{\mu}\mathbf{E}\times\mathbf{B}$ which has units of $W/m^2$, in other
 words, the energy flux through a surface. Additionally, the sample rates of realistic
@@ -136,9 +137,9 @@ the spatial, temporal, spectral, and orientation dependencies of the light field
 
 When an instrument samples light from \textit{all} possible directions passing
 through a collection area, then the
-measured quantity is the \textit{spectral radiance}. Naturally, this quantitiy
+measured quantity is the \textit{spectral irradiance}. Naturally, this quantitiy
 depends on the orientation of the sensor. For example, the \textit{downwelling
-  spectral radiance}, $E_d$ is defined by
+  spectral irradiance}, $E_d$ is defined by
 \begin{equation}
   E_d(\mathbf{x}, t, \lambda) = \int_0^{2\pi} \int_0^{\pi/2}L(\mathbf{x}, t, \theta, \phi, \lambda)\cos\theta \sin\theta d\theta d\phi
 \end{equation}
@@ -159,7 +160,7 @@ a consequence, the spectral irradiance of light from a Lambertian surface is
 Given measurements for the downwelling (incident) and upwelling spectral
 irradiances, the \textit{reflectance} is defined by their ratio:
 \begin{equation}
-  \rho(\mathbf{x},\lambda) = \dfrac{E_u(\mathbf{x}\lambda)}{E_d(\mathbf{x}, \lambda)}.
+  \rho(\mathbf{x},\lambda) = \dfrac{E_u(\mathbf{x}, \lambda)}{E_d(\mathbf{x}, \lambda)}.
 \end{equation}
 This quantity is valuable as it extracts the useful signal from an image by
 \textit{dividing out} the spectrum from the lighting source, in this case,
@@ -208,13 +209,13 @@ account for roughly 3.5\% by weight while fresh water bodies tend to contain
 trace amounts. Natural waters also contain a variety of dissolved organic
 compounds produced by the decay of plant matter. These compounds mostly include
 fulvic and humic acids which impart a yellowish-brown color in sufficient
-conecntrations and are referred to in the literature as \textit{colored
+concentrations and are referred to in the literature as \textit{colored
   dissolved organic matter} (CDOM) \cite{cdom-acids}. Inorganic particulate
-matter in natural waters is largely due to the weathering of rocks in soils
-while organic particulates include bacteria, phytoplankton, zooplankton, and
-larger organic detritus.
+matter in natural waters is largely due to the weathering and erosion of rocks
+and soils while organic particulates include bacteria, phytoplankton,
+zooplankton, and larger organic detritus.
 
-Light absorption by CDOM can be reasonably modeld using an exonential function
+Light absorption by CDOM can be reasonably modeled using an exponential function
 of the form
 \begin{equation}
   a(\lambda) = a(\lambda_0)\exp(-S_g(\lambda - \lambda_0))

@@ -53,7 +53,7 @@ hyperspectral imaging with rapid in situ data collection using autonomous boats
 as demonstrated in Chapter~\ref{ch:robot-team-supervised}. However, these
 supervised methods rely on \textit{a priori} knowledge of expected sources to
 identify appropriate reference sensors for data collection. In light of these
-limitations, unsupervised methods are needed that can expediently extract source
+limitations, unsupervised methods are needed that can reliably extract source
 signatures from high-dimensional HSI.
 
 
@@ -270,8 +270,8 @@ radial basis functions (RBF) with centers $\mu_m$
 distributed throughout the simplex (but not at the vertices) with
 \begin{equation}\label{eq:act-function}
     \Phi_{km} = \begin{cases}
-        \dfrac{s - \lVert \mathbf{z}_k - \mu_m \rVert}{s}; & \lVert z_k - \mu_m \rVert \leq s \\
-        0; & \lVert z_k - \mu_m \rVert > s
+        \dfrac{s - \lVert \mathbf{z}_k - \mu_m \rVert}{s}; & \lVert \mathbf{z}_k - \mu_m \rVert \leq s \\
+        0; & \lVert \mathbf{z}_k - \mu_m \rVert > s
     \end{cases}
 \end{equation}
 where $s$ is the spacing between RBF centers. In this form, the first $N_v$
@@ -372,7 +372,7 @@ each M-step to accelerate convergence.
 
 Optimizing Eq~\ref{eq:complete-data-llh} with respect to $\beta$ yields the final update equation:
 \begin{equation}\label{eq:beta-update}
-    \frac{1}{\beta^{\text{new}}}  = \frac{1}{ND}\sum\limits_n^N\sum\limits_k^K R_{kn}\lVert \psi(\mathbf{z}_k; \mathbf{W}) - x_n \rVert^2.
+    \frac{1}{\beta^{\text{new}}}  = \frac{1}{ND}\sum\limits_n^N\sum\limits_k^K R_{kn}\lVert \psi(\mathbf{z}_k; \mathbf{W}) - \mathbf{x}_n \rVert^2.
 \end{equation}
 
 To train a GSM model, weights $\mathbf{W}$ are randomly initialized to positive
@@ -837,7 +837,7 @@ of the internodes should not significantly affect the performance of the model.
 In fact, this was confirmed for the simulated dataset as summarized in
 Figure~\ref{fig:usgs-fits}. For considerably large datasets, the size of the
 responsibility matrix $\mathbf{R}$ can also lead to extended training times.
-This can be addressed by augmenting the EM procedure to updated using
+This can be addressed by augmenting the EM procedure to update using
 mini-batches of training samples during each E-step as described by Bishop et
 al. for the GTM in ref. \cite{gtm-developments}. Rather than updating the full
 responsibility matrix, a subset of $\mathbf{R}$ corresponding to a single batch

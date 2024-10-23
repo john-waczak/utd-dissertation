@@ -169,15 +169,16 @@ In contrast to these abstract datasets, measurements from physical sensing syste
 are governed by physical laws. This requirement imposes a strong constraint on
 the space of possible model architectures; the predictions made
 for environmental systems must be interpretable in their physical context. We
-therefore adopt a physics-based approach, by which we mean a machine learning
+therefore adopt a physics-based approach, by which we mean machine learning
 techniques which strike a balance between data-driven learning and domain-specific
-knowledge. This includes
+knowledge. This approach includes
 \begin{itemize}
 \item \textbf{Physically motivated model selection}: The chosen model should
   align with the underlying physical principles of the system under study. For
-  example, a model predicting particulate matter should not allow for
-  negative concentrations. Similarly, model assumptions for the underlying data
-  distribution should apply to the measurement data.
+  example, a model predicting particulate matter should be physically
+  realizable so that negative concentrations are disallowed. Similarly, model
+  assumptions for the underlying data distribution should apply to the
+  measurement data.
 \item \textbf{Integration of Prior Physical Knowledge}: Features corresponding
   to relevant physical quantities should be incorporated to improve model
   predictions. For example, the illumination geometry over a water body can
@@ -210,7 +211,7 @@ models should be small enough to be deployable on low-cost sensing hardware.
 
 \section{Research Contributions}
 
-The research presented in this manuscript involved the collection of multiple
+The research presented in this dissertation involved the collection of multiple
 datasets \textit{and} the creation of software for data processing, modeling,
 and analysis. The studies presented in Chapters~\ref{ch:robot-team-supervised}
 and \ref{ch:robot-team-gtm} have been published in peer-reviewed journals. The
